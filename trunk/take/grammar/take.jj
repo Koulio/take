@@ -1,0 +1,142 @@
+/* a simple version of sql */
+options {
+	IGNORE_CASE = true;
+}
+PARSER_BEGIN(Parser) 
+   package nz.org.take.script.parser;
+	import nz.org.take.script.*;
+	public class Parser{
+		Script select = new Script();
+		public static void main(String[] args) throws ParseException,TokenMgrError {
+			Parser parser = new Parser(System.in);
+			parser.parse(new Script());
+		}
+	}
+PARSER_END(Parser)
+
+SKIP:{" "}
+SKIP:{"\n"|"\r"|"\r\n"}
+TOKEN:{<DOT:".">}
+TOKEN:{<VAR:"var">}
+TOKEN:{<CON:"constant">}
+TOKEN:{<RULES:"rules">}
+TOKEN:{<AND:"and">}
+TOKEN:{<IF:"if">}
+TOKEN:{<THEN:"then">}
+TOKEN:{<INTEGER_NUMBER:(["0"-"9"])+>}
+TOKEN:{<DECIMAL_NUMBER:(["0"-"9"])+("."(["0"-"9"])+)?>}
+TOKEN:{<NAME: ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9"] )* >}
+TOKEN:{<STRING: "'"(["a"-"z","A"-"Z","_","-","?","#","*","%","_","/",",","\\",";","!","@","0"-"9"," "] )*"'" >}
+TOKEN:{<WHITESPACE: (" ")+>}
+TOKEN:{<SEMICOLON:";">}
+
+
+void parse(Script script):
+{}
+{
+	(var(script)|rule(script))*
+}
+void var(Script script):
+{}
+{
+	{VariableDeclaration v = new VariableDeclaration();}
+	<VAR> vartype(v)(<DOT>vartype(v))* 	varname(v) 
+	{script.add(v);}
+}
+void vartype(VariableDeclaration var):
+{
+	Token t;
+}
+{
+	t = <NAME>
+	{var.addToType(t.image);}
+}
+void varname(VariableDeclaration var):
+{
+	Token t;
+}
+{
+	t = <NAME>
+	{var.setName(t.image);}
+}
+void rule(Script script):
+{}
+{
+	{Rule r = new Rule();}	
+	<IF> condition(r) ( <AND> condition(r))* <THEN>  condition(r)
+	{script.add(r);}
+	
+}
+void condition(Rule r):
+{}
+{	
+	{Condition c = new Condition();}	
+	buildCondition(c)
+	{r.add(c);}
+}
+void buildCondition(Condition c):
+{}
+{	
+	LOOKAHEAD(2)
+	buildConditionType1(c) | buildConditionType2(c)
+}
+
+void buildConditionType1(Condition c):
+{}
+{
+	term(c)<DOT>predicate(c)"("terms(c)")"
+	{c.setPredicateType(PredicateType.JAVA);}
+}
+
+void buildConditionType2(Condition c):
+{}
+{
+	predicate(c)"("terms(c)")"
+	{c.setPredicateType(PredicateType.SIMPLE);}
+}
+void terms(TermContainer c):
+{}
+{
+	term(c)
+	(","term(c))*
+}
+void term(TermContainer c):
+{}
+{
+	LOOKAHEAD(3)
+	variableTerm(c) | complexTerm(c)
+}
+void variableTerm(TermContainer c) :
+{
+	Token t;
+}
+{
+	{VariableTerm v = new VariableTerm();}	
+	t = <NAME>
+	{v.setName(t.image);}
+	{c.add(v);}
+}
+void complexTerm(TermContainer c) :
+{
+}
+{
+	{ComplexTerm ct = new ComplexTerm();}	
+	function(ct)"("terms(ct)")"
+	{c.add(ct);}
+}
+void function(ComplexTerm ct) :
+{
+	Token t;
+}
+{	
+	t = <NAME>
+	{ct.setFunction(t.image);}	
+}
+void predicate(Condition c) :
+{
+	Token t;
+}
+{	
+	t = <NAME>
+	{c.setPredicate(t.image);}	
+}
