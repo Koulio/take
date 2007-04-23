@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 <A href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
+ * Copyright (C) 2006 <A href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,15 +16,38 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take;
 
+package nz.org.take.compiler.util;
+
+import java.util.HashMap;
+import java.util.Map;
 /**
- * Interface for terms.
+ * Utility class used to generate tmp variable names.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
+ * @version 0.1
  */
+public class TmpVarGenerator {
 
-public interface Term {
+	private Map<String,Integer> counters = new HashMap<String,Integer>();
 	
-	public Class getType();
+	public TmpVarGenerator() {
+		super();
+	}
+	
+	/**
+	 * Generate the next tmp var.
+	 * @return a string
+	 */
+	public String nextTmpVar(String name) {
+		Integer c = counters.get(name);
+		if (c==null) {
+			c = new Integer(0);
+			counters.put(name,c);
+		}
+		c = c+1;
+		counters.put(name,c);
+		return name+c;
+	}
+	
 
 }

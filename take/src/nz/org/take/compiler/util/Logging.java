@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 <A href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
+ * Copyright (C) 2006 <A href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,15 +16,16 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take;
+
+package nz.org.take.compiler.util;
+
+import org.apache.log4j.Category;
 
 /**
- * Interface for terms.
+ * Loggers used by the compiler.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-
-public interface Term {
-	
-	public Class getType();
+public interface Logging {
+	public static final Category LOGGER = Category.getInstance("mandarax-c");
 
 }

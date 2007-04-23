@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 <A href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
+ * Copyright (C) 2006 <A href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,15 +16,26 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take;
 
+package nz.org.take.rt;
+
+import java.util.Iterator;
 /**
- * Interface for terms.
+ * Resource iterator.
+ * This is an iterator that can be closed. The close operation releases resources, e.g.
+ * closes database connections.
+ * Note that close(), next() and hasNext() may throw unchecked exceptions DerivationException.
+ * @see DerivationException
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
+public interface ResourceIterator<T> extends Iterator<T>{
 
-public interface Term {
-	
-	public Class getType();
+
+	/**
+	 * Close the iterator.
+	 */
+	public void close();
+
+
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 <A href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
+ * Copyright (C) 2006 <A href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,15 +16,22 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take;
+package nz.org.take.compiler;
+
+import nz.org.take.compiler.util.Logging;
 
 /**
- * Interface for terms.
+ * Transforms generated sources.
+ * Can be used for AOP like code injection, or pretty printing.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
+ * @version 0.1
  */
-
-public interface Term {
-	
-	public Class getType();
-
+public interface SourceTransformation extends Logging {
+	/**
+	 * Transform the source code for the class.
+	 * @param loc the location
+	 * @param clazz the class name
+	 * @throws CompilerException
+	 */
+	public void transform(Location loc,String clazz) throws CompilerException ;
 }

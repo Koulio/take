@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 <A href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
+ * Copyright (C) 2006 <A href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,15 +16,22 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take;
+
+package nz.org.take.rt;
+
 
 /**
- * Interface for terms.
+ * Abstract iterator. remove is not supported by subclasses.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
+public abstract class AbstractIterator<T> implements ResourceIterator<T>{
 
-public interface Term {
 	
-	public Class getType();
-
+	/**
+	 * Remove the current element.
+	 * Not supported.
+	 */
+	public void remove() {
+		throw new UnsupportedOperationException();
+	}
 }

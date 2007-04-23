@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 <A href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
+ * Copyright (C) 2006 <A href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,15 +16,19 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take;
+package nz.org.take.compiler.reference;
 
 /**
- * Interface for terms.
+ * Represents a (term) slot of a predicate.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
+class Slot {
 
-public interface Term {
-	
-	public Class getType();
+	int position = -1;
+	String name = null;
+	String var = null;
+	String accessor = null;
+	String mutator = null;
+	String type = null;
 
 }
