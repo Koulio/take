@@ -28,6 +28,7 @@ import java.util.List;
 
 public class Rule implements Visitable {
 	private List<Condition> conditions = new ArrayList<Condition>();
+	private String id = null;
 
 	public List<Condition> getConditions() {
 		return conditions;
@@ -59,6 +60,14 @@ public class Rule implements Visitable {
 			b.append(" then ");
 		b.append(this.conditions.get(this.conditions.size()-1));
 		return b.toString();
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

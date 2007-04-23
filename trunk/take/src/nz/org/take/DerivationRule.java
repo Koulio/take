@@ -28,6 +28,7 @@ import java.util.List;
 
 public class DerivationRule implements Clause {
 	private Fact head = null;
+	private String id = null;
 	private List<Prerequisite> body = new ArrayList<Prerequisite>();
 	
 
@@ -53,6 +54,16 @@ public class DerivationRule implements Clause {
 
 	public void setBody(List<Prerequisite> body) {
 		this.body = body;
+	}
+
+
+	public String getId() {
+		return id;
+	}
+
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

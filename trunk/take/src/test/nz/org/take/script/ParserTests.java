@@ -79,12 +79,13 @@ public class ParserTests extends TestCase {
 	}
 	public void test10() throws Exception {
 		String input = 
-			"if p(x,y) then q(y,x)\n";
+			"rule1: if p(x,y) then q(y,x)\n";
 		Script script = parse(input);
 		assertEquals(1,script.getElements().size());
 		Rule r = this.getRuleAt(script,0);
 		Condition prereq1= r.getConditions().get(0);
 		Condition concl = r.getConditions().get(1);
+		assertEquals("rule1",r.getId());
 		assertEquals("p",prereq1.getPredicate());
 		assertEquals("q",concl.getPredicate());
 		assertEquals(new VariableTerm("x"),prereq1.getTerms().get(0));
