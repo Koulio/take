@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 <A href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
+ * Copyright (C) 2006 <A href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,15 +16,38 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take;
+package nz.org.take.rt;
 
 /**
- * Interface for terms.
+ * Empty iterator. Uses the singleton pattern.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
+ * @param <T> the type of the iterated element
  */
 
-public interface Term {
+public class EmptyIterator extends AbstractIterator {
+
+	/**
+	 * Return the default instance.
+	 * @return the instance
+	 */
+	public static ResourceIterator DEFAULT = new EmptyIterator() ; 
 	
-	public Class getType();
+	private EmptyIterator() {
+		super();
+	}
+
+	public boolean hasNext() {
+		return false;
+	}
+
+	public Object next() {
+		throw new RuntimeException("this is an empty iterator");
+	}
+
+	public void close() {
+		// nothing to do here
+	}
+
+
 
 }

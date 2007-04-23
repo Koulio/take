@@ -19,7 +19,8 @@
 
 package nz.org.take;
 
-import java.util.Iterator;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Interface for containers managing knowledge.
@@ -39,13 +40,18 @@ public interface KnowledgeBase {
 	 * @param p the predicate
 	 * @return knowledge elements
 	 */
-	public Iterator<KnowledgeElement> getElements(Predicate p) ;
+	public List<KnowledgeElement> getElements(Predicate p) ;
 	
 	/**
 	 * Get all elements.
 	 * @return knowledge elements
 	 */
-	public Iterator<KnowledgeElement> getElements() ;
+	public List<KnowledgeElement> getElements() ;
+	/**
+	 * Get all predicates for which knowledge elements are available.
+	 * @return predicates
+	 */
+	public Collection<Predicate> getSupportedPredicates() ;
 	/**
 	 * Add an element.
 	 * @param e an element

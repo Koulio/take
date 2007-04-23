@@ -16,15 +16,20 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take;
+package nz.org.take.rt;
 
 /**
- * Interface for terms.
+ * Interface for derivation listener.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
+ * @param <T> the type of the iterated elements
  */
 
-public interface Term {
-	
-	public Class getType();
-
+public interface DerivationListener {
+	/**
+	 * Notify the listener.  
+	 * @param ruleRef
+	 * @param derivationDepth
+	 * @param derivationCount
+	 */
+	public void step(String ruleRef,int derivationDepth,int derivationCount) ;
 }

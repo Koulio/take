@@ -39,5 +39,8 @@ public class ComplexTerm implements Term {
 	public void setTerms(Term[] terms) {
 		this.terms = terms;
 	}
+	public Class getType() {
+		return function==null?null:function.getReturnType();
+	}
 
 }
