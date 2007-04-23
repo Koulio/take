@@ -39,6 +39,7 @@ public interface ParserConstants {
     "<STRING>",
     "<WHITESPACE>",
     "\";\"",
+    "\":\"",
     "\"(\"",
     "\")\"",
     "\",\"",

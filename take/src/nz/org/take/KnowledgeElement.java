@@ -30,5 +30,8 @@ public interface KnowledgeElement {
 	 * @return a predicate
 	 */
 	public Predicate getPredicate() ;
-	
+	/**
+	 * Get the unique ID.
+	 */
+	public String getId();
 }

@@ -13,7 +13,7 @@
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case VAR:
-      case IF:
+      case NAME:
         ;
         break;
       default:
@@ -24,7 +24,7 @@
       case VAR:
         var(script);
         break;
-      case IF:
+      case NAME:
         rule(script);
         break;
       default:
@@ -70,6 +70,8 @@
 
   static final public void rule(Script script) throws ParseException {
          Rule r = new Rule();
+    id(r);
+    jj_consume_token(18);
     jj_consume_token(IF);
     condition(r);
     label_3:
@@ -88,6 +90,12 @@
     jj_consume_token(THEN);
     condition(r);
          script.add(r);
+  }
+
+  static final public void id(Rule r) throws ParseException {
+        Token t;
+    t = jj_consume_token(NAME);
+         r.setId(t.image);
   }
 
   static final public void condition(Rule r) throws ParseException {
@@ -116,17 +124,17 @@
     term(c);
     jj_consume_token(DOT);
     predicate(c);
-    jj_consume_token(18);
-    terms(c);
     jj_consume_token(19);
+    terms(c);
+    jj_consume_token(20);
          c.setPredicateType(PredicateType.JAVA);
   }
 
   static final public void buildConditionType2(Condition c) throws ParseException {
     predicate(c);
-    jj_consume_token(18);
-    terms(c);
     jj_consume_token(19);
+    terms(c);
+    jj_consume_token(20);
          c.setPredicateType(PredicateType.SIMPLE);
   }
 
@@ -135,14 +143,14 @@
     label_4:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 20:
+      case 21:
         ;
         break;
       default:
         jj_la1[5] = jj_gen;
         break label_4;
       }
-      jj_consume_token(20);
+      jj_consume_token(21);
       term(c);
     }
   }
@@ -174,9 +182,9 @@
   static final public void complexTerm(TermContainer c) throws ParseException {
          ComplexTerm ct = new ComplexTerm();
     function(ct);
-    jj_consume_token(18);
-    terms(ct);
     jj_consume_token(19);
+    terms(ct);
+    jj_consume_token(20);
          c.add(ct);
   }
 
@@ -206,6 +214,27 @@
     finally { jj_save(1, xla); }
   }
 
+  static final private boolean jj_3R_8() {
+    if (jj_3R_9()) return true;
+    return false;
+  }
+
+  static final private boolean jj_3R_6() {
+    if (jj_scan_token(NAME)) return true;
+    return false;
+  }
+
+  static final private boolean jj_3_1() {
+    if (jj_3R_5()) return true;
+    return false;
+  }
+
+  static final private boolean jj_3R_9() {
+    if (jj_3R_10()) return true;
+    if (jj_scan_token(19)) return true;
+    return false;
+  }
+
   static final private boolean jj_3R_10() {
     if (jj_scan_token(NAME)) return true;
     return false;
@@ -232,27 +261,6 @@
     return false;
   }
 
-  static final private boolean jj_3R_8() {
-    if (jj_3R_9()) return true;
-    return false;
-  }
-
-  static final private boolean jj_3R_6() {
-    if (jj_scan_token(NAME)) return true;
-    return false;
-  }
-
-  static final private boolean jj_3_1() {
-    if (jj_3R_5()) return true;
-    return false;
-  }
-
-  static final private boolean jj_3R_9() {
-    if (jj_3R_10()) return true;
-    if (jj_scan_token(18)) return true;
-    return false;
-  }
-
   static private boolean jj_initialized_once = false;
   static public ParserTokenManager token_source;
   static SimpleCharStream jj_input_stream;
@@ -269,7 +277,7 @@
       jj_la1_0();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x440,0x440,0x20,0x200,0x4000,0x100000,0x4000,};
+      jj_la1_0 = new int[] {0x4040,0x4040,0x20,0x200,0x4000,0x200000,0x4000,};
    }
   static final private JJCalls[] jj_2_rtns = new JJCalls[2];
   static private boolean jj_rescan = false;
@@ -467,8 +475,8 @@
 
   static public ParseException generateParseException() {
     jj_expentries.removeAllElements();
-    boolean[] la1tokens = new boolean[21];
-    for (int i = 0; i < 21; i++) {
+    boolean[] la1tokens = new boolean[22];
+    for (int i = 0; i < 22; i++) {
       la1tokens[i] = false;
     }
     if (jj_kind >= 0) {
@@ -484,7 +492,7 @@
         }
       }
     }
-    for (int i = 0; i < 21; i++) {
+    for (int i = 0; i < 22; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

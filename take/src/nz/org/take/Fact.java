@@ -26,6 +26,7 @@ package nz.org.take;
 public class Fact implements Clause {
 	
 	private Predicate predicate = null;
+	private String id = null;
 	private Term[] terms = null;
 
 	public Predicate getPredicate() {
@@ -42,6 +43,14 @@ public class Fact implements Clause {
 
 	public void setTerms(Term[] terms) {
 		this.terms = terms;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

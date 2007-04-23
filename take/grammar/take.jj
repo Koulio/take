@@ -63,9 +63,17 @@ void rule(Script script):
 {}
 {
 	{Rule r = new Rule();}	
-	<IF> condition(r) ( <AND> condition(r))* <THEN>  condition(r)
+	id(r)":"<IF> condition(r) ( <AND> condition(r))* <THEN>  condition(r)
 	{script.add(r);}
 	
+}
+void id(Rule r):
+{
+	Token t;
+}
+{
+	t = <NAME>
+	{r.setId(t.image);}
 }
 void condition(Rule r):
 {}
