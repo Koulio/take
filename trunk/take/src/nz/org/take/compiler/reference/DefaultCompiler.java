@@ -485,13 +485,12 @@ public class DefaultCompiler implements Compiler, Logging {
 		this.removeFromAgenda();
 	}
 
-	private Object getRuleRef(ClauseSet cs) {
+	private Object getRuleRef(KnowledgeElement cs) {
 		return cs.toString();
 	}
 
 	// create private method
-	private void createMethod(PrintWriter out, Query q, Slot[] islots,
-			Slot[] oslots, ClauseSet cs, int i) throws CompilerException {
+	private void createMethod(PrintWriter out, Query q, Slot[] islots,Slot[] oslots, KnowledgeElement cs, int i) throws CompilerException {
 		Predicate p = q.getPredicate();
 		printMethodComment(out, "Method generated for query " + p, islots,
 				"an interator for instances of " + getClassName(p));
@@ -520,14 +519,14 @@ public class DefaultCompiler implements Compiler, Logging {
 			createBody(out, q, islots, oslots, (DerivationRule) cs);
 		} else {
 			out.print("// this clause set type is not yet supported: ");
-			out.println(cs.getProperties());
+			out.println(cs.getClass());
 
 		}
 
 		out.println("}");
 	}
 
-	private void printLogStatement(PrintWriter out,ClauseSet cs) {
+	private void printLogStatement(PrintWriter out,KnowledgeElement cs) {
 		out.print(this.getVarName4DerivationController());
 		out.print(".log(\"");
 		out.print(this.getRuleRef(cs));
@@ -895,7 +894,7 @@ public class DefaultCompiler implements Compiler, Logging {
 	 * @return a class name
 	 */
 	private String getClassName(Fact f) {
-		return this.getNameGenerator().getClassName((Predicate) f.getKey());
+		return this.getNameGenerator().getClassName(f.getPredicate());
 	}
 
 	/**
@@ -903,8 +902,7 @@ public class DefaultCompiler implements Compiler, Logging {
 	 * @param loc the location
 	 * @param qName the full class name
 	 */
-	private void endorseClazz(Location loc, String fullClassName)
-			throws CompilerException {
+	private void endorseClazz(Location loc, String fullClassName)throws CompilerException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Class created: " + fullClassName);
 		}
