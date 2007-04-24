@@ -75,9 +75,17 @@ public class KnowledgeBaseReader {
 				variables.put(v.getName(),v);
 			}
 			else if (part instanceof Rule) {
-				DerivationRule r = buildRule(kb,variables,(Rule)part);
-				checkId(r,ids);
-				kb.add(r);
+				Rule rule = (Rule)part;
+				if (rule.getConditions().size()==1) {
+					Fact f = buildFact(variables,rule.getConditions().get(0));
+					checkId(f,ids);
+					kb.add(f);					
+				}
+				else {					
+					DerivationRule r = buildRule(variables,(Rule)part);
+					checkId(r,ids);
+					kb.add(r);
+				}
 			}
 		}
 		return kb;
@@ -103,7 +111,7 @@ public class KnowledgeBaseReader {
 			throw new ScriptSemanticsException("Can not load the following type referenced in script: " + vd.getType(),x);
 		}		
 	}
-	private DerivationRule buildRule(KnowledgeBase kb,Map<String,Variable> variables, Rule r) throws ScriptException {
+	private DerivationRule buildRule(Map<String,Variable> variables, Rule r) throws ScriptException {
 		DerivationRule rule = new DerivationRule();
 		rule.setId(r.getId());
 		List<Prerequisite> body = new ArrayList<Prerequisite>();

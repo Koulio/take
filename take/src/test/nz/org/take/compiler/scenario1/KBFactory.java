@@ -150,45 +150,24 @@ public class KBFactory {
 	 * Build the knowledge base.
 	 * @return a knowledge base
 	 */
-	protected KnowledgeBase buildKB() {
-		kb = new DefaultKnowledgeBase();
-		// add rules
-		DerivationRule rule1 = new /**
-		 * Knowledge iterator. The additional close method can be used to release resources,
-		 * e.g. database connections.
-		 * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
-		 */ lfs.rule(
-				lfs.fact(predicate_is_father, lfs.variable("person 1"), lfs.variable("person 2")), 
-				lfs.fact(predicate_is_son, lfs.variable("person 2"), lfs.variable("person 1")));
-		kb.add(rule1);
-		Rule rule2 =
-			lfs.rule(
-				lfs.fact(predicate_is_father, lfs.variable("grandchild"), lfs.variable("father")),
-				lfs.fact(predicate_is_father, lfs.variable("father"), lfs.variable("grandfather")),
-				lfs.fact(predicate_is_grandfather, lfs.variable("grandchild"), lfs.variable("grandfather")));
-		kb.add(rule2);
-//		Rule rule3 =
-//			lfs.rule(
-//				lfs.fact(predicate_is_father, lfs.variable("person 1"), lfs.variable("person 3")),
-//				lfs.fact(predicate_is_father, lfs.variable("person 2"), lfs.variable("person 3")),
-//				lfs.fact(org.mandarax.lib.text.StringArithmetic.NOT_EQUAL, lfs.variable("person 1"), lfs.variable("person 2")),
-//				lfs.fact(predicate_is_brother, lfs.variable("person 1"), lfs.variable("person 2")));
-//		kb.add(rule3);
-//		Rule rule4 =
-//			lfs.rule(
-//				lfs.fact(predicate_is_father, lfs.variable("person 1"), lfs.variable("person 2")),
-//				lfs.fact(predicate_is_brother, lfs.variable("person 2"), lfs.variable("person 3")),
-//				lfs.fact(predicate_is_oncle, lfs.variable("person 1"), lfs.variable("person 3")));
-//		kb.add(rule4);
-		
-		kb.add(lfs.fact(predicate_is_father, "Frank", "Lutz"));
-		kb.add(lfs.fact(predicate_is_father, "Guenther", "Otto"));
-		kb.add(lfs.fact(predicate_is_father, "Jens", "Klaus"));
-		kb.add(lfs.fact(predicate_is_father, "Lutz", "Otto"));
-		kb.add(lfs.fact(predicate_is_father, "Klaus", "Otto"));		
-		kb.add(lfs.fact(predicate_is_father, "Max", "Jens"));
-		kb.add(lfs.fact(predicate_is_father, "Ralf", "Lutz"));
-		kb.add(lfs.fact(predicate_is_father, "Werner", "Otto"));
+	protected KnowledgeBase buildKB() =
+		String script =
+			"var java.lang.String person1\n"+
+			"var java.lang.String person2\n"+
+			"var java.lang.String person3\n"+
+			"var java.lang.String grandchild\n"+
+			"var java.lang.String father\n"+
+			"var java.lang.String grandfather\n"+
+			"rule1: if father(person1,person2) then son(person2,person1)\n"+
+			"rule2: if father(grandchild,father) and father(father,grandfather) then grandfather(grandchild,grandfather)\n"+
+			"fact1: father, \"Frank\",\"Lutz\")\n"+
+			"fact2: father, \"Guenther\", \"Otto\"))\n"+
+			"fact3: father, \"Jens\", \"Klaus\"))\n"+
+			"fact41: father,\"Lutz\", \"Otto\"))\n"+
+			"fact5: father, \"Klaus\", \"Otto\"))\n"+		
+			"fact6: father, \"Max\",\"Jens\"))\n"+
+			"fact7: father,\"Ralf\", \"Lutz\"))\n"+
+			"fact8: father,\"Werner\", \"Otto\"))\n";
 
 		return kb;
 	}

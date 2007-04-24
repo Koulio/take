@@ -19,24 +19,39 @@
 package nz.org.take.script;
 
 /**
- * Interface that can be used to explore the script structure.
+ * constant term.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public interface ScriptVisitor {
+public class ConstantTerm implements Term {
 	
-	public boolean visit(Script node);
-	public void endVisit(Script node);
-	public boolean visit(VariableDeclaration node);
-	public void endVisit(VariableDeclaration node);
-	public boolean visit(Rule node);
-	public void endVisit(Rule node);
-	public boolean visit(Condition node);
-	public void endVisit(Condition node);
-	public boolean visit(ComplexTerm node);
-	public void endVisit(ComplexTerm node);
-	public boolean visit(VariableTerm node);
-	public void endVisit(VariableTerm node);
-	public boolean visit(ConstantTerm node);
-	public void endVisit(ConstantTerm node);
+	private String value = null;
+	public String getValue() {
+		return value;
+	}
+
+
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+
+
+	public ConstantTerm() {
+		super();
+	}
+	
+
+	
+	public void accept(ScriptVisitor visitor) {
+		visitor.visit(this);
+		visitor.endVisit(this);
+	}
+	
+	public String toString() {
+		return value;
+	}
+
+
 }
