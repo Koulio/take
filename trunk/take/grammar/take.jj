@@ -18,8 +18,6 @@ SKIP:{" "}
 SKIP:{"\n"|"\r"|"\r\n"}
 TOKEN:{<DOT:".">}
 TOKEN:{<VAR:"var">}
-TOKEN:{<CON:"constant">}
-TOKEN:{<RULES:"rules">}
 TOKEN:{<AND:"and">}
 TOKEN:{<IF:"if">}
 TOKEN:{<THEN:"then">}
@@ -27,6 +25,7 @@ TOKEN:{<INTEGER_NUMBER:(["0"-"9"])+>}
 TOKEN:{<DECIMAL_NUMBER:(["0"-"9"])+("."(["0"-"9"])+)?>}
 TOKEN:{<NAME: ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9"] )* >}
 TOKEN:{<STRING: "'"(["a"-"z","A"-"Z","_","-","?","#","*","%","_","/",",","\\",";","!","@","0"-"9"," "] )*"'" >}
+TOKEN:{<STRING_LITERAL:"\"" ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9"] )* "\"">}
 TOKEN:{<WHITESPACE: (" ")+>}
 TOKEN:{<SEMICOLON:";">}
 
@@ -63,7 +62,7 @@ void rule(Script script):
 {}
 {
 	{Rule r = new Rule();}	
-	id(r)":"<IF> condition(r) ( <AND> condition(r))* <THEN>  condition(r)
+	id(r)":"[<IF> condition(r) ( <AND> condition(r))* <THEN>]  condition(r)
 	{script.add(r);}
 	
 }
@@ -112,7 +111,7 @@ void term(TermContainer c):
 {}
 {
 	LOOKAHEAD(3)
-	variableTerm(c) | complexTerm(c)
+	variableTerm(c) | complexTerm(c) | stringLiteral(c)
 }
 void variableTerm(TermContainer c) :
 {
@@ -122,6 +121,16 @@ void variableTerm(TermContainer c) :
 	{VariableTerm v = new VariableTerm();}	
 	t = <NAME>
 	{v.setName(t.image);}
+	{c.add(v);}
+}
+void stringLiteral(TermContainer c) :
+{
+	Token t;
+}
+{
+	{ConstantTerm v = new ConstantTerm();}	
+	t = <STRING_LITERAL>
+	{v.setValue(t.image.substring(1,t.image.length()-1));}
 	{c.add(v);}
 }
 void complexTerm(TermContainer c) :

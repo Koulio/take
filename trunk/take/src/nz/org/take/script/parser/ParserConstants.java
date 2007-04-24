@@ -6,17 +6,16 @@ public interface ParserConstants {
   int EOF = 0;
   int DOT = 5;
   int VAR = 6;
-  int CON = 7;
-  int RULES = 8;
-  int AND = 9;
-  int IF = 10;
-  int THEN = 11;
-  int INTEGER_NUMBER = 12;
-  int DECIMAL_NUMBER = 13;
-  int NAME = 14;
-  int STRING = 15;
-  int WHITESPACE = 16;
-  int SEMICOLON = 17;
+  int AND = 7;
+  int IF = 8;
+  int THEN = 9;
+  int INTEGER_NUMBER = 10;
+  int DECIMAL_NUMBER = 11;
+  int NAME = 12;
+  int STRING = 13;
+  int STRING_LITERAL = 14;
+  int WHITESPACE = 15;
+  int SEMICOLON = 16;
 
   int DEFAULT = 0;
 
@@ -28,8 +27,6 @@ public interface ParserConstants {
     "\"\\r\\n\"",
     "\".\"",
     "\"var\"",
-    "\"constant\"",
-    "\"rules\"",
     "\"and\"",
     "\"if\"",
     "\"then\"",
@@ -37,6 +34,7 @@ public interface ParserConstants {
     "<DECIMAL_NUMBER>",
     "<NAME>",
     "<STRING>",
+    "<STRING_LITERAL>",
     "<WHITESPACE>",
     "\";\"",
     "\":\"",

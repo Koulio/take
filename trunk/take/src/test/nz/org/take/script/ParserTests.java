@@ -90,15 +90,53 @@ public class ParserTests extends TestCase {
 		assertEquals("q",concl.getPredicate());
 		assertEquals(new VariableTerm("x"),prereq1.getTerms().get(0));
 	}
-	public void testx() throws Exception {
+	public void test11() throws Exception {
 		String input = 
-			"var java.lang.String x\n"+
-			"var int y\n"+
-			"if p(x,y) then p(y,x)\n"+
-			"if x.equals(y) then p(x,y)\n";
+			"rule2: if x.equals(y) then q(y,x)\n";
 		Script script = parse(input);
-		assertEquals(4,script.getElements().size());
-		
+		Rule r = this.getRuleAt(script,0);
+		Condition prereq1= r.getConditions().get(0);
+		Condition concl = r.getConditions().get(1);
+		assertEquals("rule2",r.getId());
+		assertEquals("equals",prereq1.getPredicate());
+		assertEquals(PredicateType.JAVA,prereq1.getPredicateType());
+		assertEquals("q",concl.getPredicate());
+		assertEquals(PredicateType.SIMPLE,concl.getPredicateType());
+		assertEquals(new VariableTerm("x"),prereq1.getTerms().get(0));		
 	}
-
+	public void test12() throws Exception {
+		String input = 
+			"rule3: if p1(x,y) and p2(x,y) then p3(y,x)\n";
+		Script script = parse(input);
+		Rule r = this.getRuleAt(script,0);
+		Condition prereq1= r.getConditions().get(0);
+		Condition prereq2= r.getConditions().get(1);
+		Condition concl = r.getConditions().get(2);
+		assertEquals("rule3",r.getId());
+		assertEquals("p1",prereq1.getPredicate());
+		assertEquals("p2",prereq2.getPredicate());
+		assertEquals("p3",concl.getPredicate());	
+	}
+	public void test13() throws Exception {
+		String input = 
+			"fact1: p(x,y)\n";
+		Script script = parse(input);
+		Rule r = this.getRuleAt(script,0);
+		Condition f = r.getConditions().get(0);
+		assertEquals(PredicateType.SIMPLE,f.getPredicateType());
+		assertEquals("fact1",r.getId());
+		assertEquals("p",f.getPredicate());
+	}
+	public void test14() throws Exception {
+		String input = 
+			"fact1: p(\"Max\",y)\n";
+		Script script = parse(input);
+		Rule r = this.getRuleAt(script,0);
+		Condition f = r.getConditions().get(0);
+		Term t1 = f.getTerms().get(0);
+		Term t2 = f.getTerms().get(1);
+		assertTrue(t1 instanceof ConstantTerm);
+		assertEquals("Max",((ConstantTerm)t1).getValue());
+		assertTrue(t2 instanceof VariableTerm);
+	}
 }
