@@ -28,8 +28,8 @@ TOKEN:{<INTEGER_NUMBER:(["0"-"9"])+>}
 TOKEN:{<DECIMAL_NUMBER:(["0"-"9"])+("."(["0"-"9"])+)?>}
 TOKEN:{<LABEL: ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9"] )*":" >}
 TOKEN:{<NAME: ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9"] )* >}
-TOKEN:{<STRING: "'"(["a"-"z","A"-"Z","_","-","?","#","*","%","_","/",",","\\",";","!","@","0"-"9"," "] )*"'" >}
-TOKEN:{<STRING_LITERAL:"\"" ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9"] )* "\"">}
+TOKEN:{<COMMENT: "//"(["a"-"z","A"-"Z","_","-","?","#","*","%","_","/",",","\\",";","!","@","0"-"9"," "] )* >}
+TOKEN:{<STRING_LITERAL:"\"" (["a"-"z","A"-"Z","_","-","?","#","*","%","_","/",",","\\",";","!","@","0"-"9"," "] )* "\"">}
 TOKEN:{<WHITESPACE: (" ")+>}
 TOKEN:{<SEMICOLON:";">}
 
@@ -37,7 +37,16 @@ TOKEN:{<SEMICOLON:";">}
 void parse(Script script):
 {}
 {
-	(var(script)|query(script)|rule(script))*
+	(var(script)|comment(script)|query(script)|rule(script))*
+}
+void comment(Script script):
+{
+	Token t;}
+{
+	{Comment c = new Comment();}
+	t=<COMMENT>
+	{c.setText(t.image.substring(2));}
+	{script.add(c);}
 }
 void query(Script script):
 {}

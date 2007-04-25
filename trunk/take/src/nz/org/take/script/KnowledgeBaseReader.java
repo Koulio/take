@@ -83,7 +83,7 @@ public class KnowledgeBaseReader {
 				for (Variable v:vars)
 					variables.put(v.getName(),v);
 			}
-			if (part instanceof QuerySpec) {
+			else if (part instanceof QuerySpec) {
 				// must be build later once we know the predicates
 				querySpecs.add((QuerySpec)part); 
 			}
@@ -99,9 +99,9 @@ public class KnowledgeBaseReader {
 					DerivationRule r = buildRule(variables,predicatesByName,(Rule)part);
 					checkId(r,ids);
 					kb.add(r);
-				}
-				
+				}				
 			}
+			// ignore everything else, in particular comments
 		}
 		// now do the predicates
 		for (QuerySpec q:querySpecs) {

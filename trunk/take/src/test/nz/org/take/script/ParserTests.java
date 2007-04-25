@@ -42,6 +42,9 @@ public class ParserTests extends TestCase {
 	private VariableDeclaration getVarDecAt(Script script,int i) {
 		return (VariableDeclaration)script.getElements().get(i);
 	}
+	private Comment getCommentAt(Script script,int i) {
+		return (Comment)script.getElements().get(i);
+	}
 	private Rule getRuleAt(Script script,int i) {
 		return (Rule)script.getElements().get(i);
 	}
@@ -169,5 +172,23 @@ public class ParserTests extends TestCase {
 		assertEquals(2,q.getIoSpec().size());
 		assertTrue(q.getIoSpec().get(0));
 		assertFalse(q.getIoSpec().get(1));
+	}
+	public void test30() throws Exception {
+		String input = 
+			"// variables\n"+
+			"var int x,y\n"+
+			"var java.lang.String a,b,c\n"+
+			"//queries\n"+
+			"query p(in,out)\n"+
+			"//rules and facts\n"+
+			"fact1: p(\"Max\",y)\n";
+		Script script = parse(input);
+		assertEquals(7,script.getElements().size());
+		Comment c1 = this.getCommentAt(script,0);
+		Comment c2 = this.getCommentAt(script,3);
+		Comment c3 = this.getCommentAt(script,5);
+		assertEquals("variables",c1.getText().trim());
+		assertEquals("queries",c2.getText().trim());
+		assertEquals("rules and facts",c3.getText().trim());
 	}
 }

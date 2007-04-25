@@ -1,3 +1,5 @@
+// script for test scenario 1
+// @author jens dietrich, 2007
 var java.lang.String person1,person2,person3
 var java.lang.String grandchild,father,grandfather
 query is_father_of(in,out)

@@ -29,7 +29,9 @@ import java.util.List;
 public class Script implements Visitable {
 	private List elements = new ArrayList();
 
-
+	public void add(Comment c) {
+		this.elements.add(c);
+	}
 	public void add(VariableDeclaration v) {
 		this.elements.add(v);
 	}

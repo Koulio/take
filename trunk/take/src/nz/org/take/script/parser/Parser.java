@@ -15,6 +15,7 @@
       case VAR:
       case QUERY:
       case LABEL:
+      case COMMENT:
         ;
         break;
       default:
@@ -24,6 +25,9 @@
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case VAR:
         var(script);
+        break;
+      case COMMENT:
+        comment(script);
         break;
       case QUERY:
         query(script);
@@ -37,6 +41,14 @@
         throw new ParseException();
       }
     }
+  }
+
+  static final public void comment(Script script) throws ParseException {
+        Token t;
+         Comment c = new Comment();
+    t = jj_consume_token(COMMENT);
+         c.setText(t.image.substring(2));
+         script.add(c);
   }
 
   static final public void query(Script script) throws ParseException {
@@ -305,31 +317,6 @@
     finally { jj_save(1, xla); }
   }
 
-  static final private boolean jj_3_1() {
-    if (jj_3R_7()) return true;
-    return false;
-  }
-
-  static final private boolean jj_3R_10() {
-    if (jj_3R_12()) return true;
-    return false;
-  }
-
-  static final private boolean jj_3R_13() {
-    if (jj_scan_token(STRING_LITERAL)) return true;
-    return false;
-  }
-
-  static final private boolean jj_3R_14() {
-    if (jj_scan_token(NAME)) return true;
-    return false;
-  }
-
-  static final private boolean jj_3R_11() {
-    if (jj_3R_13()) return true;
-    return false;
-  }
-
   static final private boolean jj_3R_8() {
     if (jj_scan_token(NAME)) return true;
     return false;
@@ -365,6 +352,31 @@
     return false;
   }
 
+  static final private boolean jj_3_1() {
+    if (jj_3R_7()) return true;
+    return false;
+  }
+
+  static final private boolean jj_3R_10() {
+    if (jj_3R_12()) return true;
+    return false;
+  }
+
+  static final private boolean jj_3R_13() {
+    if (jj_scan_token(STRING_LITERAL)) return true;
+    return false;
+  }
+
+  static final private boolean jj_3R_14() {
+    if (jj_scan_token(NAME)) return true;
+    return false;
+  }
+
+  static final private boolean jj_3R_11() {
+    if (jj_3R_13()) return true;
+    return false;
+  }
+
   static private boolean jj_initialized_once = false;
   static public ParserTokenManager token_source;
   static SimpleCharStream jj_input_stream;
@@ -381,7 +393,7 @@
       jj_la1_0();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x8440,0x8440,0x400000,0x1800,0x20,0x400000,0x80,0x100,0x10000,0x400000,0x50000,};
+      jj_la1_0 = new int[] {0x28440,0x28440,0x400000,0x1800,0x20,0x400000,0x80,0x100,0x10000,0x400000,0x50000,};
    }
   static final private JJCalls[] jj_2_rtns = new JJCalls[2];
   static private boolean jj_rescan = false;

@@ -18,27 +18,27 @@
 
 package nz.org.take.script;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 /**
- * Interface that can be used to explore the script structure.
+ * Comment.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public interface ScriptVisitor {
+public class Comment  implements Visitable {
+
+	private String text = null;
+	public void accept(ScriptVisitor visitor) {
+		visitor.visit(this);
+		visitor.endVisit(this);
+	}
+	public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
 	
-	public boolean visit(Script node);
-	public void endVisit(Script node);
-	public boolean visit(VariableDeclaration node);
-	public void endVisit(VariableDeclaration node);
-	public boolean visit(Rule node);
-	public void endVisit(Rule node);
-	public boolean visit(Condition node);
-	public void endVisit(Condition node);
-	public boolean visit(ComplexTerm node);
-	public void endVisit(ComplexTerm node);
-	public boolean visit(VariableTerm node);
-	public void endVisit(VariableTerm node);
-	public boolean visit(ConstantTerm node);
-	public void endVisit(ConstantTerm node);
-	public boolean visit(Comment node);
-	public void endVisit(Comment node);
 }
