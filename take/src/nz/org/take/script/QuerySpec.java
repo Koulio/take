@@ -22,36 +22,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The script itself.
+ * spec for queries
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Script implements Visitable {
-	private List elements = new ArrayList();
-
-
-	public void add(VariableDeclaration v) {
-		this.elements.add(v);
+public class QuerySpec {
+	private String predicate = null;
+	private List<Boolean> ioSpec = new ArrayList<Boolean>();
+	public String getPredicate() {
+		return predicate;
 	}
-	public void add(Rule r) {
-		this.elements.add(r);
+	public void setPredicate(String predicate) {
+		this.predicate = predicate;
 	}
-	public void add(QuerySpec q) {
-		this.elements.add(q);
+	public List<Boolean> getIoSpec() {
+		return ioSpec;
 	}
-	public void accept(ScriptVisitor visitor) {
-		if (visitor.visit(this)) {
-			for (Object o:elements){
-				if (o instanceof VariableDeclaration)
-					((VariableDeclaration)o).accept(visitor);
-				else if (o instanceof Rule)
-					((Rule)o).accept(visitor);
-			}
-		}
-		visitor.endVisit(this);
+	public void addToIOSpec(boolean io) {
+		this.ioSpec.add(io);
 	}
-	public List getElements() {
-		return elements;
-	}
-
 }

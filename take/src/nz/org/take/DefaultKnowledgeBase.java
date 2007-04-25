@@ -19,6 +19,8 @@
 package nz.org.take;
 
 import java.util.*;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.ListUtils;
 
 /**
@@ -29,6 +31,7 @@ import org.apache.commons.collections.ListUtils;
 
 public class DefaultKnowledgeBase implements KnowledgeBase {
 	private List<KnowledgeElement> elements = new ArrayList<KnowledgeElement>();
+	private List<Query> queries = new ArrayList<Query>();
 	private Map<String,KnowledgeElement> elementsById = new HashMap<String,KnowledgeElement>();
 	/**
 	 * Retrieve knowledge by id.
@@ -50,7 +53,7 @@ public class DefaultKnowledgeBase implements KnowledgeBase {
 				return p.equals(e.getPredicate());
 			}
 		};
-		return (List<KnowledgeElement>)ListUtils.predicatedList(this.elements,filter);
+		return (List<KnowledgeElement>)CollectionUtils.select(this.elements,filter);
 	}
 	
 	/**
@@ -89,5 +92,26 @@ public class DefaultKnowledgeBase implements KnowledgeBase {
 		result = result && (null!=this.elementsById.remove(e.getId()));
 		return result;
 	}
-	
+	/**
+	 * Add a query.
+	 * @param q a query
+	 */
+	public synchronized void add(Query q) {
+		this.queries.add(q);
+	}
+	/**
+	 * Remove  a query, return true if this succeeded.
+	 * @param q  a query
+	 * @return a boolean
+	 */
+	public synchronized  boolean remove(Query q) {
+		return this.queries.remove(q);
+	}
+	/**
+	 * Get all queries.
+	 * @return queries
+	 */
+	public List<Query> getQueries() {
+		return (List<Query>)ListUtils.unmodifiableList(this.queries) ;
+	}
 }

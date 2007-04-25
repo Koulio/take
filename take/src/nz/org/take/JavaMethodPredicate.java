@@ -23,20 +23,13 @@ package nz.org.take;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class JavaMethodPredicate implements Predicate {
+public class JavaMethodPredicate extends AbstractPredicate {
 
 	private java.lang.reflect.Method method = null;
-	private String[] slotNames;
 	public String getName() {
 		return method==null?null:method.getName();
 	}
 
-	public String[] getSlotNames() {
-		return slotNames;
-	}
-	public void setSlotNames(String[] slotNames) {
-		this.slotNames = slotNames;
-	}
 	public Class[] getSlotTypes() {
 		Class[] types = new Class[method.getParameterTypes().length+1];
 		types[0]=method.getDeclaringClass();
@@ -49,6 +42,31 @@ public class JavaMethodPredicate implements Predicate {
 	}
 	public void setMethod(java.lang.reflect.Method method) {
 		this.method = method;
+	}
+
+	@Override
+	public int hashCode() {
+		final int PRIME = 31;
+		int result = 1;
+		result = PRIME * result + ((method == null) ? 0 : method.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final JavaMethodPredicate other = (JavaMethodPredicate) obj;
+		if (method == null) {
+			if (other.method != null)
+				return false;
+		} else if (!method.equals(other.method))
+			return false;
+		return true;
 	}
 
 }

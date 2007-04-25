@@ -26,6 +26,7 @@ package nz.org.take.script;
 public class ConstantTerm implements Term {
 	
 	private String value = null;
+	private String type = null;
 	public String getValue() {
 		return value;
 	}
@@ -51,6 +52,18 @@ public class ConstantTerm implements Term {
 	
 	public String toString() {
 		return value;
+	}
+
+
+
+	public String getType() {
+		return type;
+	}
+
+
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 

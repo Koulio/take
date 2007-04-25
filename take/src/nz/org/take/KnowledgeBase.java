@@ -48,6 +48,11 @@ public interface KnowledgeBase {
 	 */
 	public List<KnowledgeElement> getElements() ;
 	/**
+	 * Get all queries.
+	 * @return queries
+	 */
+	public List<Query> getQueries() ;
+	/**
 	 * Get all predicates for which knowledge elements are available.
 	 * @return predicates
 	 */
@@ -63,5 +68,16 @@ public interface KnowledgeBase {
 	 * @return a boolean
 	 */
 	public boolean remove(KnowledgeElement e) ;
+	/**
+	 * Add a query.
+	 * @param q a query
+	 */
+	public void add(Query q) ;
+	/**
+	 * Remove  a query, return true if this succeeded.
+	 * @param q  a query
+	 * @return a boolean
+	 */
+	public boolean remove(Query q) ;
 
 }

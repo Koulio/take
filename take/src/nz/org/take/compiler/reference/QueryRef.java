@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nz.org.take.Predicate;
-import nz.org.take.compiler.Query;
+import nz.org.take.Query;
 
 /**
  * Represents a query and a list of variables names that can be used 

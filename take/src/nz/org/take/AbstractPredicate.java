@@ -16,42 +16,29 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take.script;
+package nz.org.take;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * The script itself.
+ * Abstract predicate. By default, slot names are generated.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Script implements Visitable {
-	private List elements = new ArrayList();
+public abstract class AbstractPredicate implements Predicate {
 
+	protected String[] slotNames;
 
-	public void add(VariableDeclaration v) {
-		this.elements.add(v);
-	}
-	public void add(Rule r) {
-		this.elements.add(r);
-	}
-	public void add(QuerySpec q) {
-		this.elements.add(q);
-	}
-	public void accept(ScriptVisitor visitor) {
-		if (visitor.visit(this)) {
-			for (Object o:elements){
-				if (o instanceof VariableDeclaration)
-					((VariableDeclaration)o).accept(visitor);
-				else if (o instanceof Rule)
-					((Rule)o).accept(visitor);
+	public String[] getSlotNames() {
+		if (slotNames==null && this.getSlotTypes()!=null) {
+			slotNames = new String[this.getSlotTypes().length];
+			for (int i=1;i<slotNames.length+1;i++) {
+				slotNames[i-1]="slot"+i;
 			}
 		}
-		visitor.endVisit(this);
+		return slotNames;
 	}
-	public List getElements() {
-		return elements;
+	public void setSlotNames(String[] slotNames) {
+		this.slotNames = slotNames;
 	}
 
 }
