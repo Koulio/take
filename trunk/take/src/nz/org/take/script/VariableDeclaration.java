@@ -18,6 +18,9 @@
 
 package nz.org.take.script;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Declaration of a variable.
@@ -26,12 +29,9 @@ package nz.org.take.script;
 
 public class VariableDeclaration  implements Visitable {
 	private String type = null;
-	private String name = null;
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
+	private List<String> names = new ArrayList<String>();
+	public void addName(String name) {
+		this.names.add(name);
 	}
 	public String getType() {
 		return type;
@@ -51,14 +51,21 @@ public class VariableDeclaration  implements Visitable {
 		b.append("var ");
 		b.append(type);
 		b.append(" ");
-		b.append(name);
+		boolean f = true;
+		for (String n:names) {
+			if (f)
+				f = false;
+			else 
+				b.append(',');
+			b.append(n);	
+		}
 		return b.toString();
 	}
 	@Override
 	public int hashCode() {
 		final int PRIME = 31;
 		int result = 1;
-		result = PRIME * result + ((name == null) ? 0 : name.hashCode());
+		result = PRIME * result + ((names == null) ? 0 : names.hashCode());
 		result = PRIME * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
@@ -71,10 +78,10 @@ public class VariableDeclaration  implements Visitable {
 		if (getClass() != obj.getClass())
 			return false;
 		final VariableDeclaration other = (VariableDeclaration) obj;
-		if (name == null) {
-			if (other.name != null)
+		if (names == null) {
+			if (other.names != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!names.equals(other.names))
 			return false;
 		if (type == null) {
 			if (other.type != null)
@@ -83,5 +90,9 @@ public class VariableDeclaration  implements Visitable {
 			return false;
 		return true;
 	}
+	public List<String> getNames() {
+		return names;
+	}
+
 	
 }

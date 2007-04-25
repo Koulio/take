@@ -45,13 +45,16 @@ public class ParserTests extends TestCase {
 	private Rule getRuleAt(Script script,int i) {
 		return (Rule)script.getElements().get(i);
 	}
+	private QuerySpec getQueryAt(Script script,int i) {
+		return (QuerySpec)script.getElements().get(i);
+	}
 	public void test1() throws Exception {
 		String input = 
 			"var int x\n";
 		Script script = parse(input);
 		assertEquals(1,script.getElements().size());
 		assertTrue(script.getElements().get(0) instanceof VariableDeclaration);
-		assertEquals("x",this.getVarDecAt(script,0).getName());
+		assertEquals("x",this.getVarDecAt(script,0).getNames().get(0));
 		assertEquals("int",this.getVarDecAt(script,0).getType());
 	}
 	public void test2() throws Exception {
@@ -60,7 +63,7 @@ public class ParserTests extends TestCase {
 		Script script = parse(input);
 		assertEquals(1,script.getElements().size());
 		assertTrue(script.getElements().get(0) instanceof VariableDeclaration);	
-		assertEquals("aVar",this.getVarDecAt(script,0).getName());
+		assertEquals("aVar",this.getVarDecAt(script,0).getNames().get(0));
 		assertEquals("java.lang.String",this.getVarDecAt(script,0).getType());
 	}
 	public void test3() throws Exception {
@@ -71,12 +74,29 @@ public class ParserTests extends TestCase {
 		assertEquals(2,script.getElements().size());
 		assertTrue(script.getElements().get(0) instanceof VariableDeclaration);
 		assertTrue(script.getElements().get(1) instanceof VariableDeclaration);
-		assertEquals("x",this.getVarDecAt(script,0).getName());
+		assertEquals("x",this.getVarDecAt(script,0).getNames().get(0));
 		assertEquals("int",this.getVarDecAt(script,0).getType());
-		assertEquals("aVar",this.getVarDecAt(script,1).getName());
+		assertEquals("aVar",this.getVarDecAt(script,1).getNames().get(0));
 		assertEquals("java.lang.String",this.getVarDecAt(script,1).getType());
 		
 	}
+	public void test4() throws Exception {
+		String input = 
+			"var int x,y\n"+
+			"var java.lang.String a,b,c\n";
+		Script script = parse(input);
+		assertEquals(2,script.getElements().size());
+		assertTrue(script.getElements().get(0) instanceof VariableDeclaration);
+		assertTrue(script.getElements().get(1) instanceof VariableDeclaration);
+		assertEquals("x",this.getVarDecAt(script,0).getNames().get(0));
+		assertEquals("y",this.getVarDecAt(script,0).getNames().get(1));
+		assertEquals("int",this.getVarDecAt(script,0).getType());
+		assertEquals("a",this.getVarDecAt(script,1).getNames().get(0));
+		assertEquals("b",this.getVarDecAt(script,1).getNames().get(1));
+		assertEquals("java.lang.String",this.getVarDecAt(script,1).getType());
+		
+	}
+	
 	public void test10() throws Exception {
 		String input = 
 			"rule1: if p(x,y) then q(y,x)\n";
@@ -138,5 +158,16 @@ public class ParserTests extends TestCase {
 		assertTrue(t1 instanceof ConstantTerm);
 		assertEquals("Max",((ConstantTerm)t1).getValue());
 		assertTrue(t2 instanceof VariableTerm);
+	}
+	public void test20() throws Exception {
+		String input = 
+			"query p(in,out)\n";
+		Script script = parse(input);
+		assertEquals(1,script.getElements().size());
+		QuerySpec q = this.getQueryAt(script,0);
+		assertEquals("p",q.getPredicate());
+		assertEquals(2,q.getIoSpec().size());
+		assertTrue(q.getIoSpec().get(0));
+		assertFalse(q.getIoSpec().get(1));
 	}
 }

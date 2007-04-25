@@ -21,6 +21,7 @@ package nz.org.take.compiler;
 import java.util.List;
 
 import nz.org.take.KnowledgeBase;
+import nz.org.take.Query;
 
 
 
@@ -32,7 +33,7 @@ import nz.org.take.KnowledgeBase;
 public interface Compiler {
 	
 	/**
-	 * Compile the kb.
+	 * Compile the kb with an explicit list of queries.
 	 * @param kb a knowledge base
 	 * @param queries a list of query
 	 * @param location the location where generated sources and compiled code will be stored
@@ -41,6 +42,15 @@ public interface Compiler {
 	 * @throws CompilerException
 	 */
 	public void compile (KnowledgeBase kb,List<Query> queries,Location location,String packageName,String className) throws CompilerException ;
+	/**
+	 * Compile the kb with the list of queries in the kb.
+	 * @param kb a knowledge base
+	 * @param location the location where generated sources and compiled code will be stored
+	 * @param packageName the '.'-separator packagename of the class to be generated
+	 * @param className the class that will be generated
+	 * @throws CompilerException
+	 */
+	public void compile (KnowledgeBase kb,Location location,String packageName,String className) throws CompilerException ;
 	/**
 	 * Get the name generator.
 	 * @return Returns the nameGenerator.

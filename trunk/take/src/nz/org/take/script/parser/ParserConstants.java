@@ -9,13 +9,17 @@ public interface ParserConstants {
   int AND = 7;
   int IF = 8;
   int THEN = 9;
-  int INTEGER_NUMBER = 10;
-  int DECIMAL_NUMBER = 11;
-  int NAME = 12;
-  int STRING = 13;
-  int STRING_LITERAL = 14;
-  int WHITESPACE = 15;
-  int SEMICOLON = 16;
+  int QUERY = 10;
+  int IN = 11;
+  int OUT = 12;
+  int INTEGER_NUMBER = 13;
+  int DECIMAL_NUMBER = 14;
+  int LABEL = 15;
+  int NAME = 16;
+  int STRING = 17;
+  int STRING_LITERAL = 18;
+  int WHITESPACE = 19;
+  int SEMICOLON = 20;
 
   int DEFAULT = 0;
 
@@ -30,17 +34,20 @@ public interface ParserConstants {
     "\"and\"",
     "\"if\"",
     "\"then\"",
+    "\"query\"",
+    "\"in\"",
+    "\"out\"",
     "<INTEGER_NUMBER>",
     "<DECIMAL_NUMBER>",
+    "<LABEL>",
     "<NAME>",
     "<STRING>",
     "<STRING_LITERAL>",
     "<WHITESPACE>",
     "\";\"",
-    "\":\"",
     "\"(\"",
-    "\")\"",
     "\",\"",
+    "\")\"",
   };
 
 }

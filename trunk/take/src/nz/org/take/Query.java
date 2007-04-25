@@ -17,7 +17,7 @@
  */
 
 
-package nz.org.take.compiler;
+package nz.org.take;
 
 import nz.org.take.*;
 /**
@@ -32,11 +32,10 @@ public class Query implements Cloneable {
 	private Predicate predicate = null;
 	private boolean[] inputParams = null;
 
-
-	/**
-	 * @param predicate
-	 * @param params
-	 */
+	public Query() {
+		super();
+	}
+	
 	public Query(Predicate predicate,boolean[] params) {
 		super();
 		assert(params!=null && params.length==predicate.getSlotTypes().length);
@@ -91,6 +90,11 @@ public class Query implements Cloneable {
 	public int hashCode() {
 		// REFACTOR finetune
 		return this.predicate.hashCode();
+	}
+
+
+	public void setPredicate(Predicate predicate) {
+		this.predicate = predicate;
 	}
 
 }

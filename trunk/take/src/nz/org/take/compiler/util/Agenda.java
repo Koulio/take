@@ -1,6 +1,6 @@
 package nz.org.take.compiler.util;
 
-import nz.org.take.compiler.Query;
+import nz.org.take.Query;
 
 /**
  * This class is responsible for managing the agenda of querries that
