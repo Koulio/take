@@ -16,7 +16,7 @@ public interface ParserConstants {
   int DECIMAL_NUMBER = 14;
   int LABEL = 15;
   int NAME = 16;
-  int STRING = 17;
+  int COMMENT = 17;
   int STRING_LITERAL = 18;
   int WHITESPACE = 19;
   int SEMICOLON = 20;
@@ -41,7 +41,7 @@ public interface ParserConstants {
     "<DECIMAL_NUMBER>",
     "<LABEL>",
     "<NAME>",
-    "<STRING>",
+    "<COMMENT>",
     "<STRING_LITERAL>",
     "<WHITESPACE>",
     "\";\"",
