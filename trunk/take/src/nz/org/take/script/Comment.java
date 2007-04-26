@@ -18,8 +18,6 @@
 
 package nz.org.take.script;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -27,13 +25,9 @@ import java.util.List;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Comment  implements Visitable {
+public class Comment   {
 
 	private String text = null;
-	public void accept(ScriptVisitor visitor) {
-		visitor.visit(this);
-		visitor.endVisit(this);
-	}
 	public String getText() {
 		return text;
 	}

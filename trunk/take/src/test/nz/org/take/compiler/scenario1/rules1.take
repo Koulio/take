@@ -2,10 +2,10 @@
 // @author jens dietrich, 2007
 var java.lang.String person1,person2,person3
 var java.lang.String grandchild,father,grandfather
-query is_father_of(in,out)
-query is_father_of(out,in)
-query is_grandfather_of(in,out)
-query is_grandfather_of(out,in)
+query is_father_of(in,out) generate getFather(son)
+query is_father_of(out,in) generate getSon(father)
+query is_grandfather_of(in,out) generate getGrandfather(grandchild)
+query is_grandfather_of(out,in) generate getGrandChildren(grandfather)
 rule1: if is_father_of(person1,person2) then is_son_of(person2,person1)
 rule2: if is_father_of(grandchild,father) and is_father_of(father,grandfather) then is_grandfather_of(grandchild,grandfather)
 fact1: is_father_of("Frank","Lutz")

@@ -45,6 +45,9 @@ public class ParserTests extends TestCase {
 	private Comment getCommentAt(Script script,int i) {
 		return (Comment)script.getElements().get(i);
 	}
+	private Annotation getAnnotationAt(Script script,int i) {
+		return (Annotation)script.getElements().get(i);
+	}
 	private Rule getRuleAt(Script script,int i) {
 		return (Rule)script.getElements().get(i);
 	}
@@ -190,5 +193,35 @@ public class ParserTests extends TestCase {
 		assertEquals("variables",c1.getText().trim());
 		assertEquals("queries",c2.getText().trim());
 		assertEquals("rules and facts",c3.getText().trim());
+	}
+	public void test40() throws Exception {
+		String input = 
+			"@@dc:Creator=Jens\n"+
+			"@@dc:Date=01/01/07\n"+
+			"var int x,y\n"+
+			"var java.lang.String a,b,c\n"+
+			"//queries\n"+
+			"@description=a query\n"+
+			"query p(in,out)\n";
+		
+		Script script = parse(input);
+		
+		assertEquals(7,script.getElements().size());
+		
+		Annotation a1 = getAnnotationAt(script,0);
+		Annotation a2 = getAnnotationAt(script,1);
+		Annotation a3 = getAnnotationAt(script,5);
+		
+		assertEquals("dc:Creator",a1.getKey().trim());
+		assertEquals("Jens",a1.getValue().trim());
+		assertTrue(a1.isGlobal());
+		
+		assertEquals("dc:Date",a2.getKey().trim());
+		assertEquals("01/01/07",a2.getValue().trim());
+		assertTrue(a2.isGlobal());
+		
+		assertEquals("description",a3.getKey().trim());
+		assertEquals("a query",a3.getValue().trim());
+		assertFalse(a3.isGlobal());
 	}
 }

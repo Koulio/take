@@ -43,11 +43,6 @@ public class VariableTerm implements Term {
 		this.name = name;
 	}
 	
-	public void accept(ScriptVisitor visitor) {
-		visitor.visit(this);
-		visitor.endVisit(this);
-	}
-	
 	public String toString() {
 		return name;
 	}

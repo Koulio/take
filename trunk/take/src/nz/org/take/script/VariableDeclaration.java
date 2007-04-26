@@ -27,7 +27,7 @@ import java.util.List;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class VariableDeclaration  implements Visitable {
+public class VariableDeclaration {
 	private String type = null;
 	private List<String> names = new ArrayList<String>();
 	public void addName(String name) {
@@ -41,10 +41,6 @@ public class VariableDeclaration  implements Visitable {
 			type=token;
 		else 
 			this.type = type+'.'+token;
-	}
-	public void accept(ScriptVisitor visitor) {
-		visitor.visit(this);
-		visitor.endVisit(this);
 	}
 	public String toString() {
 		StringBuffer b = new StringBuffer();

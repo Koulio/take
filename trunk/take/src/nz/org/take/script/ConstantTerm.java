@@ -45,11 +45,6 @@ public class ConstantTerm implements Term {
 	
 
 	
-	public void accept(ScriptVisitor visitor) {
-		visitor.visit(this);
-		visitor.endVisit(this);
-	}
-	
 	public String toString() {
 		return value;
 	}

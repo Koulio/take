@@ -26,7 +26,7 @@ import java.util.List;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Rule implements Visitable {
+public class Rule  {
 	private List<Condition> conditions = new ArrayList<Condition>();
 	private String id = null;
 
@@ -38,15 +38,6 @@ public class Rule implements Visitable {
 		this.conditions.add(c);
 	}
 
-	public void accept(ScriptVisitor visitor) {		
-		if (visitor.visit(this)) {
-			for (Condition c:this.conditions) {
-				c.accept(visitor);				
-			}
-		}
-		visitor.endVisit(this);
-	}
-	
 	public String toString() {
 		StringBuffer b = new StringBuffer();
 		b.append("if ");

@@ -19,12 +19,40 @@
 package nz.org.take.script;
 
 /**
- * Instances of these classes accept visitors.
+ * Comment.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public interface Visitable {
-	
-	public void accept(ScriptVisitor visitor);
+public class Annotation   {
 
+	private boolean isGlobal = false;
+	private String key = null;
+	private String value = null;
+	public boolean isGlobal() {
+		return isGlobal;
+	}
+	public void addToKey(String token) {
+		if (key==null)
+			key=token;
+		else
+			key = key+':'+token;
+	}
+	public void setGlobal(boolean isGlobal) {
+		this.isGlobal = isGlobal;
+	}
+	public void setAnnotation(String annotation) {
+		int sep = annotation.indexOf('=');
+		if (sep==-1)
+			throw new IllegalArgumentException("Invalid annotation format, annotation must have the format @key=value");
+		this.key=annotation.substring(0,sep).trim();
+		this.value=annotation.substring(sep+1).trim();
+	}
+	public String getValue() {
+		return value;
+	}
+	public String getKey() {
+		return key;
+	}
+
+	
 }

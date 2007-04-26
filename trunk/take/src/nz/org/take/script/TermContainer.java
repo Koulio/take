@@ -26,7 +26,7 @@ import java.util.List;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public abstract class TermContainer implements Visitable  {
+public abstract class TermContainer  {
 	
 	protected List<Term> terms = new ArrayList<Term>();
 

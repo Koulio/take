@@ -35,15 +35,6 @@ public class Condition extends TermContainer {
 	public void setPredicate(String predicate) {
 		this.predicate = predicate;
 	}
-	public void accept(ScriptVisitor visitor) {
-		if (visitor.visit(this)) {
-			for (Term t:terms) {
-				t.accept(visitor);
-			}
-		}
-		visitor.endVisit(this);
-	}
-	
 	public String toString() {
 		StringBuffer b = new StringBuffer();
 		b.append(predicate);
