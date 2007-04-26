@@ -26,7 +26,7 @@ import java.util.List;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Script implements Visitable {
+public class Script {
 	private List elements = new ArrayList();
 
 	public void add(Comment c) {
@@ -41,16 +41,8 @@ public class Script implements Visitable {
 	public void add(QuerySpec q) {
 		this.elements.add(q);
 	}
-	public void accept(ScriptVisitor visitor) {
-		if (visitor.visit(this)) {
-			for (Object o:elements){
-				if (o instanceof VariableDeclaration)
-					((VariableDeclaration)o).accept(visitor);
-				else if (o instanceof Rule)
-					((Rule)o).accept(visitor);
-			}
-		}
-		visitor.endVisit(this);
+	public void add(Annotation a) {
+		this.elements.add(a);
 	}
 	public List getElements() {
 		return elements;

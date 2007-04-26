@@ -34,15 +34,6 @@ public class ComplexTerm extends TermContainer implements Term {
 		this.function = function;
 	}
 	
-	public void accept(ScriptVisitor visitor) {
-		if (visitor.visit(this)) {
-			for (Term t:terms) {
-				t.accept(visitor);
-			}
-		}
-		visitor.endVisit(this);
-	}
-	
 	public String toString() {
 		StringBuffer b = new StringBuffer();
 		b.append(function);

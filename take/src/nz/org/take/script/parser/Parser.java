@@ -14,6 +14,8 @@
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case VAR:
       case QUERY:
+      case GLOBALANNOTATION:
+      case LOCALANNOTATION:
       case LABEL:
       case COMMENT:
         ;
@@ -29,6 +31,12 @@
       case COMMENT:
         comment(script);
         break;
+      case LOCALANNOTATION:
+        globalannotation(script);
+        break;
+      case GLOBALANNOTATION:
+        localannotation(script);
+        break;
       case QUERY:
         query(script);
         break;
@@ -43,6 +51,24 @@
     }
   }
 
+  static final public void localannotation(Script script) throws ParseException {
+        Token t;
+         Annotation a = new Annotation();
+    t = jj_consume_token(GLOBALANNOTATION);
+         a.setGlobal(true);
+         a.setAnnotation(t.image.substring(2));
+         script.add(a);
+  }
+
+  static final public void globalannotation(Script script) throws ParseException {
+        Token t;
+         Annotation a = new Annotation();
+    t = jj_consume_token(LOCALANNOTATION);
+         a.setGlobal(false);
+         a.setAnnotation(t.image.substring(1));
+         script.add(a);
+  }
+
   static final public void comment(Script script) throws ParseException {
         Token t;
          Comment c = new Comment();
@@ -55,22 +81,22 @@
          QuerySpec q = new QuerySpec();
     jj_consume_token(QUERY);
     predicateQ(q);
-    jj_consume_token(21);
+    jj_consume_token(25);
     io(q);
     label_2:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 22:
+      case 26:
         ;
         break;
       default:
         jj_la1[2] = jj_gen;
         break label_2;
       }
-      jj_consume_token(22);
+      jj_consume_token(26);
       io(q);
     }
-    jj_consume_token(23);
+    jj_consume_token(27);
          script.add(q);
   }
 
@@ -128,14 +154,14 @@
     label_4:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 22:
+      case 26:
         ;
         break;
       default:
         jj_la1[5] = jj_gen;
         break label_4;
       }
-      jj_consume_token(22);
+      jj_consume_token(26);
       varname(v);
     }
          script.add(v);
@@ -215,17 +241,17 @@
     term(c);
     jj_consume_token(DOT);
     predicate(c);
-    jj_consume_token(21);
+    jj_consume_token(25);
     terms(c);
-    jj_consume_token(23);
+    jj_consume_token(27);
          c.setPredicateType(PredicateType.JAVA);
   }
 
   static final public void buildConditionType2(Condition c) throws ParseException {
     predicate(c);
-    jj_consume_token(21);
+    jj_consume_token(25);
     terms(c);
-    jj_consume_token(23);
+    jj_consume_token(27);
          c.setPredicateType(PredicateType.SIMPLE);
   }
 
@@ -234,14 +260,14 @@
     label_6:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 22:
+      case 26:
         ;
         break;
       default:
         jj_la1[9] = jj_gen;
         break label_6;
       }
-      jj_consume_token(22);
+      jj_consume_token(26);
       term(c);
     }
   }
@@ -285,9 +311,9 @@
   static final public void complexTerm(TermContainer c) throws ParseException {
          ComplexTerm ct = new ComplexTerm();
     function(ct);
-    jj_consume_token(21);
+    jj_consume_token(25);
     terms(ct);
-    jj_consume_token(23);
+    jj_consume_token(27);
          c.add(ct);
   }
 
@@ -324,7 +350,7 @@
 
   static final private boolean jj_3R_12() {
     if (jj_3R_14()) return true;
-    if (jj_scan_token(21)) return true;
+    if (jj_scan_token(25)) return true;
     return false;
   }
 
@@ -393,7 +419,7 @@
       jj_la1_0();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x28440,0x28440,0x400000,0x1800,0x20,0x400000,0x80,0x100,0x10000,0x400000,0x50000,};
+      jj_la1_0 = new int[] {0x299100,0x299100,0x4000000,0x6000,0x20,0x4000000,0x200,0x400,0x100000,0x4000000,0x500000,};
    }
   static final private JJCalls[] jj_2_rtns = new JJCalls[2];
   static private boolean jj_rescan = false;
@@ -591,8 +617,8 @@
 
   static public ParseException generateParseException() {
     jj_expentries.removeAllElements();
-    boolean[] la1tokens = new boolean[24];
-    for (int i = 0; i < 24; i++) {
+    boolean[] la1tokens = new boolean[28];
+    for (int i = 0; i < 28; i++) {
       la1tokens[i] = false;
     }
     if (jj_kind >= 0) {
@@ -608,7 +634,7 @@
         }
       }
     }
-    for (int i = 0; i < 24; i++) {
+    for (int i = 0; i < 28; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
