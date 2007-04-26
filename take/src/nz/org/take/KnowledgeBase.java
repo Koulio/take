@@ -27,7 +27,7 @@ import java.util.List;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public interface KnowledgeBase {
+public interface KnowledgeBase extends Annotatable {
 	
 	/**
 	 * Retrieve knowledge by id.

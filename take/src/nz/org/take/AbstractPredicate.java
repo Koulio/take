@@ -24,7 +24,7 @@ package nz.org.take;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public abstract class AbstractPredicate implements Predicate {
+public abstract class AbstractPredicate extends AbstractAnnotatable implements Predicate {
 
 	protected String[] slotNames;
 

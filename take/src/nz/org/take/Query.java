@@ -19,7 +19,6 @@
 
 package nz.org.take;
 
-import nz.org.take.*;
 /**
  * Query interface. A query consists of a predicate and flags classifying 
  * the terms as input or output slots. 
@@ -27,7 +26,7 @@ import nz.org.take.*;
  * they will be turned into method parameters in the code generated.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-public class Query implements Cloneable {
+public class Query extends AbstractAnnotatable {
 
 	private Predicate predicate = null;
 	private boolean[] inputParams = null;

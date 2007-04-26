@@ -23,7 +23,7 @@ package nz.org.take;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Fact implements Clause {
+public class Fact extends AbstractAnnotatable implements Clause {
 	
 	private Predicate predicate = null;
 	private String id = null;
