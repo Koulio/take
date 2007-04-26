@@ -29,7 +29,7 @@ import org.apache.commons.collections.ListUtils;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class DefaultKnowledgeBase implements KnowledgeBase {
+public class DefaultKnowledgeBase extends AbstractAnnotatable implements KnowledgeBase {
 	private List<KnowledgeElement> elements = new ArrayList<KnowledgeElement>();
 	private List<Query> queries = new ArrayList<Query>();
 	private Map<String,KnowledgeElement> elementsById = new HashMap<String,KnowledgeElement>();

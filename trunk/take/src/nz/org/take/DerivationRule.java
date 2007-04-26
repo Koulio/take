@@ -26,7 +26,7 @@ import java.util.List;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class DerivationRule implements Clause {
+public class DerivationRule extends AbstractAnnotatable implements Clause {
 	private Fact head = null;
 	private String id = null;
 	private List<Prerequisite> body = new ArrayList<Prerequisite>();

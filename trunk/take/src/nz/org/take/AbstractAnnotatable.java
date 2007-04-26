@@ -15,23 +15,36 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
 package nz.org.take;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * Interface for  knowledge element.
+ * Abstract superclass for classes that can be annotated.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public interface KnowledgeElement extends Annotatable  {
+public abstract class  AbstractAnnotatable implements Annotatable  {
+	private Map<String,String> annotations = new HashMap<String,String>();
 
-	/**
-	 * Get the predicate.
-	 * @return a predicate
+	/* (non-Javadoc)
+	 * @see nz.org.take.Annotatable#getAnnotations()
 	 */
-	public Predicate getPredicate() ;
-	/**
-	 * Get the unique ID.
+	public Map<String, String> getAnnotations() {
+		return annotations;
+	}
+	/* (non-Javadoc)
+	 * @see nz.org.take.Annotatable#addAnnotation(java.lang.String, java.lang.String)
 	 */
-	public String getId();
+	public void addAnnotation(String key,String value) {
+		this.annotations.put(key, value);
+	}
+	/* (non-Javadoc)
+	 * @see nz.org.take.Annotatable#removeAnnotation(java.lang.String)
+	 */
+	public String removeAnnotation(String key) {
+		return this.annotations.remove(key);
+	}
+
 }

@@ -15,23 +15,31 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
 package nz.org.take;
 
+import java.util.Map;
+
 /**
- * Interface for  knowledge element.
+ * Interface for classes that can be annotated.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public interface KnowledgeElement extends Annotatable  {
+public interface Annotatable {
+
+	public abstract Map<String, String> getAnnotations();
 
 	/**
-	 * Get the predicate.
-	 * @return a predicate
+	 * Add a new annotation.
+	 * @param key
+	 * @param value
 	 */
-	public Predicate getPredicate() ;
+	public abstract void addAnnotation(String key, String value);
+
 	/**
-	 * Get the unique ID.
+	 * Removes an annotation.
+	 * @param key
+	 * @return the value of the removed annotation or null if there is no such annotation
 	 */
-	public String getId();
+	public abstract String removeAnnotation(String key);
+
 }
