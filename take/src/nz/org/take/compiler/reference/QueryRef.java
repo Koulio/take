@@ -20,6 +20,7 @@ package nz.org.take.compiler.reference;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import nz.org.take.Predicate;
 import nz.org.take.Query;
@@ -41,6 +42,9 @@ class QueryRef extends Query {
 	QueryRef(Predicate predicate, boolean[] params,List<String> paramRefs) {
 		super(predicate, params);
 		this.paramRefs = paramRefs;
+		for (Entry<String,String> e:predicate.getAnnotations().entrySet()) {
+			this.addAnnotation(e.getKey(), e.getValue());
+		}
 	}
 	/**
 	 * Get a list of parameter references.

@@ -19,6 +19,7 @@
 package nz.org.take.compiler;
 
 import nz.org.take.Predicate;
+import nz.org.take.Query;
 import nz.org.take.script.Rule;
 
 
@@ -27,68 +28,50 @@ import nz.org.take.script.Rule;
  * representing artefacts in the kb (predicates, facts, rules, ..).
  * 
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
- * @version 0.1
  */
 public interface NameGenerator {
 	/**
 	 * Generate a class name.
-	 * 
-	 * @param p
-	 *            a predicate
+	 * @param p  a predicate
 	 * @return a name
 	 */
 	public String getClassName(Predicate p);
 
 	/**
-	 * Generate a method name fo a predicate with given input parameter
-	 * 
-	 * @param p
-	 *            a predicate
-	 * @param inputParam
-	 *            indicates whether the slots are in or output slots
+	 * Generate a method name fo a query
+	 * @param q a query
 	 * @return a method name
 	 */
-	public String getMethodName(Predicate p, boolean[] inputParam);
+	public String getMethodName(Query q);
 
 	/**
 	 * Generate an accessor name for a slot.
-	 * 
-	 * @param p
-	 *            a predicate
-	 * @param slot
-	 *            a slot position
+	 * @param p a predicate
+	 * @param slot a slot position
 	 * @return a name
 	 */
 	public String getAccessorNameForSlot(Predicate p, int slot);
 
 	/**
 	 * Generate a mutator name for a slot.
-	 * 
-	 * @param p
-	 *            a predicate
-	 * @param slot
-	 *            a slot position
+	 * @param p a predicate
+	 * @param slot a slot position
 	 * @return a name
 	 */
 	public String getMutatorNameForSlot(Predicate p, int slot);
 
 	/**
 	 * Generate a variable name for a slot.
-	 * 
-	 * @param p
-	 *            a predicate
-	 * @param slot
-	 *            a slot position
+	 * @param p a predicate
+	 * @param slot a slot position
 	 * @return a name
 	 */
 	public String getVariableNameForSlot(Predicate p, int slot);
 
 	/**
 	 * Get the class name for the bindings used in the method generated for a
-	 * rule.
-	 * 
-	 * @param r
-	 *            a rule
+	 * rule. 
+	 * @param r a rule
 	 * @return the name of the binding class for the rule
 	 */
 	public String getBindingClassName(Rule r);

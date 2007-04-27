@@ -41,5 +41,11 @@ public interface Annotatable {
 	 * @return the value of the removed annotation or null if there is no such annotation
 	 */
 	public abstract String removeAnnotation(String key);
+	/**
+	 * Get the annotation value for a given key.
+	 * @param key the key
+	 * @return the value or null if there is no such annotation
+	 */
+	public abstract String getAnnotation(String key);
 
 }

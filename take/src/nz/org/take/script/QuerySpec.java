@@ -19,16 +19,22 @@
 package nz.org.take.script;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import nz.org.take.AbstractAnnotatable;
+import nz.org.take.Annotatable;
 
 /**
  * spec for queries
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class QuerySpec {
+public class QuerySpec extends AbstractAnnotatable {
 	private String predicate = null;
 	private List<Boolean> ioSpec = new ArrayList<Boolean>();
+
 	public String getPredicate() {
 		return predicate;
 	}

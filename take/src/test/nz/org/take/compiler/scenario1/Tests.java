@@ -79,9 +79,9 @@ public class Tests extends TestCase
 	public void test1(){
 		_KB kb = new _KB();
 		
-		Iterator<_is_father_of> results = kb.is_father_of_10("Max");	
+		Iterator<IsFatherOf> results = kb.getFather("Max");	
 		assertTrue(results.hasNext());
-		_is_father_of r = results.next();
+		IsFatherOf r = results.next();
 		String father = r.slot2;
 		assertEquals("Jens",father);
 		assertFalse(results.hasNext());
@@ -91,9 +91,9 @@ public class Tests extends TestCase
 	 */
 	public void test2(){
 		_KB kb = new _KB();
-		ResultSet<_is_grandfather_of> results = kb.is_grandfather_of_10("Max");	
+		ResultSet<IsGrandfatherOf> results = kb.getGrandfather("Max");	
 		assertTrue(results.hasNext());
-		_is_grandfather_of r = results.next();
+		IsGrandfatherOf r = results.next();
 		DerivationController x = results.getDerivationController();
 		x.printLog();
 		String grandfather = r.slot2;
@@ -107,9 +107,9 @@ public class Tests extends TestCase
 	 */
 	public void test3(){
 		_KB kb = new _KB();
-		Iterator<_is_father_of> results = kb.is_father_of_01("Jens");	
+		Iterator<IsFatherOf> results = kb.getSon("Jens");	
 		assertTrue(results.hasNext());
-		_is_father_of r = results.next();
+		IsFatherOf r = results.next();
 		String son = r.slot1;
 		assertEquals("Max",son);
 		assertFalse(results.hasNext());
@@ -121,7 +121,7 @@ public class Tests extends TestCase
 	 */
 	public void test4(){
 		_KB kb = new _KB();
-		Iterator<_is_father_of> results = kb.is_father_of_01("Otto");	
+		Iterator<IsFatherOf> results = kb.getSon("Otto");	
 		assertTrue(results.hasNext());
 		assertEquals("Guenther",results.next().slot1);
 		assertEquals("Lutz",results.next().slot1);
@@ -135,7 +135,7 @@ public class Tests extends TestCase
 	 */
 	public void test5(){
 		_KB kb = new _KB();
-		Iterator<_is_grandfather_of> results = kb.is_grandfather_of_01("Otto");	
+		Iterator<IsGrandfatherOf> results = kb.getGrandchildren("Otto");	
 		assertTrue(results.hasNext());
 		while(results.hasNext()) {
 			System.out.println(results.next().slot1);

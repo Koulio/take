@@ -23,7 +23,7 @@ package nz.org.take;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public interface Predicate {
+public interface Predicate extends Annotatable {
 	public Class[] getSlotTypes();
 	public String[] getSlotNames();
 	public String getName();
