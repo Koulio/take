@@ -28,23 +28,17 @@ import java.util.Map;
 public abstract class  AbstractAnnotatable implements Annotatable  {
 	private Map<String,String> annotations = new HashMap<String,String>();
 
-	/* (non-Javadoc)
-	 * @see nz.org.take.Annotatable#getAnnotations()
-	 */
 	public Map<String, String> getAnnotations() {
 		return annotations;
 	}
-	/* (non-Javadoc)
-	 * @see nz.org.take.Annotatable#addAnnotation(java.lang.String, java.lang.String)
-	 */
 	public void addAnnotation(String key,String value) {
 		this.annotations.put(key, value);
 	}
-	/* (non-Javadoc)
-	 * @see nz.org.take.Annotatable#removeAnnotation(java.lang.String)
-	 */
 	public String removeAnnotation(String key) {
 		return this.annotations.remove(key);
+	}
+	public String getAnnotation(String key) {
+		return this.annotations.get(key);
 	}
 
 }

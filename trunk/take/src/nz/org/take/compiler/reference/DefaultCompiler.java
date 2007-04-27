@@ -692,7 +692,7 @@ public class DefaultCompiler implements Compiler, Logging {
 			 * if (prereq!=r.getHead()) addToAgenda(query);
 			 */
 			if (first) {
-//				 call method
+				// call method
 				// unification: find the input params known
 				QueryRef query = buildQuery(prereq, bindings);
 				first = false;
@@ -842,15 +842,12 @@ public class DefaultCompiler implements Compiler, Logging {
 
 	/**
 	 * Get the method name associated with a query.
-	 * 
-	 * @param q
-	 *            a query
+	 * @param q a query
 	 * @return a method name
 	 */
 	private String getMethodName(Query q) {
 
-		return this.getNameGenerator().getMethodName(q.getPredicate(),
-				q.getInputParams());
+		return this.getNameGenerator().getMethodName(q);
 		// StringBuffer b = new StringBuffer();
 		// char[] name = q.getPredicate().getName().toCharArray();
 		// for (char ch : name)

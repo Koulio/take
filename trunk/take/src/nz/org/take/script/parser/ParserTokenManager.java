@@ -315,14 +315,14 @@ static private final int jjMoveNfa_0(int startState, int curPos)
                      jjstateSet[jjnewStateCnt++] = 5;
                   break;
                case 1:
-                  if ((0xafffb42b00000000L & l) == 0L)
+                  if ((0xaffff42b00000000L & l) == 0L)
                      break;
                   if (kind > 15)
                      kind = 15;
                   jjstateSet[jjnewStateCnt++] = 1;
                   break;
                case 4:
-                  if ((0xafffb42b00000000L & l) == 0L)
+                  if ((0xaffff42b00000000L & l) == 0L)
                      break;
                   if (kind > 16)
                      kind = 16;

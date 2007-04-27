@@ -22,7 +22,9 @@ package nz.org.take.compiler.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import nz.org.take.AnnotationKeys;
 import nz.org.take.Predicate;
+import nz.org.take.Query;
 import nz.org.take.compiler.NameGenerator;
 import nz.org.take.script.Rule;
 
@@ -48,6 +50,10 @@ public class DefaultNameGenerator implements NameGenerator {
 	 * @see org.mandarax.compiler.NameGenerator#getClassName(org.mandarax.kernel.Predicate)
 	 */
 	public String getClassName(Predicate p){
+		String nameFromAnnnotation = p.getAnnotation(AnnotationKeys.TAKE_GENERATE_CLASS);
+		if (nameFromAnnnotation!=null)
+			return nameFromAnnnotation;
+		
 		String s = p.getName();
 		return "_"+this.createJavaName(s,null);
 	}
@@ -102,20 +108,23 @@ public class DefaultNameGenerator implements NameGenerator {
 		return b.toString();
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.mandarax.compiler.NameGenerator#getMethodName(org.mandarax.kernel.Predicate, boolean[])
-	 */
-	public String getMethodName(Predicate p, boolean[] inputParam) {
-			StringBuffer b = new StringBuffer();
-			char[] name = p.getName().toCharArray();
-			for (char ch : name)
-				if (!Character.isWhitespace(ch))
-					b.append(ch);
-				else
-					b.append("_");
-			b.append("_");
-			for (boolean f : inputParam)
-				b.append( f ? "1" : "0" );
-			return b.toString();
+	public String getMethodName(Query q) {
+		String nameFromAnnnotation = q.getAnnotation(AnnotationKeys.TAKE_GENERATE_METHOD);
+		if (nameFromAnnnotation!=null)
+			return nameFromAnnnotation;
+		
+		Predicate p = q.getPredicate();
+		boolean[] inputParam = q.getInputParams();
+		StringBuffer b = new StringBuffer();
+		char[] name = p.getName().toCharArray();
+		for (char ch : name)
+			if (!Character.isWhitespace(ch))
+				b.append(ch);
+			else
+				b.append("_");
+		b.append("_");
+		for (boolean f : inputParam)
+			b.append( f ? "1" : "0" );
+		return b.toString();
 	}
 }

@@ -21,6 +21,9 @@ package nz.org.take.script;
 import java.io.Reader;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.Map.Entry;
+
+import nz.org.take.Annotatable;
 import nz.org.take.Constant;
 import nz.org.take.DefaultKnowledgeBase;
 import nz.org.take.DerivationRule;
@@ -59,6 +62,14 @@ public class KnowledgeBaseReader {
 		return script;
 	}
 	/**
+	 * Annotate an element.
+	 */
+	private void annotate(Annotatable annotatable,List<Annotation> annotations) {
+		for (Annotation ann:annotations)  
+			annotatable.addAnnotation(ann.getKey(),ann.getValue());
+		annotations.clear(); // reset annotations
+	}
+	/**
 	 * Read the knowledge base from a script.
 	 */
 	public KnowledgeBase read(Reader input) throws ScriptException {
@@ -77,27 +88,39 @@ public class KnowledgeBaseReader {
 		KnowledgeBase kb = new DefaultKnowledgeBase(); 
 		Set<String> ids = new HashSet<String>(); 
 		Map<String,Variable> variables = new HashMap<String,Variable>();
+		List<Annotation> annotations = new ArrayList<Annotation>();
 		for (Object part:script.getElements()) {
 			if (part instanceof VariableDeclaration) {
 				List<Variable> vars = buildVariables((VariableDeclaration)part);
 				for (Variable v:vars)
 					variables.put(v.getName(),v);
+				annotations.clear(); // var declarations do not support annotations
+			}
+			else if (part instanceof Annotation) {
+				Annotation ann = (Annotation)part;
+				if (ann.isGlobal())
+					kb.addAnnotation(ann.getKey(),ann.getValue());
+				else annotations.add(ann);
 			}
 			else if (part instanceof QuerySpec) {
 				// must be build later once we know the predicates
 				querySpecs.add((QuerySpec)part); 
+				annotate((QuerySpec)part,annotations); 
 			}
 			else if (part instanceof Rule) {
 				Rule rule = (Rule)part;
+				
 				if (rule.getConditions().size()==1) {
 					Fact f = buildFact(variables,predicatesByName,rule.getConditions().get(0));
 					f.setId(rule.getId());
 					checkId(f,ids);
+					annotate(f,annotations); 
 					kb.add(f);					
 				}
 				else {					
 					DerivationRule r = buildRule(variables,predicatesByName,(Rule)part);
 					checkId(r,ids);
+					annotate(r,annotations); 
 					kb.add(r);
 				}				
 			}
@@ -106,9 +129,18 @@ public class KnowledgeBaseReader {
 		// now do the predicates
 		for (QuerySpec q:querySpecs) {
 			Query query = buildQuery(predicatesByName,q);
+			for (Entry<String,String> e:q.getAnnotations().entrySet())  
+				query.addAnnotation(e.getKey(),e.getValue());
+			// take over annotations for predicate
+			takeOverAnnotations(query);
 			kb.add(query);
 		}
 		return kb;
+	}
+	// take over query annotations for the query predicate
+	private void takeOverAnnotations(Query q) {
+		for (Entry<String,String> e:q.getAnnotations().entrySet())  
+			q.getPredicate().addAnnotation(e.getKey(),e.getValue());		
 	}
 	private String getId(Predicate p) {
 		return p.getName()+'_'+p.getSlotTypes().length;
@@ -215,8 +247,14 @@ public class KnowledgeBaseReader {
 		}
 		else 
 			throw new ScriptSemanticsException ("Unsupported predicate type encountered in condition: " + c);
-		predicatesByName.put(this.getId(predicate),predicate);
-		return predicate;
+		String id = this.getId(predicate);
+		Predicate existingPredicate = predicatesByName.get(id);
+		if (existingPredicate==null) {
+			predicatesByName.put(this.getId(predicate),predicate);
+			return predicate;
+		}
+		else
+			return existingPredicate;
 	}
 	private nz.org.take.Term[] buildTerms(Map<String,Variable> variables,Condition c) throws ScriptException {
 		nz.org.take.Term[] terms = new nz.org.take.Term[c.getTerms().size()];
