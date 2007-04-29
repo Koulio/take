@@ -82,7 +82,7 @@ public class Tests extends TestCase
 		Iterator<IsFatherOf> results = kb.getFather("Max");	
 		assertTrue(results.hasNext());
 		IsFatherOf r = results.next();
-		String father = r.slot2;
+		String father = r.father;
 		assertEquals("Jens",father);
 		assertFalse(results.hasNext());
 	}
@@ -96,7 +96,7 @@ public class Tests extends TestCase
 		IsGrandfatherOf r = results.next();
 		DerivationController x = results.getDerivationController();
 		x.printLog();
-		String grandfather = r.slot2;
+		String grandfather = r.grandfather;
 		assertEquals("Klaus",grandfather);
 		assertFalse(results.hasNext());
 	}
@@ -110,7 +110,7 @@ public class Tests extends TestCase
 		Iterator<IsFatherOf> results = kb.getSon("Jens");	
 		assertTrue(results.hasNext());
 		IsFatherOf r = results.next();
-		String son = r.slot1;
+		String son = r.son;
 		assertEquals("Max",son);
 		assertFalse(results.hasNext());
 	}
@@ -123,10 +123,10 @@ public class Tests extends TestCase
 		_KB kb = new _KB();
 		Iterator<IsFatherOf> results = kb.getSon("Otto");	
 		assertTrue(results.hasNext());
-		assertEquals("Guenther",results.next().slot1);
-		assertEquals("Lutz",results.next().slot1);
-		assertEquals("Klaus",results.next().slot1);
-		assertEquals("Werner",results.next().slot1);
+		assertEquals("Guenther",results.next().son);
+		assertEquals("Lutz",results.next().son);
+		assertEquals("Klaus",results.next().son);
+		assertEquals("Werner",results.next().son);
 		assertFalse(results.hasNext());
 	}
 	
@@ -138,7 +138,7 @@ public class Tests extends TestCase
 		Iterator<IsGrandfatherOf> results = kb.getGrandchildren("Otto");	
 		assertTrue(results.hasNext());
 		while(results.hasNext()) {
-			System.out.println(results.next().slot1);
+			System.out.println(results.next().grandson);
 		}
 	}
 	
