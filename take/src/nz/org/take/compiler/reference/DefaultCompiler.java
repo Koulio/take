@@ -414,7 +414,7 @@ public class DefaultCompiler implements Compiler, Logging {
 		out.println(',');
 		out.println(this.getVarName4DerivationController());
 		out.println(");");
-		out.println("return _result;} // blabla");
+		out.println("return _result;} ");
 	}
 	
 
@@ -498,7 +498,7 @@ public class DefaultCompiler implements Compiler, Logging {
 		out.println("};"); // end inner class
 		out.print("return "); // end inner class
 		out.println(RESULT);
-		out.println(";} // blabla");
+		out.println(";} // ");
 		
 		// generate a method for each clause set
 		for (int i = 0; i < css.size(); i++) {

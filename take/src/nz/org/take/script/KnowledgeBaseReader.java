@@ -23,7 +23,9 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.Map.Entry;
 
+import nz.org.take.AbstractPredicate;
 import nz.org.take.Annotatable;
+import nz.org.take.AnnotationKeys;
 import nz.org.take.Constant;
 import nz.org.take.DefaultKnowledgeBase;
 import nz.org.take.DerivationRule;
@@ -139,8 +141,27 @@ public class KnowledgeBaseReader {
 	}
 	// take over query annotations for the query predicate
 	private void takeOverAnnotations(Query q) {
-		for (Entry<String,String> e:q.getAnnotations().entrySet())  
-			q.getPredicate().addAnnotation(e.getKey(),e.getValue());		
+		Predicate p = q.getPredicate();
+		for (Entry<String,String> e:q.getAnnotations().entrySet())  {
+			String key = e.getKey();
+			p.addAnnotation(key,e.getValue());	
+			if (AnnotationKeys.TAKE_GENERATE_SLOTS.equals(key)) {
+				// set slot names from annotation
+				List<String> slots = new ArrayList<String>();
+				for (StringTokenizer tok = new StringTokenizer(e.getValue(),",");tok.hasMoreTokens();) {
+					slots.add(tok.nextToken().trim());
+				}
+				if (slots.size()!=p.getSlotTypes().length) {
+					// TODO log warning
+				}
+				else {
+					String[] arr = slots.toArray(new String[slots.size()]);
+					if (p instanceof AbstractPredicate) 
+						((AbstractPredicate)p).setSlotNames(arr);
+					//else  TODO log warning
+				}
+			}
+		}
 	}
 	private String getId(Predicate p) {
 		return p.getName()+'_'+p.getSlotTypes().length;
