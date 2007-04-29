@@ -1,4 +1,5 @@
 #summary About the people behind Take.
+#labels Featured
 
 = Details =
 
