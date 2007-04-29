@@ -1,4 +1,5 @@
 #summary How the rule compiler works.
+#labels Featured,Phase-Design,Phase-Implementation
 
 = Introduction =
 
@@ -56,7 +57,6 @@ The API is very simple:
   # 'IsGrandfatherOf' is a data class generated for the respective predicate
   # the parameters have the correct types, they are specified in the queries as *in* parameters
   # the result sets have a reference to the derivation used - applications can trace the rules that have been used in order to compute results!
-
 
 
 
