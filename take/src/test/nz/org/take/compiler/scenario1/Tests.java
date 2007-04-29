@@ -107,7 +107,7 @@ public class Tests extends TestCase
 	 */
 	public void test3(){
 		_KB kb = new _KB();
-		Iterator<IsFatherOf> results = kb.getSon("Jens");	
+		Iterator<IsFatherOf> results = kb.getSons("Jens");	
 		assertTrue(results.hasNext());
 		IsFatherOf r = results.next();
 		String son = r.son;
@@ -121,7 +121,7 @@ public class Tests extends TestCase
 	 */
 	public void test4(){
 		_KB kb = new _KB();
-		Iterator<IsFatherOf> results = kb.getSon("Otto");	
+		Iterator<IsFatherOf> results = kb.getSons("Otto");	
 		assertTrue(results.hasNext());
 		assertEquals("Guenther",results.next().son);
 		assertEquals("Lutz",results.next().son);

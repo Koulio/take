@@ -9,7 +9,7 @@ var java.lang.String grandchild,father,grandfather
 @take.compilerhint.slots=son,father
 @take.compilerhint.method=getFather
 query is_father_of(in,out)
-@take.compilerhint.method=getSon
+@take.compilerhint.method=getSons
 query is_father_of(out,in)
 @take.compilerhint.class=IsGrandfatherOf
 @take.compilerhint.slots=grandson,grandfather
