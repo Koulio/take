@@ -5,17 +5,17 @@ var java.lang.String person1,person2,person3
 var java.lang.String grandchild,father,grandfather
 // queries - annotations are optional and are used to generate 
 // custom classes and methods
-@take.generate.class=IsFatherOf
-@take.generate.slots=son,father
-@take.generate.method=getFather
+@take.compilerhint.class=IsFatherOf
+@take.compilerhint.slots=son,father
+@take.compilerhint.method=getFather
 query is_father_of(in,out)
-@take.generate.method=getSon
+@take.compilerhint.method=getSon
 query is_father_of(out,in)
-@take.generate.class=IsGrandfatherOf
-@take.generate.slots=grandson,grandfather
-@take.generate.method=getGrandfather
+@take.compilerhint.class=IsGrandfatherOf
+@take.compilerhint.slots=grandson,grandfather
+@take.compilerhint.method=getGrandfather
 query is_grandfather_of(in,out)
-@take.generate.method=getGrandchildren
+@take.compilerhint.method=getGrandchildren
 query is_grandfather_of(out,in)
 // rules
 rule2: if is_father_of(grandchild,father) and is_father_of(father,grandfather) then is_grandfather_of(grandchild,grandfather)
