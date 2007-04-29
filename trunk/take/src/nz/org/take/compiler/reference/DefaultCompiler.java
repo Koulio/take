@@ -510,7 +510,7 @@ public class DefaultCompiler implements Compiler, Logging {
 	}
 
 	private Object getRuleRef(KnowledgeElement cs) {
-		return cs.toString();
+		return cs.getId();
 	}
 
 	// create private method
