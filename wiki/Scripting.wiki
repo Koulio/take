@@ -1,4 +1,5 @@
 #summary How scripting works.
+#labels Featured,Phase-Implementation,Phase-Design
 
 = The Take Script Language =
 
@@ -69,5 +70,4 @@ This script contains some additional features:
   # queries that are used to generate code to query the rule base
   # a query is a predicate and a spec which parameters (slots) will be provided by the application
   # additional annotations ("compilation hints") that are used by the compiler to choose names for the generated code
-
 
