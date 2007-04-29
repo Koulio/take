@@ -48,6 +48,7 @@ public class DefaultCompiler implements Compiler, Logging {
 	private List<SourceTransformation> transformations = new ArrayList<SourceTransformation>();
 	private Map<DerivationRule, String> bindingClassNames = new HashMap<DerivationRule, String>();
 	private int bindingClassCounter = 1;
+	private Map<String,String> methodNames4QueriesFromAnnotations = new HashMap<String,String>();
 
 	/**
 	 * 
@@ -68,8 +69,16 @@ public class DefaultCompiler implements Compiler, Logging {
 	public void compile(KnowledgeBase kb, List<Query> queries,Location location, String packageName, String className)throws CompilerException {
 
 		// put queries to publicAgenda (necessity is checked implicit)
-		for (Query q : queries)
+		for (Query q : queries) {
 			this.addToAgenda(q);
+			// cache method names from annotation so that queries that are built later
+			// can use the same annotations
+			String methodName = q.getAnnotation(AnnotationKeys.TAKE_GENERATE_METHOD);
+			if (methodName!=null) {
+				String k = this.createQueryHash(q);
+				methodNames4QueriesFromAnnotations.put(k, methodName);
+			}
+		}
 		String fullClassName = packageName + "." + className;
 		this.kb = kb;
 		try {
@@ -92,6 +101,7 @@ public class DefaultCompiler implements Compiler, Logging {
 			throw new CompilerException(x);
 		}
 	}
+	
 	
 	/**
 	 * Compile the kb with the list of queries in the kb.
@@ -146,7 +156,10 @@ public class DefaultCompiler implements Compiler, Logging {
 			if (ref != null)
 				params.add(ref);
 		}
-		return new QueryRef((Predicate) f.getPredicate(), io, params);
+		QueryRef q = new QueryRef((Predicate) f.getPredicate(), io, params);
+		configNewQuery(q);
+		
+		return q;
 	}
 
 	/**
@@ -741,6 +754,7 @@ public class DefaultCompiler implements Compiler, Logging {
 					}
 				}
 				QueryRef nextQuery = new QueryRef(prereq.getPredicate(), sig,params);
+				configNewQuery(nextQuery);
 				out.print("return ");
 				if (prereq == r.getHead()) {
 					out.print("new SingletonIterator(");
@@ -764,6 +778,16 @@ public class DefaultCompiler implements Compiler, Logging {
 		out.print("return ");
 		out.print(iteratorName);
 		out.println(";");
+	}
+   /**
+    * Configure a query built by the compiler.
+    * This means to add compiler hint annotations.
+    * @param q
+    */
+	private void configNewQuery(QueryRef q) {
+		String methodNameAnnotation = this.methodNames4QueriesFromAnnotations.get(this.createQueryHash(q));
+		if (methodNameAnnotation!=null)
+			q.addAnnotation(AnnotationKeys.TAKE_GENERATE_METHOD,methodNameAnnotation);
 	}
 
 	/**
@@ -1295,4 +1319,31 @@ public class DefaultCompiler implements Compiler, Logging {
 		this.varName4DerivationController = varName4DerivationController;
 	}
 
+	/**
+	 * Create a string identifying a query.
+	 * @param q
+	 * @return
+	 */
+	private String createQueryHash(Query q) {
+		StringBuffer b = new StringBuffer();
+		b.append(q.getPredicate().getName());
+		b.append('_');
+		for (boolean f:q.getInputParams()) {
+			b.append(f?'1':'0');
+		}
+		return b.toString();
+	} 
+	
+	/**
+	 * Copy an annotation.
+	 * @param key
+	 * @param from
+	 * @param to
+	 */
+	private void copyAnnotation(String key,Annotatable from,Annotatable to) {
+		String value = from.getAnnotation(key);
+		if (value!=null)
+			to.addAnnotation(key, value);
+	}
+	
 }
