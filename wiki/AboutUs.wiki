@@ -1,0 +1,17 @@
+#summary About the people behind Take.
+
+= Details =
+
+== Jens ==
+
+Jens is a Senior Lecturer at Massey University NZ. He has contributed to the open source community for many years. Projects include: 
+
+  # [http://www.mandarax.org Mandarax] - an inference engine for Java
+  # [http://www-ist.massey.ac.nz/wop/ WebOfPatterns] - a design pattern tool for Eclipse
+
+
+For details, check out Jens' [http://www-ist.massey.ac.nz/JBDietrich/ homepage].
+
+== Bastian == 
+
+TODO
