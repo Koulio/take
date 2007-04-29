@@ -3,7 +3,7 @@
 
 = The Take Script Language =
 
-Take supports a simple script language to define rules. Here is an example from taken from the test cases: 
+Take supports a simple scripting language to derivation define rules. Here is an example from taken from the test cases: 
 
 {{{
 // script for test scenario 1
@@ -70,7 +70,6 @@ This script contains some additional features:
   # queries that are used to generate code to query the rule base
   # a query is a predicate and a spec which parameters (slots) will be provided by the application
   # additional annotations ("compilation hints") that are used by the compiler to choose names for the generated code
-
 
 
 
