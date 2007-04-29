@@ -15,4 +15,9 @@ The main motivation for starting Take was:
   # to address some scalability problems Mandarax has (Mandarax uses an interpreter, but the overall ideas are very similar)
   # to generate non trivial code from advanced (UML) models - could be seen as contribution to the MDA vision
 
-  
+Design Goals:
+  # treat rules like server pages - generate code, compile and load at runtime
+  # easy integration of external knowledge (web services, relational databases, ..)
+  # simple API based on PLOJOs and iterators
+  # applications have access to derivation trace (rules and facts that have been used to compute a result)
+  # direct support Java features like methods (as predicates and functions), properties and associations  
