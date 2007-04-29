@@ -42,9 +42,6 @@ class QueryRef extends Query {
 	QueryRef(Predicate predicate, boolean[] params,List<String> paramRefs) {
 		super(predicate, params);
 		this.paramRefs = paramRefs;
-		for (Entry<String,String> e:predicate.getAnnotations().entrySet()) {
-			this.addAnnotation(e.getKey(), e.getValue());
-		}
 	}
 	/**
 	 * Get a list of parameter references.
