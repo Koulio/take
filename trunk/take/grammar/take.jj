@@ -158,23 +158,8 @@ void condition(Rule r):
 }
 void buildCondition(Condition c):
 {}
-{	
-	LOOKAHEAD(2)
-	buildConditionType1(c) | buildConditionType2(c)
-}
-
-void buildConditionType1(Condition c):
-{}
-{
-	term(c)<DOT>predicate(c)"("terms(c)")"
-	{c.setPredicateType(PredicateType.JAVA);}
-}
-
-void buildConditionType2(Condition c):
-{}
 {
 	predicate(c)"("terms(c)")"
-	{c.setPredicateType(PredicateType.SIMPLE);}
 }
 void terms(TermContainer c):
 {}
@@ -186,7 +171,7 @@ void term(TermContainer c):
 {}
 {
 	LOOKAHEAD(3)
-	variableTerm(c) | complexTerm(c) | stringLiteral(c)
+	complexTerm(c) | variableTerm(c) | stringLiteral(c)
 }
 void variableTerm(TermContainer c) :
 {
