@@ -117,17 +117,14 @@ public class ParserTests extends TestCase {
 		assertEquals(new VariableTerm("x"),prereq1.getTerms().get(0));
 	}
 	public void test11() throws Exception {
-		String input = 
-			"rule2: if x.equals(y) then q(y,x)\n";
+		String input = "rule2: if equals(x,y) then q(y,x)\n";
 		Script script = parse(input);
 		Rule r = this.getRuleAt(script,0);
 		Condition prereq1= r.getConditions().get(0);
 		Condition concl = r.getConditions().get(1);
 		assertEquals("rule2",r.getId());
 		assertEquals("equals",prereq1.getPredicate());
-		assertEquals(PredicateType.JAVA,prereq1.getPredicateType());
 		assertEquals("q",concl.getPredicate());
-		assertEquals(PredicateType.SIMPLE,concl.getPredicateType());
 		assertEquals(new VariableTerm("x"),prereq1.getTerms().get(0));		
 	}
 	public void test12() throws Exception {
@@ -149,10 +146,10 @@ public class ParserTests extends TestCase {
 		Script script = parse(input);
 		Rule r = this.getRuleAt(script,0);
 		Condition f = r.getConditions().get(0);
-		assertEquals(PredicateType.SIMPLE,f.getPredicateType());
 		assertEquals("fact1",r.getId());
 		assertEquals("p",f.getPredicate());
 	}
+	// string literals
 	public void test14() throws Exception {
 		String input = 
 			"fact1: p(\"Max\",y)\n";
@@ -165,6 +162,31 @@ public class ParserTests extends TestCase {
 		assertEquals("Max",((ConstantTerm)t1).getValue());
 		assertTrue(t2 instanceof VariableTerm);
 	}
+	// complex terms
+	public void test15() throws Exception {
+		String input = "fact: p(f(x),g(y,z))\n";
+		Script script = parse(input);
+		Condition f = this.getRuleAt(script,0).getConditions().get(0);
+		assertEquals("p",f.getPredicate());
+		assertEquals("p",f.getPredicate());
+		Term t1 = f.getTerms().get(0);
+		Term t2 = f.getTerms().get(1);
+		assertTrue(t1 instanceof ComplexTerm);
+		assertTrue(t2 instanceof ComplexTerm);	
+		ComplexTerm c1 = (ComplexTerm)t1;
+		ComplexTerm c2 = (ComplexTerm)t2;
+		assertEquals("f",c1.getFunction());
+		assertEquals(1,c1.getTerms().size());
+		assertTrue(c1.getTerms().get(0) instanceof VariableTerm);
+		assertEquals("x",((VariableTerm)c1.getTerms().get(0)).getName());
+		assertEquals("g",c2.getFunction());
+		assertEquals(2,c2.getTerms().size());
+		assertTrue(c2.getTerms().get(0) instanceof VariableTerm);
+		assertEquals("y",((VariableTerm)c2.getTerms().get(0)).getName());
+		assertTrue(c2.getTerms().get(1) instanceof VariableTerm);
+		assertEquals("z",((VariableTerm)c2.getTerms().get(1)).getName());
+	}
+	
 	public void test20() throws Exception {
 		String input = 
 			"query p(in,out)\n";
