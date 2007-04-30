@@ -15,7 +15,7 @@ For details, check out Jens' [http://www-ist.massey.ac.nz/JBDietrich/ homepage].
 
 == Bastian ==
 
-Bastian is a Master student in Information- and Mediatechnologies at the [http://www.tu-cottbus.de Brandenburg Technical University] in Cottbus. He is currently working on his Master Thesis at Massey University NZ about rule compilation and a MDA scenario that includes modeling, compiling and executing of rules.
+Bastian is a Master student in Information- and Mediatechnologies at the [http://www.tu-cottbus.de Brandenburg Technical University] in Cottbus. He is currently working on his Master Thesis at Massey University NZ about rule compilation and a MDA scenario that includes modeling, compiling and executing rules.
 
 Projects:
   # [http://www.mandarax.org Mandarax] - in particular involved in the  [http://sourceforge.net/projects/mandarax compiler subproject]
