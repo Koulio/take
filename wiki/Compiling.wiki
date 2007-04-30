@@ -43,7 +43,7 @@ public class GenerateClasses {
 }
 }}}
 
-The 'KnowledgeBaseReader' reads the script and creates a knowledge base. This knowledge base is then passed to the compiler that generates a [http://take.googlecode.com/svn/trunk/take/src/test/nz/org/take/compiler/scenario1/generated/_KB.java _KB] class. 
+The `KnowledgeBaseReader` reads the script and creates a knowledge base. This knowledge base is then passed to the compiler that generates a [http://take.googlecode.com/svn/trunk/take/src/test/nz/org/take/compiler/scenario1/generated/_KB.java _KB] class. 
 
 This class has public methods that can be used to query the rules. For instance, the following method is generated:
 
@@ -54,9 +54,8 @@ This class has public methods that can be used to query the rules. For instance,
 
 The API is very simple: 
   # [http://take.googlecode.com/svn/trunk/take/src/nz/org/take/rt/ResultSet.java ResultSet] is an Iterator
-  # 'IsGrandfatherOf' is a data class generated for the respective predicate
+  # `IsGrandfatherOf` is a data class generated for the respective predicate
   # the parameters have the correct types, they are specified in the queries as *in* parameters
   # the result sets have a reference to the derivation used - applications can trace the rules that have been used in order to compute results!
-
 
 
