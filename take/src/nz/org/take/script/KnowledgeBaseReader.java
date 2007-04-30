@@ -30,7 +30,8 @@ import nz.org.take.Constant;
 import nz.org.take.DefaultKnowledgeBase;
 import nz.org.take.DerivationRule;
 import nz.org.take.Fact;
-import nz.org.take.JavaMethodPredicate;
+import nz.org.take.JFunction;
+import nz.org.take.JPredicate;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.KnowledgeElement;
 import nz.org.take.Predicate;
@@ -265,22 +266,12 @@ public class KnowledgeBaseReader {
 			predicate=p;
 		}
 		else if (type==PredicateType.JAVA) {
-			JavaMethodPredicate p = new JavaMethodPredicate();
-			Class clazz = terms[0].getType();
-			// TODO matching using superclasses
-			Class[] paramTypes = new Class[terms.length-1];
-			for (int i=1;i<terms.length;i++) {
-				paramTypes[i-1]=terms[i].getType();
-			}
-			Method m;
-			try {
-				m = clazz.getMethod(c.getPredicate(),paramTypes);
-				p.setMethod(m);
-				predicate=p;
-			} catch (Exception e) {
-				throw new ScriptSemanticsException("No method for predicate found: " + c.getPredicate(),e);
-			}
-			
+			JPredicate p = new JPredicate();
+			// TODO matching using superclasses			
+			Class[] paramTypes = getParamTypes( terms);
+			Method m = findMethod(c.getPredicate(),terms);
+			p.setMethod(m);
+			predicate=p;			
 		}
 		else 
 			throw new ScriptSemanticsException ("Unsupported predicate type encountered in condition: " + c);
@@ -293,12 +284,22 @@ public class KnowledgeBaseReader {
 		else
 			return existingPredicate;
 	}
-	private nz.org.take.Term[] buildTerms(Map<String,Variable> variables,Condition c) throws ScriptException {
+	private nz.org.take.Term[] buildTerms(Map<String,Variable> variables,TermContainer c) throws ScriptException {
 		nz.org.take.Term[] terms = new nz.org.take.Term[c.getTerms().size()];
 		for (int i=0;i<terms.length;i++)
 			terms[i] = buildTerm(variables,c.getTerms().get(i));
 		return terms;
 	}
+	private Method findMethod(String name,nz.org.take.Term[] terms) throws ScriptException {
+		Class clazz = terms[0].getType();
+		Class[] paramTypes = getParamTypes( terms);
+		try {
+			return clazz.getMethod(name,paramTypes);
+		} catch (Exception e) {
+			throw new ScriptSemanticsException("No method for symbol found: " + name,e);
+		}
+	}
+
 	private nz.org.take.Term buildTerm(Map<String,Variable> variables,Term t) throws ScriptException {
 		if (t instanceof VariableTerm) {
 			String name = ((VariableTerm)t).getName();
@@ -314,10 +315,30 @@ public class KnowledgeBaseReader {
 				c.setObject(ct.getValue());
 				return c;
 			}
+			
 			else 
 				throw new ScriptSemanticsException("Constant terms of this type are not yet supported " + ct.getType());
 		}
+		else if (t instanceof ComplexTerm) {
+			ComplexTerm ct = (ComplexTerm)t;
+			String f = ct.getFunction();
+			nz.org.take.Term[] terms = buildTerms(variables,ct);
+			Method m = this.findMethod(f, buildTerms(variables,ct));
+			JFunction function = new JFunction();
+			function.setMethod(m);
+			nz.org.take.ComplexTerm  cplxTerm = new nz.org.take.ComplexTerm ();
+			cplxTerm.setFunction(function);
+			cplxTerm.setTerms(terms);
+			return cplxTerm;
+		}
 		else
 			throw new ScriptSemanticsException("This term type  is not yet supported " + t);
+	}
+	private Class[] getParamTypes(nz.org.take.Term[] terms) {
+		Class[] paramTypes = new Class[terms.length-1];
+		for (int i=1;i<terms.length;i++) {
+			paramTypes[i-1]=terms[i].getType();
+		}
+		return paramTypes;
 	}
 }

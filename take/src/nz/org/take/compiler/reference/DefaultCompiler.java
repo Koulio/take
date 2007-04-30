@@ -88,7 +88,7 @@ public class DefaultCompiler implements Compiler, Logging {
 			endorseClazz(location, fullClassName);
 
 			// return types
-			for (Predicate p:kb.getSupportedPredicates()) {
+			for (Predicate p:findPredicates(kb)) {
 				className = getClassName(p);
 				fullClassName = packageName + "." + className;
 				out = new PrintWriter(location.getSrcOut(fullClassName));
@@ -101,7 +101,24 @@ public class DefaultCompiler implements Compiler, Logging {
 			throw new CompilerException(x);
 		}
 	}
-	
+	/**
+	 * Create the list of predicates referenced in the kb.
+	 * @param kb a knowledge base
+	 * @return a list of predicates
+	 */
+	private Collection<Predicate> findPredicates(KnowledgeBase kb) {
+		Collection<Predicate> predicates = new HashSet<Predicate>();
+		for (KnowledgeElement e: kb.getElements()) {
+			if (e instanceof DerivationRule) {
+				DerivationRule r = (DerivationRule)e;
+				for (Prerequisite p:r.getBody()) {
+					predicates.add(p.getPredicate());
+				}
+			}
+			predicates.add(e.getPredicate());
+		}
+		return predicates;
+	}
 	
 	/**
 	 * Compile the kb with the list of queries in the kb.
@@ -139,29 +156,25 @@ public class DefaultCompiler implements Compiler, Logging {
 	/**
 	 * Create an array consisting of slots that are the input params for calling
 	 * a method asociated by a fact.
-	 * 
-	 * @param f
-	 *            a fact
-	 * @param bindings
-	 *            bindings
+	 * @param f  a fact
+	 * @param bindings  bindings
 	 * @return an array of slots
 	 */
-	private QueryRef buildQuery(Fact f, Map<Term, String> bindings) {
+	private QueryRef buildQuery(Fact f, Bindings bindings) {
 		Term[] terms = f.getTerms();
 		boolean[] io = new boolean[terms.length];
 		List<String> params = new ArrayList<String>();
 		for (int i = 0; i < io.length; i++) {
-			String ref = bindings.get(terms[i]);
+			String ref = bindings.getRef(terms[i]);
 			io[i] = ref != null;
 			if (ref != null)
 				params.add(ref);
 		}
 		QueryRef q = new QueryRef((Predicate) f.getPredicate(), io, params);
-		configNewQuery(q);
-		
+		configNewQuery(q);		
 		return q;
 	}
-
+	
 	/**
 	 * Build the output slots for a query.
 	 * 
@@ -247,62 +260,43 @@ public class DefaultCompiler implements Compiler, Logging {
 	}
 
 	/**
-	 * Create a class that can be used to keep track of variable bindings in
-	 * rules.
-	 * 
-	 * @param out
-	 *            the writer
-	 * @param r
-	 *            the rule
+	 * Create a class that can be used to keep track of variable bindings in rules.
+	 * @param out the writer
+	 * @param r  the rule
 	 * @return a map associating variables with instance variable names
 	 */
-	@SuppressWarnings("unchecked")
-	private Map<Variable, String> createBindingClass(PrintWriter out, DerivationRule r)
-			throws CompilerException {
-		Map<Variable, String> map = new HashMap<Variable, String>();
+	private Map<Term, String> createBindingClass(PrintWriter out, DerivationRule r) throws CompilerException {
+		Map<Term, String> map = new HashMap<Term, String>();
 		this.printOneLineComment(out, "Variable bindings in rule: ", r);
 		String name = this.getBindingClassName(r);
 		out.print("class ");
 		out.print(name);
 		out.println('{');
 		int counter = 1;
-		for (Prerequisite prereq : (List<Prerequisite>) r.getBody()) {
-			for (Term t : prereq.getTerms()) {
-				if (t instanceof Variable) {
-					Variable v = (Variable) t;
-					if (!map.containsKey(v)) {
-						String property = "p" + counter;
-						counter = counter + 1;
-						map.put(v, property);
-						this.printOneLineComment(out,"Property generated for var \"", v, "\" from ",prereq);
-						out.print(v.getType().getName());
-						out.print(" ");
-						out.print(property);
-						out.println(";");
-					}
-				} else
-					throw new CompilerException(
-							"Only variable terms are accepted in prerequisites, this is not a variable term: "
-									+ t);
-			}
-
-		}
+		List<Term> termsInRule = this.getAllTerms(r);		
+		for (Term t : termsInRule) {
+			if (!map.containsKey(t)) {
+					String property = "p" + counter;
+					counter = counter + 1;
+					map.put(t, property);
+					this.printOneLineComment(out,	"Property generated for term  \"", t,"\"");
+					out.print(t.getType().getName());
+					out.print(" ");
+					out.print(property);
+					out.println(";");
+				}
+			} 
 
 		out.println("};");
 		return map;
 	}
 
 	/**
-	 * Create a class for a return type.
-	 * 
-	 * @param out
-	 *            the writer
-	 * @param clazz
-	 *            the class name
-	 * @param pck
-	 *            the package name
-	 * @param p
-	 *            the predicate
+	 * Create a class for a return type. 
+	 * @param out  the writer
+	 * @param clazz   the class name
+	 * @param pck the package name
+	 * @param p  the predicate
 	 */
 	private void createReturnType(PrintWriter out, String clazz, String pck,Predicate p) throws CompilerException {
 		Slot[] slots = buildSlots(p);
@@ -425,7 +419,22 @@ public class DefaultCompiler implements Compiler, Logging {
 	 * @throws CompilerException
 	 */
 	@SuppressWarnings("unchecked")
-	private void createPrivateMethod(PrintWriter out, Query q) throws CompilerException {
+	private void createPrivateMethod(PrintWriter out, Query q) 	throws CompilerException {
+		Predicate p = q.getPredicate();
+		if (p instanceof SimplePredicate) 
+			createPrivateMethod1( out,  q);
+		else if (p instanceof JPredicate) 
+			createPrivateMethod2( out,  q);
+		else throw new CompilerException("This kind of predicate is not supported in queries: " + p.getClass());
+	}
+	/**
+	 * Create a private method for the given query.
+	 * The predicate of the query is defined by rules and facts.
+	 * @param out
+	 * @param q
+	 * @throws CompilerException
+	 */
+	private void createPrivateMethod1(PrintWriter out, Query q) 	throws CompilerException {
 		Slot[] inSlots = this.buildInputSlots(q);
 		Slot[] outSlots = this.buildOutputSlots(q);
 		Predicate p = q.getPredicate();
@@ -498,13 +507,90 @@ public class DefaultCompiler implements Compiler, Logging {
 		out.println("};"); // end inner class
 		out.print("return "); // end inner class
 		out.println(RESULT);
-		out.println(";} // ");
+		out.println(";} // blabla");
 		
 		// generate a method for each clause set
 		for (int i = 0; i < css.size(); i++) {
 			createMethod(out, q, inSlots, outSlots, css.get(i), i);
 		}
 
+		this.endorseMethod(methodName);
+		this.removeFromAgenda();
+	}
+
+	/**
+	 * Create a private method for the given query.
+	 * The predicate of the query is defined by a Java method.
+	 * @param out
+	 * @param q
+	 * @throws CompilerException
+	 */
+	private void createPrivateMethod2(PrintWriter out, Query q) 	throws CompilerException {
+		Slot[] inSlots = this.buildInputSlots(q);
+		Slot[] outSlots = this.buildOutputSlots(q);
+		JPredicate p = (JPredicate)q.getPredicate();
+
+		printMethodComment(out, "Method generated for query " + p, inSlots,"an interator for instances of " + getClassName(p));
+
+
+		
+		// start header
+		this.printGenericType(out, "private ResourceIterator", getClassName(p));
+		String methodName = getMethodName(q);
+		out.print(methodName);
+
+		printParameters(out, inSlots, true,true,false);
+		// end params
+		out.println("{");
+		
+		if (outSlots.length>0)
+			throw new CompilerException("Cannot generate code for queries with JavaPredicates and unbound variables, extends are not yet supported ");
+
+		// variable to cache derivation depth
+		out.print("final int _derivationlevel=");
+		out.print(this.getVarName4DerivationController());
+		out.println(".getDepth();");
+		
+		// start condition
+		out.print("if (");		
+		String target = inSlots[0].var;
+		String[] params = new String[inSlots.length-1];
+		for (int i=0;i<params.length;i++)
+			params[i]=inSlots[i+1].var;
+		this.printMethodInvocation(out, p.getMethod().getName(), target,params);
+		out.println(" ){");
+		
+		// log
+		out.print("_derivation.log(\"");
+		out.print(p.getMethod());
+		out.println("\");");
+		
+		
+		out.print(getClassName(p));
+		out.print(' ');
+		out.print(RESULT);
+		out.print('=');
+		this.printContructorInvocation(out,getClassName(p));
+		out.println(';');
+		
+		// assign input vars
+		for (Slot slot:inSlots) {
+				printVariableAssignment(out,RESULT,slot.name,slot.var);
+		}
+		
+		out.print("return new SingletonIterator<");
+		out.print(getClassName(p));
+		out.print(">(");
+		out.print(RESULT);
+		out.println(");");
+
+
+		out.println('}');
+		
+		// else = EMPTY Iterator
+		out.println("return EmptyIterator.DEFAULT;");
+		out.println('}');
+		
 		this.endorseMethod(methodName);
 		this.removeFromAgenda();
 	}
@@ -651,18 +737,21 @@ public class DefaultCompiler implements Compiler, Logging {
 		printLogStatement(out,r);
 		
 		// the concrete bindings for this rule
-		Map<Term, String> bindings = new HashMap<Term, String>();
+		List<Term> allTerms = this.getAllTerms(r);
+		Bindings bindings = new Bindings(allTerms);
+		
 		// compute initial bindings
 		Fact head = r.getHead();
 		Term[] terms = head.getTerms();
+		
 		// bind all inputslots to variables of the current rule
 		for (int i = 0; i < islots.length; i++) {
 			bindings.put(terms[islots[i].position], islots[i].var);
 		}
 
 		String bindingsClass = this.getBindingClassName(r);
-		// all variablenames of the current rule
-		Map<Variable, String> refs = createBindingClass(out, r);
+		// all variable names of the current rule
+		Map<Term, String> refs = createBindingClass(out, r);
 		out.print("final ");
 		out.print(bindingsClass);
 		out.print(" ");
@@ -672,14 +761,10 @@ public class DefaultCompiler implements Compiler, Logging {
 		out.println(';');
 
 		// assign input vars
-		for (Map.Entry<Variable, String> refEntry : refs.entrySet()) {
-			String var = bindings.get(refEntry.getKey());
-			if (var != null) {
-				out.print("bindings.");
-				out.print(refEntry.getValue());
-				out.print("=");
-				out.print(var);
-				out.println(";");
+		for (Map.Entry<Term, String> refEntry : refs.entrySet()) {
+			String var = bindings.getRef(refEntry.getKey());
+			if (var != null) {				
+				printVariableAssignment(out, "bindings",refEntry.getValue(),var);
 			}
 		}
 
@@ -705,7 +790,7 @@ public class DefaultCompiler implements Compiler, Logging {
 			 * if (prereq!=r.getHead()) addToAgenda(query);
 			 */
 			if (first) {
-				// call method
+//				 call method
 				// unification: find the input params known
 				QueryRef query = buildQuery(prereq, bindings);
 				first = false;
@@ -730,31 +815,48 @@ public class DefaultCompiler implements Compiler, Logging {
 				Term[] pterms = previousFact.getTerms();
 				for (int i = 0; i < pterms.length; i++) {
 					Term t = pterms[i];
+					Slot slot = this.buildSlot(previousFact.getPredicate(),	i);
+					
+					// the type of the term and the type of the predicate slot might be different (but compatible - the term types must be a subtype
+					// of the slot type. If they are different, a cast must be generated
+					
+					Class termType = t.getType();
+					Class slotType = previousFact.getPredicate().getSlotTypes()[i];
+					String cast = termType.equals(slotType)?null:termType.getName();
+					String ref = refs.get(t);
 					if (t instanceof Variable) {
-						Variable vt = (Variable) t;
-						Slot slot = this.buildSlot(previousFact.getPredicate(),i);
-						printVariableAssignment(out, "bindings", refs.get(vt),"object", slot.var);
+						Variable vt = (Variable) t;						
+						printVariableAssignment(out, "bindings",ref,"object", slot.var,cast);
 						bindings.put(vt, refs.get(vt));
-					} else {
-						// REFACTOR generalise
+					} else if (t instanceof ComplexTerm) {
+						ComplexTerm vt = (ComplexTerm) t;						
+						printVariableAssignment(out, "bindings",ref,"object", slot.var,cast);
+						bindings.put(vt, refs.get(vt));						
+					}
+					else {
+						// REFACTOR generalise - cover constant terms
 						throw new CompilerException("Only variables are supported here");
 					}
 				}
 				// build method call
 				// here we call the method that supplies the next iterator
-				boolean[] sig = new boolean[prereq.getPredicate().getSlotTypes().length];
+				boolean[] sig = new boolean[prereq.getPredicate()	.getSlotTypes().length];
 				List<String> params = new ArrayList<String>(sig.length);
 				for (int j = 0; j < sig.length; j++) {
+					// bind known variables
+					// OLD TODO remove comments
 					// problem
 					//String expr = refs.get(prereq.getTerms()[j]);
 					// terms  that have been bound
-					sig[j] = bindings.containsKey(prereq.getTerms()[j]);
+					sig[j] = bindings.hasBinding(prereq.getTerms()[j]);
 					if (sig[j]) {
-						params.add("bindings."+ refs.get(prereq.getTerms()[j]));
+						params	.add("bindings."+refs.get(prereq.getTerms()[j]));
 					}
 				}
-				QueryRef nextQuery = new QueryRef(prereq.getPredicate(), sig,params);
-				configNewQuery(nextQuery);
+				// TODO
+				QueryRef nextQuery = new QueryRef(prereq.getPredicate(), sig,	params);
+				this.configNewQuery(nextQuery);
+				
 				out.print("return ");
 				if (prereq == r.getHead()) {
 					out.print("new SingletonIterator(");
@@ -957,7 +1059,6 @@ public class DefaultCompiler implements Compiler, Logging {
 
 	/**
 	 * Add a source code transformer.
-	 * 
 	 * @param t
 	 */
 	public void add(SourceTransformation t) {
@@ -966,7 +1067,6 @@ public class DefaultCompiler implements Compiler, Logging {
 
 	/**
 	 * Remove a source code transformer.
-	 * 
 	 * @param t
 	 */
 	public void remove(SourceTransformation t) {
@@ -975,7 +1075,6 @@ public class DefaultCompiler implements Compiler, Logging {
 
 	/**
 	 * Get a list of source transformers installed.
-	 * 
 	 * @return a list of transformations
 	 */
 	public List<SourceTransformation> getSourceTransformers() {
@@ -984,11 +1083,8 @@ public class DefaultCompiler implements Compiler, Logging {
 
 	/**
 	 * Print a one line comment.
-	 * 
-	 * @param out
-	 *            a print writer
-	 * @param tokens
-	 *            (will be converted to strings using toString)
+	 * @param out a print writer
+	 * @param tokens (will be converted to strings using toString)
 	 */
 	private void printOneLineComment(PrintWriter out, Object... tokens) {
 		out.print("// ");
@@ -999,13 +1095,9 @@ public class DefaultCompiler implements Compiler, Logging {
 
 	/**
 	 * Print a parameter list generated from an array of input slots.
-	 * 
-	 * @param out
-	 *            a print writer
-	 * @param islots
-	 *            an array of slots
-	 * @param isDeclaration
-	 *            whether to include the type declarations
+	 * @param out  a print writer
+	 * @param islots an array of slots
+	 * @param isDeclaration whether to include the type declarations
 	 */
 	private void printParameters(PrintWriter out, Slot[] islots,boolean isDeclaration,boolean includeExplanation,boolean resetDerivationLevel) {
 		out.print("(");
@@ -1049,15 +1141,10 @@ public class DefaultCompiler implements Compiler, Logging {
 	/**
 	 * Print a Method comment with javadoc tags generated from an array of
 	 * slots.
-	 * 
-	 * @param out
-	 *            a print writer
-	 * @param comment
-	 *            the Methodcomment
-	 * @param islots
-	 *            the input/param slots
-	 * @param returnComment
-	 *            comment for the return tag
+	 * @param outa print writer
+	 * @param comment the Methodcomment
+	 * @param islots  the input/param slots
+	 * @param returnComment  comment for the return tag
 	 */
 	private void printMethodComment(PrintWriter out, String comment,
 			Slot[] islots, String returnComment) {
@@ -1078,13 +1165,9 @@ public class DefaultCompiler implements Compiler, Logging {
 
 	/**
 	 * Print a generic type followed by a white space.
-	 * 
-	 * @param out
-	 *            a print writer
-	 * @param type
-	 *            the type name
-	 * @param param
-	 *            the parameter type
+	 * @param out a print writer
+	 * @param type the type name
+	 * @param param the parameter type
 	 */
 	private void printGenericType(PrintWriter out, String type, String param) {
 		out.print(type);
@@ -1095,15 +1178,10 @@ public class DefaultCompiler implements Compiler, Logging {
 
 	/**
 	 * Print a constructor.
-	 * 
-	 * @param out
-	 *            a print writer
-	 * @param type
-	 *            the type name
-	 * @param genTypeParam
-	 *            the generic type parameter
-	 * @param params
-	 *            the parameters
+	 * @param out a print writer
+	 * @param type  the type name
+	 * @param genTypeParam the generic type parameter
+	 * @param params the parameters
 	 */
 	private void printContructorInvocation(PrintWriter out, String type,
 			String genTypeParam, String... params) {
@@ -1128,17 +1206,11 @@ public class DefaultCompiler implements Compiler, Logging {
 
 	/**
 	 * Print a constructor invocation for a class with two generic types.
-	 * 
-	 * @param out
-	 *            a print writer
-	 * @param type
-	 *            the type name
-	 * @param genType1
-	 *            the generic type parameter1
-	 * @param genType2
-	 *            the generic type parameter2
-	 * @param params
-	 *            the parameters
+	 * @param out a print writer
+	 * @param type   the type name
+	 * @param genType1 the generic type parameter1
+	 * @param genType2   the generic type parameter2
+	 * @param params the parameters
 	 */
 	private void printContructorInvocation2(PrintWriter out, String type,
 			String genTypeParam1, String genTypeParam2, String... params) {
@@ -1163,11 +1235,8 @@ public class DefaultCompiler implements Compiler, Logging {
 
 	/**
 	 * Print the code used to invoke the constructor.
-	 * 
-	 * @param out
-	 *            a print writer
-	 * @param queryRef
-	 *            the query + the parameters used
+	 * @param out a print writer
+	 * @param queryRef the query + the parameters used
 	 */
 	private void printConstructorInvocation(PrintWriter out, QueryRef queryRef) {
 		out.print("new ");
@@ -1183,35 +1252,87 @@ public class DefaultCompiler implements Compiler, Logging {
 		}
 		out.print(")");
 	}
-
+	/**
+	 * Print a constructor invocation for a class with two generic types.
+	 * @param out  a print writer
+	 * @param type  the type name
+	 */
+	private void printContructorInvocation(PrintWriter out, String type) {
+		out.print("new ");
+		out.print(type);
+		out.print("()");
+	}
+	/**
+	 * Print a constructor.
+	 * @param out a print writer
+	 * @param name  the method name
+	 * @param target the target object ref
+	 * @param params  the parameters
+	 */
+	private void printMethodInvocation(PrintWriter out, String name, String target,String... params) {
+		out.print(target);
+		out.print('.');
+		out.print(name);
+		out.print('(');
+		boolean f = true;
+		for (String param : params) {
+			if (f)
+				f = false;
+			else
+				out.print(",");
+			out.print(param);
+		}
+		out.print(')');
+	}
 	/**
 	 * Print a variable assignment.
-	 * 
-	 * @param out
-	 *            a print writer
-	 * @param obj
-	 *            the object reference
-	 * @param attr
-	 *            the attribute (optional)
-	 * @param value
-	 *            the value
-	 * @param valueAttr
-	 *            the value attribute (optional)
+	 * @param out   a print writer
+	 * @param obj    the object reference
+	 * @param attr  the attribute (optional)
+	 * @param value  the value
+	 * @param valueAttr the value attribute (optional)
+	 *  @param cast cast value to this type, don't cast if null
 	 */
-	private void printVariableAssignment(PrintWriter out, String obj,
-			String attr, String value, String valueAttr) {
+	private void printVariableAssignment(PrintWriter out, String obj,String attr, String value, String valueAttr,String cast) {
 		out.print(obj);
 		if (attr != null) {
 			out.print('.');
 			out.print(attr);
 		}
 		out.print('=');
+		if (cast!=null) {
+			out.print('(');
+			out.print(cast);
+			out.print(')');
+		}
 		out.print(value);
 		if (valueAttr != null) {
 			out.print('.');
 			out.print(valueAttr);
 		}
 		out.println(';');
+	}
+	
+	/**
+	 * Print a variable assignment.
+	 * @param out   a print writer
+	 * @param obj    the object reference
+	 * @param attr  the attribute (optional)
+	 * @param value  the value
+	 * @param valueAttr the value attribute (optional)
+	 */
+	private void printVariableAssignment(PrintWriter out, String obj,String attr, String value, String valueAttr) {
+		printVariableAssignment( out,  obj, attr,  value,  valueAttr,null);
+	}
+	/**
+	 * Print a variable assignment.
+	 * @param out   a print writer
+	 * @param obj    the object reference
+	 * @param attr  the attribute (optional)
+	 * @param value  the value
+	 */
+	private void printVariableAssignment(PrintWriter out, String obj,String attr, String value) {
+		printVariableAssignment( out,  obj, attr,  value,  null,null);
 	}
 
 	/**
@@ -1345,5 +1466,46 @@ public class DefaultCompiler implements Compiler, Logging {
 		if (value!=null)
 			to.addAnnotation(key, value);
 	}
-	
+	/**
+	 * Get all terms (recursive) occuring in a rule.
+	 * @param r a rule
+	 * @return a list of terms
+	 */
+	private List<Term> getAllTerms(DerivationRule r) {
+		List<Term> terms = new ArrayList<Term>();
+		List<Prerequisite>body = r.getBody();
+		for (Prerequisite p:body) {
+			collectTerms(terms,p);
+		}
+		collectTerms(terms,r.getHead());
+		return terms;
+	}
+	/**
+	 * Collect all terms.
+	 * @param list the list used to collect the terms
+	 * @param c the term container
+	 */
+	private void collectTerms(List<Term> terms,ComplexTerm c) {
+		for (Term t:c.getTerms()) {
+			// avoid duplication!
+			if (!terms.contains(t))
+				terms.add(t);
+			if (t instanceof ComplexTerm)
+				collectTerms(terms,(ComplexTerm)t);
+		}
+	}
+	/**
+	 * Collect all terms.
+	 * @param list the list used to collect the terms
+	 * @param c the term container
+	 */
+	private void collectTerms(List<Term> terms,Fact c) {
+		for (Term t:c.getTerms()) {
+			// avoid duplication!
+			if (!terms.contains(t))
+				terms.add(t);
+			if (t instanceof ComplexTerm)
+				collectTerms(terms,(ComplexTerm)t);
+		}
+	}
 }
