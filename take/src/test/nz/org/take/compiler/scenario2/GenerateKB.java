@@ -24,13 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.BasicConfigurator;
 import nz.org.take.KnowledgeBase;
-import nz.org.take.compiler.NameGenerator;
-import nz.org.take.compiler.reference.DefaultCompiler;
-import nz.org.take.compiler.util.DefaultLocation;
-import nz.org.take.compiler.util.DefaultNameGenerator;
-import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
 import nz.org.take.script.KnowledgeBaseReader;
-import nz.org.take.script.ScriptException;
 
 /**
  * Script to generate a KB.
