@@ -23,7 +23,7 @@ package nz.org.take;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class JavaMethodPredicate extends AbstractPredicate {
+public class JPredicate extends AbstractPredicate {
 
 	private java.lang.reflect.Method method = null;
 	public String getName() {
@@ -60,7 +60,7 @@ public class JavaMethodPredicate extends AbstractPredicate {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final JavaMethodPredicate other = (JavaMethodPredicate) obj;
+		final JPredicate other = (JPredicate) obj;
 		if (method == null) {
 			if (other.method != null)
 				return false;

@@ -20,9 +20,13 @@ package test.nz.org.take.compiler.scenario3;
 
 import java.util.*;
 
+import nz.org.take.DerivationRule;
+import nz.org.take.Fact;
+import nz.org.take.KnowledgeBase;
 import nz.org.take.rt.ResultSet;
+import test.nz.org.take.compiler.scenario2.GenerateKB;
+import test.nz.org.take.compiler.scenario3.generated.IsBrotherRelationship;
 import test.nz.org.take.compiler.scenario3.generated._KB;
-import test.nz.org.take.compiler.scenario3.generated._is_brother_of;
 import junit.framework.TestCase;
 
 /**
@@ -35,8 +39,9 @@ import junit.framework.TestCase;
 public class Tests extends TestCase
 {
 
+	private KnowledgeBase kb = null;
 	/**
-	 * Construct new test instance	 *
+	 * Construct new test instance
 	 * @param name the test name
 	 */
 	public Tests(String name)
@@ -54,6 +59,7 @@ public class Tests extends TestCase
 	protected void setUp() throws Exception
 	{
 		super.setUp();
+		kb = GenerateKB.buildKB();
 	}
 
 	/**
@@ -77,7 +83,7 @@ public class Tests extends TestCase
 		_KB kb = new _KB();
 		Person p1 = new Person("Klaus");
 		Person p2 = new Person("Lutz");
-		ResultSet<_is_brother_of> results = kb.is_brother_of_11(p1,p2);	
+		ResultSet<IsBrotherRelationship> results = kb.isBrother(p1,p2);	
 		assertTrue(results.hasNext());
 		List<String> x = results.getDerivationLog();
 		results.getDerivationController().printLog();
@@ -105,11 +111,11 @@ public class Tests extends TestCase
 		}
 		return count;
 	} 
-	private boolean isRule(String s) {
-		return s.contains("IF") && s.contains("THEN");
+	private boolean isRule(String id) {
+		return kb.getElement(id) instanceof DerivationRule;
 	}
-	private boolean isFact(String s) {
-		return !isRule(s);
+	private boolean isFact(String id) {
+		return kb.getElement(id) instanceof Fact;
 	}
 }
 	

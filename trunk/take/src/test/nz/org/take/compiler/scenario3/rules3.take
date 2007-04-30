@@ -7,4 +7,4 @@ var test.nz.org.take.compiler.scenario3.Person person1,person2
 @take.compilerhint.method=isBrother
 query isBrother(in,in)
 // rules
-rule1: if equals(getFather(person1),getFather(person2)) then isBrother(person1,person2) 
+rule1: if sameAs(getFather(person1),getFather(person2)) then isBrother(person1,person2) 

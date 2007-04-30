@@ -77,5 +77,7 @@ public class Person {
 		
 	}
 	
-	
+	public boolean sameAs(Person p) {
+		return this.getName().equals(p.getName());
+	}
 }
