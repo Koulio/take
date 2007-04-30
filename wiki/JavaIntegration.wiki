@@ -1,0 +1,39 @@
+#summary How Java functionality are integrated into rules.
+#labels Featured,Phase-Design,Phase-Implementation
+
+= Introduction =
+
+The smooth integration of Java types, objects and methods is one of the major design goals for Take.
+
+= Details =
+
+Java functionality is integrated as follows: 
+
+  # Java classes and interfaces are used as variable terms
+  # Java methods returning booleans can be used as predicates
+  # Arbitrary Java methods can be used as terms
+
+Planned, bot yet implemented: 
+
+  # Java object (references) to be used as constant terms
+  # Java properties and associations (one2one and one2many) to be used as predicates/ fact(s)
+  
+Examples: 
+
+The test scenario 3 uses Java methods as predicates and functions, and the custom class 'Person' is used as term type. The rule base is defined by the following [http://take.googlecode.com/svn/trunk/take/src/test/nz/org/take/compiler/scenario3/rules3.take script]:
+
+{{{
+// script for test scenario 1
+@@dc:creator=author jens dietrich
+@@dc:date=30/04/2007
+var test.nz.org.take.compiler.scenario3.Person person1,person2
+@take.compilerhint.class=IsBrotherRelationship
+@take.compilerhint.slots=person1,person2
+@take.compilerhint.method=isBrother
+query isBrother(in,in)
+// rules
+rule1: if sameAs(getFather(person1),getFather(person2)) then isBrother(person1,person2) 
+}}}
+
+`sameAs` and `getFather` are methods in `Person`.   Note that there are now facts. A query like 'isBrother(p1,p2)' is answered by performing `p1.getFather().sameAs(p2.getFather())`. 
+
