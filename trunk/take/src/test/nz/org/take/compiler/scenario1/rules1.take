@@ -1,6 +1,6 @@
 // script for test scenario 1
 @@dc:creator=author jens dietrich
-@@dc:date=26/02/2007
+@@dc:date=26/04/2007
 var java.lang.String person1,person2,person3
 var java.lang.String grandchild,father,grandfather
 // queries - annotations are optional and are used to generate 
