@@ -19,5 +19,4 @@ Bastian is a Master student in Information- and Mediatechnologies at the [http:/
 
 Projects:
   # [http://www.mandarax.org Mandarax] - in particular involved in the  [http://sourceforge.net/projects/mandarax compiler subproject]
-
   # [http://sourceforge.net/projects/dplab DPLab] - a teaching tool for Design Patterns based on Eclipse
