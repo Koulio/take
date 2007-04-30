@@ -235,9 +235,25 @@ public class KnowledgeBaseReader {
 		p.setTerms(terms);
 		return p;
 	}
+	private PredicateType getPredicateType(String name,nz.org.take.Term[] terms) throws ScriptException  {
+		
+		Class clazz = terms[0].getType();
+		Class[] paramTypes = new Class[terms.length-1];
+		for (int i=1;i<terms.length;i++) {
+			paramTypes[i-1]=terms[i].getType();
+		}
+		try {
+			Method m = clazz.getMethod(name,paramTypes);
+			// this is the name of a method, so this is a Java predicate
+			return PredicateType.JAVA;
+		}
+		catch (Exception x) {}
+		
+		return PredicateType.SIMPLE;
+	}
 	private nz.org.take.Predicate buildPredicate(Map<String,Variable> variables,Map<String,Predicate> predicatesByName,Condition c,nz.org.take.Term[] terms) throws ScriptException {
 		Predicate predicate = null;
-		PredicateType type = c.getPredicateType();
+		PredicateType type = getPredicateType(c.getPredicate(),terms);
 		if (type==PredicateType.SIMPLE) {
 			SimplePredicate p = new SimplePredicate();
 			p.setName(c.getPredicate());

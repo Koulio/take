@@ -24,5 +24,5 @@ package nz.org.take.script;
  */
 
 public interface Term  {
-
+	
 }

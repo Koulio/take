@@ -26,8 +26,6 @@ package nz.org.take.script;
 public class Condition extends TermContainer {
 	
 	private String predicate = null;
-	private PredicateType predicateType = null;
-
 	public String getPredicate() {
 		return predicate;
 	}
@@ -48,18 +46,7 @@ public class Condition extends TermContainer {
 			b.append(t);
 		}
 		b.append(')');
-		if  (this.predicateType==PredicateType.SIMPLE) b.append("[s]");
-		else if  (this.predicateType==PredicateType.JAVA) b.append("[j]");
-		else b.append("[?]");
 		return b.toString();
-	}
-
-	public PredicateType getPredicateType() {
-		return predicateType;
-	}
-
-	public void setPredicateType(PredicateType predicateType) {
-		this.predicateType = predicateType;
 	}
 	
 }
