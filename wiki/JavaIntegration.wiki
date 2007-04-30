@@ -35,5 +35,6 @@ query isBrother(in,in)
 rule1: if sameAs(getFather(person1),getFather(person2)) then isBrother(person1,person2) 
 }}}
 
-`sameAs` and `getFather` are methods in `Person`.   Note that there are now facts. A query like 'isBrother(p1,p2)' is answered by performing `p1.getFather().sameAs(p2.getFather())`. 
+`sameAs` and `getFather` are methods in `Person`.   Note that there are now facts. A query like `isBrother(p1,p2)` is answered by performing `p1.getFather().sameAs(p2.getFather())`. 
+
 
