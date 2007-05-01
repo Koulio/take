@@ -18,29 +18,32 @@
 
 package nz.org.take.script;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import nz.org.take.AbstractAnnotatable;
 
 /**
- * spec for queries
+ * Abstract script element.
+ * Keeps track of the position of elements in the script. 
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class QuerySpec extends ScriptElement {
-	private String predicate = null;
-	private List<Boolean> ioSpec = new ArrayList<Boolean>();
-
-	public String getPredicate() {
-		return predicate;
+public class ScriptElement  extends AbstractAnnotatable {
+	protected int line = -1;
+	protected int col = -1;
+	public int getCol() {
+		return col;
 	}
-	public void setPredicate(String predicate) {
-		this.predicate = predicate;
+	public void setCol(int col) {
+		this.col = col;
 	}
-	public List<Boolean> getIoSpec() {
-		return ioSpec;
+	public int getLine() {
+		return line;
 	}
-	public void addToIOSpec(boolean io) {
-		this.ioSpec.add(io);
+	public void setLine(int line) {
+		this.line = line;
 	}
+	public void setPosition(int line,int col) {
+		setLine(line);
+		setCol(col);
+	}
+	
 }

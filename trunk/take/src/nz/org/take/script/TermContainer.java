@@ -26,7 +26,7 @@ import java.util.List;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public abstract class TermContainer  {
+public abstract class TermContainer  extends ScriptElement {
 	
 	protected List<Term> terms = new ArrayList<Term>();
 

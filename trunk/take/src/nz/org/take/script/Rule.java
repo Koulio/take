@@ -26,7 +26,15 @@ import java.util.List;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Rule  {
+public class Rule extends ScriptElement  {
+	@Override
+	public int getLine() {
+		if (this.line==-1 && this.getConditions().size()>1)
+			return this.conditions.get(0).getLine();
+		else
+			return super.getLine();
+	}
+
 	private List<Condition> conditions = new ArrayList<Condition>();
 	private String id = null;
 

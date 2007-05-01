@@ -25,7 +25,7 @@ package nz.org.take.script;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Comment   {
+public class Comment extends ScriptElement {
 
 	private String text = null;
 	public String getText() {

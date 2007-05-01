@@ -23,7 +23,7 @@ package nz.org.take.script;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class ConstantTerm implements Term {
+public class ConstantTerm extends ScriptElement implements Term {
 	
 	private String value = null;
 	private String type = null;

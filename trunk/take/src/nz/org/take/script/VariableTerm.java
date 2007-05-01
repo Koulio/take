@@ -23,7 +23,7 @@ package nz.org.take.script;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class VariableTerm implements Term {
+public class VariableTerm extends ScriptElement implements Term {
 	private String name = null;
 
 	public VariableTerm() {

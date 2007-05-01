@@ -57,6 +57,7 @@
     t = jj_consume_token(GLOBALANNOTATION);
          a.setGlobal(true);
          a.setAnnotation(t.image.substring(2));
+         a.setPosition(t.beginLine,t.beginColumn);
          script.add(a);
   }
 
@@ -66,6 +67,7 @@
     t = jj_consume_token(LOCALANNOTATION);
          a.setGlobal(false);
          a.setAnnotation(t.image.substring(1));
+         a.setPosition(t.beginLine,t.beginColumn);
          script.add(a);
   }
 
@@ -74,12 +76,14 @@
          Comment c = new Comment();
     t = jj_consume_token(COMMENT);
          c.setText(t.image.substring(2));
+         c.setPosition(t.beginLine,t.beginColumn);
          script.add(c);
   }
 
   static final public void query(Script script) throws ParseException {
+        Token t;
          QuerySpec q = new QuerySpec();
-    jj_consume_token(QUERY);
+    t = jj_consume_token(QUERY);
     predicateQ(q);
     jj_consume_token(25);
     io(q);
@@ -97,6 +101,7 @@
       io(q);
     }
     jj_consume_token(27);
+         q.setPosition(t.beginLine,t.beginColumn);
          script.add(q);
   }
 
@@ -134,8 +139,9 @@
   }
 
   static final public void var(Script script) throws ParseException {
+        Token t;
          VariableDeclaration v = new VariableDeclaration();
-    jj_consume_token(VAR);
+    t = jj_consume_token(VAR);
     vartype(v);
     label_3:
     while (true) {
@@ -164,6 +170,7 @@
       jj_consume_token(26);
       varname(v);
     }
+         v.setPosition(t.beginLine,t.beginColumn);
          script.add(v);
   }
 
@@ -269,6 +276,7 @@
          VariableTerm v = new VariableTerm();
     t = jj_consume_token(NAME);
          v.setName(t.image);
+         v.setPosition(t.beginLine,t.beginColumn);
          c.add(v);
   }
 
@@ -278,6 +286,7 @@
     t = jj_consume_token(STRING_LITERAL);
          v.setValue(t.image.substring(1,t.image.length()-1));
          v.setType("java.lang.String");
+         v.setPosition(t.beginLine,t.beginColumn);
          c.add(v);
   }
 
@@ -293,12 +302,14 @@
   static final public void function(ComplexTerm ct) throws ParseException {
         Token t;
     t = jj_consume_token(NAME);
+         ct.setPosition(t.beginLine,t.beginColumn);
          ct.setFunction(t.image);
   }
 
   static final public void predicate(Condition c) throws ParseException {
         Token t;
     t = jj_consume_token(NAME);
+         c.setPosition(t.beginLine,t.beginColumn);
          c.setPredicate(t.image);
   }
 
@@ -307,6 +318,23 @@
     try { return !jj_3_1(); }
     catch(LookaheadSuccess ls) { return true; }
     finally { jj_save(0, xla); }
+  }
+
+  static final private boolean jj_3R_12() {
+    if (jj_3R_14()) return true;
+    return false;
+  }
+
+  static final private boolean jj_3R_13() {
+    if (jj_scan_token(NAME)) return true;
+    return false;
+  }
+
+  static final private boolean jj_3R_7() {
+    if (jj_3R_8()) return true;
+    if (jj_scan_token(25)) return true;
+    if (jj_3R_9()) return true;
+    return false;
   }
 
   static final private boolean jj_3_1() {
@@ -337,30 +365,13 @@
     return false;
   }
 
-  static final private boolean jj_3R_9() {
-    if (jj_3R_10()) return true;
-    return false;
-  }
-
   static final private boolean jj_3R_8() {
     if (jj_scan_token(NAME)) return true;
     return false;
   }
 
-  static final private boolean jj_3R_12() {
-    if (jj_3R_14()) return true;
-    return false;
-  }
-
-  static final private boolean jj_3R_13() {
-    if (jj_scan_token(NAME)) return true;
-    return false;
-  }
-
-  static final private boolean jj_3R_7() {
-    if (jj_3R_8()) return true;
-    if (jj_scan_token(25)) return true;
-    if (jj_3R_9()) return true;
+  static final private boolean jj_3R_9() {
+    if (jj_3R_10()) return true;
     return false;
   }
 
