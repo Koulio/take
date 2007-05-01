@@ -19,11 +19,11 @@
 package nz.org.take.script;
 
 /**
- * Comment.
+ * Annotations.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Annotation   {
+public class Annotation extends ScriptElement {
 
 	private boolean isGlobal = false;
 	private String key = null;

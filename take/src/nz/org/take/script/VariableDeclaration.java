@@ -27,7 +27,7 @@ import java.util.List;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class VariableDeclaration {
+public class VariableDeclaration extends ScriptElement  {
 	private String type = null;
 	private List<String> names = new ArrayList<String>();
 	public void addName(String name) {

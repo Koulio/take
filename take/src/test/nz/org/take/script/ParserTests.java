@@ -48,6 +48,9 @@ public class ParserTests extends TestCase {
 	private Annotation getAnnotationAt(Script script,int i) {
 		return (Annotation)script.getElements().get(i);
 	}
+	private ScriptElement getElementAt(Script script,int i) {
+		return (ScriptElement)script.getElements().get(i);
+	}
 	private Rule getRuleAt(Script script,int i) {
 		return (Rule)script.getElements().get(i);
 	}
@@ -245,5 +248,29 @@ public class ParserTests extends TestCase {
 		assertEquals("description",a3.getKey().trim());
 		assertEquals("a query",a3.getValue().trim());
 		assertFalse(a3.isGlobal());
+	}
+	public void test50() throws Exception {
+		String input = 
+			"@@dc:Creator=Jens\n"+
+			"@@dc:Date=01/01/07\n"+
+			"var int x,y\n"+
+			"var java.lang.String a,b,c\n"+
+			"//queries\n"+
+			"@description=a query\n"+
+			"query p(in,out)\n"+
+			"rule3: if p1(x,y) and p2(x,y) then p3(y,x)\n";
+		
+		Script script = parse(input);
+		for (int i=0;i<8;i++)
+			assertEquals(i+1,getElementAt(script,i).getLine());
+		
+		// check terms
+		Rule r = this.getRuleAt(script,7);
+		Condition c = r.getConditions().get(0);
+		assertEquals(8,c.getLine());
+		VariableTerm v = (VariableTerm)c.getTerms().get(0);
+		assertEquals(8,v.getLine());
+		
+
 	}
 }

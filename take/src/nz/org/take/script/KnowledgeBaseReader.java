@@ -182,7 +182,7 @@ public class KnowledgeBaseReader {
 			clazz = this.classloader.loadClass(vd.getType());
 		}
 		catch (ClassNotFoundException x) {
-			throw new ScriptSemanticsException("Can not load the following type referenced in script: " + vd.getType(),x);
+			throw new ScriptSemanticsException("Can not load the following type referenced in script: " + vd.getType() + this.printPosInfo(vd),x);
 		}		
 		List<Variable> variables = new ArrayList<Variable>();
 		for (String name:vd.getNames()) {
@@ -198,7 +198,7 @@ public class KnowledgeBaseReader {
 		String predicateName = q.getPredicate()+'_'+q.getIoSpec().size();
 		Predicate p = predicatesByName.get(predicateName);
 		if (p==null)
-			throw new ScriptSemanticsException("Query references a predicate that is not defined in the script: " + q.getPredicate() + " with " + q.getIoSpec().size() + " slots");
+			throw new ScriptSemanticsException("Query references a predicate that is not defined in the script: " + q.getPredicate() + " with " + q.getIoSpec().size() + " slots" + this.printPosInfo(q));
 		
 		query.setPredicate(p);
 		boolean[] io = new boolean[q.getIoSpec().size()];
@@ -274,7 +274,7 @@ public class KnowledgeBaseReader {
 			predicate=p;			
 		}
 		else 
-			throw new ScriptSemanticsException ("Unsupported predicate type encountered in condition: " + c);
+			throw new ScriptSemanticsException ("Unsupported predicate type encountered in condition: " + print(c));
 		String id = this.getId(predicate);
 		Predicate existingPredicate = predicatesByName.get(id);
 		if (existingPredicate==null) {
@@ -305,7 +305,7 @@ public class KnowledgeBaseReader {
 			String name = ((VariableTerm)t).getName();
 			Variable var = variables.get(name);
 			if (var==null)
-				throw new ScriptSemanticsException("This variable is used before it is defined: " + name);
+				throw new ScriptSemanticsException("This variable is used before it is defined: " + print(t));
 			return var;
 		}
 		else if (t instanceof ConstantTerm) {
@@ -317,7 +317,7 @@ public class KnowledgeBaseReader {
 			}
 			
 			else 
-				throw new ScriptSemanticsException("Constant terms of this type are not yet supported " + ct.getType());
+				throw new ScriptSemanticsException("Constant terms of this type are not yet supported: " + ct.getType() + " " + printPosInfo((Term)ct));
 		}
 		else if (t instanceof ComplexTerm) {
 			ComplexTerm ct = (ComplexTerm)t;
@@ -332,7 +332,7 @@ public class KnowledgeBaseReader {
 			return cplxTerm;
 		}
 		else
-			throw new ScriptSemanticsException("This term type  is not yet supported " + t);
+			throw new ScriptSemanticsException("This term type  is not yet supported " + print(t));
 	}
 	private Class[] getParamTypes(nz.org.take.Term[] terms) {
 		Class[] paramTypes = new Class[terms.length-1];
@@ -341,4 +341,24 @@ public class KnowledgeBaseReader {
 		}
 		return paramTypes;
 	}
+	private String print(ScriptElement e) {
+		return new StringBuffer()
+			.append(e.toString())
+			.append(printPosInfo(e))
+			.toString();
+	}
+	private String printPosInfo(ScriptElement e) {
+		return new StringBuffer()
+			.append("[in line ")
+			.append(e.getLine())
+			.append(']')
+			.toString();
+	}
+	private String printPosInfo(Term t) {
+		return  printPosInfo((ScriptElement)t);
+	}
+	private String print(Term t) {
+		return print((ScriptElement)t);
+	}
+
 }

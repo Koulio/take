@@ -20,12 +20,14 @@ package nz.org.take;
 import java.util.HashMap;
 import java.util.Map;
 
+import nz.org.take.script.ScriptElement;
+
 /**
  * Abstract superclass for classes that can be annotated.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public abstract class  AbstractAnnotatable implements Annotatable  {
+public abstract class AbstractAnnotatable implements Annotatable  {
 	private Map<String,String> annotations = new HashMap<String,String>();
 
 	public Map<String, String> getAnnotations() {
