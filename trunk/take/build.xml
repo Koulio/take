@@ -1,6 +1,24 @@
 <?xml version="1.0"?>
-
-<project name="simplebundle" default="javacc">
+<!-- Buid script for take -->
+<!-- Authors Jens Dietrich <j.b.dietrich@massey.ac.nz> -->
+	
+<project name="simplebundle" default="compile">
+	<property name="name" value="take"/>
+	<property name="version" value="0.1"/>
+	<property name="version_suffix" value="0.1"/>
+	<property name="debug" value="on"/>
+	<property name="src.dir" value="src"/>
+	<property name="classes.dir" value="classes"/>
+	<property name="docs.dir" value="docs"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="config.dir" value="config"/>
+	<property name="build.dir" value="build"/>
+	<property name="build.classes" value="${build.dir}/classes"/>
+	<property name="build.lib" value="${build.dir}/lib"/>
+	<property name="build.main.jar" value="${build.lib}/${name}-${version}.jar"/>
+	<property name="build.script.jar" value="${build.lib}/${name}-script-${version}.jar"/>
+	<property name="build.rt.jar" value="${build.lib}/${name}-rt-${version}.jar"/>
+	<property name="build.test.jar" value="${build.lib}/${name}-tests-${version}.jar"/>
     <path id="build.classpath">
         <fileset dir="lib">
             <include name="**/*.jar" />
@@ -8,7 +26,14 @@
     </path>
 	<property name="build" value="./build"/>
 	<property name="classes" value="${build}/classes"/>
-<target name="javacc">
+<!-- Prepare the output directories-->	
+<target name="prepare" description="Prepare the build directories">
+	<mkdir dir="${build.dir}"/>
+	<mkdir dir="${build.classes}"/>
+	<mkdir dir="${build.lib}"/>
+</target>
+<!-- Generate the parser using JavaCC -->
+<target name="generateparser" description="Generate the parser">
 	<javacc
 	    target="grammar/take.jj"
 	    outputdirectory="src/nz/org/take/script/parser"
@@ -16,8 +41,48 @@
 	    static="true"
 	/>
 </target>	
+<!-- Compiles the classes -->	
+<target name="compile" depends="prepare,generateparser" description="Compile the whole project">
+	<javac destdir="${build.classes}" 
+         debug="${debug}" 
+         deprecation="on"
+         optimize="off"
+         srcdir="${src.dir}"
+         classpathref="build.classpath"
+	/>
+</target>
+<!-- Tests the project, using JUnit tests -->
+<target name="tests" depends="compile" description="Tests the project">
+	<junit printsummary="yes" haltonfailure="no">
+		<classpath>
+			<pathelement location="${build.classes}"/>
+			<pathelement path="${java.class.path}"/>
+		</classpath>
+		<formatter type="plain"/>
+		<test name="test.nz.org.take.script.ParserTests"/>
+		<test name="test.nz.org.take.compiler.scenario1.Tests"/>
+		<test name="test.nz.org.take.compiler.scenario2.Tests"/>
+		<test name="test.nz.org.take.compiler.scenario3.Tests"/>
+	</junit>
+</target>
+<!-- build the jars -->
+<target name="jar" depends="compile" description="Creates the jar file">
+	<filter token="NAME" value="${name}"/>
+	<filter token="TITLE" value="${name}"/>
+	<filter token="VERSION" value="${version}"/>
+	<filter token="VENDOR" value="Jens Dietrich, Massey University"/>
+	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
+	<!-- separate jar files for runtime and tests -->
+	<jar jarfile="${build.main.jar}" 
+		manifest="${build.tmp}/manifest.mf" 
+		basedir="${build.classes}"
+		excludes="test/**/*.*,/**/*.*"
+	/>
+
+</target>
+<!-- clean up -->	
 <target name="clean">
-<delete dir = "${classes}"/>
-<delete dir = "${build}"/>
+	<delete dir = "${classes}"/>
+	<delete dir = "${build}"/>
 </target>
 </project>
