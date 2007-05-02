@@ -19,8 +19,6 @@
 package test.nz.org.take.compiler.scenario1;
 
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import test.nz.org.take.compiler.scenario1.generated.*;
 import nz.org.take.rt.DerivationController;
 import nz.org.take.rt.ResultSet;
