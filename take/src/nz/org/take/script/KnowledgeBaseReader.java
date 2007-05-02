@@ -20,6 +20,7 @@ package nz.org.take.script;
 
 import java.io.Reader;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -236,8 +237,9 @@ public class KnowledgeBaseReader {
 		p.setTerms(terms);
 		return p;
 	}
-	private PredicateType getPredicateType(String name,nz.org.take.Term[] terms) throws ScriptException  {
-		
+	// try to find a method for the term (types) and the name
+	// this is used to decide the predicate type
+	private Method getMethod(String name,nz.org.take.Term[] terms) throws ScriptException  {		
 		Class clazz = terms[0].getType();
 		Class[] paramTypes = new Class[terms.length-1];
 		for (int i=1;i<terms.length;i++) {
@@ -245,17 +247,32 @@ public class KnowledgeBaseReader {
 		}
 		try {
 			Method m = clazz.getMethod(name,paramTypes);
-			// this is the name of a method, so this is a Java predicate
-			return PredicateType.JAVA;
+			return m;
 		}
-		catch (Exception x) {}
+		catch (Exception x) {
+			// start investigating supertypes
+			Method[] methods = clazz.getMethods();
+			for (Method m:methods) {
+				if (Modifier.isPublic(m.getModifiers())) {
+					if (m.getName().equals(name) && m.getParameterTypes().length==paramTypes.length) {
+						// check types
+						boolean ok = true;
+						for (int i=0;i<paramTypes.length;i++) {
+							ok = ok && m.getParameterTypes()[i].isAssignableFrom(paramTypes[i]);
+						}
+						if (ok)
+							return m;
+					}
+				}
+			}
+		}
+		return null;
 		
-		return PredicateType.SIMPLE;
 	}
 	private nz.org.take.Predicate buildPredicate(Map<String,Variable> variables,Map<String,Predicate> predicatesByName,Condition c,nz.org.take.Term[] terms) throws ScriptException {
 		Predicate predicate = null;
-		PredicateType type = getPredicateType(c.getPredicate(),terms);
-		if (type==PredicateType.SIMPLE) {
+		Method m = getMethod(c.getPredicate(),terms);
+		if (m==null) {
 			SimplePredicate p = new SimplePredicate();
 			p.setName(c.getPredicate());
 			Class[] types = new Class[terms.length];
@@ -265,16 +282,13 @@ public class KnowledgeBaseReader {
 			p.setSlotTypes(types);
 			predicate=p;
 		}
-		else if (type==PredicateType.JAVA) {
+		else {
 			JPredicate p = new JPredicate();
 			// TODO matching using superclasses			
 			Class[] paramTypes = getParamTypes( terms);
-			Method m = findMethod(c.getPredicate(),terms);
 			p.setMethod(m);
 			predicate=p;			
 		}
-		else 
-			throw new ScriptSemanticsException ("Unsupported predicate type encountered in condition: " + print(c));
 		String id = this.getId(predicate);
 		Predicate existingPredicate = predicatesByName.get(id);
 		if (existingPredicate==null) {
