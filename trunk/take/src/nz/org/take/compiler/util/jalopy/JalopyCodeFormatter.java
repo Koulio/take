@@ -18,15 +18,18 @@
 
 package nz.org.take.compiler.util.jalopy;
 
+import org.apache.log4j.Logger;
 import nz.org.take.compiler.*;
-
 import de.hunsicker.jalopy.Jalopy;
+
 /**
  * Code pretty printer.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 public class JalopyCodeFormatter implements SourceTransformation {
 
+	public Logger LOGGER = Logger.getLogger(JalopyCodeFormatter.class);
+	
 	public JalopyCodeFormatter() {
 		super();
 	}

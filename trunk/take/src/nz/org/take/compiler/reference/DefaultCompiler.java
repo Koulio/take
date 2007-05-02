@@ -20,6 +20,9 @@ package nz.org.take.compiler.reference;
 
 import java.io.PrintWriter;
 import java.util.*;
+
+import org.apache.log4j.Logger;
+
 import nz.org.take.compiler.*;
 import nz.org.take.compiler.Compiler;
 import nz.org.take.compiler.util.*;
@@ -30,7 +33,9 @@ import nz.org.take.*;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class DefaultCompiler implements Compiler, Logging {
+public class DefaultCompiler implements Compiler {
+	
+	public Logger LOGGER = Logger.getLogger(DefaultCompiler.class);
 
 	private static final String RESULT = "result";
 	

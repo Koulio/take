@@ -20,8 +20,11 @@ package nz.org.take.compiler;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import nz.org.take.KnowledgeBase;
 import nz.org.take.Query;
+import nz.org.take.compiler.reference.DefaultCompiler;
 
 
 
@@ -31,7 +34,7 @@ import nz.org.take.Query;
  */
 
 public interface Compiler {
-	
+		
 	/**
 	 * Compile the kb with an explicit list of queries.
 	 * @param kb a knowledge base
