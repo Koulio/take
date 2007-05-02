@@ -78,7 +78,11 @@
 		basedir="${build.classes}"
 		excludes="test/**/*.*,/**/*.*"
 	/>
-
+	<jar jarfile="${build.rt.jar}" 
+		manifest="${build.tmp}/manifest.mf" 
+		basedir="${build.classes}"
+		includes="nz/org/take/rt/*.*"
+	/>
 </target>
 <!-- clean up -->	
 <target name="clean">
