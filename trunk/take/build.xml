@@ -2,7 +2,7 @@
 <!-- Buid script for take -->
 <!-- Authors Jens Dietrich <j.b.dietrich@massey.ac.nz> -->
 	
-<project name="simplebundle" default="compile">
+<project name="take" default="jar">
 	<property name="name" value="take"/>
 	<property name="version" value="0.1"/>
 	<property name="version_suffix" value="0.1"/>
@@ -15,6 +15,7 @@
 	<property name="build.dir" value="build"/>
 	<property name="build.classes" value="${build.dir}/classes"/>
 	<property name="build.lib" value="${build.dir}/lib"/>
+	<property name="build.tmp" value="${build.dir}/tmp"/>
 	<property name="build.main.jar" value="${build.lib}/${name}-${version}.jar"/>
 	<property name="build.script.jar" value="${build.lib}/${name}-script-${version}.jar"/>
 	<property name="build.rt.jar" value="${build.lib}/${name}-rt-${version}.jar"/>
@@ -31,6 +32,7 @@
 	<mkdir dir="${build.dir}"/>
 	<mkdir dir="${build.classes}"/>
 	<mkdir dir="${build.lib}"/>
+	<mkdir dir="${build.tmp}"/>
 </target>
 <!-- Generate the parser using JavaCC -->
 <target name="generateparser" description="Generate the parser">
@@ -42,17 +44,49 @@
 	/>
 </target>	
 <!-- Compiles the classes -->	
-<target name="compile" depends="prepare,generateparser" description="Compile the whole project">
+<!-- we dop not compile the generated test and example code-->
+<!-- this will should be compiled (code generated) using the output of this task -->	
+<target name="compile" depends="prepare,generateparser" description="Compile the whole project except the generated test code tests">
 	<javac destdir="${build.classes}" 
-         debug="${debug}" 
-         deprecation="on"
-         optimize="off"
-         srcdir="${src.dir}"
-         classpathref="build.classpath"
+        debug="${debug}" 
+        deprecation="on"
+        optimize="off"
+        srcdir="${src.dir}"
+        classpathref="build.classpath"
+		excludes="test/**/generated/*.*,test/**/*Tests.*"
 	/>
 </target>
+<!-- Compiles the tests -->	
+<target name="compiletests" depends="generatetestcode" description="Compile the tests">
+	<javac destdir="${build.classes}" 
+        debug="${debug}" 
+        deprecation="on"
+        optimize="off"
+        srcdir="${src.dir}"
+        classpathref="build.classpath"
+		includes="test/**/*.*,/**/*.*"
+	/>
+</target>
+<!-- Generate tests sources -->
+<target name="generatetestcode" depends="compile" description="Compiles the test cases with the take compiler">
+	<path id="path4generatingtests">
+		<pathelement location="${build.classes}"/>
+	    <fileset dir="lib">
+	        <include name="**/*.jar"/>
+	    </fileset>
+	</path>
+	<java classname="test.nz.org.take.compiler.scenario1.GenerateClasses">
+		<classpath><path refid="path4generatingtests"/></classpath>
+	</java>
+	<java classname="test.nz.org.take.compiler.scenario2.GenerateClasses">
+		<classpath><path refid="path4generatingtests"/></classpath>
+	</java>
+	<java classname="test.nz.org.take.compiler.scenario3.GenerateClasses">
+		<classpath><path refid="path4generatingtests"/></classpath>
+	</java>
+</target>
 <!-- Tests the project, using JUnit tests -->
-<target name="tests" depends="compile" description="Tests the project">
+<target name="tests" depends="compiletests" description="Tests the project">
 	<junit printsummary="yes" haltonfailure="no">
 		<classpath>
 			<pathelement location="${build.classes}"/>
@@ -66,9 +100,8 @@
 	</junit>
 </target>
 <!-- build the jars -->
-<target name="jar" depends="compile" description="Creates the jar file">
-	<filter token="NAME" value="${name}"/>
-	<filter token="TITLE" value="${name}"/>
+<target name="jar" depends="tests" description="Creates the jar file">
+	<filter token="TITLE" value="${name} API and reference compiler"/>
 	<filter token="VERSION" value="${version}"/>
 	<filter token="VENDOR" value="Jens Dietrich, Massey University"/>
 	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
@@ -76,12 +109,31 @@
 	<jar jarfile="${build.main.jar}" 
 		manifest="${build.tmp}/manifest.mf" 
 		basedir="${build.classes}"
-		excludes="test/**/*.*,/**/*.*"
+		excludes="test/**/*.*,/**/*.*,nz/org/take/rt/*.*,nz/org/take/script/**/*.*"
 	/>
+	<filter token="TITLE" value="${name} runtime classes"/>
+	<delete file="${build.tmp}/manifest.mf"/>
+	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
 	<jar jarfile="${build.rt.jar}" 
 		manifest="${build.tmp}/manifest.mf" 
 		basedir="${build.classes}"
 		includes="nz/org/take/rt/*.*"
+	/>
+	<filter token="TITLE" value="${name} scripting language"/>
+	<delete file="${build.tmp}/manifest.mf"/>
+	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
+	<jar jarfile="${build.script.jar}" 
+		manifest="${build.tmp}/manifest.mf" 
+		basedir="${build.classes}"
+		includes="nz/org/take/script/**/*.*"
+	/>
+	<filter token="TITLE" value="${name} JUnit test cases"/>
+	<delete file="${build.tmp}/manifest.mf"/>
+	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
+	<jar jarfile="${build.test.jar}" 
+		manifest="${build.tmp}/manifest.mf" 
+		basedir="${build.classes}"
+		includes="test/**/*.*,/**/*.*"
 	/>
 </target>
 <!-- clean up -->	
