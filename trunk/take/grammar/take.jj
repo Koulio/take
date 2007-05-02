@@ -52,6 +52,7 @@ void localannotation(Script script):
 	t = <GLOBALANNOTATION>
 	{a.setGlobal(true);}
 	{a.setAnnotation(t.image.substring(2));}
+	{a.setPosition(t.beginLine,t.beginColumn);}
 	{script.add(a);}
 }
 void globalannotation(Script script):
@@ -63,22 +64,28 @@ void globalannotation(Script script):
 	t = <LOCALANNOTATION>
 	{a.setGlobal(false);}
 	{a.setAnnotation(t.image.substring(1));}
+	{a.setPosition(t.beginLine,t.beginColumn);}
 	{script.add(a);}
 }
 void comment(Script script):
 {
-	Token t;}
+	Token t;
+}
 {
 	{Comment c = new Comment();}
 	t=<COMMENT>
 	{c.setText(t.image.substring(2));}
+	{c.setPosition(t.beginLine,t.beginColumn);}
 	{script.add(c);}
 }
 void query(Script script):
-{}
+{
+	Token t;
+}
 {
 	{QuerySpec q = new QuerySpec();}
-	<QUERY> predicateQ(q)"("io(q)(","io(q))*")"
+	t=<QUERY> predicateQ(q)"("io(q)(","io(q))*")"
+	{q.setPosition(t.beginLine,t.beginColumn);}
 	{script.add(q);}
 }
 void predicateQ(QuerySpec q):
@@ -111,10 +118,13 @@ void out(QuerySpec q):
 	{q.addToIOSpec(false);}
 }
 void var(Script script):
-{}
+{
+	Token t;
+}
 {
 	{VariableDeclaration v = new VariableDeclaration();}
-	<VAR> vartype(v)(<DOT>vartype(v))* 	varname(v) (","varname(v))*
+	t=<VAR> vartype(v)(<DOT>vartype(v))* 	varname(v) (","varname(v))*
+	{v.setPosition(t.beginLine,t.beginColumn);}
 	{script.add(v);}
 }
 void vartype(VariableDeclaration var):
@@ -181,6 +191,7 @@ void variableTerm(TermContainer c) :
 	{VariableTerm v = new VariableTerm();}	
 	t = <NAME>
 	{v.setName(t.image);}
+	{v.setPosition(t.beginLine,t.beginColumn);}
 	{c.add(v);}
 }
 void stringLiteral(TermContainer c) :
@@ -192,6 +203,7 @@ void stringLiteral(TermContainer c) :
 	t = <STRING_LITERAL>
 	{v.setValue(t.image.substring(1,t.image.length()-1));}
 	{v.setType("java.lang.String");}
+	{v.setPosition(t.beginLine,t.beginColumn);}
 	{c.add(v);}
 	
 }
@@ -209,6 +221,7 @@ void function(ComplexTerm ct) :
 }
 {	
 	t = <NAME>
+	{ct.setPosition(t.beginLine,t.beginColumn);}
 	{ct.setFunction(t.image);}	
 }
 void predicate(Condition c) :
@@ -217,5 +230,6 @@ void predicate(Condition c) :
 }
 {	
 	t = <NAME>
+	{c.setPosition(t.beginLine,t.beginColumn);}
 	{c.setPredicate(t.image);}	
 }
