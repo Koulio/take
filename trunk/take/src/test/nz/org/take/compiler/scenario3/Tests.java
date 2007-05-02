@@ -26,6 +26,7 @@ import nz.org.take.KnowledgeBase;
 import nz.org.take.rt.ResultSet;
 import test.nz.org.take.compiler.scenario2.GenerateKB;
 import test.nz.org.take.compiler.scenario3.generated.IsBrotherRelationship;
+import test.nz.org.take.compiler.scenario3.generated.IsBrotherRelationship2;
 import test.nz.org.take.compiler.scenario3.generated._KB;
 import junit.framework.TestCase;
 
@@ -84,6 +85,19 @@ public class Tests extends TestCase
 		Person p1 = new Person("Klaus");
 		Person p2 = new Person("Lutz");
 		ResultSet<IsBrotherRelationship> results = kb.isBrother(p1,p2);	
+		assertTrue(results.hasNext());
+		List<String> x = results.getDerivationLog();
+		results.getDerivationController().printLog();
+		assertEquals("Wrong number of rules",1,countRules(x));
+	}
+	public void test2(){
+		
+		System.out.println("starting test case 2");
+		
+		_KB kb = new _KB();
+		Person p1 = new Person("Klaus");
+		Person p2 = new Person("Lutz");
+		ResultSet<IsBrotherRelationship2> results = kb.isBrother2(p1,p2);	
 		assertTrue(results.hasNext());
 		List<String> x = results.getDerivationLog();
 		results.getDerivationController().printLog();
