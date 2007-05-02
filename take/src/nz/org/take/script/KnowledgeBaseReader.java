@@ -24,6 +24,8 @@ import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.Map.Entry;
 
+import org.apache.log4j.Logger;
+
 import nz.org.take.AbstractPredicate;
 import nz.org.take.Annotatable;
 import nz.org.take.AnnotationKeys;
@@ -50,6 +52,8 @@ import nz.org.take.script.parser.Parser;
 public class KnowledgeBaseReader {
 	private ClassLoader classloader = KnowledgeBaseReader.class.getClassLoader();
 	private static Parser parser =null;
+	public Logger LOGGER = Logger.getLogger(KnowledgeBaseReader.class);
+	
 	/**
 	 * Parse a script. 
 	 * @param input
@@ -272,6 +276,9 @@ public class KnowledgeBaseReader {
 	private nz.org.take.Predicate buildPredicate(Map<String,Variable> variables,Map<String,Predicate> predicatesByName,Condition c,nz.org.take.Term[] terms) throws ScriptException {
 		Predicate predicate = null;
 		Method m = getMethod(c.getPredicate(),terms);
+		if (m!=null) {
+			LOGGER.debug("Interpreted predicate " + predicatesByName + this.printPosInfo(c) + " as method " + m);
+		}
 		if (m==null) {
 			SimplePredicate p = new SimplePredicate();
 			p.setName(c.getPredicate());

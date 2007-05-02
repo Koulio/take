@@ -18,15 +18,13 @@
 
 package nz.org.take.compiler;
 
-import nz.org.take.compiler.util.Logging;
-
 /**
  * Transforms generated sources.
  * Can be used for AOP like code injection, or pretty printing.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  * @version 0.1
  */
-public interface SourceTransformation extends Logging {
+public interface SourceTransformation  {
 	/**
 	 * Transform the source code for the class.
 	 * @param loc the location
