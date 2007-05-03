@@ -1,0 +1,12 @@
+// script for test scenario 3 - references Java methods as functions and predicates
+@@dc:creator=author jens dietrich
+@@dc:date=30/04/2007
+var test.nz.org.take.compiler.scenario4.Student student
+var test.nz.org.take.compiler.scenario4.Course course
+var test.nz.org.take.compiler.scenario4.College college
+query isEnrolled(in,out)
+@take.compilerhint.class=IsEnrolled
+@take.compilerhint.slots=student,college
+@take.compilerhint.method=isInrolled
+// rules
+rule1: if course(student,course) and degree(course,college) then isEnrolled(student,college)

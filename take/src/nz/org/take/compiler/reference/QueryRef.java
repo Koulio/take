@@ -20,8 +20,6 @@ package nz.org.take.compiler.reference;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
-
 import nz.org.take.Predicate;
 import nz.org.take.Query;
 
