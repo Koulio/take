@@ -11,15 +11,15 @@
 	<property name="classes.dir" value="classes"/>
 	<property name="docs.dir" value="docs"/>
 	<property name="lib.dir" value="lib"/>
-	<property name="config.dir" value="config"/>
+	<property name="config.dir" value="misc"/>
 	<property name="build.dir" value="build"/>
 	<property name="build.classes" value="${build.dir}/classes"/>
 	<property name="build.lib" value="${build.dir}/lib"/>
 	<property name="build.tmp" value="${build.dir}/tmp"/>
-	<property name="build.main.jar" value="${build.lib}/${name}-${version}.jar"/>
-	<property name="build.script.jar" value="${build.lib}/${name}-script-${version}.jar"/>
-	<property name="build.rt.jar" value="${build.lib}/${name}-rt-${version}.jar"/>
-	<property name="build.test.jar" value="${build.lib}/${name}-tests-${version}.jar"/>
+	<property name="build.main.jar" value="${build.lib}/${name}-${version}"/>
+	<property name="build.script.jar" value="${build.lib}/${name}-script-${version}"/>
+	<property name="build.rt.jar" value="${build.lib}/${name}-rt-${version}"/>
+	<property name="build.test.jar" value="${build.lib}/${name}-tests-${version}"/>
     <path id="build.classpath">
         <fileset dir="lib">
             <include name="**/*.jar" />
@@ -101,12 +101,15 @@
 </target>
 <!-- build the jars -->
 <target name="jar" depends="tests" description="Creates the jar file">
+  	<tstamp>
+    	<format property="today" pattern="ddMMyyhhmm"/>
+  	</tstamp>
 	<filter token="TITLE" value="${name} API and reference compiler"/>
 	<filter token="VERSION" value="${version}"/>
 	<filter token="VENDOR" value="Jens Dietrich, Massey University"/>
 	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
 	<!-- separate jar files for runtime and tests -->
-	<jar jarfile="${build.main.jar}" 
+	<jar jarfile="${build.main.jar}.build${today}.jar" 
 		manifest="${build.tmp}/manifest.mf" 
 		basedir="${build.classes}"
 		excludes="test/**/*.*,/**/*.*,nz/org/take/rt/*.*,nz/org/take/script/**/*.*"
@@ -114,7 +117,7 @@
 	<filter token="TITLE" value="${name} runtime classes"/>
 	<delete file="${build.tmp}/manifest.mf"/>
 	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
-	<jar jarfile="${build.rt.jar}" 
+	<jar jarfile="${build.rt.jar}.build${today}.jar" 
 		manifest="${build.tmp}/manifest.mf" 
 		basedir="${build.classes}"
 		includes="nz/org/take/rt/*.*"
@@ -122,7 +125,7 @@
 	<filter token="TITLE" value="${name} scripting language"/>
 	<delete file="${build.tmp}/manifest.mf"/>
 	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
-	<jar jarfile="${build.script.jar}" 
+	<jar jarfile="${build.script.jar}.build${today}.jar" 
 		manifest="${build.tmp}/manifest.mf" 
 		basedir="${build.classes}"
 		includes="nz/org/take/script/**/*.*"
@@ -130,7 +133,7 @@
 	<filter token="TITLE" value="${name} JUnit test cases"/>
 	<delete file="${build.tmp}/manifest.mf"/>
 	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
-	<jar jarfile="${build.test.jar}" 
+	<jar jarfile="${build.test.jar}.build${today}.jar" 
 		manifest="${build.tmp}/manifest.mf" 
 		basedir="${build.classes}"
 		includes="test/**/*.*,/**/*.*"
