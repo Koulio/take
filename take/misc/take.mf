@@ -1,6 +1,5 @@
 Manifest-version: 1.0
-Name: @NAME@
 Implementation-Title: @TITLE@
 Implementation-Vendor: @VENDOR@
 Implementation-Version: @VERSION@
-
+Implementation-URL: http://code.google.com/p/take/
