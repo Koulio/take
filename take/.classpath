@@ -7,5 +7,6 @@
 	<classpathentry path="lib/commons-collections-3.1.jar" kind="lib"/>
 	<classpathentry path="lib/log4j-1.2.7.jar" kind="lib"/>
 	<classpathentry path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4" kind="con"/>
+	<classpathentry path="lib/junit-4.1.jar" kind="lib"/>
 	<classpathentry path="bin" kind="output"/>
 </classpath>
