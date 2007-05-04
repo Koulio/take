@@ -18,30 +18,13 @@
 
 package nz.org.take.script;
 
+import java.beans.*;
 import java.io.Reader;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
+import java.lang.reflect.*;
 import java.util.*;
 import java.util.Map.Entry;
-
 import org.apache.log4j.Logger;
-
-import nz.org.take.AbstractPredicate;
-import nz.org.take.Annotatable;
-import nz.org.take.AnnotationKeys;
-import nz.org.take.Constant;
-import nz.org.take.DefaultKnowledgeBase;
-import nz.org.take.DerivationRule;
-import nz.org.take.Fact;
-import nz.org.take.JFunction;
-import nz.org.take.JPredicate;
-import nz.org.take.KnowledgeBase;
-import nz.org.take.KnowledgeElement;
-import nz.org.take.Predicate;
-import nz.org.take.Prerequisite;
-import nz.org.take.Query;
-import nz.org.take.SimplePredicate;
-import nz.org.take.Variable;
+import nz.org.take.*;
 import nz.org.take.script.parser.Parser;
 
 /**
@@ -246,55 +229,84 @@ public class KnowledgeBaseReader {
 	private Method getMethod(String name,nz.org.take.Term[] terms) throws ScriptException  {		
 		Class clazz = terms[0].getType();
 		Class[] paramTypes = new Class[terms.length-1];
+		Method m = null;
 		for (int i=1;i<terms.length;i++) {
 			paramTypes[i-1]=terms[i].getType();
 		}
 		try {
-			Method m = clazz.getMethod(name,paramTypes);
-			return m;
+			m = clazz.getMethod(name,paramTypes);
 		}
-		catch (Exception x) {
+		catch (Exception x) {}
+		if (m==null) {
 			// start investigating supertypes
 			Method[] methods = clazz.getMethods();
-			for (Method m:methods) {
-				if (Modifier.isPublic(m.getModifiers())) {
-					if (m.getName().equals(name) && m.getParameterTypes().length==paramTypes.length) {
+			for (Method m1:methods) {
+				if (m1.getReturnType()==Boolean.TYPE && Modifier.isPublic(m1.getModifiers())) {
+					if (m1.getName().equals(name) && m1.getParameterTypes().length==paramTypes.length) {
 						// check types
 						boolean ok = true;
 						for (int i=0;i<paramTypes.length;i++) {
-							ok = ok && m.getParameterTypes()[i].isAssignableFrom(paramTypes[i]);
+							ok = ok && m1.getParameterTypes()[i].isAssignableFrom(paramTypes[i]);
 						}
-						if (ok)
-							return m;
+						if (ok){
+							m = m1;
+							break;
+						}
 					}
 				}
 			}
 		}
+		return m;
+		
+	}
+	//	 try to find a property for the clazz and the name, return null if there is no such property
+	private PropertyDescriptor getProperty(String name,Class clazz) throws ScriptException  {
+		try {
+			BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
+			PropertyDescriptor[] properties = beanInfo.getPropertyDescriptors();
+			for (PropertyDescriptor property:properties) {
+				if (name.equals(property.getName()) && property.getReadMethod()!=null) {
+					return property;
+				}
+			}
+		}
+		catch (Exception x) {}
 		return null;
 		
 	}
 	private nz.org.take.Predicate buildPredicate(Map<String,Variable> variables,Map<String,Predicate> predicatesByName,Condition c,nz.org.take.Term[] terms) throws ScriptException {
 		Predicate predicate = null;
-		Method m = getMethod(c.getPredicate(),terms);
+		String name = c.getPredicate();
+		Method m = getMethod(name,terms);
+		PropertyDescriptor property = null;
+		if (m==null)
+			property = getProperty(c.getPredicate(), terms[0].getType());
+		
 		if (m!=null) {
-			LOGGER.debug("Interpreted predicate " + predicatesByName + this.printPosInfo(c) + " as method " + m);
+			LOGGER.debug("Interpreting predicate symbol " + name + this.printPosInfo(c) + " as Java method " + m);
+			JPredicate p = new JPredicate();		
+			Class[] paramTypes = getParamTypes( terms);
+			p.setMethod(m);
+			predicate=p;			
 		}
-		if (m==null) {
+		else if (property!=null) {
+			LOGGER.debug("Interpreting predicate symbol " + name + this.printPosInfo(c) + " as bean property");
+			PropertyPredicate p = new PropertyPredicate();
+			p.setProperty(property);
+			p.setOwnerType(terms[0].getType());
+			// todo remove this line that just does lazy initialization
+			predicate=p;			
+		}
+		else {
+			LOGGER.debug("Interpreting predicate symbol " + name + this.printPosInfo(c) + " as simple predicate");
 			SimplePredicate p = new SimplePredicate();
-			p.setName(c.getPredicate());
+			p.setName(name);
 			Class[] types = new Class[terms.length];
 			for (int i=0;i<terms.length;i++) { 
 				types[i] = terms[i].getType();			
 			}
 			p.setSlotTypes(types);
 			predicate=p;
-		}
-		else {
-			JPredicate p = new JPredicate();
-			// TODO matching using superclasses			
-			Class[] paramTypes = getParamTypes( terms);
-			p.setMethod(m);
-			predicate=p;			
 		}
 		String id = this.getId(predicate);
 		Predicate existingPredicate = predicatesByName.get(id);

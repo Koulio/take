@@ -530,15 +530,13 @@ public class DefaultCompiler implements Compiler {
 	 * @param q
 	 * @throws CompilerException
 	 */
-	private void createPrivateMethod2(PrintWriter out, Query q) 	throws CompilerException {
+	private void createPrivateMethod2(PrintWriter out, Query q) throws CompilerException {
 		Slot[] inSlots = this.buildInputSlots(q);
 		Slot[] outSlots = this.buildOutputSlots(q);
 		JPredicate p = (JPredicate)q.getPredicate();
 
 		printMethodComment(out, "Method generated for query " + p, inSlots,"an interator for instances of " + getClassName(p));
 
-
-		
 		// start header
 		this.printGenericType(out, "private ResourceIterator", getClassName(p));
 		String methodName = getMethodName(q);

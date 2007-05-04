@@ -9,4 +9,4 @@ query isEnrolled(in,out)
 @take.compilerhint.slots=student,college
 @take.compilerhint.method=isInrolled
 // rules
-rule1: if course(student,course) and degree(course,college) then isEnrolled(student,college)
+rule1: if courses(student,course) and college(course,college) then isEnrolled(student,college)

@@ -23,6 +23,9 @@ package nz.org.take;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 
 public class PropertyPredicate extends AbstractPredicate {
@@ -31,7 +34,6 @@ public class PropertyPredicate extends AbstractPredicate {
 	private Class ownerType = null;
 	private boolean isOne2One = true; // false => One2Many
 	
-
 	public String getName() {
 		return property.getName();
 	}
@@ -43,18 +45,55 @@ public class PropertyPredicate extends AbstractPredicate {
 			Class clazz = property.getPropertyType();
 			if (java.util.Collection.class.isAssignableFrom(clazz)) {
 				isOne2One = false;
-				TypeVariable[] genTypes = clazz.getTypeParameters();
-				if (genTypes.length==0)
+				// check for generics
+				Method m = property.getReadMethod();
+				Type gtype = m.getGenericReturnType();
+				if (gtype instanceof ParameterizedType) {
+					ParameterizedType ptype = (ParameterizedType)gtype;
+					Type otype = ptype.getOwnerType();
+					Type rtype = ptype.getRawType();
+					Type[] atypes = ptype.getActualTypeArguments();
+					// TODO check whether this is really necessary
+					if (atypes.length==0)
+						types[1] = Object.class;
+					types[1] = (Class)atypes[0];
+				}
+				else 
 					types[1] = Object.class;
+
 			}
 			else if (clazz.isArray()) {
 				types[1] = clazz.getComponentType();
 				isOne2One = false;
 			}
 			else {
-				
+				types[1] = clazz;
 			}
 		} 
 		return types;
+	}
+
+	public boolean isOne2One() {
+		return isOne2One;
+	}
+
+	public void setOne2One(boolean isOne2One) {
+		this.isOne2One = isOne2One;
+	}
+
+	public java.beans.PropertyDescriptor getProperty() {
+		return property;
+	}
+
+	public void setProperty(java.beans.PropertyDescriptor property) {
+		this.property = property;
+	}
+
+	public Class getOwnerType() {
+		return ownerType;
+	}
+
+	public void setOwnerType(Class ownerType) {
+		this.ownerType = ownerType;
 	}
 }
