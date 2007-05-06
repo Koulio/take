@@ -20,8 +20,6 @@ package nz.org.take;
 import java.util.HashMap;
 import java.util.Map;
 
-import nz.org.take.script.ScriptElement;
-
 /**
  * Abstract superclass for classes that can be annotated.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
