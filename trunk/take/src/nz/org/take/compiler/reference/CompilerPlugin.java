@@ -18,8 +18,13 @@
 
 package nz.org.take.compiler.reference;
 
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
+
+import nz.org.take.KnowledgeBase;
+import nz.org.take.Query;
+import nz.org.take.compiler.CompilerException;
 import nz.org.take.compiler.NameGenerator;
 import nz.org.take.compiler.SourceTransformation;
 
@@ -32,11 +37,35 @@ import nz.org.take.compiler.SourceTransformation;
 
 public abstract class CompilerPlugin extends CompilerUtils {
 	private DefaultCompiler owner = null;
-
+	// constant to be used for the tmp variable to store the return value of methods to be generated 
+	protected static String RESULT = "result";
+	
 	public CompilerPlugin(DefaultCompiler owner) {
 		super();
 		this.owner = owner;
 	}
+	
+	/**
+	 * Create a method for a query. 
+	 * @return the name of the method created
+	 * @param out an output stream
+	 * @param q a query
+	 */
+	public abstract String createMethod(PrintWriter out, Query q) throws CompilerException ;
+	
+	/**
+	 * Check whether this plugin can create code for the given query. 
+	 * Usually, this means investigate the predicate type.
+	 * @param q a query
+	 */
+	public abstract boolean supports(Query q) ;
+	
+	/**
+	 * Check the prerequisites. E.g., whether code can be generated for the 
+	 * set of input variables in the query.  If this fails, throw an exception.
+	 * @param q a query
+	 */
+	public abstract void checkPrerequisites(Query q) throws CompilerException;
 
 	@Override
 	public Map<String, String> getMethodNames4QueriesFromAnnotations() {
@@ -47,7 +76,10 @@ public abstract class CompilerPlugin extends CompilerUtils {
 	public NameGenerator getNameGenerator() {
 		return owner.getNameGenerator();
 	}
-
+	@Override
+	public KnowledgeBase getKB() {
+		return owner.getKB();
+	}
 	@Override
 	public List<SourceTransformation> getSourceTransformers() {
 		return owner.getSourceTransformers();
