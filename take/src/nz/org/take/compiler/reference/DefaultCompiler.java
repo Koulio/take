@@ -43,21 +43,23 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	// custom settings
 	private String derivationControllerClass = "DefaultDerivationController";
 	private String[] derivationControllerInitialisationParameters = {}; // will be passed to the constructor of derivationControllerClass
-	
 	private List<Query> publicAgenda = new ArrayList<Query>();
 	private Collection<Query> done = new ArrayList<Query>();
-	NameGenerator nameGenerator = new DefaultNameGenerator();
+	private NameGenerator nameGenerator = new DefaultNameGenerator();
 	private KnowledgeBase kb = null;
-	List<SourceTransformation> transformations = new ArrayList<SourceTransformation>();
+	private List<SourceTransformation> transformations = new ArrayList<SourceTransformation>();
 	private Map<DerivationRule, String> bindingClassNames = new HashMap<DerivationRule, String>();
 	private int bindingClassCounter = 1;
 	private Map<String,String> methodNames4QueriesFromAnnotations = new HashMap<String,String>();
 
+	private List<CompilerPlugin> plugins = new ArrayList<CompilerPlugin>();
+	
 	/**
 	 * 
 	 */
 	public DefaultCompiler() throws Exception {
 		super();
+		this.install(new CompilerPlugin4JPredicates(this));
 	}
 
 	/**
@@ -312,10 +314,25 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	@SuppressWarnings("unchecked")
 	private void createPrivateMethod(PrintWriter out, Query q) 	throws CompilerException {
 		Predicate p = q.getPredicate();
+		String methodName = null; 
 		if (p instanceof SimplePredicate) 
-			createPrivateMethod1( out,  q);
-		else if (p instanceof JPredicate) 
-			createPrivateMethod2( out,  q);
+			methodName = createPrivateMethod1(out,q);
+		else {
+			// try to use plugin
+			for (CompilerPlugin plugin:this.plugins) {
+				if (plugin.supports(q)) {
+					// the next line may throw an exception
+					// an alternative strategy would be "try next plugin"
+					plugin.checkPrerequisites(q);
+					
+					methodName = plugin.createMethod(out, q);
+				}
+			}
+		}
+		if (methodName!=null) {
+			this.endorseMethod(methodName);
+			this.removeFromAgenda();
+		}		
 		else throw new CompilerException("This kind of predicate is not supported in queries: " + p.getClass());
 	}
 	/**
@@ -323,9 +340,10 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	 * The predicate of the query is defined by rules and facts.
 	 * @param out
 	 * @param q
+	 * @return the method name
 	 * @throws CompilerException
 	 */
-	private void createPrivateMethod1(PrintWriter out, Query q) 	throws CompilerException {
+	private String createPrivateMethod1(PrintWriter out, Query q) 	throws CompilerException {
 		Slot[] inSlots = this.buildInputSlots(q);
 		Slot[] outSlots = this.buildOutputSlots(q);
 		Predicate p = q.getPredicate();
@@ -404,84 +422,9 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		for (int i = 0; i < css.size(); i++) {
 			createMethod(out, q, inSlots, outSlots, css.get(i), i);
 		}
+		
+		return methodName;
 
-		this.endorseMethod(methodName);
-		this.removeFromAgenda();
-	}
-
-	/**
-	 * Create a private method for the given query.
-	 * The predicate of the query is defined by a Java method.
-	 * @param out
-	 * @param q
-	 * @throws CompilerException
-	 */
-	private void createPrivateMethod2(PrintWriter out, Query q) throws CompilerException {
-		Slot[] inSlots = this.buildInputSlots(q);
-		Slot[] outSlots = this.buildOutputSlots(q);
-		JPredicate p = (JPredicate)q.getPredicate();
-
-		printMethodComment(out, "Method generated for query " + p, inSlots,"an interator for instances of " + getClassName(p));
-
-		// start header
-		this.printGenericType(out, "private ResourceIterator", getClassName(p));
-		String methodName = getMethodName(q);
-		out.print(methodName);
-
-		printParameters(out, inSlots, true,true,false);
-		// end params
-		out.println("{");
-		
-		if (outSlots.length>0)
-			throw new CompilerException("Cannot generate code for queries with JavaPredicates and unbound variables, extends are not yet supported ");
-
-		// variable to cache derivation depth
-		out.print("final int _derivationlevel=");
-		out.print(this.getVarName4DerivationController());
-		out.println(".getDepth();");
-		
-		// start condition
-		out.print("if (");		
-		String target = inSlots[0].var;
-		String[] params = new String[inSlots.length-1];
-		for (int i=0;i<params.length;i++)
-			params[i]=inSlots[i+1].var;
-		this.printMethodInvocation(out, p.getMethod().getName(), target,params);
-		out.println(" ){");
-		
-		// log
-		out.print("_derivation.log(\"");
-		out.print(p.getMethod());
-		out.println("\");");
-		
-		
-		out.print(getClassName(p));
-		out.print(' ');
-		out.print(RESULT);
-		out.print('=');
-		this.printContructorInvocation(out,getClassName(p));
-		out.println(';');
-		
-		// assign input vars
-		for (Slot slot:inSlots) {
-				printVariableAssignment(out,RESULT,slot.name,slot.var);
-		}
-		
-		out.print("return new SingletonIterator<");
-		out.print(getClassName(p));
-		out.print(">(");
-		out.print(RESULT);
-		out.println(");");
-
-
-		out.println('}');
-		
-		// else = EMPTY Iterator
-		out.println("return EmptyIterator.DEFAULT;");
-		out.println('}');
-		
-		this.endorseMethod(methodName);
-		this.removeFromAgenda();
 	}
 
 	// create private method
@@ -887,5 +830,17 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	
 	public Map<String, String> getMethodNames4QueriesFromAnnotations() {
 		return methodNames4QueriesFromAnnotations;
+	}
+
+	@Override
+	public KnowledgeBase getKB() {
+		return kb;
+	}
+	/**
+	 * Install a plugin.
+	 * @param plugin a new compiler plugin
+	 */
+	public void install(CompilerPlugin plugin) {
+		this.plugins.add(plugin);
 	}
 }

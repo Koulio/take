@@ -46,6 +46,11 @@ public abstract class CompilerUtils {
 	  */
 	public abstract String getVarName4DerivationController() ;
 	/**
+	  * Get the knowledge base for which code is to be generated.
+	  * @return a kb
+	  */
+	public abstract KnowledgeBase getKB() ;
+	/**
 	 * Get the method names gathered from in query annotations.
 	 * @return a map
 	 */
