@@ -1,5 +1,5 @@
 // script for test scenario 1
-@@dc:creator=author jens dietrich
+@@dc:creator=jens dietrich
 @@dc:date=26/04/2007
 var java.lang.String person1,person2,person3
 var java.lang.String grandchild,father,grandfather

@@ -1,5 +1,5 @@
 // script for test scenario 3 - references Java methods as functions and predicates
-@@dc:creator=author jens dietrich
+@@dc:creator=jens dietrich
 @@dc:date=30/04/2007
 var test.nz.org.take.compiler.scenario3.Person person1,person2
 @take.compilerhint.class=IsBrotherRelationship
