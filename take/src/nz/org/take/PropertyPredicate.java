@@ -26,7 +26,6 @@ package nz.org.take;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
 
 public class PropertyPredicate extends AbstractPredicate {
 	private java.beans.PropertyDescriptor property = null;

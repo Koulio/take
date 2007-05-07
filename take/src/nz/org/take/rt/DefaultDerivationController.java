@@ -46,7 +46,7 @@ public class DefaultDerivationController  implements DerivationController {
 		if (cancelled) 
 			throw new DerivationCancelledException();
 		
-		// System.out.println("Log@" + level + " : " + ruleRef);
+		System.out.println("Log@" + depth + " : " + ruleRef);
 		this.delegate.add(depth,ruleRef);		
 		this.derivationCount = this.derivationCount+1;
 		

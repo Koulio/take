@@ -20,9 +20,6 @@ package nz.org.take.compiler.reference;
 
 import java.io.PrintWriter;
 import java.util.*;
-
-import org.apache.log4j.Logger;
-
 import nz.org.take.compiler.*;
 import nz.org.take.compiler.Compiler;
 import nz.org.take.compiler.util.*;
@@ -60,6 +57,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	public DefaultCompiler() throws Exception {
 		super();
 		this.install(new CompilerPlugin4JPredicates(this));
+		this.install(new CompilerPlugin4PropertyPredicates(this));
 	}
 
 	/**
@@ -264,11 +262,10 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	private void createPublicMethod(PrintWriter out, Query q)
 			throws CompilerException {
 		Slot[] inSlots = this.buildInputSlots(q);
-		Slot[] outSlots = this.buildOutputSlots(q);
 		Predicate p = q.getPredicate();
 
 		printMethodComment(out, "Method generated for query " + p, inSlots,
-				"an interator for instances of " + getClassName(p));
+				"an iterator for instances of " + getClassName(p));
 
 		// start header
 		this.printGenericType(out, "public ResultSet", getClassName(p));
@@ -348,7 +345,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		Slot[] outSlots = this.buildOutputSlots(q);
 		Predicate p = q.getPredicate();
 
-		printMethodComment(out, "Method generated for query " + p, inSlots,"an interator for instances of " + getClassName(p));
+		printMethodComment(out, "Method generated for query " + p, inSlots,"an iterator for instances of " + getClassName(p));
 
 		// start header
 		this.printGenericType(out, "private ResourceIterator", getClassName(p));
@@ -431,7 +428,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	private void createMethod(PrintWriter out, Query q, Slot[] islots,Slot[] oslots, KnowledgeElement cs, int i) throws CompilerException {
 		Predicate p = q.getPredicate();
 		printMethodComment(out, "Method generated for query " + p, islots,
-				"an interator for instances of " + getClassName(p));
+				"an iterator for instances of " + getClassName(p));
 
 		// facts are handled differently to minimize memory consumption
 		if (cs instanceof Fact) {
