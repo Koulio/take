@@ -1,5 +1,5 @@
 // script for test scenario 3 - references Java methods as functions and predicates
-@@dc:creator=author jens dietrich
+@@dc:creator=jens dietrich
 @@dc:date=30/04/2007
 var test.nz.org.take.compiler.scenario4.Student student
 var test.nz.org.take.compiler.scenario4.Course course
