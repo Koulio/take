@@ -23,7 +23,7 @@ package nz.org.take;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Variable implements Term {
+public class Variable extends AbstractAnnotatable implements Term {
 	
 	private String name = null;
 	private Class type = null;
