@@ -55,6 +55,12 @@
         classpathref="build.classpath"
 		excludes="test/**/generated/*.*,test/**/*Tests.*"
 	/>
+	<!-- copy velocity templates (they are loaded by the class loader) -->
+	<copy todir="${build.classes}">
+	    <fileset dir="${src.dir}">
+	      <include name="**/*.vm"/>
+	    </fileset>
+	</copy>
 </target>
 <!-- Compiles the tests -->	
 <target name="compiletests" depends="generatetestcode" description="Compile the tests">
@@ -84,6 +90,9 @@
 	<java classname="test.nz.org.take.compiler.scenario3.GenerateClasses">
 		<classpath><path refid="path4generatingtests"/></classpath>
 	</java>
+	<java classname="test.nz.org.take.compiler.scenario4.GenerateClasses">
+		<classpath><path refid="path4generatingtests"/></classpath>
+	</java>
 </target>
 <!-- Tests the project, using JUnit tests -->
 <target name="tests" depends="compiletests" description="Tests the project">
@@ -97,6 +106,7 @@
 		<test name="test.nz.org.take.compiler.scenario1.Tests"/>
 		<test name="test.nz.org.take.compiler.scenario2.Tests"/>
 		<test name="test.nz.org.take.compiler.scenario3.Tests"/>
+		<test name="test.nz.org.take.compiler.scenario4.Tests"/>
 	</junit>
 </target>
 <!-- build the jars -->

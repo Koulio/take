@@ -18,9 +18,11 @@
 
 package nz.org.take.compiler.reference;
 
+import java.beans.PropertyDescriptor;
 import java.io.PrintWriter;
 
 import nz.org.take.JPredicate;
+import nz.org.take.PropertyPredicate;
 import nz.org.take.Query;
 import nz.org.take.compiler.CompilerException;
 
@@ -48,6 +50,7 @@ public class CompilerPlugin4JPredicates extends CompilerPlugin {
 	public String createMethod(PrintWriter out, Query q) throws CompilerException {
 		Slot[] inSlots = this.buildInputSlots(q);
 		JPredicate p = (JPredicate)q.getPredicate();
+		
 		printMethodComment(out, "Method generated for query " + p, inSlots,"an interator for instances of " + getClassName(p));
 
 		// start header
@@ -102,7 +105,7 @@ public class CompilerPlugin4JPredicates extends CompilerPlugin {
 
 	@Override
 	public boolean supports(Query q) {
-		return q.getPredicate() instanceof JPredicate;
+		return q.getPredicate() instanceof JPredicate ;
 	}
 
 }

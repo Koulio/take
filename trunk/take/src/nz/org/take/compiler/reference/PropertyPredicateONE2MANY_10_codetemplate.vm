@@ -1,0 +1,32 @@
+    /**
+     * Method generated for query $query
+     * @param source 
+     * @return an iterator 
+     * code generated using velocity template $templatename
+    */
+    private ResourceIterator< $resulttype > $methodname (
+        final $sourcetype source,  
+        final DerivationController _derivation) {
+     
+        final Iterator<$targettype> iterator =  source.$accessor ().iterator();
+        _derivation.log( $property );
+        ResourceIterator <$resulttype > result = new ResourceIterator <$resulttype > () {
+        	public boolean hasNext() {
+        		return iterator.hasNext();
+        	}
+        	public void close() {
+        		// nothing to do here
+        	}
+        	public $resulttype next() {
+        		$resulttype next = new $resulttype ();
+        		next. $slot1 = source;
+        		next. $slot2 = iterator.next();
+        		return next; 
+        	}
+        	public void remove() {
+				throw new UnsupportedOperationException("Remove is not supported here");
+			}
+        };
+        return result;
+
+    }
