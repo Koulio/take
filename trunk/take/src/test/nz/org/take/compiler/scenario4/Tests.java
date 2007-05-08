@@ -94,13 +94,40 @@ public class Tests extends TestCase
 		s2.getCourses().add(c3);
 		c1.setCollege(coll1);
 		c1.setCollege(coll1);
-		c2.setCollege(coll2);
+		c2.setCollege(coll2);		
+
+		ResultSet<IsEnrolled> result = kb.isEnrolled(s1);
+		IsEnrolled r1 = result.next();
+		assertTrue(r1.college.equals(coll1));
+	}
+	
+	public void test2(){
 		
+		System.out.println("starting test case 2");
+		
+		_KB kb = new _KB();
+		Student s1 = new Student("John");
+		Student s2 = new Student("Tom");
+		Student s3 = new Student("Tim");
+		Course c1 = new Course("comp101");
+		Course c2 = new Course("se201");
+		Course c3 = new Course("fin101");
+		College coll1 = new College("engineering");
+		College coll2 = new College("business");
+		
+		s1.getCourses().add(c1);
+		s1.getCourses().add(c2);
+		s2.getCourses().add(c2);
+		s2.getCourses().add(c3);
+		c1.setCollege(coll1);
+		c1.setCollege(coll1);
+		c2.setCollege(coll2);		
 
-		ResultSet<_isEnrolled> result = kb.isEnrolled_10(s1);
-		_isEnrolled r1 = result.next();
-		assertTrue(r1.slot2.equals(coll1));
-
+		ResultSet<IsEnrolled> result = kb.isEnrolled(s1,coll1);
+		assertTrue(result.hasNext());
+		IsEnrolled r = result.next();
+		assertTrue(r.college.equals(coll1));
+		assertTrue(r.student.equals(s1));
 	}
 
 	private int countRules(List<String> x) {
