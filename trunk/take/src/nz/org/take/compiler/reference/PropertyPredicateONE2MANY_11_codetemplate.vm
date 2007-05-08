@@ -10,7 +10,15 @@
         final DerivationController _derivation) {
         
         _derivation.log($property);
-    	// TODO this is a dummy
-    	throw new UnspupportedOperationException("dummy implementation");
+        
+         final Iterator<$targettype> iterator =  source.$accessor ().iterator();
+         while (iterator.hasNext()) {
+         	if (target.equals(iterator.next()) {
+         	    $resulttype result = new $resulttype ();
+        		result. $slot1 = source;
+        		result. $slot2 = target;
+        		return new SingletonIterator<$resulttype>(result); 
+         	}
+         }
         return EmptyIterator.DEFAULT;
     }
