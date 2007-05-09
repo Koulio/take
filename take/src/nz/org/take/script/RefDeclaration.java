@@ -19,11 +19,11 @@
 package nz.org.take.script;
 
 /**
- * Declaration of a variable.
+ * Declaration of an object reference.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class VariableDeclaration extends Declaration  {
+public class RefDeclaration extends Declaration  {
 	public String toString() {
 		StringBuffer b = new StringBuffer();
 		b.append("var ");

@@ -13,6 +13,7 @@
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case VAR:
+      case REF:
       case QUERY:
       case GLOBALANNOTATION:
       case LOCALANNOTATION:
@@ -27,6 +28,9 @@
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case VAR:
         var(script);
+        break;
+      case REF:
+        ref(script);
         break;
       case COMMENT:
         comment(script);
@@ -85,22 +89,22 @@
          QuerySpec q = new QuerySpec();
     t = jj_consume_token(QUERY);
     predicateQ(q);
-    jj_consume_token(25);
+    jj_consume_token(26);
     io(q);
     label_2:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 26:
+      case 27:
         ;
         break;
       default:
         jj_la1[2] = jj_gen;
         break label_2;
       }
-      jj_consume_token(26);
+      jj_consume_token(27);
       io(q);
     }
-    jj_consume_token(27);
+    jj_consume_token(28);
          q.setPosition(t.beginLine,t.beginColumn);
          script.add(q);
   }
@@ -142,7 +146,7 @@
         Token t;
          VariableDeclaration v = new VariableDeclaration();
     t = jj_consume_token(VAR);
-    vartype(v);
+    dectype(v);
     label_3:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -154,36 +158,72 @@
         break label_3;
       }
       jj_consume_token(DOT);
-      vartype(v);
+      dectype(v);
     }
-    varname(v);
+    decname(v);
     label_4:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 26:
+      case 27:
         ;
         break;
       default:
         jj_la1[5] = jj_gen;
         break label_4;
       }
-      jj_consume_token(26);
-      varname(v);
+      jj_consume_token(27);
+      decname(v);
     }
          v.setPosition(t.beginLine,t.beginColumn);
          script.add(v);
   }
 
-  static final public void vartype(VariableDeclaration var) throws ParseException {
+  static final public void ref(Script script) throws ParseException {
         Token t;
-    t = jj_consume_token(NAME);
-         var.addToType(t.image);
+         RefDeclaration r = new RefDeclaration();
+    t = jj_consume_token(REF);
+    dectype(r);
+    label_5:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case DOT:
+        ;
+        break;
+      default:
+        jj_la1[6] = jj_gen;
+        break label_5;
+      }
+      jj_consume_token(DOT);
+      dectype(r);
+    }
+    decname(r);
+    label_6:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case 27:
+        ;
+        break;
+      default:
+        jj_la1[7] = jj_gen;
+        break label_6;
+      }
+      jj_consume_token(27);
+      decname(r);
+    }
+         r.setPosition(t.beginLine,t.beginColumn);
+         script.add(r);
   }
 
-  static final public void varname(VariableDeclaration var) throws ParseException {
+  static final public void dectype(Declaration d) throws ParseException {
         Token t;
     t = jj_consume_token(NAME);
-         var.addName(t.image);
+         d.addToType(t.image);
+  }
+
+  static final public void decname(Declaration d) throws ParseException {
+        Token t;
+    t = jj_consume_token(NAME);
+         d.addName(t.image);
   }
 
   static final public void rule(Script script) throws ParseException {
@@ -193,15 +233,15 @@
     case IF:
       jj_consume_token(IF);
       condition(r);
-      label_5:
+      label_7:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case AND:
           ;
           break;
         default:
-          jj_la1[6] = jj_gen;
-          break label_5;
+          jj_la1[8] = jj_gen;
+          break label_7;
         }
         jj_consume_token(AND);
         condition(r);
@@ -209,7 +249,7 @@
       jj_consume_token(THEN);
       break;
     default:
-      jj_la1[7] = jj_gen;
+      jj_la1[9] = jj_gen;
       ;
     }
     condition(r);
@@ -230,24 +270,24 @@
 
   static final public void buildCondition(Condition c) throws ParseException {
     predicate(c);
-    jj_consume_token(25);
+    jj_consume_token(26);
     terms(c);
-    jj_consume_token(27);
+    jj_consume_token(28);
   }
 
   static final public void terms(TermContainer c) throws ParseException {
     term(c);
-    label_6:
+    label_8:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 26:
+      case 27:
         ;
         break;
       default:
-        jj_la1[8] = jj_gen;
-        break label_6;
+        jj_la1[10] = jj_gen;
+        break label_8;
       }
-      jj_consume_token(26);
+      jj_consume_token(27);
       term(c);
     }
   }
@@ -264,7 +304,7 @@
         stringLiteral(c);
         break;
       default:
-        jj_la1[9] = jj_gen;
+        jj_la1[11] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -293,9 +333,9 @@
   static final public void complexTerm(TermContainer c) throws ParseException {
          ComplexTerm ct = new ComplexTerm();
     function(ct);
-    jj_consume_token(25);
+    jj_consume_token(26);
     terms(ct);
-    jj_consume_token(27);
+    jj_consume_token(28);
          c.add(ct);
   }
 
@@ -320,58 +360,58 @@
     finally { jj_save(0, xla); }
   }
 
-  static final private boolean jj_3R_12() {
-    if (jj_3R_14()) return true;
-    return false;
-  }
-
-  static final private boolean jj_3R_13() {
-    if (jj_scan_token(NAME)) return true;
-    return false;
-  }
-
-  static final private boolean jj_3R_7() {
-    if (jj_3R_8()) return true;
-    if (jj_scan_token(25)) return true;
+  static final private boolean jj_3_1() {
     if (jj_3R_9()) return true;
     return false;
   }
 
-  static final private boolean jj_3_1() {
-    if (jj_3R_7()) return true;
-    return false;
-  }
-
-  static final private boolean jj_3R_10() {
+  static final private boolean jj_3R_12() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_1()) {
     jj_scanpos = xsp;
-    if (jj_3R_11()) {
+    if (jj_3R_13()) {
     jj_scanpos = xsp;
-    if (jj_3R_12()) return true;
+    if (jj_3R_14()) return true;
     }
     }
     return false;
   }
 
-  static final private boolean jj_3R_14() {
+  static final private boolean jj_3R_16() {
     if (jj_scan_token(STRING_LITERAL)) return true;
     return false;
   }
 
-  static final private boolean jj_3R_11() {
-    if (jj_3R_13()) return true;
+  static final private boolean jj_3R_13() {
+    if (jj_3R_15()) return true;
     return false;
   }
 
-  static final private boolean jj_3R_8() {
+  static final private boolean jj_3R_10() {
+    if (jj_scan_token(NAME)) return true;
+    return false;
+  }
+
+  static final private boolean jj_3R_11() {
+    if (jj_3R_12()) return true;
+    return false;
+  }
+
+  static final private boolean jj_3R_14() {
+    if (jj_3R_16()) return true;
+    return false;
+  }
+
+  static final private boolean jj_3R_15() {
     if (jj_scan_token(NAME)) return true;
     return false;
   }
 
   static final private boolean jj_3R_9() {
     if (jj_3R_10()) return true;
+    if (jj_scan_token(26)) return true;
+    if (jj_3R_11()) return true;
     return false;
   }
 
@@ -385,13 +425,13 @@
   static public boolean lookingAhead = false;
   static private boolean jj_semLA;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[10];
+  static final private int[] jj_la1 = new int[12];
   static private int[] jj_la1_0;
   static {
       jj_la1_0();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x299100,0x299100,0x4000000,0x6000,0x20,0x4000000,0x200,0x400,0x4000000,0x500000,};
+      jj_la1_0 = new int[] {0x532300,0x532300,0x8000000,0xc000,0x20,0x8000000,0x20,0x8000000,0x400,0x800,0x8000000,0xa00000,};
    }
   static final private JJCalls[] jj_2_rtns = new JJCalls[1];
   static private boolean jj_rescan = false;
@@ -413,7 +453,7 @@
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -426,7 +466,7 @@
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -443,7 +483,7 @@
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -453,7 +493,7 @@
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -469,7 +509,7 @@
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -478,7 +518,7 @@
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -589,15 +629,15 @@
 
   static public ParseException generateParseException() {
     jj_expentries.removeAllElements();
-    boolean[] la1tokens = new boolean[28];
-    for (int i = 0; i < 28; i++) {
+    boolean[] la1tokens = new boolean[29];
+    for (int i = 0; i < 29; i++) {
       la1tokens[i] = false;
     }
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 12; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -606,7 +646,7 @@
         }
       }
     }
-    for (int i = 0; i < 28; i++) {
+    for (int i = 0; i < 29; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
