@@ -23,6 +23,10 @@ import java.io.Reader;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.Map.Entry;
+
+import javax.script.Bindings;
+import javax.script.SimpleBindings;
+
 import org.apache.log4j.Logger;
 import nz.org.take.*;
 import nz.org.take.script.parser.Parser;
@@ -62,8 +66,20 @@ public class KnowledgeBaseReader {
 	}
 	/**
 	 * Read the knowledge base from a script.
+	 * @param input the reader
+	 * @param bindings the bindings associating refs with objects
+	 * @return the knowledge base 
 	 */
 	public KnowledgeBase read(Reader input) throws ScriptException {
+		return read(input,new SimpleBindings());
+	}
+	/**
+	 * Read the knowledge base from a script.
+	 * @param input the reader
+	 * @param bindings the bindings associating refs with objects
+	 * @return the knowledge base 
+	 */
+	public KnowledgeBase read(Reader input,Bindings bindings) throws ScriptException {
 		Script script = null;
 		try {
 			script = parse(input);
@@ -79,12 +95,19 @@ public class KnowledgeBaseReader {
 		KnowledgeBase kb = new DefaultKnowledgeBase(); 
 		Set<String> ids = new HashSet<String>(); 
 		Map<String,Variable> variables = new HashMap<String,Variable>();
+		Map<String,Constant> constants = new HashMap<String,Constant>();
 		List<Annotation> annotations = new ArrayList<Annotation>();
 		for (Object part:script.getElements()) {
 			if (part instanceof VariableDeclaration) {
 				List<Variable> vars = buildVariables((VariableDeclaration)part);
 				for (Variable v:vars)
 					variables.put(v.getName(),v);
+				annotations.clear(); // var declarations do not support annotations
+			}
+			if (part instanceof RefDeclaration) {
+				List<Constant> cons = buildConstants((RefDeclaration)part,bindings);
+				for (Constant c:cons)
+					constants.put(c.getName(),c);
 				annotations.clear(); // var declarations do not support annotations
 			}
 			else if (part instanceof Annotation) {
@@ -102,14 +125,14 @@ public class KnowledgeBaseReader {
 				Rule rule = (Rule)part;
 				
 				if (rule.getConditions().size()==1) {
-					Fact f = buildFact(variables,predicatesByName,rule.getConditions().get(0));
+					Fact f = buildFact(variables,constants,predicatesByName,rule.getConditions().get(0));
 					f.setId(rule.getId());
 					checkId(f,ids);
 					annotate(f,annotations); 
 					kb.add(f);					
 				}
 				else {					
-					DerivationRule r = buildRule(variables,predicatesByName,(Rule)part);
+					DerivationRule r = buildRule(variables,constants,predicatesByName,(Rule)part);
 					checkId(r,ids);
 					annotate(r,annotations); 
 					kb.add(r);
@@ -181,6 +204,31 @@ public class KnowledgeBaseReader {
 		}
 		return variables;
 	}
+	private List<Constant> buildConstants(RefDeclaration cd,Bindings bindings) throws ScriptException {
+		Class clazz = null;
+		try {
+			clazz = this.classloader.loadClass(cd.getType());
+		}
+		catch (ClassNotFoundException x) {
+			throw new ScriptSemanticsException("Can not load the following type referenced in script: " + cd.getType() + this.printPosInfo(cd),x);
+		}		
+		List<Constant> constants = new ArrayList<Constant>();
+		for (String name:cd.getNames()) {
+			Constant c = new Constant();
+			c.setName(name);
+			c.setType(clazz);
+			Object obj = bindings.get(name);
+			if (obj==null) {
+				throw new ScriptSemanticsException("No binding found for object reference " + name + this.printPosInfo(cd));
+			}
+			if (clazz.isAssignableFrom(obj.getClass())) {
+				throw new ScriptSemanticsException("Type of object in bindings for "+name+" (" + obj.getClass() + ") is incompatible with declared type " + this.printPosInfo(cd));
+			}
+			c.setObject(obj);
+			constants.add(c);
+		}
+		return constants;
+	}
 	private Query buildQuery(Map<String,Predicate> predicatesByName,QuerySpec q) throws ScriptException {
 		Query query = new Query();
 		String predicateName = q.getPredicate()+'_'+q.getIoSpec().size();
@@ -195,30 +243,30 @@ public class KnowledgeBaseReader {
 		query.setInputParams(io);
 		return query;
 	}
-	private DerivationRule buildRule(Map<String,Variable> variables, Map<String,Predicate> predicatesByName,Rule r) throws ScriptException {
+	private DerivationRule buildRule(Map<String,Variable> variables,Map<String,Constant> constants, Map<String,Predicate> predicatesByName,Rule r) throws ScriptException {
 		DerivationRule rule = new DerivationRule();
 		rule.setId(r.getId());
 		List<Prerequisite> body = new ArrayList<Prerequisite>();
 		for (int i=0;i<r.getConditions().size()-1;i++) {
-			Prerequisite prereq = buildPrerequisite(variables,predicatesByName,r.getConditions().get(i));
+			Prerequisite prereq = buildPrerequisite(variables,constants,predicatesByName,r.getConditions().get(i));
 			body.add(prereq);
 		}
 		rule.setBody(body);
-		Fact head = buildFact(variables,predicatesByName,r.getConditions().get(r.getConditions().size()-1));
+		Fact head = buildFact(variables,constants,predicatesByName,r.getConditions().get(r.getConditions().size()-1));
 		rule.setHead(head);
 		return rule;
 	}
-	private Prerequisite buildPrerequisite(Map<String,Variable> variables,Map<String,Predicate> predicatesByName, Condition c) throws ScriptException {
+	private Prerequisite buildPrerequisite(Map<String,Variable> variables,Map<String,Constant> constants,Map<String,Predicate> predicatesByName, Condition c) throws ScriptException {
 		Prerequisite p = new Prerequisite();
-		nz.org.take.Term[] terms = buildTerms(variables,c);
+		nz.org.take.Term[] terms = buildTerms(variables,constants,c);
 		nz.org.take.Predicate predicate = buildPredicate(variables,predicatesByName,c,terms);
 		p.setPredicate(predicate);
 		p.setTerms(terms);
 		return p;
 	}
-	private Fact buildFact(Map<String,Variable> variables, Map<String,Predicate> predicatesByName, Condition c) throws ScriptException {
+	private Fact buildFact(Map<String,Variable> variables, Map<String,Constant> constants,Map<String,Predicate> predicatesByName, Condition c) throws ScriptException {
 		Fact p = new Fact();
-		nz.org.take.Term[] terms = buildTerms(variables,c);
+		nz.org.take.Term[] terms = buildTerms(variables,constants,c);
 		nz.org.take.Predicate predicate = buildPredicate(variables,predicatesByName,c,terms);
 		p.setPredicate(predicate);
 		p.setTerms(terms);
@@ -317,10 +365,10 @@ public class KnowledgeBaseReader {
 		else
 			return existingPredicate;
 	}
-	private nz.org.take.Term[] buildTerms(Map<String,Variable> variables,TermContainer c) throws ScriptException {
+	private nz.org.take.Term[] buildTerms(Map<String,Variable> variables,Map<String,Constant> constants,TermContainer c) throws ScriptException {
 		nz.org.take.Term[] terms = new nz.org.take.Term[c.getTerms().size()];
 		for (int i=0;i<terms.length;i++)
-			terms[i] = buildTerm(variables,c.getTerms().get(i));
+			terms[i] = buildTerm(variables,constants,c.getTerms().get(i));
 		return terms;
 	}
 	private Method findMethod(String name,nz.org.take.Term[] terms) throws ScriptException {
@@ -333,13 +381,16 @@ public class KnowledgeBaseReader {
 		}
 	}
 
-	private nz.org.take.Term buildTerm(Map<String,Variable> variables,Term t) throws ScriptException {
+	private nz.org.take.Term buildTerm(Map<String,Variable> variables,Map<String,Constant> constants,Term t) throws ScriptException {
 		if (t instanceof VariableTerm) {
 			String name = ((VariableTerm)t).getName();
 			Variable var = variables.get(name);
-			if (var==null)
-				throw new ScriptSemanticsException("This variable is used before it is defined: " + print(t));
-			return var;
+			Constant con = constants.get(name);
+			if (var==null && con==null)
+				throw new ScriptSemanticsException("This variable or reference is used before it is defined: " + print(t));
+			if (var!=null && con!=null)
+				throw new ScriptSemanticsException("Symbol is used to define an object reference and a variable: " + name);
+			return var==null?var:con;
 		}
 		else if (t instanceof ConstantTerm) {
 			ConstantTerm ct = (ConstantTerm)t;
@@ -355,8 +406,8 @@ public class KnowledgeBaseReader {
 		else if (t instanceof ComplexTerm) {
 			ComplexTerm ct = (ComplexTerm)t;
 			String f = ct.getFunction();
-			nz.org.take.Term[] terms = buildTerms(variables,ct);
-			Method m = this.findMethod(f, buildTerms(variables,ct));
+			nz.org.take.Term[] terms = buildTerms(variables,constants,ct);
+			Method m = this.findMethod(f, buildTerms(variables,constants,ct));
 			JFunction function = new JFunction();
 			function.setMethod(m);
 			nz.org.take.ComplexTerm  cplxTerm = new nz.org.take.ComplexTerm ();

@@ -28,6 +28,9 @@ public class Constant extends Variable {
 	private Object object = null;
 	// the type can be overridden, by default the type of the object is used
 	private Class type = null;
+	// this is a string that is used to proxy the object
+	private String ref = null;
+	
 	public Object getObject() {
 		return object;
 	}
@@ -51,6 +54,12 @@ public class Constant extends Variable {
 	private void checkTypeConsistency(Object o,Class t) {
 		if (o!=null && t!=null && !t.isAssignableFrom(o.getClass()))
 			throw new IllegalArgumentException("Object "+ o + " and type " + t + " are inconsistent, the type must be a supertype of the object type");
+	}
+	public String getRef() {
+		return ref;
+	}
+	public void setRef(String ref) {
+		this.ref = ref;
 	}
 
 }

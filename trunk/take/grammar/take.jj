@@ -20,6 +20,7 @@ TOKEN:{<DOT:".">}
 TOKEN:{<EQ:"=">}
 TOKEN:{<COL:":">}
 TOKEN:{<VAR:"var">}
+TOKEN:{<REF:"ref">}
 TOKEN:{<AND:"and">}
 TOKEN:{<IF:"if">}
 TOKEN:{<THEN:"then">}
@@ -41,7 +42,7 @@ TOKEN:{<SEMICOLON:";">}
 void parse(Script script):
 {}
 {
-	(var(script)|comment(script)|globalannotation(script)|localannotation(script)|query(script)|rule(script))*
+	(var(script)|ref(script)|comment(script)|globalannotation(script)|localannotation(script)|query(script)|rule(script))*
 }
 void localannotation(Script script):
 {
@@ -123,25 +124,35 @@ void var(Script script):
 }
 {
 	{VariableDeclaration v = new VariableDeclaration();}
-	t=<VAR> vartype(v)(<DOT>vartype(v))* 	varname(v) (","varname(v))*
+	t=<VAR> dectype(v)(<DOT>dectype(v))* decname(v) (","decname(v))*
 	{v.setPosition(t.beginLine,t.beginColumn);}
 	{script.add(v);}
 }
-void vartype(VariableDeclaration var):
+void ref(Script script):
+{
+	Token t;
+}
+{
+	{RefDeclaration r = new RefDeclaration();}
+	t=<REF> dectype(r)(<DOT>dectype(r))* decname(r) (","decname(r))*
+	{r.setPosition(t.beginLine,t.beginColumn);}
+	{script.add(r);}
+}
+void dectype(Declaration d):
 {
 	Token t;
 }
 {
 	t = <NAME>
-	{var.addToType(t.image);}
+	{d.addToType(t.image);}
 }
-void varname(VariableDeclaration var):
+void decname(Declaration d):
 {
 	Token t;
 }
 {
 	t = <NAME>
-	{var.addName(t.image);}
+	{d.addName(t.image);}
 }
 void rule(Script script):
 {}
@@ -181,7 +192,7 @@ void term(TermContainer c):
 {}
 {
 	LOOKAHEAD(3)
-	complexTerm(c) | variableTerm(c) | stringLiteral(c)
+	complexTerm(c) | variableTerm(c) | stringLiteral(c) 
 }
 void variableTerm(TermContainer c) :
 {
