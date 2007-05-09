@@ -42,6 +42,9 @@ public class ParserTests extends TestCase {
 	private VariableDeclaration getVarDecAt(Script script,int i) {
 		return (VariableDeclaration)script.getElements().get(i);
 	}
+	private RefDeclaration getRefDecAt(Script script,int i) {
+		return (RefDeclaration)script.getElements().get(i);
+	}
 	private Comment getCommentAt(Script script,int i) {
 		return (Comment)script.getElements().get(i);
 	}
@@ -105,6 +108,38 @@ public class ParserTests extends TestCase {
 		assertEquals("java.lang.String",this.getVarDecAt(script,1).getType());
 		
 	}
+	
+	public void test5() throws Exception {
+		String input = 
+			"ref int x\n"+
+			"ref java.lang.String aVar\n";
+		Script script = parse(input);
+		assertEquals(2,script.getElements().size());
+		assertTrue(script.getElements().get(0) instanceof RefDeclaration);
+		assertTrue(script.getElements().get(1) instanceof RefDeclaration);
+		assertEquals("x",this.getRefDecAt(script,0).getNames().get(0));
+		assertEquals("int",this.getRefDecAt(script,0).getType());
+		assertEquals("aVar",this.getRefDecAt(script,1).getNames().get(0));
+		assertEquals("java.lang.String",this.getRefDecAt(script,1).getType());
+		
+	}
+	public void test6() throws Exception {
+		String input = 
+			"ref int x,y\n"+
+			"ref java.lang.String a,b,c\n";
+		Script script = parse(input);
+		assertEquals(2,script.getElements().size());
+		assertTrue(script.getElements().get(0) instanceof RefDeclaration);
+		assertTrue(script.getElements().get(1) instanceof RefDeclaration);
+		assertEquals("x",this.getRefDecAt(script,0).getNames().get(0));
+		assertEquals("y",this.getRefDecAt(script,0).getNames().get(1));
+		assertEquals("int",this.getRefDecAt(script,0).getType());
+		assertEquals("a",this.getRefDecAt(script,1).getNames().get(0));
+		assertEquals("b",this.getRefDecAt(script,1).getNames().get(1));
+		assertEquals("java.lang.String",this.getRefDecAt(script,1).getType());
+		
+	}
+	
 	
 	public void test10() throws Exception {
 		String input = 

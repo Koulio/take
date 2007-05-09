@@ -35,6 +35,9 @@ public class Script {
 	public void add(VariableDeclaration v) {
 		this.elements.add(v);
 	}
+	public void add(RefDeclaration v) {
+		this.elements.add(v);
+	}
 	public void add(Rule r) {
 		this.elements.add(r);
 	}
