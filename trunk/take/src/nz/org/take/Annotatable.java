@@ -26,8 +26,6 @@ import java.util.Map;
 
 public interface Annotatable {
 
-	public abstract Map<String, String> getAnnotations();
-
 	/**
 	 * Add a new annotation.
 	 * @param key
@@ -41,11 +39,20 @@ public interface Annotatable {
 	 * @return the value of the removed annotation or null if there is no such annotation
 	 */
 	public abstract String removeAnnotation(String key);
+	
 	/**
 	 * Get the annotation value for a given key.
 	 * @param key the key
 	 * @return the value or null if there is no such annotation
 	 */
 	public abstract String getAnnotation(String key);
+
+	/**
+	 * Add all Annotations.
+	 * @param newAnnotations
+	 */
+	public void addAnnotations(Map<String,String> newAnnotations);
+
+	public abstract Map<String, String> getAnnotations();
 
 }

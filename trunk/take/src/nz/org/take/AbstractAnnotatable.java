@@ -26,13 +26,16 @@ import java.util.Map;
  */
 
 public abstract class AbstractAnnotatable implements Annotatable  {
-	private Map<String,String> annotations = new HashMap<String,String>();
+	Map<String,String> annotations = new HashMap<String,String>();
 
 	public Map<String, String> getAnnotations() {
 		return annotations;
 	}
 	public void addAnnotation(String key,String value) {
 		this.annotations.put(key, value);
+	}
+	public void addAnnotations(Map<String,String> newAnnotations) {
+		annotations.putAll(newAnnotations);
 	}
 	public String removeAnnotation(String key) {
 		return this.annotations.remove(key);
