@@ -114,16 +114,19 @@
   	<tstamp>
     	<format property="today" pattern="ddMMyyhhmm"/>
   	</tstamp>
+	
+	<!-- api and compiler -->
 	<filter token="TITLE" value="${name} API and reference compiler"/>
 	<filter token="VERSION" value="${version}"/>
 	<filter token="VENDOR" value="Jens Dietrich, Massey University"/>
 	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
-	<!-- separate jar files for runtime and tests -->
 	<jar jarfile="${build.main.jar}.build${today}.jar" 
 		manifest="${build.tmp}/manifest.mf" 
 		basedir="${build.classes}"
 		excludes="test/**/*.*,/**/*.*,nz/org/take/rt/*.*,nz/org/take/script/**/*.*"
 	/>
+	
+	<!-- runtime classes -->
 	<filter token="TITLE" value="${name} runtime classes"/>
 	<delete file="${build.tmp}/manifest.mf"/>
 	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
@@ -132,14 +135,25 @@
 		basedir="${build.classes}"
 		includes="nz/org/take/rt/*.*"
 	/>
+	
+	<!-- scripting -->
+	<!-- copy service definition(s) -->
+	<mkdir dir="${build.tmp}/services"/>
+	<copy todir="${build.classes}/services">
+		<fileset dir="${config.dir}/services"/>
+	</copy>
+	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
 	<filter token="TITLE" value="${name} scripting language"/>
 	<delete file="${build.tmp}/manifest.mf"/>
 	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
 	<jar jarfile="${build.script.jar}.build${today}.jar" 
 		manifest="${build.tmp}/manifest.mf" 
 		basedir="${build.classes}"
-		includes="nz/org/take/script/**/*.*"
+		includes="nz/org/take/script/**/*.*,services/**/*.*"
 	/>
+	<mkdir dir="${build.tmp}/services"/>
+	
+	<!-- tests -->
 	<filter token="TITLE" value="${name} JUnit test cases"/>
 	<delete file="${build.tmp}/manifest.mf"/>
 	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>

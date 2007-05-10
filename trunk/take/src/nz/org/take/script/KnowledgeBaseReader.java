@@ -390,7 +390,7 @@ public class KnowledgeBaseReader {
 				throw new ScriptSemanticsException("This variable or reference is used before it is defined: " + print(t));
 			if (var!=null && con!=null)
 				throw new ScriptSemanticsException("Symbol is used to define an object reference and a variable: " + name);
-			return var==null?var:con;
+			return var==null?con:var;
 		}
 		else if (t instanceof ConstantTerm) {
 			ConstantTerm ct = (ConstantTerm)t;
