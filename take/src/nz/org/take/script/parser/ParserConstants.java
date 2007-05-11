@@ -8,23 +8,24 @@ public interface ParserConstants {
   int EQ = 6;
   int COL = 7;
   int VAR = 8;
-  int REF = 9;
-  int AND = 10;
-  int IF = 11;
-  int THEN = 12;
-  int QUERY = 13;
-  int IN = 14;
-  int OUT = 15;
-  int GLOBALANNOTATION = 16;
-  int LOCALANNOTATION = 17;
-  int INTEGER_NUMBER = 18;
-  int DECIMAL_NUMBER = 19;
-  int LABEL = 20;
-  int NAME = 21;
-  int COMMENT = 22;
-  int STRING_LITERAL = 23;
-  int WHITESPACE = 24;
-  int SEMICOLON = 25;
+  int NOT = 9;
+  int REF = 10;
+  int AND = 11;
+  int IF = 12;
+  int THEN = 13;
+  int QUERY = 14;
+  int IN = 15;
+  int OUT = 16;
+  int GLOBALANNOTATION = 17;
+  int LOCALANNOTATION = 18;
+  int INTEGER_NUMBER = 19;
+  int DECIMAL_NUMBER = 20;
+  int LABEL = 21;
+  int NAME = 22;
+  int COMMENT = 23;
+  int STRING_LITERAL = 24;
+  int WHITESPACE = 25;
+  int SEMICOLON = 26;
 
   int DEFAULT = 0;
 
@@ -38,6 +39,7 @@ public interface ParserConstants {
     "\"=\"",
     "\":\"",
     "\"var\"",
+    "\"not\"",
     "\"ref\"",
     "\"and\"",
     "\"if\"",

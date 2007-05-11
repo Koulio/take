@@ -27,4 +27,5 @@ public interface Predicate extends Annotatable {
 	public Class[] getSlotTypes();
 	public String[] getSlotNames();
 	public String getName();
+	public boolean isNegated();
 }

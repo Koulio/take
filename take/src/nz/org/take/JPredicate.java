@@ -26,29 +26,13 @@ package nz.org.take;
 public class JPredicate extends AbstractPredicate {
 
 	private java.lang.reflect.Method method = null;
-	public String getName() {
-		return method==null?null:method.getName();
-	}
-
-	public Class[] getSlotTypes() {
-		Class[] types = new Class[method.getParameterTypes().length+1];
-		types[0]=method.getDeclaringClass();
-		for (int i=1;i<types.length;i++)
-			types[i]=method.getParameterTypes()[i-1];
-		return types;
-	}
-	public java.lang.reflect.Method getMethod() {
-		return method;
-	}
-	public void setMethod(java.lang.reflect.Method method) {
-		this.method = method;
-	}
-
+	
 	@Override
 	public int hashCode() {
 		final int PRIME = 31;
 		int result = 1;
 		result = PRIME * result + ((method == null) ? 0 : method.hashCode());
+		result = PRIME * result + (negated ? 1231 : 1237);
 		return result;
 	}
 
@@ -66,7 +50,27 @@ public class JPredicate extends AbstractPredicate {
 				return false;
 		} else if (!method.equals(other.method))
 			return false;
+		if (negated != other.negated)
+			return false;
 		return true;
+	}
+
+	public String getName() {
+		return method==null?null:method.getName();
+	}
+
+	public Class[] getSlotTypes() {
+		Class[] types = new Class[method.getParameterTypes().length+1];
+		types[0]=method.getDeclaringClass();
+		for (int i=1;i<types.length;i++)
+			types[i]=method.getParameterTypes()[i-1];
+		return types;
+	}
+	public java.lang.reflect.Method getMethod() {
+		return method;
+	}
+	public void setMethod(java.lang.reflect.Method method) {
+		this.method = method;
 	}
 
 }

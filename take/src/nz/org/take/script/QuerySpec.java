@@ -30,7 +30,17 @@ import java.util.List;
 public class QuerySpec extends ScriptElement {
 	private String predicate = null;
 	private List<Boolean> ioSpec = new ArrayList<Boolean>();
+	private boolean negated = false;
 
+	public boolean isNegated() {
+		return negated;
+	}
+	public void setNegated(boolean negated) {
+		this.negated = negated;
+	}
+	public void setIoSpec(List<Boolean> ioSpec) {
+		this.ioSpec = ioSpec;
+	}
 	public String getPredicate() {
 		return predicate;
 	}

@@ -176,7 +176,7 @@ public class KnowledgeBaseReader {
 		}
 	}
 	private String getId(Predicate p) {
-		return p.getName()+'_'+p.getSlotTypes().length;
+		return p.getName()+'_'+p.getSlotTypes().length+(p.isNegated()?"-":"+");
 	}
 	private void checkId(KnowledgeElement e,Set<String> ids) throws ScriptException {
 		String id = e.getId();
@@ -231,7 +231,7 @@ public class KnowledgeBaseReader {
 	}
 	private Query buildQuery(Map<String,Predicate> predicatesByName,QuerySpec q) throws ScriptException {
 		Query query = new Query();
-		String predicateName = q.getPredicate()+'_'+q.getIoSpec().size();
+		String predicateName = q.getPredicate()+'_'+q.getIoSpec().size()+(q.isNegated()?"-":"+");
 		Predicate p = predicatesByName.get(predicateName);
 		if (p==null)
 			throw new ScriptSemanticsException("Query references a predicate that is not defined in the script: " + q.getPredicate() + " with " + q.getIoSpec().size() + " slots" + this.printPosInfo(q));
@@ -324,6 +324,7 @@ public class KnowledgeBaseReader {
 	}
 	private nz.org.take.Predicate buildPredicate(Map<String,Variable> variables,Map<String,Predicate> predicatesByName,Condition c,nz.org.take.Term[] terms) throws ScriptException {
 		Predicate predicate = null;
+		boolean negated = c.isNegated();
 		String name = c.getPredicate();
 		Method m = getMethod(name,terms);
 		PropertyDescriptor property = null;
@@ -332,9 +333,10 @@ public class KnowledgeBaseReader {
 		
 		if (m!=null) {
 			LOGGER.debug("Interpreting predicate symbol " + name + this.printPosInfo(c) + " as Java method " + m);
-			JPredicate p = new JPredicate();		
+			JPredicate p = new JPredicate();
 			Class[] paramTypes = getParamTypes( terms);
 			p.setMethod(m);
+			p.setNegated(negated);
 			predicate=p;			
 		}
 		else if (property!=null) {
@@ -342,6 +344,7 @@ public class KnowledgeBaseReader {
 			PropertyPredicate p = new PropertyPredicate();
 			p.setProperty(property);
 			p.setOwnerType(terms[0].getType());
+			p.setNegated(negated);
 			// todo remove this line that just does lazy initialization
 			predicate=p;			
 		}
@@ -349,6 +352,7 @@ public class KnowledgeBaseReader {
 			LOGGER.debug("Interpreting predicate symbol " + name + this.printPosInfo(c) + " as simple predicate");
 			SimplePredicate p = new SimplePredicate();
 			p.setName(name);
+			p.setNegated(negated);
 			Class[] types = new Class[terms.length];
 			for (int i=0;i<terms.length;i++) { 
 				types[i] = terms[i].getType();			

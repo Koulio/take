@@ -27,6 +27,9 @@ package nz.org.take;
 public abstract class AbstractPredicate extends AbstractAnnotatable implements Predicate {
 
 	protected String[] slotNames;
+	// this is strong, explicit negation
+	protected boolean negated = false;
+	
 
 	public String[] getSlotNames() {
 		if (slotNames==null && this.getSlotTypes()!=null) {
@@ -39,6 +42,12 @@ public abstract class AbstractPredicate extends AbstractAnnotatable implements P
 	}
 	public void setSlotNames(String[] slotNames) {
 		this.slotNames = slotNames;
+	}
+	public boolean isNegated() {
+		return negated;
+	}
+	public void setNegated(boolean negated) {
+		this.negated = negated;
 	}
 
 }
