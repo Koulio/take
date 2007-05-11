@@ -28,6 +28,16 @@ public class Fact extends AbstractAnnotatable implements Clause {
 	private Predicate predicate = null;
 	private String id = null;
 	private Term[] terms = null;
+	// strong, explicit negation
+	private boolean negated = false;
+
+	public boolean isNegated() {
+		return negated;
+	}
+
+	public void setNegated(boolean negated) {
+		this.negated = negated;
+	}
 
 	public Predicate getPredicate() {
 		return predicate;
