@@ -20,6 +20,7 @@ TOKEN:{<DOT:".">}
 TOKEN:{<EQ:"=">}
 TOKEN:{<COL:":">}
 TOKEN:{<VAR:"var">}
+TOKEN:{<NOT:"not">}
 TOKEN:{<REF:"ref">}
 TOKEN:{<AND:"and">}
 TOKEN:{<IF:"if">}
@@ -85,9 +86,17 @@ void query(Script script):
 }
 {
 	{QuerySpec q = new QuerySpec();}
-	t=<QUERY> predicateQ(q)"("io(q)(","io(q))*")"
+	t=<QUERY> [negated(q)] predicateQ(q)"("io(q)(","io(q))*")"
 	{q.setPosition(t.beginLine,t.beginColumn);}
 	{script.add(q);}
+}
+void negated(QuerySpec q):
+{
+	Token t;
+}
+{
+	t = <NOT>
+	{q.setNegated(true);}
 }
 void predicateQ(QuerySpec q):
 {
@@ -180,7 +189,15 @@ void condition(Rule r):
 void buildCondition(Condition c):
 {}
 {
-	predicate(c)"("terms(c)")"
+	[negation(c)]predicate(c)"("terms(c)")"
+}
+void negation(Condition c):
+{
+	Token t;
+}
+{
+	t = <NOT>
+	{c.setNegated(true);}
 }
 void terms(TermContainer c):
 {}

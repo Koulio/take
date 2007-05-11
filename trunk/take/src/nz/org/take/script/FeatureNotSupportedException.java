@@ -16,40 +16,28 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take;
+package nz.org.take.script;
 
 /**
- * Represents standalone facts and conditions that are part of a derivation rule.
+ * Exceptions that occur when a not supported or not yet implemented feature is encountered.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Fact extends AbstractAnnotatable implements Clause {
-	
-	private Predicate predicate = null;
-	private String id = null;
-	private Term[] terms = null;
-	public Predicate getPredicate() {
-		return predicate;
+public class FeatureNotSupportedException extends ScriptException {
+
+	public FeatureNotSupportedException() {
 	}
 
-	public void setPredicate(Predicate predicate) {
-		this.predicate = predicate;
+	public FeatureNotSupportedException(String arg0) {
+		super(arg0);
 	}
 
-	public Term[] getTerms() {
-		return terms;
+	public FeatureNotSupportedException(Throwable arg0) {
+		super(arg0);
 	}
 
-	public void setTerms(Term[] terms) {
-		this.terms = terms;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
+	public FeatureNotSupportedException(String arg0, Throwable arg1) {
+		super(arg0, arg1);
 	}
 
 }

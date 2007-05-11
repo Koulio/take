@@ -26,6 +26,15 @@ package nz.org.take.script;
 public class Condition extends TermContainer {
 	
 	private String predicate = null;
+	private boolean isNegated = false;
+	public boolean isNegated() {
+		return isNegated;
+	}
+
+	public void setNegated(boolean isNegated) {
+		this.isNegated = isNegated;
+	}
+
 	public String getPredicate() {
 		return predicate;
 	}
@@ -35,6 +44,8 @@ public class Condition extends TermContainer {
 	}
 	public String toString() {
 		StringBuffer b = new StringBuffer();
+		if (this.isNegated())
+			b.append("not_");
 		b.append(predicate);
 		b.append('(');
 		boolean f = true;

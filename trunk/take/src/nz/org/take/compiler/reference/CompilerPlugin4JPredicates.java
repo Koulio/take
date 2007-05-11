@@ -18,11 +18,8 @@
 
 package nz.org.take.compiler.reference;
 
-import java.beans.PropertyDescriptor;
 import java.io.PrintWriter;
-
 import nz.org.take.JPredicate;
-import nz.org.take.PropertyPredicate;
 import nz.org.take.Query;
 import nz.org.take.compiler.CompilerException;
 

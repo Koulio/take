@@ -26,6 +26,7 @@ package nz.org.take;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 
 public class PropertyPredicate extends AbstractPredicate {
 	private java.beans.PropertyDescriptor property = null;
@@ -35,6 +36,46 @@ public class PropertyPredicate extends AbstractPredicate {
 	
 	public String getName() {
 		return property.getName();
+	}
+
+	@Override
+	public int hashCode() {
+		final int PRIME = 31;
+		int result = 1;
+		result = PRIME * result + (isOne2One ? 1231 : 1237);
+		result = PRIME * result + (negated ? 1231 : 1237);
+		result = PRIME * result + ((ownerType == null) ? 0 : ownerType.hashCode());
+		result = PRIME * result + ((property == null) ? 0 : property.hashCode());
+		result = PRIME * result + Arrays.hashCode(types);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final PropertyPredicate other = (PropertyPredicate) obj;
+		if (isOne2One != other.isOne2One)
+			return false;
+		if (negated != other.negated)
+			return false;
+		if (ownerType == null) {
+			if (other.ownerType != null)
+				return false;
+		} else if (!ownerType.equals(other.ownerType))
+			return false;
+		if (property == null) {
+			if (other.property != null)
+				return false;
+		} else if (!property.equals(other.property))
+			return false;
+		if (!Arrays.equals(types, other.types))
+			return false;
+		return true;
 	}
 
 	public Class[] getSlotTypes() {

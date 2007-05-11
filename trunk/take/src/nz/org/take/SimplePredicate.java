@@ -29,23 +29,12 @@ public class SimplePredicate extends AbstractPredicate {
 
 	private String name;
 	private Class[] slotTypes;
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public Class[] getSlotTypes() {
-		return slotTypes;
-	}
-	public void setSlotTypes(Class[] slotTypes) {
-		this.slotTypes = slotTypes;
-	}
 	@Override
 	public int hashCode() {
 		final int PRIME = 31;
 		int result = 1;
 		result = PRIME * result + ((name == null) ? 0 : name.hashCode());
+		result = PRIME * result + (negated ? 1231 : 1237);
 		result = PRIME * result + Arrays.hashCode(slotTypes);
 		return result;
 	}
@@ -63,9 +52,23 @@ public class SimplePredicate extends AbstractPredicate {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (negated != other.negated)
+			return false;
 		if (!Arrays.equals(slotTypes, other.slotTypes))
 			return false;
 		return true;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Class[] getSlotTypes() {
+		return slotTypes;
+	}
+	public void setSlotTypes(Class[] slotTypes) {
+		this.slotTypes = slotTypes;
 	}
 
 }

@@ -24,17 +24,4 @@ package nz.org.take;
  */
 
 public class Prerequisite extends Fact {
-	// negation as failure like in Prolog
-	boolean weaklyNegated = false;
-
-	public boolean isWeaklyNegated() {
-		return weaklyNegated;
-	}
-
-	public void setWeaklyNegated(boolean weaklyNegated) {
-		this.weaklyNegated = weaklyNegated;
-	}
-
-
-
 }

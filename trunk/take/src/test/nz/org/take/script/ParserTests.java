@@ -308,4 +308,41 @@ public class ParserTests extends TestCase {
 		
 
 	}
+	public void test60() throws Exception {
+		String input = "rule1: if not p(x,y) then q(y,x)\n";
+		Script script = parse(input);
+		assertEquals(1,script.getElements().size());
+		Rule r = this.getRuleAt(script,0);
+		Condition prereq1= r.getConditions().get(0);
+		Condition concl = r.getConditions().get(1);
+		assertEquals("rule1",r.getId());
+		assertEquals("p",prereq1.getPredicate());
+		assertEquals(true,prereq1.isNegated());
+		assertEquals("q",concl.getPredicate());
+		assertEquals(false,concl.isNegated());
+	}
+	public void test61() throws Exception {
+		String input = "rule1: if p(x,y) then not q(y,x)\n";
+		Script script = parse(input);
+		assertEquals(1,script.getElements().size());
+		Rule r = this.getRuleAt(script,0);
+		Condition prereq1= r.getConditions().get(0);
+		Condition concl = r.getConditions().get(1);
+		assertEquals("rule1",r.getId());
+		assertEquals("p",prereq1.getPredicate());
+		assertEquals(false,prereq1.isNegated());
+		assertEquals("q",concl.getPredicate());
+		assertEquals(true,concl.isNegated());
+	}
+	public void test62() throws Exception {
+		String input = "query not p(in,in)"+"query q(in,in)";
+		Script script = parse(input);
+		assertEquals(2,script.getElements().size());
+		QuerySpec q1 = this.getQueryAt(script,0);
+		assertEquals("p",q1.getPredicate());
+		assertEquals(true,q1.isNegated());
+		QuerySpec q2 = this.getQueryAt(script,1);
+		assertEquals("q",q2.getPredicate());
+		assertEquals(false,q2.isNegated());
+	}
 }

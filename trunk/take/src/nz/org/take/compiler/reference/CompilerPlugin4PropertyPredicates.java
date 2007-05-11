@@ -41,6 +41,8 @@ public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 	public static final String TEMPLATE_O10 = TEMPLATEPATH+"PropertyPredicateONE2ONE_10_codetemplate.vm";
 	public static final String TEMPLATE_M10 = TEMPLATEPATH+"PropertyPredicateONE2MANY_10_codetemplate.vm";
 	public static final String TEMPLATE_M11 = TEMPLATEPATH+"PropertyPredicateONE2MANY_10_codetemplate.vm";
+	public static final String TEMPLATE_O11N = TEMPLATEPATH+"PropertyPredicateONE2ONE_11_neg_codetemplate.vm";
+	public static final String TEMPLATE_M11N = TEMPLATEPATH+"PropertyPredicateONE2MANY_10_neg_codetemplate.vm";
 
 	public static VelocityEngine VE = new VelocityEngine();
 	
@@ -85,7 +87,9 @@ public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 		boolean param2known = q.getInputParams()[1]; // true - both slots known
 			
 		// load and (lazy) init templates
-		String templateName = this.getTemplateName(param2known, p.isOne2One());
+		if (!param2known && p.isNegated()) 
+			throw new CompilerException("Cannot generate code for negated property predicates with variable in target slot");
+		String templateName = this.getTemplateName(param2known, p.isOne2One(),p.isNegated());
 		Template template = this.getTemplate(templateName);
 		
 		// bind template variables
@@ -117,15 +121,21 @@ public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 		return q.getPredicate() instanceof PropertyPredicate;
 	}
 	
-	private String getTemplateName(boolean param2known, boolean isOne2One) {
-		if (param2known&&isOne2One)
+	private String getTemplateName(boolean param2known, boolean isOne2One,boolean isNegated) {
+		if (param2known&&isOne2One&&!isNegated)
 			return TEMPLATE_O11;
-		else if (param2known&&!isOne2One)
+		else if (param2known&&!isOne2One&&!isNegated)
 			return TEMPLATE_M11;		
-		if (!param2known&&isOne2One)
+		else if (!param2known&&isOne2One&&!isNegated)
 			return TEMPLATE_O10;
-		else if (!param2known&&!isOne2One)
-			return TEMPLATE_M10;	
+		else if (!param2known&&!isOne2One&&!isNegated)
+			return TEMPLATE_M10;
+		else if (param2known&&isOne2One&&isNegated)
+			return TEMPLATE_O11N;
+		else if (param2known&&!isOne2One&&isNegated)
+			return TEMPLATE_M11N;		
+		
+		
 		return null;
 	}
 		
