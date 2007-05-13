@@ -37,12 +37,12 @@ import nz.org.take.compiler.CompilerException;
 public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 	
 	public static final String TEMPLATEPATH = "nz/org/take/compiler/reference/";
-	public static final String TEMPLATE_O11 = TEMPLATEPATH+"PropertyPredicateONE2ONE_11_codetemplate.vm";
-	public static final String TEMPLATE_O10 = TEMPLATEPATH+"PropertyPredicateONE2ONE_10_codetemplate.vm";
-	public static final String TEMPLATE_M10 = TEMPLATEPATH+"PropertyPredicateONE2MANY_10_codetemplate.vm";
-	public static final String TEMPLATE_M11 = TEMPLATEPATH+"PropertyPredicateONE2MANY_10_codetemplate.vm";
-	public static final String TEMPLATE_O11N = TEMPLATEPATH+"PropertyPredicateONE2ONE_11_neg_codetemplate.vm";
-	public static final String TEMPLATE_M11N = TEMPLATEPATH+"PropertyPredicateONE2MANY_10_neg_codetemplate.vm";
+	public static final String TEMPLATE_O11 = TEMPLATEPATH+"PropertyPredicateONE2ONE_11.vm";
+	public static final String TEMPLATE_O10 = TEMPLATEPATH+"PropertyPredicateONE2ONE_10.vm";
+	public static final String TEMPLATE_M10 = TEMPLATEPATH+"PropertyPredicateONE2MANY_10.vm";
+	public static final String TEMPLATE_M11 = TEMPLATEPATH+"PropertyPredicateONE2MANY_10.vm";
+	public static final String TEMPLATE_O11N = TEMPLATEPATH+"PropertyPredicateONE2ONE_11_neg.vm";
+	public static final String TEMPLATE_M11N = TEMPLATEPATH+"PropertyPredicateONE2MANY_10_neg.vm";
 
 	public static VelocityEngine VE = new VelocityEngine();
 	

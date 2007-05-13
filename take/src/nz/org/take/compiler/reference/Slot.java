@@ -22,7 +22,7 @@ package nz.org.take.compiler.reference;
  * Represents a (term) slot of a predicate.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-class Slot {
+public class Slot {
 
 	int position = -1;
 	String name = null;
@@ -30,5 +30,25 @@ class Slot {
 	String accessor = null;
 	String mutator = null;
 	String type = null;
+	
+	// public accessors to make properties visible to velocity
+	public String getAccessor() {
+		return accessor;
+	}
+	public String getMutator() {
+		return mutator;
+	}
+	public String getName() {
+		return name;
+	}
+	public int getPosition() {
+		return position;
+	}
+	public String getType() {
+		return type;
+	}
+	public String getVar() {
+		return var;
+	}
 
 }
