@@ -38,12 +38,11 @@ rule1: if sameAs(getFather(person1),getFather(person2)) then isBrother(person1,p
 
 `sameAs` and `getFather` are methods in `Person`.   Note that there are now facts. A query like `isBrother(p1,p2)` is answered by performing `p1.getFather().sameAs(p2.getFather())`. 
 
-The test scenario 4 uses Java properties as predicates. Consider the following rule:
+The test scenario 4 uses Java properties as predicates. Consider the following rule from the test [http://take.googlecode.com/svn/trunk/take/src/test/nz/org/take/compiler/scenario4/rules4.take script]:
 
 {{{
 query isEnrolled(in,in)
 rule1: if courses(student,course) and college(course,college) then isEnrolled(student,college)
 }}}
 
-Courses have a property college (i.e., a pair of methods getCollege and setCollege), and students have a ONE2MANY property courses (i.e., the property type is java.util.List<Course>). It is then possible to query the generated knowledge base whether a student is enrolled in a certain college. 
-
+Courses have a property college (i.e., a pair of methods `getCollege` and `setCollege`), and students have a `ONE2MANY` property courses (i.e., the property type is `java.util.List<Course>`). It is then possible to query the generated knowledge base whether a student is enrolled in a certain college. 
