@@ -1,0 +1,23 @@
+    /**
+     * Method generated for query $query
+     * @param source 
+     * @param target  
+     * @return an iterator
+     * code generated using velocity template $templatename
+    */
+    private ResourceIterator< $resulttype > $methodname (
+		#foreach( $slot in $slots )
+    		final $slot.type $slot.getVar(),
+   		#end
+        final DerivationController _derivation) {
+        
+        _derivation.log("$method");
+        if (! $target.$method.getName() ($args)) {        	
+        	$resulttype result = new $resulttype();
+        	#foreach( $slot in $slots )
+        		result. $slot.getName() = $slot.getVar() ;
+   			#end
+        	return new SingletonIterator<$resulttype>(result);
+        }
+        return EmptyIterator.DEFAULT;
+    }
