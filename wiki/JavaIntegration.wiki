@@ -12,11 +12,12 @@ Java functionality is integrated as follows:
   # Java classes and interfaces are used as variable terms
   # Java methods returning booleans can be used as predicates
   # Arbitrary Java methods can be used as terms
+  # Java (bean) properties and associations (one2one and one2many) can be used as predicates/ fact(s)
 
 Planned, bot yet implemented: 
 
   # Java object (references) to be used as constant terms
-  # Java properties and associations (one2one and one2many) to be used as predicates/ fact(s)
+  
   
 Examples: 
 
@@ -37,4 +38,12 @@ rule1: if sameAs(getFather(person1),getFather(person2)) then isBrother(person1,p
 
 `sameAs` and `getFather` are methods in `Person`.   Note that there are now facts. A query like `isBrother(p1,p2)` is answered by performing `p1.getFather().sameAs(p2.getFather())`. 
 
+The test scenario 4 uses Java properties as predicates. Consider the following rule:
+
+{{{
+query isEnrolled(in,in)
+rule1: if courses(student,course) and college(course,college) then isEnrolled(student,college)
+}}}
+
+Courses have a property college (i.e., a pair of methods getCollege and setCollege), and students have a ONE2MANY property courses (i.e., the property type is java.util.List<Course>). It is then possible to query the generated knowledge base whether a student is enrolled in a certain college. 
 
