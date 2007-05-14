@@ -34,8 +34,6 @@ import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
  */
 
 public class GenerateClasses {
-	public static final String ROOT = "r";
-	public static final int DEPTH=3;
 		
 	/**
 	 * Generate the sources for the example.
