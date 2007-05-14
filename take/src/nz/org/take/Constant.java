@@ -61,5 +61,8 @@ public class Constant extends Variable {
 	public void setRef(String ref) {
 		this.ref = ref;
 	}
+	public boolean isProxy() {
+		return this.object==null && this.ref!=null;
+	}
 
 }
