@@ -30,8 +30,6 @@ import nz.org.take.script.KnowledgeBaseReader;
  */
 
 public class GenerateKB {
-	public static final String ROOT = "r";
-	public static final int DEPTH=3;
 		
 		/**
 		 * Generate the sources for the example.
