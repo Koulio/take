@@ -25,6 +25,7 @@ package test.nz.org.take.compiler.scenario5;
 
 public class Customer {
 	private String name = null;
+	private CustomerCategory category = null;
 
 	public Customer(String name) {
 		super();
@@ -62,6 +63,14 @@ public class Customer {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	public CustomerCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(CustomerCategory category) {
+		this.category = category;
 	}
 	
 }
