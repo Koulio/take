@@ -23,7 +23,7 @@ package nz.org.take;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Constant extends Variable {
+public class Constant implements Term {
 	
 	private Object object = null;
 	// the type can be overridden, by default the type of the object is used
