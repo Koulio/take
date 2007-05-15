@@ -23,10 +23,7 @@ import java.io.Reader;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.Map.Entry;
-
-import javax.script.Bindings;
 import javax.script.SimpleBindings;
-
 import org.apache.log4j.Logger;
 import nz.org.take.*;
 import nz.org.take.script.parser.Parser;
@@ -64,22 +61,13 @@ public class KnowledgeBaseReader {
 			annotatable.addAnnotation(ann.getKey(),ann.getValue());
 		annotations.clear(); // reset annotations
 	}
+
 	/**
 	 * Read the knowledge base from a script.
 	 * @param input the reader
-	 * @param bindings the bindings associating refs with objects
 	 * @return the knowledge base 
 	 */
 	public KnowledgeBase read(Reader input) throws ScriptException {
-		return read(input,new SimpleBindings());
-	}
-	/**
-	 * Read the knowledge base from a script.
-	 * @param input the reader
-	 * @param bindings the bindings associating refs with objects
-	 * @return the knowledge base 
-	 */
-	public KnowledgeBase read(Reader input,Bindings bindings) throws ScriptException {
 		Script script = null;
 		try {
 			script = parse(input);
@@ -105,9 +93,9 @@ public class KnowledgeBaseReader {
 				annotations.clear(); // var declarations do not support annotations
 			}
 			if (part instanceof RefDeclaration) {
-				List<Constant> cons = buildConstants((RefDeclaration)part,bindings);
+				List<Constant> cons = buildConstants((RefDeclaration)part);
 				for (Constant c:cons)
-					constants.put(c.getName(),c);
+					constants.put(getId(c),c);
 				annotations.clear(); // var declarations do not support annotations
 			}
 			else if (part instanceof Annotation) {
@@ -150,6 +138,9 @@ public class KnowledgeBaseReader {
 			kb.add(query);
 		}
 		return kb;
+	}
+	private String getId(Constant c) {
+		return c.getRef()==null?(c.getObject()==null?null:c.getObject().toString()):c.getRef();
 	}
 	// take over query annotations for the query predicate
 	private void takeOverAnnotations(Query q) {
@@ -204,7 +195,7 @@ public class KnowledgeBaseReader {
 		}
 		return variables;
 	}
-	private List<Constant> buildConstants(RefDeclaration cd,Bindings bindings) throws ScriptException {
+	private List<Constant> buildConstants(RefDeclaration cd) throws ScriptException {
 		Class clazz = null;
 		try {
 			clazz = this.classloader.loadClass(cd.getType());
@@ -215,16 +206,8 @@ public class KnowledgeBaseReader {
 		List<Constant> constants = new ArrayList<Constant>();
 		for (String name:cd.getNames()) {
 			Constant c = new Constant();
-			c.setName(name);
+			c.setRef(name);
 			c.setType(clazz);
-			Object obj = bindings.get(name);
-			if (obj==null) {
-				throw new ScriptSemanticsException("No binding found for object reference " + name + this.printPosInfo(cd));
-			}
-			if (clazz.isAssignableFrom(obj.getClass())) {
-				throw new ScriptSemanticsException("Type of object in bindings for "+name+" (" + obj.getClass() + ") is incompatible with declared type " + this.printPosInfo(cd));
-			}
-			c.setObject(obj);
 			constants.add(c);
 		}
 		return constants;
@@ -381,7 +364,22 @@ public class KnowledgeBaseReader {
 		try {
 			return clazz.getMethod(name,paramTypes);
 		} catch (Exception e) {
-			throw new ScriptSemanticsException("No method for symbol found: " + name,e);
+			return null;
+		}
+	}
+	private Method findPropertyAccessor(String name,nz.org.take.Term[] terms) throws ScriptException {
+		if (terms.length>1)
+			return null; // getters dont have parameters
+		Class clazz = terms[0].getType();
+		try {
+			BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
+			for (PropertyDescriptor property:beanInfo.getPropertyDescriptors()) {
+				if (property.getName().equals(name)) 
+					return property.getReadMethod();
+			}
+			return null;
+		} catch (IntrospectionException e1) {
+			return null;
 		}
 	}
 
@@ -411,7 +409,11 @@ public class KnowledgeBaseReader {
 			ComplexTerm ct = (ComplexTerm)t;
 			String f = ct.getFunction();
 			nz.org.take.Term[] terms = buildTerms(variables,constants,ct);
-			Method m = this.findMethod(f, buildTerms(variables,constants,ct));
+			Method m = this.findMethod(f, terms);
+			if (m==null) // check whether there is such a property
+				m = findPropertyAccessor(f, terms);
+			if (m==null)
+				throw new ScriptSemanticsException("No method or property found for symbol: " + f);
 			JFunction function = new JFunction();
 			function.setMethod(m);
 			nz.org.take.ComplexTerm  cplxTerm = new nz.org.take.ComplexTerm ();

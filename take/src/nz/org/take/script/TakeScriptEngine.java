@@ -44,7 +44,7 @@ public class TakeScriptEngine extends AbstractScriptEngine {
 
 	public Object eval(Reader reader, ScriptContext context) throws ScriptException {
 		try {
-			return new KnowledgeBaseReader().read(reader, context.getBindings(ScriptContext.ENGINE_SCOPE));
+			return new KnowledgeBaseReader().read(reader);
 		} catch (nz.org.take.script.ScriptException e) {
 			throw new ScriptException(e);
 		}

@@ -609,7 +609,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			 * if (prereq!=r.getHead()) addToAgenda(query);
 			 */
 			if (first) {
-//				 call method
+				// call method
 				// unification: find the input params known
 				QueryRef query = buildQuery(prereq, bindings);
 				first = false;
@@ -650,6 +650,10 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 					} else if (t instanceof ComplexTerm) {
 						ComplexTerm vt = (ComplexTerm) t;						
 						printVariableAssignment(out, "bindings",ref,"object", slot.var,cast);
+						bindings.put(vt, refs.get(vt));						
+					} else if (t instanceof Constant) {
+						Constant vt = (Constant) t;						
+						printVariableAssignment(out, "bindings",ref,"Constants",vt.getRef(),cast);
 						bindings.put(vt, refs.get(vt));						
 					}
 					else {
