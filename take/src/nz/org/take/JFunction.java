@@ -42,7 +42,11 @@ public class JFunction implements Function {
 	}
 
 	public Class getReturnType() {
-		return method.getDeclaringClass();
+		return method.getReturnType();
+	}
+	
+	public String toString() {
+		return method.getName();
 	}
 
 }

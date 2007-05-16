@@ -72,5 +72,10 @@ public class JPredicate extends AbstractPredicate {
 	public void setMethod(java.lang.reflect.Method method) {
 		this.method = method;
 	}
+	
+	public String toString() {
+		return method.getName();
+	}
+	
 
 }

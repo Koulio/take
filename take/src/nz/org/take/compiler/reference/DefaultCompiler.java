@@ -264,7 +264,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		Slot[] inSlots = this.buildInputSlots(q);
 		Predicate p = q.getPredicate();
 
-		printMethodComment(out, "Method generated for query " + p, inSlots,
+		printMethodComment(out, "Method generated for query " + q, inSlots,
 				"an iterator for instances of " + getClassName(p));
 
 		// start header
@@ -320,7 +320,8 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 				if (plugin.supports(q)) {
 					// the next line may throw an exception
 					// an alternative strategy would be "try next plugin"
-					plugin.checkPrerequisites(q);
+					
+					//plugin.checkPrerequisites(q);
 					
 					methodName = plugin.createMethod(out, q);
 				}
@@ -345,7 +346,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		Slot[] outSlots = this.buildOutputSlots(q);
 		Predicate p = q.getPredicate();
 
-		printMethodComment(out, "Method generated for query " + p, inSlots,"an iterator for instances of " + getClassName(p));
+		printMethodComment(out, "Method generated for query " + q, inSlots,"an iterator for instances of " + getClassName(p));
 
 		// start header
 		this.printGenericType(out, "private ResourceIterator", getClassName(p));
@@ -427,7 +428,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	// create private method
 	private void createMethod(PrintWriter out, Query q, Slot[] islots,Slot[] oslots, KnowledgeElement cs, int i) throws CompilerException {
 		Predicate p = q.getPredicate();
-		printMethodComment(out, "Method generated for query " + p, islots,
+		printMethodComment(out, "Method generated for query " + q, islots,
 				"an iterator for instances of " + getClassName(p));
 
 		// facts are handled differently to minimize memory consumption

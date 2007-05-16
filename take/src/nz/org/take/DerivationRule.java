@@ -65,5 +65,21 @@ public class DerivationRule extends AbstractAnnotatable implements Clause {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
+	public String toString() {
+		StringBuffer b = new StringBuffer();
+		boolean f = true;
+		b.append(" IF ");
+		for (Prerequisite p:this.body) {
+			if (f)
+				f = false;
+			else 
+				b.append(" AND ");
+			b.append(p);
+		}
+		b.append(" THEN ");
+		b.append(head);
+		return b.toString();
+	}
 
 }
