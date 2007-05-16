@@ -23,7 +23,7 @@ package nz.org.take;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public interface Term {
+public interface Term extends Visitable{
 	
 	public Class getType();
 

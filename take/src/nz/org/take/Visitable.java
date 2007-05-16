@@ -19,50 +19,10 @@
 package nz.org.take;
 
 /**
- * Complex terms are composed of functions and other terms.
+ * Visitable.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class ComplexTerm implements Term {
-	
-	private Function function = null;
-	private Term[] terms = null;
-	public Function getFunction() {
-		return function;
-	}
-	public void setFunction(Function function) {
-		this.function = function;
-	}
-	public Term[] getTerms() {
-		return terms;
-	}
-	public void setTerms(Term[] terms) {
-		this.terms = terms;
-	}
-	public Class getType() {
-		return function==null?null:function.getReturnType();
-	}
-	public String toString() {
-		StringBuffer b = new StringBuffer();
-		boolean f = true;
-		b.append(function);
-		b.append('(');
-		for (Term t:terms) {
-			if (f)
-				f = false;
-			else 
-				b.append(',');
-			b.append(t);
-		}
-		b.append(')');
-		return b.toString();
-	}
-	public void accept(KnowledgeBaseVisitor visitor) {
-		if (visitor.visit(this)) {
-			for (Term t:terms)
-				t.accept(visitor);
-		}		
-		visitor.endVisit(this);
-	}
-
+public interface Visitable {
+	public void accept(KnowledgeBaseVisitor visitor); 
 }

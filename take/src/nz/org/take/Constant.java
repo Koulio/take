@@ -73,4 +73,8 @@ public class Constant implements Term {
 			b.append(']');
 		return b.toString();
 	}
+	public void accept(KnowledgeBaseVisitor visitor) {
+		visitor.visit(this);
+		visitor.endVisit(this);
+	}
 }

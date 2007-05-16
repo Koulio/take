@@ -81,5 +81,12 @@ public class DerivationRule extends AbstractAnnotatable implements Clause {
 		b.append(head);
 		return b.toString();
 	}
-
+	public void accept(KnowledgeBaseVisitor visitor) {
+		if (visitor.visit(this)) {
+			head.accept(visitor);
+			for (Prerequisite p:body)
+				p.accept(visitor);
+		}		
+		visitor.endVisit(this);
+	}
 }

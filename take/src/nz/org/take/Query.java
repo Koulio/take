@@ -26,7 +26,7 @@ package nz.org.take;
  * they will be turned into method parameters in the code generated.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-public class Query extends AbstractAnnotatable {
+public class Query extends AbstractAnnotatable implements Visitable {
 
 	private Predicate predicate = null;
 	private boolean[] inputParams = null;
@@ -110,6 +110,10 @@ public class Query extends AbstractAnnotatable {
 		}
 		b.append(']');
 		return b.toString();
+	}
+	public void accept(KnowledgeBaseVisitor visitor) {
+		visitor.visit(this);
+		visitor.endVisit(this);
 	}
 
 }
