@@ -39,5 +39,12 @@ public class Variable extends AbstractAnnotatable implements Term {
 	public void setType(Class type) {
 		this.type = type;
 	}
+	public String toString() {
+		StringBuffer b = new StringBuffer();
+		b.append('<');
+		b.append(name);
+		b.append('>');
+		return b.toString();
+	}
 
 }

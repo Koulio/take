@@ -42,5 +42,20 @@ public class ComplexTerm implements Term {
 	public Class getType() {
 		return function==null?null:function.getReturnType();
 	}
+	public String toString() {
+		StringBuffer b = new StringBuffer();
+		boolean f = true;
+		b.append(function);
+		b.append('(');
+		for (Term t:terms) {
+			if (f)
+				f = false;
+			else 
+				b.append(',');
+			b.append(t);
+		}
+		b.append(')');
+		return b.toString();
+	}
 
 }

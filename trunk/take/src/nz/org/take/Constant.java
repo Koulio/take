@@ -64,5 +64,13 @@ public class Constant implements Term {
 	public boolean isProxy() {
 		return this.object==null && this.ref!=null;
 	}
-
+	public String toString() {
+		StringBuffer b = new StringBuffer();
+		if (isProxy())
+			b.append('[');
+		b.append(isProxy()?ref:object);
+		if (isProxy())
+			b.append(']');
+		return b.toString();
+	}
 }

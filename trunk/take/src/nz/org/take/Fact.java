@@ -51,5 +51,22 @@ public class Fact extends AbstractAnnotatable implements Clause {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
+	public String toString() {
+		StringBuffer b = new StringBuffer();
+		boolean f = true;
+		b.append(predicate);
+		b.append('(');
+		for (Term t:terms) {
+			if (f)
+				f = false;
+			else 
+				b.append(',');
+			b.append(t);
+		}
+		b.append(')');
+		return b.toString();
+	}
+	
 
 }

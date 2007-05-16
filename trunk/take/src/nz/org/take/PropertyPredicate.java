@@ -136,4 +136,7 @@ public class PropertyPredicate extends AbstractPredicate {
 	public void setOwnerType(Class ownerType) {
 		this.ownerType = ownerType;
 	}
+	public String toString() {
+		return property.getName();
+	}
 }

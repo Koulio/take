@@ -71,4 +71,10 @@ public class SimplePredicate extends AbstractPredicate {
 		this.slotTypes = slotTypes;
 	}
 
+	
+	public String toString() {
+		// use UML syntax for derivated properties
+		return "/"+name;
+	}
+	
 }

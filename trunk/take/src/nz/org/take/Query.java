@@ -95,5 +95,21 @@ public class Query extends AbstractAnnotatable {
 	public void setPredicate(Predicate predicate) {
 		this.predicate = predicate;
 	}
+	
+	public String toString() {
+		StringBuffer b = new StringBuffer();
+		boolean f = true;
+		b.append(predicate);
+		b.append('[');
+		for (boolean io:inputParams) {
+			if (f)
+				f = false;
+			else 
+				b.append(',');
+			b.append(io?"in":"out");
+		}
+		b.append(']');
+		return b.toString();
+	}
 
 }
