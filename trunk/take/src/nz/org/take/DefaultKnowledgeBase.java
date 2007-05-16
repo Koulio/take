@@ -114,4 +114,13 @@ public class DefaultKnowledgeBase extends AbstractAnnotatable implements Knowled
 	public List<Query> getQueries() {
 		return (List<Query>)ListUtils.unmodifiableList(this.queries) ;
 	}
+	public void accept(KnowledgeBaseVisitor visitor) {
+		if (visitor.visit(this)) {
+			for (Query q:queries)
+				q.accept(visitor);
+			for (KnowledgeElement e:elements)
+				e.accept(visitor);
+		}		
+		visitor.endVisit(this);
+	}
 }

@@ -67,6 +67,12 @@ public class Fact extends AbstractAnnotatable implements Clause {
 		b.append(')');
 		return b.toString();
 	}
-	
+	public void accept(KnowledgeBaseVisitor visitor) {
+		if (visitor.visit(this)) {
+			for (Term t:terms)
+				t.accept(visitor);
+		}		
+		visitor.endVisit(this);
+	}
 
 }
