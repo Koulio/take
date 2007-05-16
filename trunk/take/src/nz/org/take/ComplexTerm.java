@@ -23,7 +23,7 @@ package nz.org.take;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class ComplexTerm implements Term {
+public class ComplexTerm extends AbstractAnnotatable implements Term {
 	
 	private Function function = null;
 	private Term[] terms = null;
