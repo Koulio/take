@@ -1,4 +1,4 @@
-// script for test scenario 3 - references Java methods as functions and predicates
+// script for test scenario 5 - uses constants
 @@dc:creator=jens dietrich
 @@dc:date=14/05/2007
 var test.nz.org.take.compiler.scenario5.Customer customer

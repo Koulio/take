@@ -3,7 +3,7 @@
 @@dc:date=26/04/2007
 var test.nz.org.take.compiler.scenario6.Person person1,person2,person3
 var test.nz.org.take.compiler.scenario6.Person grandchild,father,grandfather
-ref Frank,Lutz,Guenther,Otto,Jens,Klaus,Max,Ralf,Werner 
+ref test.nz.org.take.compiler.scenario6.Person Frank,Lutz,Guenther,Otto,Jens,Klaus,Max,Ralf,Werner 
 // queries - annotations are optional and are used to generate 
 // custom classes and methods
 @take.compilerhint.class=IsFatherOf

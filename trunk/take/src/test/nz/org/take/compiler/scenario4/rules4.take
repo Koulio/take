@@ -1,4 +1,4 @@
-// script for test scenario 3 - references Java methods as functions and predicates
+// script for test scenario 4 - tests the use of bean properties as predicates
 @@dc:creator=jens dietrich
 @@dc:date=30/04/2007
 var test.nz.org.take.compiler.scenario4.Student student

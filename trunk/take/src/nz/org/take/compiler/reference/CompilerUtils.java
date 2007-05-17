@@ -526,18 +526,23 @@ public abstract class CompilerUtils {
 
 
 	/**
-	 * Get the code that is used to reference an object.
-	 * 
-	 * @param type
-	 * @param obj
+	 * Get the code that is used to reference a constant.	
+	 * @param constantClassName
+	 * @param t
 	 * @return
 	 */
-	protected String getObjectRefCode(Class type, Object obj) throws CompilerException {
-		if (type == String.class)
-			return "\"" + obj + "\"";
-		else
-			throw new CompilerException(
-					"Don't know how to reference this object: " + obj);
+	protected String getRef(String constantClassName, Constant t) throws CompilerException {
+		if (t.isProxy()) {
+			return constantClassName+'.'+t.getRef();
+		}
+		else {
+			Object obj = t.getObject();
+			if (t.getType() == String.class)
+				return "\"" + obj + "\"";
+			else
+				throw new CompilerException(
+						"Don't know how to reference this object: " + obj);
+		}
 	}
 
 	/**

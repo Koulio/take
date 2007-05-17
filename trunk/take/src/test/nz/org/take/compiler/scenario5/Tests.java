@@ -18,10 +18,6 @@
 
 package test.nz.org.take.compiler.scenario5;
 
-import java.util.*;
-
-import nz.org.take.DerivationRule;
-import nz.org.take.Fact;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.rt.ResultSet;
 import test.nz.org.take.compiler.scenario5.generated.*;
@@ -57,7 +53,8 @@ public class Tests extends TestCase
 	protected void setUp() throws Exception
 	{
 		super.setUp();
-		kb = GenerateKB.buildKB();
+		Constants.goldCustomer = new CustomerCategory("gold");
+		Constants.goldCustomerDiscount = new Discount(42,true);
 	}
 
 	/**
@@ -76,16 +73,10 @@ public class Tests extends TestCase
 
 	public void test1(){
 		
-		System.out.println("starting test case 1");
-		
+		System.out.println("starting test case 1");		
 		_KB kb = new _KB();
 		Customer c = new Customer("John");
-		c.setCategory(new CustomerCategory("gold"));
-		
-		Constants.goldCustomer = new CustomerCategory("gold");
-		Constants.goldCustomerDiscount = new Discount(42,true);
-
-
+		c.setCategory(new CustomerCategory("gold"));		
 		ResultSet<discount> rs = kb.getDiscount(c);
 		assertTrue(rs.hasNext());
 		discount d = rs.next();
