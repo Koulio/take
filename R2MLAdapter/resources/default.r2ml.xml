@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<r2ml:RuleBase
+	xsi:schemaLocation=
+		"http://www.rewerse.net/I1/2006/R2ML http://oxygen.informatik.tu-cottbus.de/R2ML/0.4/R2ML.xsd"
+	xmlns:r2ml="http://www.rewerse.net/I1/2006/R2ML"
+	xmlns:r2mlv="http://www.rewerse.net/I1/2006/R2ML/R2MLV"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	>
+
+	<r2ml:DerivationRuleSet r2ml:ruleSetID="DRS001">
+		
+		<r2ml:DerivationRule r2ml:ruleID="DR000">
+            <r2ml:Documentation>
+                <r2ml:RuleText r2ml:textFormat="plain">
+					IF
+						fatherOf(Max, Jens)
+					THEN
+						is_sonOf(Jens, Max)
+				</r2ml:RuleText>
+            </r2ml:Documentation>
+            <r2ml:conditions>
+				<r2ml:GenericAtom r2ml:predicateID="fatherOf">
+					<r2ml:arguments>
+						<r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="Max" />
+						<r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="Jens" />
+					</r2ml:arguments>
+				</r2ml:GenericAtom>
+            </r2ml:conditions>
+            <r2ml:conclusion>
+				<r2ml:GenericAtom r2ml:predicateID="sonOf">
+					<r2ml:arguments>
+						<r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="Jens" />
+						<r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="Max" />
+					</r2ml:arguments>
+				</r2ml:GenericAtom>
+            </r2ml:conclusion>
+        </r2ml:DerivationRule>
+		
+    </r2ml:DerivationRuleSet>
+	
+</r2ml:RuleBase>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:r2ml="http://www.rewerse.net/I1/2006/R2ML" targetNamespace="http://www.rewerse.net/I1/2006/R2ML" elementFormDefault="qualified" attributeFormDefault="qualified" version="0.4" xml:lang="en">
+ <!--
+
+Elements  for actions 
+
+-->
+ <xs:element name="SOAPRPCAction" type="r2ml:SOAPRPCAction" abstract="false" substitutionGroup="r2ml:SOAPAction"/>
+ <xs:element name="SOAPAction" type="r2ml:SOAPAction" abstract="false" substitutionGroup="r2ml:MessageActionExpression"/>
+ <xs:element name="MessageActionExpression" type="r2ml:MessageActionExpression" abstract="true" substitutionGroup="r2ml:AtomicActionEventExpression"/>
+ <xs:element name="InvokeActionExpression" type="r2ml:InvokeActionExpression" abstract="false" substitutionGroup="r2ml:SystemActionExpression"/>
+ <xs:element name="AssignActionExpression" type="r2ml:AssignActionExpression" abstract="false" substitutionGroup="r2ml:SystemActionExpression"/>
+ <xs:element name="CreateActionExpression" type="r2ml:CreateActionExpression" abstract="false" substitutionGroup="r2ml:SystemActionExpression"/>
+ <xs:element name="DeleteActionExpression" type="r2ml:DeleteActionExpression" abstract="false" substitutionGroup="r2ml:SystemActionExpression"/>
+ <!-- 
+The abstract concept of Action
+-->
+
+ <xs:element name="ActionExpression" abstract="true"/>
+ <xs:complexType name="ActionExpression" abstract="true"/>
+<!-- System actions --> 
+ <xs:element name="SystemActionExpression" abstract="true" substitutionGroup="r2ml:ActionExpression"/>
+ <xs:complexType name="SystemActionExpression" abstract="true">
+   <xs:complexContent>
+   <xs:extension base="r2ml:ActionExpression"/>
+  </xs:complexContent>
+ </xs:complexType>
+ 
+ <!-- AtomicActionEventExpression -->
+ <xs:element name="AtomicActionEventExpression" abstract="false" substitutionGroup="r2ml:AtomicEventExpression"/>
+ <xs:complexType name="AtomicActionEventExpression" abstract="false">
+   <xs:complexContent>
+   <xs:extension base="r2ml:AtomicEventExpression"/>
+  </xs:complexContent>
+ </xs:complexType>
+ 
+ <!-- Message action -->
+ <xs:complexType name="MessageActionExpression" abstract="true">
+  <xs:complexContent>
+   <xs:extension base="r2ml:AtomicActionEventExpression"/>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- SOAP action -->
+ <xs:complexType name="SOAPAction" abstract="false">
+  <xs:complexContent>
+   <xs:extension base="r2ml:MessageActionExpression"/>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- SOAP rpc action -->
+ <xs:complexType name="SOAPRPCAction" abstract="false">
+  <xs:complexContent>
+   <xs:extension base="r2ml:SOAPAction">
+    <xs:sequence>
+     <xs:element ref="r2ml:arguments"/>
+    </xs:sequence>
+    <xs:attribute ref="r2ml:operationID" use="required"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- 
+Invoke action 
+-->
+ <xs:complexType name="InvokeActionExpression" abstract="false">
+  <xs:complexContent>
+   <xs:extension base="r2ml:ActionExpression">
+    <xs:sequence>
+     <xs:element ref="r2ml:contextArgument" minOccurs="0"/>
+     <xs:element ref="r2ml:arguments" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute ref="r2ml:operationID" use="required"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- 
+Assign action 
+-->
+ <xs:complexType name="AssignActionExpression" abstract="false">
+  <xs:complexContent>
+   <xs:extension base="r2ml:ActionExpression">
+    <xs:sequence>
+     <xs:element ref="r2ml:contextArgument"/>
+     <xs:element ref="r2ml:Term"/>
+    </xs:sequence>
+    <xs:attribute ref="r2ml:propertyID" use="required"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- 
+Create Action 
+-->
+ <xs:complexType name="CreateActionExpression" abstract="false">
+  <xs:complexContent>
+   <xs:extension base="r2ml:ActionExpression">
+    <xs:sequence>
+     <xs:element ref="r2ml:Slot" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute ref="r2ml:classID" use="required"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!--
+Delete Action 
+-->
+ <xs:complexType name="DeleteActionExpression" abstract="false">
+  <xs:complexContent>
+   <xs:extension base="r2ml:ActionExpression">
+    <xs:sequence>
+     <xs:element ref="r2ml:contextArgument"/>
+    </xs:sequence>
+    <xs:attribute ref="r2ml:classID" use="required"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+</xs:schema>

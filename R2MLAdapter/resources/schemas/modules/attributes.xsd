@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:r2ml="http://www.rewerse.net/I1/2006/R2ML" targetNamespace="http://www.rewerse.net/I1/2006/R2ML" elementFormDefault="qualified" attributeFormDefault="qualified" version="0.4" xml:lang="en">
+ <!-- Appear in Atom -->
+ <xs:attribute name="isNegated" type="xs:boolean"/>
+ <!-- Appear in ObjectVariable and Object  i.e. the type for object variables and object constants-->
+ <xs:attribute name="classID" type="xs:QName"/>
+ <!-- appear in  ObjectDescriptionAtom -->
+ <xs:attribute name="baseType" type="xs:QName"/>
+ <!-- appear in referencePropertyAtom -->
+ <xs:attribute name="referencePropertyID" type="xs:QName"/>
+ <!-- appear in AttributeDataTermPair, AttributionAtom, AttributeFunctionTerm -->
+ <xs:attribute name="attributeID" type="xs:QName"/>
+ <!-- appear in ObjectOperationTerm and DataOperationTerm  and is a reference to an UML Operation -->
+ <xs:attribute name="operationID" type="xs:QName"/>
+ <!-- appear in GenericAtom -->
+ <xs:attribute name="predicateID" type="xs:QName"/>
+ <xs:attribute name="predicateType" type="r2ml:PredicateType"/>
+ <!-- appear in a AssociationAtom -->
+ <xs:attribute name="associationPredicateID" type="xs:QName"/>
+ <!-- appear in AssignAction -->
+ <xs:attribute name="propertyID" type="xs:QName"/>
+ <!-- appear in a BuiltinPredicateAtom -->
+ <xs:attribute name="datatypePredicateID" type="xs:QName"/>
+ <!-- appear in nany named entity: ObjectVariable DataVariable -->
+ <xs:attribute name="name" type="xs:NCName"/>
+ <!-- 	appear in Object -->
+ <xs:attribute name="objectID" type="xs:QName"/>
+ <!-- appear in GenericEntityName -->
+ <xs:attribute name="genericEntityID" type="xs:string"/>
+ <!-- appear in BuiltinFunctionTerm -->
+ <xs:attribute name="datatypeFunctionID" type="xs:QName"/>
+ <!-- appear in DataClassificationAtom -->
+ <xs:attribute name="datatypeID" type="xs:QName"/>
+ <!-- ID's -->
+ <xs:attribute name="ruleSetID" type="xs:ID"/>
+ <xs:attribute name="ruleID" type="xs:ID"/>
+ <!-- cardinalities -->
+ <xs:attribute name="minCardinality" type="xs:positiveInteger"/>
+ <xs:attribute name="maxCardinality" type="xs:positiveInteger"/>
+ <!-- multivalued terms -->
+ <xs:attribute name="typeCategory" type="r2ml:CollectionType"/>
+ <!-- appear in PlainLiteral -->
+ <xs:attribute name="languageTag" type="xs:normalizedString"/>
+ <xs:attribute name="lexicalValue" type="xs:string"/>
+ <!-- appear in Atomic event expression -->
+ <xs:attribute name="eventID" type="xs:QName"/>
+ <xs:attribute name="eventType" type="xs:QName"/>
+ <xs:attribute name="sender" type="xs:anyURI"/>
+ <!-- appear in FunctionalTerm -->
+ <xs:attribute name="genericFunctionID" type="xs:QName"/>
+ <xs:attribute name="externalVocabularyID" type="xs:anyURI"/>
+ <xs:attribute name="externalVocabularyLanguage" type="r2ml:ExternalVocabularyLanguage"/>
+</xs:schema>
