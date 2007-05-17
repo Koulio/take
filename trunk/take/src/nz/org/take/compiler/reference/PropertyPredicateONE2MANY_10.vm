@@ -8,7 +8,7 @@
         final $sourcetype source,  
         final DerivationController _derivation) {
      
-        final Iterator<$targettype> iterator =  source.$accessor ().iterator();
+        final java.util.Iterator<$targettype> iterator =  source.$accessor ().iterator();
         _derivation.log( $property );
         ResourceIterator <$resulttype > result = new ResourceIterator <$resulttype > () {
         	public boolean hasNext() {
