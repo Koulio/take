@@ -12,7 +12,7 @@
         _derivation.log($property);
         
         boolean ok = true;
-        final Iterator<$targettype> iterator =  source.$accessor ().iterator();
+        final java.util.Iterator<$targettype> iterator =  source.$accessor ().iterator();
         while (iterator.hasNext()) {
         	ok = ok && (target.equals(iterator.next());
         }

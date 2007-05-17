@@ -61,8 +61,20 @@ public class Constant extends AbstractAnnotatable implements Term {
 	public void setRef(String ref) {
 		this.ref = ref;
 	}
+	/**
+	 * Whether this is just a placeholder to access the object or a real object. 
+	 * @return
+	 */
 	public boolean isProxy() {
 		return this.object==null && this.ref!=null;
+	}
+	/**
+	 * Whether this is a literal, in particular a string.
+	 * @return
+	 */
+	public boolean isLiteral() {
+		// TODO support for numeric types
+		return this.object!=null && getType()==String.class;
 	}
 	public String toString() {
 		StringBuffer b = new StringBuffer();
