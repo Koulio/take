@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:r2ml="http://www.rewerse.net/I1/2006/R2ML" targetNamespace="http://www.rewerse.net/I1/2006/R2ML" elementFormDefault="qualified" attributeFormDefault="qualified" version="0.4" xml:lang="en">
+ <!-- 
+
+Elements for roles 
+
+-->
+ <xs:element name="constraint" type="r2ml:constraint" abstract="false"/>
+ <xs:element name="conditions" type="r2ml:condition" abstract="false"/>
+ <xs:element name="conclusion" type="r2ml:conclusion"/>
+ <xs:element name="antecedent" type="r2ml:antecedent" abstract="false"/>
+ <xs:element name="consequent" type="r2ml:consequent" abstract="false"/>
+ <xs:element name="postcondition" type="r2ml:postcondition" abstract="false"/>
+ <xs:element name="producedAction" type="r2ml:producedAction" abstract="false"/>
+ <xs:element name="triggeringEvent" type="r2ml:triggeringEvent" abstract="false"/>
+ <xs:element name="dataValue" type="r2ml:dataValue" abstract="false"/>
+ <xs:element name="subject" type="r2ml:subject" abstract="false"/>
+ <xs:element name="object" type="r2ml:object" abstract="false"/>
+ <xs:element name="value" type="r2ml:value" abstract="false"/>
+ <xs:element name="arguments" type="r2ml:arguments" abstract="false"/>
+ <xs:element name="dataArguments" type="r2ml:dataArguments" abstract="false"/>
+ <xs:element name="objectArguments" type="r2ml:objectArguments" abstract="false"/>
+ <xs:element name="contextArgument" type="r2ml:contextArgument" abstract="false"/>
+ <!-- 
+
+Role elements 
+
+-->
+ <!-- constraint  (appear in integrity rules) -->
+ <xs:complexType name="constraint" abstract="false">
+  <xs:sequence>
+   <xs:element ref="r2ml:QuantifiedFormula"/>
+  </xs:sequence>
+ </xs:complexType>
+ <!-- condition -->
+ <xs:complexType name="condition" abstract="false">
+  <xs:sequence>
+   <xs:element ref="r2ml:qf.AndOrNafNegFormula" maxOccurs="unbounded"/>
+  </xs:sequence>
+ </xs:complexType>
+ <!-- conclusion -->
+ <xs:complexType name="conclusion" abstract="false">
+  <xs:choice>
+   <xs:element ref="r2ml:Atom"/>
+   <xs:element ref="r2ml:qf.LiteralConjunction" maxOccurs="unbounded"/>
+  </xs:choice>
+ </xs:complexType>
+ <!-- postcondition -->
+ <xs:complexType name="postcondition" abstract="false">
+  <xs:sequence>
+   <xs:element ref="r2ml:qf.AndOrNafNegFormula" maxOccurs="unbounded"/>
+  </xs:sequence>
+ </xs:complexType>
+ <!-- antecedent -->
+ <xs:complexType name="antecedent" abstract="false">
+  <xs:sequence>
+   <xs:element ref="r2ml:LogicalFormula"/>
+  </xs:sequence>
+ </xs:complexType>
+ <!-- consequent -->
+ <xs:complexType name="consequent" abstract="false">
+  <xs:sequence>
+   <xs:element ref="r2ml:LogicalFormula"/>
+  </xs:sequence>
+ </xs:complexType>
+ <!-- produced action (appear in production rules and reaction rules)-->
+ <xs:complexType name="producedAction" abstract="false">
+  <xs:choice>
+   <xs:element ref="r2ml:SystemActionExpression"/>
+     <xs:element ref="r2ml:AtomicEventExpression"/>
+  </xs:choice>
+ </xs:complexType>
+ <!-- triggeringEvent  (appear in event expressions)-->
+ <xs:complexType name="triggeringEvent" abstract="false">
+  <xs:sequence>
+   <xs:element ref="r2ml:EventExpression"/>
+  </xs:sequence>
+ </xs:complexType>
+ <!-- roles that appear in atoms -->
+ <!-- role subject -->
+ <xs:complexType name="subject" abstract="false">
+  <xs:sequence>
+   <xs:element ref="r2ml:ObjectTerm"/>
+  </xs:sequence>
+ </xs:complexType>
+ <!-- role value -->
+ <xs:complexType name="value" abstract="false">
+  <xs:sequence>
+   <xs:element ref="r2ml:Term"/>
+  </xs:sequence>
+ </xs:complexType>
+ <!-- role object -->
+ <xs:complexType name="object" abstract="false">
+  <xs:sequence>
+   <xs:element ref="r2ml:ObjectTerm"/>
+  </xs:sequence>
+ </xs:complexType>
+ <!-- role dataValue -->
+ <xs:complexType name="dataValue" abstract="false">
+  <xs:sequence>
+   <xs:element ref="r2ml:DataTerm"/>
+  </xs:sequence>
+ </xs:complexType>
+ <!-- role genericArguments -->
+ <xs:complexType name="genericArguments" abstract="false">
+  <xs:choice>
+   <xs:element ref="r2ml:GenericVariable"/>
+   <xs:element ref="r2ml:ObjectName"/>
+   <xs:element ref="r2ml:GenericFunctionTerm"/>
+  </xs:choice>
+ </xs:complexType>
+ <!-- role argument -->
+ <xs:complexType name="arguments" abstract="false">
+  <xs:sequence>
+   <xs:element ref="r2ml:Term" minOccurs="0" maxOccurs="unbounded"/>
+  </xs:sequence>
+ </xs:complexType>
+ <!-- role contextArgument -->
+ <xs:complexType name="contextArgument" abstract="false">
+  <xs:sequence>
+   <xs:element ref="r2ml:ObjectTerm"/>
+  </xs:sequence>
+ </xs:complexType>
+ <!-- role dataArgument -->
+ <xs:complexType name="dataArguments" abstract="false">
+  <xs:sequence>
+   <xs:element ref="r2ml:DataTerm" minOccurs="0" maxOccurs="unbounded"/>
+  </xs:sequence>
+ </xs:complexType>
+ <!-- role objectArgument -->
+ <xs:complexType name="objectArguments" abstract="false">
+  <xs:sequence>
+   <xs:element ref="r2ml:ObjectTerm" minOccurs="2" maxOccurs="unbounded"/>
+  </xs:sequence>
+ </xs:complexType>
+</xs:schema>

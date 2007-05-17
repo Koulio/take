@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:r2ml="http://www.rewerse.net/I1/2006/R2ML" targetNamespace="http://www.rewerse.net/I1/2006/R2ML" elementFormDefault="qualified" attributeFormDefault="qualified" version="0.4" xml:lang="en">
+ <!--
+
+Elements for constructing terms 
+
+-->
+ <xs:element name="Term" type="r2ml:Term" abstract="true"/>
+ <xs:element name="ObjectTerm" type="r2ml:ObjectTerm" abstract="true" substitutionGroup="r2ml:Term"/>
+ <xs:element name="DataTerm" type="r2ml:DataTerm" abstract="true" substitutionGroup="r2ml:Term"/>
+ <!-- 
+
+Elements for constructing basic terms 
+
+-->
+ <xs:element name="GenericTerm" type="r2ml:GenericTerm" abstract="true" substitutionGroup="r2ml:Term"/>
+ <xs:element name="GenericVariable" type="r2ml:GenericVariable" abstract="false" substitutionGroup="r2ml:GenericTerm"/>
+ <xs:element name="ObjectVariable" type="r2ml:ObjectVariable" abstract="false" substitutionGroup="r2ml:ObjectTerm"/>
+ <xs:element name="ObjectName" type="r2ml:ObjectName" abstract="false" substitutionGroup="r2ml:ObjectTerm"/>
+ <xs:element name="GenericEntityName" type="r2ml:GenericEntityName" abstract="false" substitutionGroup="r2ml:GenericTerm"/>
+ <xs:element name="DataVariable" type="r2ml:DataVariable" abstract="false" substitutionGroup="r2ml:DataTerm"/>
+ <xs:element name="TypedLiteral" type="r2ml:TypedLiteral" abstract="false" substitutionGroup="r2ml:DataTerm"/>
+ <xs:element name="PlainLiteral" type="r2ml:PlainLiteral" abstract="false" substitutionGroup="r2ml:DataTerm"/>
+ <!--
+
+ Elements for constructing functional terms 
+
+-->
+ <xs:element name="GenericFunctionTerm" type="r2ml:GenericFunctionTerm" abstract="false" substitutionGroup="r2ml:Term"/>
+ <xs:element name="ObjectOperationTerm" type="r2ml:ObjectOperationTerm" abstract="false" substitutionGroup="r2ml:ObjectTerm"/>
+ <xs:element name="ReferencePropertyFunctionTerm" type="r2ml:ReferencePropertyFunctionTerm" abstract="false" substitutionGroup="r2ml:ObjectTerm"/>
+ <xs:element name="DataOperationTerm" type="r2ml:DataOperationTerm" abstract="false" substitutionGroup="r2ml:DataFunctionTerm"/>
+ <xs:element name="AttributeFunctionTerm" type="r2ml:AttributeFunctionTerm" abstract="false" substitutionGroup="r2ml:DataFunctionTerm"/>
+ <xs:element name="DatatypeFunctionTerm" type="r2ml:DatatypeFunctionTerm" abstract="false" substitutionGroup="r2ml:DataFunctionTerm"/>
+ <!-- 
+
+R2ML Terms
+
+-->
+ <!--The abstract concept of Term -->
+ <xs:complexType name="Term">
+  <xs:attribute ref="r2ml:typeCategory" use="optional"/>
+ </xs:complexType>
+ <!-- The abstract concept of ObjectTerm -->
+ <xs:complexType name="ObjectTerm" abstract="true">
+  <xs:complexContent>
+   <xs:extension base="r2ml:Term"/>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- The abstract concept of Data Term -->
+ <xs:complexType name="DataTerm" abstract="true">
+  <xs:complexContent>
+   <xs:extension base="r2ml:Term"/>
+  </xs:complexContent>
+ </xs:complexType>
+ <!--GenericTerm-->
+ <xs:complexType name="GenericTerm" abstract="true">
+  <xs:complexContent>
+   <xs:extension base="r2ml:Term"/>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- GenericEntityName -->
+ <xs:complexType name="GenericEntityName" abstract="false">
+  <xs:complexContent>
+   <xs:extension base="r2ml:GenericTerm">
+    <xs:attribute ref="r2ml:genericEntityID" use="required"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- R2ML generic variable -->
+ <xs:complexType name="GenericVariable" abstract="false">
+  <xs:complexContent>
+   <xs:extension base="r2ml:GenericTerm">
+    <xs:attribute ref="r2ml:name" use="required"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- ObjectVariable -->
+ <xs:complexType name="ObjectVariable" abstract="false">
+  <xs:complexContent>
+   <xs:extension base="r2ml:ObjectTerm">
+    <xs:attribute ref="r2ml:name" use="required"/>
+    <xs:attribute ref="r2ml:classID" use="optional"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- Object name -->
+ <xs:complexType name="ObjectName" abstract="false">
+  <xs:complexContent>
+   <xs:extension base="r2ml:ObjectTerm">
+    <xs:attribute ref="r2ml:objectID" use="required"/>
+    <xs:attribute ref="r2ml:classID" use="optional"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- Data variable -->
+ <xs:complexType name="DataVariable" abstract="false">
+  <xs:complexContent>
+   <xs:extension base="r2ml:DataTerm">
+    <xs:attribute ref="r2ml:name" use="required"/>
+    <xs:attribute ref="r2ml:datatypeID" use="optional"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- Data Literal -->
+ <xs:element name="DataLiteral" type="r2ml:DataLiteral" abstract="true" substitutionGroup="r2ml:DataTerm"/>
+ <xs:complexType name="DataLiteral" abstract="true">
+  <xs:complexContent>
+   <xs:extension base="r2ml:DataTerm">
+    <xs:attribute ref="r2ml:lexicalValue" use="required"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- Plain Literal -->
+ <xs:complexType name="PlainLiteral" abstract="false">
+  <xs:complexContent>
+   <xs:extension base="r2ml:DataLiteral">
+    <xs:attribute name="languageTag" use="required"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- Typed literal -->
+ <xs:complexType name="TypedLiteral" abstract="false">
+  <xs:complexContent>
+   <xs:extension base="r2ml:DataLiteral">
+    <xs:attribute ref="r2ml:datatypeID" use="required"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- GenericFunctionTerm -->
+ <xs:complexType name="GenericFunctionTerm" abstract="false">
+  <xs:complexContent>
+   <xs:extension base="r2ml:Term">
+    <xs:sequence>
+     <xs:element ref="r2ml:arguments"/>
+    </xs:sequence>
+    <xs:attribute ref="r2ml:genericFunctionID" use="required"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- ObjectOperationTerm -->
+ <xs:complexType name="ObjectOperationTerm" abstract="false">
+  <xs:complexContent>
+   <xs:extension base="r2ml:ObjectTerm">
+    <xs:sequence>
+     <xs:element ref="r2ml:contextArgument"/>
+     <xs:element ref="r2ml:arguments" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute ref="r2ml:operationID" use="required"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- ReferencePropertyFunctionTerm. Corresponds to a functional association end (of a binary association) in a UML class model. -->
+ <xs:complexType name="ReferencePropertyFunctionTerm" abstract="false">
+  <xs:complexContent>
+   <xs:extension base="r2ml:ObjectTerm">
+    <xs:sequence>
+     <xs:element ref="r2ml:contextArgument"/>
+    </xs:sequence>
+    <xs:attribute ref="r2ml:referencePropertyID" use="required"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- Data function term -->
+ <xs:element name="DataFunctionTerm" type="r2ml:DataFunctionTerm" abstract="true" substitutionGroup="r2ml:DataTerm"/>
+ <xs:complexType name="DataFunctionTerm" abstract="true">
+  <xs:complexContent>
+   <xs:restriction base="r2ml:DataTerm"/>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- Data operation term -->
+ <xs:complexType name="DataOperationTerm">
+  <xs:complexContent>
+   <xs:extension base="r2ml:DataFunctionTerm">
+    <xs:sequence>
+     <xs:element ref="r2ml:contextArgument" minOccurs="0"/>
+     <xs:element ref="r2ml:arguments"/>
+    </xs:sequence>
+    <xs:attribute ref="r2ml:operationID" use="required"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- AttributeFunctionTerm -->
+ <xs:complexType name="AttributeFunctionTerm">
+  <xs:complexContent>
+   <xs:extension base="r2ml:DataFunctionTerm">
+    <xs:sequence>
+     <xs:element ref="r2ml:contextArgument"/>
+    </xs:sequence>
+    <xs:attribute ref="r2ml:attributeID" use="required"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!-- DatatypeFunctionTerm -->
+ <xs:complexType name="DatatypeFunctionTerm" abstract="false">
+  <xs:complexContent>
+   <xs:extension base="r2ml:DataFunctionTerm">
+    <xs:sequence>
+     <xs:element ref="r2ml:dataArguments"/>
+    </xs:sequence>
+    <xs:attribute ref="r2ml:datatypeFunctionID" use="required"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <xs:simpleType name="CollectionType">
+  <xs:restriction base="xs:string">
+   <xs:enumeration value="individual"/>
+   <xs:enumeration value="set"/>
+   <xs:enumeration value="order"/>
+   <xs:enumeration value="bag"/>
+   <xs:enumeration value="sequence"/>
+  </xs:restriction>
+ </xs:simpleType>
+</xs:schema>

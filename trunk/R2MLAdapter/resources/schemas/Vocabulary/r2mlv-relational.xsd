@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:r2mlv="http://www.rewerse.net/I1/2006/R2ML/R2MLV" targetNamespace="http://www.rewerse.net/I1/2006/R2ML/R2MLV" elementFormDefault="qualified" attributeFormDefault="qualified" xml:lang="en"
+		xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+		jxb:version="1.0"
+		>
+
+ <xs:include schemaLocation="r2mlv-basic.xsd"/>
+ <xs:element name="GenericPredicate" type="r2mlv:GenericPredicate" substitutionGroup="r2mlv:Predicate"/>
+ <xs:element name="AssociationPredicate" type="r2mlv:AssociationPredicate" substitutionGroup="r2mlv:Predicate"/>
+ <!--
+Generic Predicate
+-->
+ <xs:complexType name="GenericPredicate">
+  <xs:complexContent>
+   <xs:extension base="r2mlv:Predicate">
+        <xs:sequence>
+     <xs:element ref="r2mlv:argumentsType"/>
+    </xs:sequence>
+    <xs:attribute ref="r2mlv:vp" use="optional"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ <!--
+AssociationPredicate
+-->
+ <xs:complexType name="AssociationPredicate">
+  <xs:complexContent>
+   <xs:extension base="r2mlv:Predicate">
+    <xs:sequence>
+     <xs:element ref="r2mlv:argumentsType"/>
+    </xs:sequence>
+    <xs:attribute name="associationPredicateID" type="xs:QName"/>
+    <xs:attribute ref="r2mlv:vp" use="optional"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+</xs:schema>

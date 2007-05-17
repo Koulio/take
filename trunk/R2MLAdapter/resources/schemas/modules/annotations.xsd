@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:r2ml="http://www.rewerse.net/I1/2006/R2ML"  xmlns:dc="http://purl.org/dc/elements/1.1/" targetNamespace="http://www.rewerse.net/I1/2006/R2ML" elementFormDefault="qualified" attributeFormDefault="qualified" version="0.4" xml:lang="en">
+ 
+ <!-- 
+
+Dublin Core namespace  used in annotations
+
+-->
+ <xs:import namespace="http://purl.org/dc/elements/1.1/" schemaLocation="http://dublincore.org/schemas/xmls/qdc/2006/01/06/dc.xsd"/>
+
+ <!-- 
+
+Elements for annotations 
+
+-->
+ <xs:element name="Documentation" type="r2ml:Documentation" abstract="false"/>
+ <xs:element name="SourceCode" type="r2ml:SourceCode" abstract="false"/>
+ <xs:element name="RuleText" type="r2ml:RuleText" abstract="false"/>
+ <!-- 
+
+R2ML types for rule annotations 
+
+-->
+ <xs:complexType name="Documentation" abstract="false">
+  <xs:choice minOccurs="0" maxOccurs="unbounded">
+   <xs:element ref="r2ml:RuleText" minOccurs="0" maxOccurs="unbounded"/>
+   <xs:element ref="r2ml:SourceCode" minOccurs="0" maxOccurs="unbounded"/>
+   <xs:element ref="dc:subject" minOccurs="0" maxOccurs="unbounded"/>
+   <xs:element ref="dc:creator" minOccurs="0" maxOccurs="unbounded"/>
+   <xs:element ref="dc:contributor" minOccurs="0" maxOccurs="unbounded"/>
+   <xs:element ref="dc:title" minOccurs="0" maxOccurs="unbounded"/>
+   <xs:element ref="dc:description" minOccurs="0" maxOccurs="unbounded"/>
+   <xs:element ref="dc:source" minOccurs="0" maxOccurs="unbounded"/>
+   <xs:element ref="dc:type" minOccurs="0" maxOccurs="unbounded"/>
+   <xs:element ref="dc:date" minOccurs="0" maxOccurs="unbounded"/>
+  </xs:choice>
+ </xs:complexType>
+ <!-- R2ML RuleText element -->
+ <xs:complexType name="RuleText">
+  <xs:simpleContent>
+   <xs:extension base="xs:string">
+    <xs:attribute name="textFormat" type="xs:string" use="optional"/>
+    <xs:attribute name="ruleVocabularyDiagram" type="xs:anyURI" use="optional"/>
+    <xs:attribute name="ruleDiagram" type="xs:anyURI" use="optional"/>
+   </xs:extension>
+  </xs:simpleContent>
+ </xs:complexType>
+ <!-- R2ML SourceCode type -->
+ <xs:complexType name="SourceCode">
+  <xs:complexContent>
+   <xs:extension base="xs:anyType">
+    <xs:attribute name="language" type="xs:string" use="optional"/>
+   </xs:extension>
+  </xs:complexContent>
+ </xs:complexType>
+ 
+</xs:schema>
