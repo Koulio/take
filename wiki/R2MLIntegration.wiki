@@ -2,7 +2,7 @@
 
 = Integration of the REWERSE Rule Markup Language (R2ML) =
 
-[http://oxygen.informatik.tu-cottbus.de/rewerse-i1/?q=R2ML R2ML] is a comprehensive and user-friendly XML rule format that allows
+[http://oxygen.informatik.tu-cottbus.de/rewerse-i1/?q=R2ML R2ML] is a *comprehensive* and *user-friendly* XML rule format that allows
   * interchanging rules between different systems and tools,
   * enriching ontologies by rules,
   * connecting your rule system with (our) R2ML-based tools for visualization, verbalization, verification and validation.
@@ -17,4 +17,3 @@ Currently implemented are the following R2ML concepts:
 || ProductionRuleSet || --- || not supported ||
 || ReactionRuleSet || --- || not supported ||
 || IntegrityRuleSet || --- || not supported ||
-
