@@ -18,4 +18,4 @@ Currently implemented are the following R2ML concepts:
 || ReactionRuleSet || --- || not supported ||
 || IntegrityRuleSet || --- || not supported ||
 || DerivationRule || DerivationRule || ||
-|| conclusion || DerivationRule::head || R2ML-Atoms are mapped into take-Facts ||
+|| conclusion || DerivationRule::head ||  ||
