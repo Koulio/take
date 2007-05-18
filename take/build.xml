@@ -93,6 +93,12 @@
 	<java classname="test.nz.org.take.compiler.scenario4.GenerateClasses">
 		<classpath><path refid="path4generatingtests"/></classpath>
 	</java>
+	<java classname="test.nz.org.take.compiler.scenario5.GenerateClasses">
+		<classpath><path refid="path4generatingtests"/></classpath>
+	</java>
+	<java classname="test.nz.org.take.compiler.scenario6.GenerateClasses">
+		<classpath><path refid="path4generatingtests"/></classpath>
+	</java>
 </target>
 <!-- Tests the project, using JUnit tests -->
 <target name="tests" depends="compiletests" description="Tests the project">
@@ -107,6 +113,8 @@
 		<test name="test.nz.org.take.compiler.scenario2.Tests"/>
 		<test name="test.nz.org.take.compiler.scenario3.Tests"/>
 		<test name="test.nz.org.take.compiler.scenario4.Tests"/>
+		<test name="test.nz.org.take.compiler.scenario5.Tests"/>
+		<test name="test.nz.org.take.compiler.scenario6.Tests"/>
 	</junit>
 </target>
 <!-- build the jars -->
