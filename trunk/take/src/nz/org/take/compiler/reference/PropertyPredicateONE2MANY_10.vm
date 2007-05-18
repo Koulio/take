@@ -9,7 +9,7 @@
         final DerivationController _derivation) {
      
         final java.util.Iterator<$targettype> iterator =  source.$accessor ().iterator();
-        _derivation.log( $property );
+        _derivation.log( $property ,DerivationController.BEAN_PROPERTY);
         ResourceIterator <$resulttype > result = new ResourceIterator <$resulttype > () {
         	public boolean hasNext() {
         		return iterator.hasNext();

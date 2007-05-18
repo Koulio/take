@@ -11,7 +11,7 @@
    		#end
         final DerivationController _derivation) {
         
-        _derivation.log("$method");
+        _derivation.log("$method",DerivationController.JAVA_METHOD);
         if (! $target.$method.getName() ($args)) {        	
         	$resulttype result = new $resulttype();
         	#foreach( $slot in $slots )

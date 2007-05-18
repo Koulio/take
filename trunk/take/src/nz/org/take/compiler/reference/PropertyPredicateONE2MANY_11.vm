@@ -9,7 +9,7 @@
         final $targettype target, 
         final DerivationController _derivation) {
         
-        _derivation.log($property);
+        _derivation.log($property,DerivationController.BEAN_PROPERTY);
         
          final java.util.Iterator<$targettype> iterator =  source.$accessor ().iterator();
          while (iterator.hasNext()) {
