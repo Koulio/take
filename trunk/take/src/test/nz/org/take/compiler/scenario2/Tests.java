@@ -25,6 +25,8 @@ import nz.org.take.DerivationRule;
 import nz.org.take.Fact;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.KnowledgeElement;
+import nz.org.take.rt.DerivationController;
+import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
 import test.nz.org.take.compiler.scenario2.generated.*;
 import junit.framework.TestCase;
@@ -82,7 +84,7 @@ public class Tests extends TestCase
 		nz.org.take.rt.ResultSet<AncestorRelationship> results = kb.isAncestor("r0","r");	
 		assertTrue(results.hasNext());
 		AncestorRelationship next = results.next();
-		List<String> x = results.getDerivationLog();
+		List<DerivationLogEntry> x = results.getDerivationLog();
 		results.getDerivationController().printLog();
 		assertEquals("Wrong number of rules",1,countRules(x));
 		assertEquals("Wrong number of facts",1,countFacts(x));
@@ -97,7 +99,7 @@ public class Tests extends TestCase
 		ResultSet<AncestorRelationship> results = kb.isAncestor("r1","r");	
 		assertTrue(results.hasNext());
 		AncestorRelationship next = results.next();
-		List<String> x = results.getDerivationLog();
+		List<DerivationLogEntry> x = results.getDerivationLog();
 		results.getDerivationController().printLog();
 		assertEquals("Wrong number of rules",1,countRules(x));
 		assertEquals("Wrong number of facts",1,countFacts(x));
@@ -112,7 +114,7 @@ public class Tests extends TestCase
 		ResultSet<AncestorRelationship> results = kb.isAncestor("r00","r");	
 		assertTrue(results.hasNext());
 		AncestorRelationship next = results.next();
-		List<String> x = results.getDerivationLog();
+		List<DerivationLogEntry> x = results.getDerivationLog();
 		results.getDerivationController().printLog();
 		assertEquals("Wrong number of rules",2,countRules(x));
 		assertEquals("Wrong number of facts",2,countFacts(x));
@@ -128,7 +130,7 @@ public class Tests extends TestCase
 		ResultSet<AncestorRelationship> results = kb.isAncestor("r11","r");	
 		assertTrue(results.hasNext());
 		AncestorRelationship next = results.next();
-		List<String> x = results.getDerivationLog();
+		List<DerivationLogEntry> x = results.getDerivationLog();
 		results.getDerivationController().printLog();
 		assertEquals("Wrong number of rules",2,countRules(x));
 		assertEquals("Wrong number of facts",2,countFacts(x));
@@ -144,7 +146,7 @@ public class Tests extends TestCase
 		ResultSet<AncestorRelationship> results = kb.isAncestor("r000","r");	
 		assertTrue(results.hasNext());
 		AncestorRelationship next = results.next();
-		List<String> x = results.getDerivationLog();
+		List<DerivationLogEntry> x = results.getDerivationLog();
 		results.getDerivationController().printLog();
 		assertEquals("Wrong number of rules",2,countRules(x));
 		assertEquals("Wrong number of facts",3,countFacts(x));
@@ -154,9 +156,9 @@ public class Tests extends TestCase
 	}
 	
 	
-	private boolean checkFatherFact(List<String> list,String name1,String name2) {
-		for (String id:list) {
-			KnowledgeElement e = kb.getElement(id);
+	private boolean checkFatherFact(List<DerivationLogEntry> list,String name1,String name2) {
+		for (DerivationLogEntry l:list) {
+			KnowledgeElement e = kb.getElement(l.getName());
 			if (e instanceof Fact) {
 				Fact f = (Fact)e;
 				boolean ok = "isFather".equals(f.getPredicate().getName());
@@ -169,33 +171,26 @@ public class Tests extends TestCase
 		}
 		return false;
 	}
-	private int countRules(List<String> x) {
-		Set set = new HashSet(); // remove duplicates
+	private int countRules(List<DerivationLogEntry> x) {
+		Set<DerivationLogEntry> set = new HashSet<DerivationLogEntry>(); // remove duplicates
 		set.addAll(x);
 		int count = 0;
-		for (Object e:set) {
-			String r = e.toString();
-			if (isRule(r))
+		for (DerivationLogEntry e:set) {
+			if (e.getKind()==DerivationController.RULE)
 				count = count+1;
 		}
 		return count;
 	} 
-	private int countFacts(List<String> x) {
-		Set set = new HashSet(); // remove duplicates
+	private int countFacts(List<DerivationLogEntry> x) {
+		Set<DerivationLogEntry> set = new HashSet<DerivationLogEntry>(); // remove duplicates
 		set.addAll(x);
 		int count = 0;
-		for (Object e:set) {
-			String r = e.toString();
-			if (isFact(r))
+		for (DerivationLogEntry e:set) {
+			if (e.getKind()==DerivationController.FACT)
 				count = count+1;
 		}
 		return count;
 	} 
-	private boolean isRule(String id) {
-		return kb.getElement(id) instanceof DerivationRule;
-	}
-	private boolean isFact(String id) {
-		return kb.getElement(id) instanceof Fact;
-	}
+
 }
 	
