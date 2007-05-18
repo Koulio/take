@@ -23,6 +23,8 @@ import java.util.*;
 import nz.org.take.DerivationRule;
 import nz.org.take.Fact;
 import nz.org.take.KnowledgeBase;
+import nz.org.take.rt.DerivationController;
+import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
 import test.nz.org.take.compiler.scenario2.GenerateKB;
 import test.nz.org.take.compiler.scenario3.generated.IsBrotherRelationship;
@@ -86,7 +88,7 @@ public class Tests extends TestCase
 		Person p2 = new Person("Lutz");
 		ResultSet<IsBrotherRelationship> results = kb.isBrother(p1,p2);	
 		assertTrue(results.hasNext());
-		List<String> x = results.getDerivationLog();
+		List<DerivationLogEntry> x = results.getDerivationLog();
 		results.getDerivationController().printLog();
 		assertEquals("Wrong number of rules",1,countRules(x));
 	}
@@ -99,37 +101,29 @@ public class Tests extends TestCase
 		Person p2 = new Person("Lutz");
 		ResultSet<IsBrotherRelationship2> results = kb.isBrother2(p1,p2);	
 		assertTrue(results.hasNext());
-		List<String> x = results.getDerivationLog();
+		List<DerivationLogEntry> x = results.getDerivationLog();
 		results.getDerivationController().printLog();
 		assertEquals("Wrong number of rules",1,countRules(x));
 	}
-	private int countRules(List<String> x) {
-		Set set = new HashSet(); // remove duplicates
+	private int countRules(List<DerivationLogEntry> x) {
+		Set<DerivationLogEntry> set = new HashSet<DerivationLogEntry>(); // remove duplicates
 		set.addAll(x);
 		int count = 0;
-		for (Object e:set) {
-			String r = e.toString();
-			if (isRule(r))
+		for (DerivationLogEntry e:set) {
+			if (e.getKind()==DerivationController.RULE)
 				count = count+1;
 		}
 		return count;
 	} 
-	private int countFacts(List<String> x) {
-		Set set = new HashSet(); // remove duplicates
+	private int countFacts(List<DerivationLogEntry> x) {
+		Set<DerivationLogEntry> set = new HashSet<DerivationLogEntry>(); // remove duplicates
 		set.addAll(x);
 		int count = 0;
-		for (Object e:set) {
-			String r = e.toString();
-			if (isFact(r))
+		for (DerivationLogEntry e:set) {
+			if (e.getKind()==DerivationController.FACT)
 				count = count+1;
 		}
 		return count;
 	} 
-	private boolean isRule(String id) {
-		return kb.getElement(id) instanceof DerivationRule;
-	}
-	private boolean isFact(String id) {
-		return kb.getElement(id) instanceof Fact;
-	}
 }
 	
