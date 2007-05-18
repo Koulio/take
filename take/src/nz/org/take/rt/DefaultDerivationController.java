@@ -34,20 +34,21 @@ import java.util.List;
 
 public class DefaultDerivationController  implements DerivationController {
 	private List<String> delegate = new ArrayList<String>();
+	private List<Integer> delegate2 = new ArrayList<Integer>();
 	private int depth = 0;
 	private boolean cancelled = false;
 	private int derivationCount = 0;
 	private DerivationListener derivationListener = null;
 	/**
 	 * Log the use of a clause set
-	 * @param ruleRef a string referencing the clause set (id or similar)
 	 */
-	public void log(String ruleRef) {
+	public void log(String ruleRef,int kind) {
 		if (cancelled) 
 			throw new DerivationCancelledException();
 		
-		System.out.println("Log@" + depth + " : " + ruleRef);
-		this.delegate.add(depth,ruleRef);		
+		// System.out.println("Log@" + depth + " : " + ruleRef);
+		this.delegate.add(depth,ruleRef);	
+		this.delegate2.add(depth,kind);
 		this.derivationCount = this.derivationCount+1;
 		
 		if (derivationListener!=null)
@@ -57,12 +58,13 @@ public class DefaultDerivationController  implements DerivationController {
 	 * Get a copy of the derivation log. 
 	 * @return a list
 	 */
-	public List<String> getLog() {
-		List<String> list = new ArrayList<String>();
+	public List<DerivationLogEntry> getLog() {
+		List<DerivationLogEntry> list = new ArrayList<DerivationLogEntry>();
 		for (int i=0;i<=depth;i++) {
 			String s = this.delegate.get(i);
-			if (s!=null) 
-				list.add(this.delegate.get(i));
+			if (s!=null) {
+				list.add(new DerivationLogEntry(this.delegate.get(i),this.delegate2.get(i)));
+			}
 		}
 			
 		return list;

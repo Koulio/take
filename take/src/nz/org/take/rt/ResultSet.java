@@ -42,7 +42,7 @@ public class ResultSet<T> implements ResourceIterator<T>{
 		this.delegate.close();
 	}
 
-	public List<String> getDerivationLog() {
+	public List<DerivationLogEntry> getDerivationLog() {
 		return derivationController.getLog();
 	}
 

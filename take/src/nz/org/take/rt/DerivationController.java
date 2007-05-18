@@ -40,18 +40,25 @@ import java.util.List;
  */
 
 public interface DerivationController  {
+	// constants to be used as parameters in log
+	public static final int ANY = 0;
+	public static final int RULE = 1;
+	public static final int FACT = 2;
+	public static final int BEAN_PROPERTY = 3;
+	public static final int JAVA_METHOD = 4;
 	
 	/**
 	 * Log the use of a clause set
 	 * @param ruleRef a string referencing the clause set (id or similar)
+	 * @param in kind what kind of knowledge this is (one of the constants RULE, FACT etc)
 	 */
-	public void log(String ruleRef) ;
+	public void log(String ruleRef,int kind) ;
 	/**
-	 * Get a copy of the derivation log. 
+	 * Get (a copy of) the derivation log. 
 	 * May throw a runtime exception (e.g., if the derivation has been cancelled). 
 	 * @return a list
 	 */
-	public List<String> getLog() ;
+	public List<DerivationLogEntry> getLog() ;
 	
 	/**
 	 * Print the log to a print stream.

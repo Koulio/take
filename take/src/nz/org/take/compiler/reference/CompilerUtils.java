@@ -608,10 +608,20 @@ public abstract class CompilerUtils {
 		out.print(")");
 	}
 	protected void printLogStatement(PrintWriter out, KnowledgeElement cs) {
+		String kind = null;
+		if (cs instanceof DerivationRule)
+			kind = "DerivationController.RULE";
+		else if (cs instanceof Fact)
+			kind = "DerivationController.FACT";
+		else 
+			kind = "DerivationController.ANY";
+		
 		out.print(this.getVarName4DerivationController());
 		out.print(".log(\"");
 		out.print(this.getRuleRef(cs));
-		out.print("\");");
+		out.print("\",");
+		out.print(kind);
+		out.println(");");
 	}
 	/**
 	 * Collect all terms.

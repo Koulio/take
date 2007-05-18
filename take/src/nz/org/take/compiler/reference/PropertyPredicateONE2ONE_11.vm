@@ -10,10 +10,9 @@
         final $targettype target, 
         final DerivationController _derivation) {
         
-        _derivation.log($property);
+        _derivation.log($property,DerivationController.BEAN_PROPERTY);
         if (target .equals(source .$accessor ())) {
-        	_derivation.log($property);
-        	$resulttype result = new $resulttype();
+           	$resulttype result = new $resulttype();
         	result.$slot1 = source;
         	result.$slot2 = target;
         	return new SingletonIterator<$resulttype>(result);
