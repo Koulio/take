@@ -63,8 +63,10 @@ public class GenerateClasses {
 		} catch (ScriptException e) {
 			e.printStackTrace();
 		}
-		
-		compiler.compile(kb, location, "test.nz.org.take.compiler.scenario1.generated","_KB");
+		compiler.setLocation(location);
+		compiler.setPackageName("test.nz.org.take.compiler.scenario1.generated");
+		compiler.setClassName("_KB");
+		compiler.compile(kb);
 
 	}
 
