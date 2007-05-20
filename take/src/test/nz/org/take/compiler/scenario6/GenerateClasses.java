@@ -47,6 +47,9 @@ public class GenerateClasses {
 		compiler.add(new JalopyCodeFormatter());
 		compiler.setNameGenerator(nameGenerator);
 		KnowledgeBase kb = GenerateKB.buildKB();
-		compiler.compile(kb, location, "test.nz.org.take.compiler.scenario6.generated","_KB");
+		compiler.setLocation(location);
+		compiler.setPackageName("test.nz.org.take.compiler.scenario6.generated");
+		compiler.setClassName("_KB");
+		compiler.compile(kb);
 	}
 }

@@ -17,7 +17,9 @@
  */
 
 
-package test.nz.org.take.compiler.scenario2;
+package example.nz.org.take.compiler.example1;
+
+import java.io.FileReader;
 
 import org.apache.log4j.BasicConfigurator;
 import nz.org.take.KnowledgeBase;
@@ -26,31 +28,34 @@ import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.DefaultNameGenerator;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
+import nz.org.take.script.KnowledgeBaseReader;
 
 
 /**
- * Script to generate classes for the test kb.
+ * Script to generate the public interface for this scenario.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class GenerateClasses {
+public class GenerateInterface {
 		
-		/**
-		 * Generate the sources for the example.
-		 * @param args
-		 */
-		public static void main(String[] args) throws Exception {
-			BasicConfigurator.configure();
-			DefaultLocation location = new DefaultLocation();
-			NameGenerator nameGenerator = new DefaultNameGenerator();
-			nz.org.take.compiler.Compiler compiler = new DefaultCompiler();
-			compiler.add(new JalopyCodeFormatter());
-			compiler.setNameGenerator(nameGenerator);
-			KnowledgeBase kb = GenerateKB.buildKB();
-			compiler.setLocation(location);
-			compiler.setPackageName("test.nz.org.take.compiler.scenario2.generated");
-			compiler.setClassName("_KB");
-			compiler.compile(kb);
-
-		}
+	/**
+	 * Generate the sources for the example.
+	 * @param args
+	 */
+	public static void main(String[] args) throws Exception {
+		BasicConfigurator.configure();
+		DefaultLocation location = new DefaultLocation();
+		NameGenerator nameGenerator = new DefaultNameGenerator();
+		nz.org.take.compiler.Compiler compiler = new DefaultCompiler();
+		compiler.add(new JalopyCodeFormatter());
+		compiler.setNameGenerator(nameGenerator);
+		BasicConfigurator.configure();			
+		// generate kb
+		KnowledgeBaseReader reader = new KnowledgeBaseReader();
+		KnowledgeBase kb = reader.read(new FileReader("src/example/nz/org/take/compiler/example1/family.take"));
+		compiler.setLocation(location);
+		compiler.setPackageName("example.nz.org.take.compiler.example1.spec");
+		compiler.setClassName("FamilyKnowledge");
+		compiler.compileInterface(kb);
+	}
 }
