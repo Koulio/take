@@ -1,4 +1,5 @@
 #summary How to import other rule formats?
+#labels Featured,Phase-Requirements
 
 = Integration of the REWERSE Rule Markup Language (R2ML) =
 
