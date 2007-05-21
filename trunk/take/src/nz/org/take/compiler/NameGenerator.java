@@ -22,7 +22,6 @@ import nz.org.take.Predicate;
 import nz.org.take.Query;
 import nz.org.take.script.Rule;
 
-
 /**
  * Service used to generate the names for artifacts (classes,methods)
  * representing artefacts in the kb (predicates, facts, rules, ..).
@@ -68,11 +67,4 @@ public interface NameGenerator {
 	 */
 	public String getVariableNameForSlot(Predicate p, int slot);
 
-	/**
-	 * Get the class name for the bindings used in the method generated for a
-	 * rule. 
-	 * @param r a rule
-	 * @return the name of the binding class for the rule
-	 */
-	public String getBindingClassName(Rule r);
 }

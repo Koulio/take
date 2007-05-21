@@ -21,12 +21,10 @@ package nz.org.take.compiler.util;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import nz.org.take.AnnotationKeys;
 import nz.org.take.Predicate;
 import nz.org.take.Query;
 import nz.org.take.compiler.NameGenerator;
-import nz.org.take.script.Rule;
 
 /**
  * Default name generator implementation.
@@ -35,16 +33,6 @@ import nz.org.take.script.Rule;
 
 public class DefaultNameGenerator implements NameGenerator {
 
-	public static Map<Rule, String> bindingClassNames =  new HashMap<Rule, String>();
-
-	public String getBindingClassName(Rule r) {
-		String name = bindingClassNames.get(r);
-		if (name == null) {
-			name = "bindingsInRule" + bindingClassNames.size();
-			bindingClassNames.put(r, name);
-		}
-		return name;
-	}
 
 	/* (non-Javadoc)
 	 * @see org.mandarax.compiler.NameGenerator#getClassName(org.mandarax.kernel.Predicate)

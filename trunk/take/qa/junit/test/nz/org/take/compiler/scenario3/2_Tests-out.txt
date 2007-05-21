@@ -1,0 +1,111 @@
+// script for test scenario 1
+@@dc:date=30/02/2007
+@@dc:creator=author jens dietrich
+var java.lang.String descendant,ancestor,x
+@take.compilerhint.slots=person1,person2
+@take.compilerhint.method=isAncestor
+@take.compilerhint.class=AncestorRelationship
+query isAncestor(in,in)
+rule1: if isFather(descendant,ancestor) then isAncestor(descendant,ancestor)
+rule2: if isAncestor(x,ancestor) and isFather(descendant,x) then isAncestor(descendant,ancestor)
+fact1: isFather("r0","r")
+fact2: isFather("r1","r")
+fact3: isFather("r00","r0")
+fact4: isFather("r01","r0")
+fact5: isFather("r10","r1")
+fact6: isFather("r11","r1")
+fact7: isFather("r000","r00")
+fact8: isFather("r001","r00")
+fact9: isFather("r010","r01")
+fact10: isFather("r011","r01")
+fact11: isFather("r100","r10")
+fact12: isFather("r101","r10")
+fact13: isFather("r110","r11")
+fact14: isFather("r111","r11")
+0 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 9] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 10] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 11] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 12] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 13] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 14] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 15] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 16] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 17] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 18] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 19] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 20] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 21] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 22] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 23] as simple predicate
+16 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 24] as simple predicate
+starting test case 1
+1. rule1
+2. public boolean test.nz.org.take.compiler.scenario3.Person.sameAs(test.nz.org.take.compiler.scenario3.Person)
+// script for test scenario 1
+@@dc:date=30/02/2007
+@@dc:creator=author jens dietrich
+var java.lang.String descendant,ancestor,x
+@take.compilerhint.slots=person1,person2
+@take.compilerhint.method=isAncestor
+@take.compilerhint.class=AncestorRelationship
+query isAncestor(in,in)
+rule1: if isFather(descendant,ancestor) then isAncestor(descendant,ancestor)
+rule2: if isAncestor(x,ancestor) and isFather(descendant,x) then isAncestor(descendant,ancestor)
+fact1: isFather("r0","r")
+fact2: isFather("r1","r")
+fact3: isFather("r00","r0")
+fact4: isFather("r01","r0")
+fact5: isFather("r10","r1")
+fact6: isFather("r11","r1")
+fact7: isFather("r000","r00")
+fact8: isFather("r001","r00")
+fact9: isFather("r010","r01")
+fact10: isFather("r011","r01")
+fact11: isFather("r100","r10")
+fact12: isFather("r101","r10")
+fact13: isFather("r110","r11")
+fact14: isFather("r111","r11")
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 9] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 9] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 10] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 10] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 11] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 11] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 12] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 12] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 13] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 13] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 14] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 14] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 15] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 15] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 16] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 16] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 17] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 17] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 18] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 18] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 19] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 19] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 20] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 20] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 21] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 21] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 22] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 22] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 23] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 23] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 24] as simple predicate
+47 [main] DEBUG nz.org.take.script.KnowledgeBaseReader  - Interpreting predicate symbol isFather[in line 24] as simple predicate
+starting test case 2
+1. rule2
+2. public boolean test.nz.org.take.compiler.scenario3.Person.equals(java.lang.Object)

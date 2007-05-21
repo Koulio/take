@@ -1,0 +1,6 @@
+1. rule2
+2. fact6
+3. fact3
+Frank
+Jens
+Ralf
