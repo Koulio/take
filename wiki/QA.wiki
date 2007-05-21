@@ -1,6 +1,4 @@
-#summary contains quality assurance related information.
 #labels Featured,Phase-QA
-
 = QA=
 
 A couple of qa related reports are produced by the build script. These reports can be accessed here: 
