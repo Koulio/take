@@ -1,0 +1,724 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>JDepend Analysis</title>
+<style type="text/css">
+      body {
+        font:normal 68% verdana,arial,helvetica;
+        color:#000000;
+      }
+      table tr td, tr th {
+          font-size: 68%;
+      }
+      table.details tr th{
+        font-weight: bold;
+        text-align:left;
+        background:#a6caf0;
+      }
+      table.details tr td{
+        background:#eeeee0;
+      }
+      
+      p {
+        line-height:1.5em;
+        margin-top:0.5em; margin-bottom:1.0em;
+        margin-left:2em;
+        margin-right:2em;
+      }
+      h1 {
+        margin: 0px 0px 5px; font: 165% verdana,arial,helvetica
+      }
+      h2 {
+        margin-top: 1em; margin-bottom: 0.5em; font: bold 125% verdana,arial,helvetica
+      }
+      h3 {
+        margin-bottom: 0.5em; font: bold 115% verdana,arial,helvetica
+      }
+      h4 {
+        margin-bottom: 0.5em; font: bold 100% verdana,arial,helvetica
+      }
+      h5 {
+        margin-bottom: 0.5em; font: bold 100% verdana,arial,helvetica
+      }
+      h6 {
+        margin-bottom: 0.5em; font: bold 100% verdana,arial,helvetica
+      }
+      .Error {
+        font-weight:bold; color:red;
+      }
+      .Failure {
+        font-weight:bold; color:purple;
+      }
+      .Properties {
+        text-align:right;
+      }
+      </style>
+</head>
+<body>
+<h1>
+<a name="top">JDepend Analysis</a>
+</h1>
+<p align="right">Designed for use with <a href="http://www.clarkware.com/software/JDepend.html">JDepend</a> and <a href="http://jakarta.apache.org">Ant</a>.</p>
+<hr size="2">
+<table width="100%">
+<tr>
+<td><a name="NVsummary">
+<h2>Summary</h2>
+</a></td><td align="right">
+    [<a href="#NVsummary">summary</a>]
+    [<a href="#NVpackages">packages</a>]
+    [<a href="#NVcycles">cycles</a>]
+    [<a href="#NVexplanations">explanations</a>]
+    </td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Package</th><th>Total Classes</th><th><a href="#EXnumber">Abstract Classes</a></th><th><a href="#EXnumber">Concrete Classes</a></th><th><a href="#EXafferent">Afferent Couplings</a></th><th><a href="#EXefferent">Efferent Couplings</a></th><th><a href="#EXabstractness">Abstractness</a></th><th><a href="#EXinstability">Instability</a></th><th><a href="#EXdistance">Distance</a></th>
+</tr>
+<tr>
+<td align="left"><a href="#PKexample.nz.org.take.compiler.example1">example.nz.org.take.compiler.example1</a></td><td align="right">4</td><td align="right">0</td><td align="right">4</td><td align="right">0</td><td align="right">6</td><td align="right">0</td><td align="right">1</td><td align="right">0</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKexample.nz.org.take.compiler.example1.impl">example.nz.org.take.compiler.example1.impl</a></td><td align="right">14</td><td align="right">0</td><td align="right">14</td><td align="right">0</td><td align="right">2</td><td align="right">0</td><td align="right">1</td><td align="right">0</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKexample.nz.org.take.compiler.example1.spec">example.nz.org.take.compiler.example1.spec</a></td><td align="right">3</td><td align="right">1</td><td align="right">2</td><td align="right">1</td><td align="right">1</td><td align="right">0.33</td><td align="right">0.5</td><td align="right">0.17</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKnz.org.take">nz.org.take</a></td><td align="right">28</td><td align="right">14</td><td align="right">14</td><td align="right">4</td><td align="right">1</td><td align="right">0.5</td><td align="right">0.2</td><td align="right">0.3</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKnz.org.take.compiler">nz.org.take.compiler</a></td><td align="right">5</td><td align="right">4</td><td align="right">1</td><td align="right">4</td><td align="right">1</td><td align="right">0.8</td><td align="right">0.2</td><td align="right">0</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKnz.org.take.compiler.reference">nz.org.take.compiler.reference</a></td><td align="right">9</td><td align="right">2</td><td align="right">7</td><td align="right">1</td><td align="right">6</td><td align="right">0.22</td><td align="right">0.86</td><td align="right">0.08</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKnz.org.take.compiler.util">nz.org.take.compiler.util</a></td><td align="right">6</td><td align="right">2</td><td align="right">4</td><td align="right">2</td><td align="right">3</td><td align="right">0.33</td><td align="right">0.6</td><td align="right">0.07</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKnz.org.take.compiler.util.jalopy">nz.org.take.compiler.util.jalopy</a></td><td align="right">1</td><td align="right">0</td><td align="right">1</td><td align="right">1</td><td align="right">3</td><td align="right">0</td><td align="right">0.75</td><td align="right">0.25</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKnz.org.take.rt">nz.org.take.rt</a></td><td align="right">15</td><td align="right">6</td><td align="right">9</td><td align="right">2</td><td align="right">0</td><td align="right">0.4</td><td align="right">0</td><td align="right">0.6</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKnz.org.take.script">nz.org.take.script</a></td><td align="right">23</td><td align="right">2</td><td align="right">21</td><td align="right">2</td><td align="right">3</td><td align="right">0.09</td><td align="right">0.6</td><td align="right">0.31</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKnz.org.take.script.parser">nz.org.take.script.parser</a></td><td align="right">10</td><td align="right">1</td><td align="right">9</td><td align="right">1</td><td align="right">1</td><td align="right">0.1</td><td align="right">0.5</td><td align="right">0.4</td>
+</tr>
+<tr>
+<td align="left">de.hunsicker.jalopy</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.apache.commons.collections</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.apache.log4j</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.apache.velocity</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.apache.velocity.app</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+</table>
+<table width="100%">
+<tr>
+<td><a name="NVpackages">
+<h2>Packages</h2>
+</a></td><td align="right">
+    [<a href="#NVsummary">summary</a>]
+    [<a href="#NVpackages">packages</a>]
+    [<a href="#NVcycles">cycles</a>]
+    [<a href="#NVexplanations">explanations</a>]
+    </td>
+</tr>
+</table>
+<h3>
+<a name="PKexample.nz.org.take.compiler.example1">example.nz.org.take.compiler.example1</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 0</td><td><a href="#EXefferent">Efferent Couplings</a>: 6</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 1</td><td><a href="#EXdistance">Distance</a>: 0</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    example.nz.org.take.compiler.example1.Example
+                <br>
+                    example.nz.org.take.compiler.example1.GenerateClasses
+                <br>
+                    example.nz.org.take.compiler.example1.GenerateInterface
+                <br>
+                    example.nz.org.take.compiler.example1.Person
+                <br>
+</td><td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%"><a href="#PKnz.org.take.compiler">nz.org.take.compiler</a>
+<br>
+<a href="#PKnz.org.take.compiler.reference">nz.org.take.compiler.reference</a>
+<br>
+<a href="#PKnz.org.take.compiler.util">nz.org.take.compiler.util</a>
+<br>
+<a href="#PKnz.org.take.compiler.util.jalopy">nz.org.take.compiler.util.jalopy</a>
+<br>
+<a href="#PKnz.org.take.script">nz.org.take.script</a>
+<br>
+<a href="#PKorg.apache.log4j">org.apache.log4j</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKexample.nz.org.take.compiler.example1.impl">example.nz.org.take.compiler.example1.impl</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 0</td><td><a href="#EXefferent">Efferent Couplings</a>: 2</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 1</td><td><a href="#EXdistance">Distance</a>: 0</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    example.nz.org.take.compiler.example1.impl.Constants
+                <br>
+                    example.nz.org.take.compiler.example1.impl.KB
+                <br>
+                    example.nz.org.take.compiler.example1.impl.KB$1
+                <br>
+                    example.nz.org.take.compiler.example1.impl.KB$10
+                <br>
+                    example.nz.org.take.compiler.example1.impl.KB$1bindingsInRule1
+                <br>
+                    example.nz.org.take.compiler.example1.impl.KB$2
+                <br>
+                    example.nz.org.take.compiler.example1.impl.KB$2bindingsInRule1
+                <br>
+                    example.nz.org.take.compiler.example1.impl.KB$3
+                <br>
+                    example.nz.org.take.compiler.example1.impl.KB$4
+                <br>
+                    example.nz.org.take.compiler.example1.impl.KB$5
+                <br>
+                    example.nz.org.take.compiler.example1.impl.KB$6
+                <br>
+                    example.nz.org.take.compiler.example1.impl.KB$7
+                <br>
+                    example.nz.org.take.compiler.example1.impl.KB$8
+                <br>
+                    example.nz.org.take.compiler.example1.impl.KB$9
+                <br>
+</td><td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%"><a href="#PKexample.nz.org.take.compiler.example1.spec">example.nz.org.take.compiler.example1.spec</a>
+<br>
+<a href="#PKnz.org.take.rt">nz.org.take.rt</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKexample.nz.org.take.compiler.example1.spec">example.nz.org.take.compiler.example1.spec</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 1</td><td><a href="#EXefferent">Efferent Couplings</a>: 1</td><td><a href="#EXabstractness">Abstractness</a>: 0.33</td><td><a href="#EXinstability">Instability</a>: 0.5</td><td><a href="#EXdistance">Distance</a>: 0.17</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%">
+                    example.nz.org.take.compiler.example1.spec.FamilyKnowledge
+                <br>
+</td><td valign="top" width="25%">
+                    example.nz.org.take.compiler.example1.spec.IsFatherOf
+                <br>
+                    example.nz.org.take.compiler.example1.spec.IsGrandfatherOf
+                <br>
+</td><td valign="top" width="25%"><a href="#PKexample.nz.org.take.compiler.example1.impl">example.nz.org.take.compiler.example1.impl</a>
+<br>
+</td><td valign="top" width="25%"><a href="#PKnz.org.take.rt">nz.org.take.rt</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKnz.org.take">nz.org.take</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 4</td><td><a href="#EXefferent">Efferent Couplings</a>: 1</td><td><a href="#EXabstractness">Abstractness</a>: 0.5</td><td><a href="#EXinstability">Instability</a>: 0.2</td><td><a href="#EXdistance">Distance</a>: 0.3</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%">
+                    nz.org.take.AbstractAnnotatable
+                <br>
+                    nz.org.take.AbstractPredicate
+                <br>
+                    nz.org.take.Annotatable
+                <br>
+                    nz.org.take.AnnotationKeys
+                <br>
+                    nz.org.take.Clause
+                <br>
+                    nz.org.take.ExternalKnowledge
+                <br>
+                    nz.org.take.Function
+                <br>
+                    nz.org.take.KnowledgeBase
+                <br>
+                    nz.org.take.KnowledgeBaseVisitor
+                <br>
+                    nz.org.take.KnowledgeElement
+                <br>
+                    nz.org.take.KnowledgeIterator
+                <br>
+                    nz.org.take.Predicate
+                <br>
+                    nz.org.take.Term
+                <br>
+                    nz.org.take.Visitable
+                <br>
+</td><td valign="top" width="25%">
+                    nz.org.take.AbstractKnowledgeBaseVisitor
+                <br>
+                    nz.org.take.ComplexTerm
+                <br>
+                    nz.org.take.Constant
+                <br>
+                    nz.org.take.DefaultKnowledgeBase
+                <br>
+                    nz.org.take.DefaultKnowledgeBase$1
+                <br>
+                    nz.org.take.DerivationRule
+                <br>
+                    nz.org.take.Fact
+                <br>
+                    nz.org.take.JFunction
+                <br>
+                    nz.org.take.JPredicate
+                <br>
+                    nz.org.take.Prerequisite
+                <br>
+                    nz.org.take.PropertyPredicate
+                <br>
+                    nz.org.take.Query
+                <br>
+                    nz.org.take.SimplePredicate
+                <br>
+                    nz.org.take.Variable
+                <br>
+</td><td valign="top" width="25%"><a href="#PKnz.org.take.compiler">nz.org.take.compiler</a>
+<br>
+<a href="#PKnz.org.take.compiler.reference">nz.org.take.compiler.reference</a>
+<br>
+<a href="#PKnz.org.take.compiler.util">nz.org.take.compiler.util</a>
+<br>
+<a href="#PKnz.org.take.script">nz.org.take.script</a>
+<br>
+</td><td valign="top" width="25%"><a href="#PKorg.apache.commons.collections">org.apache.commons.collections</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKnz.org.take.compiler">nz.org.take.compiler</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 4</td><td><a href="#EXefferent">Efferent Couplings</a>: 1</td><td><a href="#EXabstractness">Abstractness</a>: 0.8</td><td><a href="#EXinstability">Instability</a>: 0.2</td><td><a href="#EXdistance">Distance</a>: 0</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%">
+                    nz.org.take.compiler.Compiler
+                <br>
+                    nz.org.take.compiler.Location
+                <br>
+                    nz.org.take.compiler.NameGenerator
+                <br>
+                    nz.org.take.compiler.SourceTransformation
+                <br>
+</td><td valign="top" width="25%">
+                    nz.org.take.compiler.CompilerException
+                <br>
+</td><td valign="top" width="25%"><a href="#PKexample.nz.org.take.compiler.example1">example.nz.org.take.compiler.example1</a>
+<br>
+<a href="#PKnz.org.take.compiler.reference">nz.org.take.compiler.reference</a>
+<br>
+<a href="#PKnz.org.take.compiler.util">nz.org.take.compiler.util</a>
+<br>
+<a href="#PKnz.org.take.compiler.util.jalopy">nz.org.take.compiler.util.jalopy</a>
+<br>
+</td><td valign="top" width="25%"><a href="#PKnz.org.take">nz.org.take</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKnz.org.take.compiler.reference">nz.org.take.compiler.reference</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 1</td><td><a href="#EXefferent">Efferent Couplings</a>: 6</td><td><a href="#EXabstractness">Abstractness</a>: 0.22</td><td><a href="#EXinstability">Instability</a>: 0.86</td><td><a href="#EXdistance">Distance</a>: 0.08</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%">
+                    nz.org.take.compiler.reference.CompilerPlugin
+                <br>
+                    nz.org.take.compiler.reference.CompilerUtils
+                <br>
+</td><td valign="top" width="25%">
+                    nz.org.take.compiler.reference.Bindings
+                <br>
+                    nz.org.take.compiler.reference.CompilerPlugin4JPredicates
+                <br>
+                    nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates
+                <br>
+                    nz.org.take.compiler.reference.DefaultCompiler
+                <br>
+                    nz.org.take.compiler.reference.DefaultCompiler$1
+                <br>
+                    nz.org.take.compiler.reference.QueryRef
+                <br>
+                    nz.org.take.compiler.reference.Slot
+                <br>
+</td><td valign="top" width="25%"><a href="#PKexample.nz.org.take.compiler.example1">example.nz.org.take.compiler.example1</a>
+<br>
+</td><td valign="top" width="25%"><a href="#PKnz.org.take">nz.org.take</a>
+<br>
+<a href="#PKnz.org.take.compiler">nz.org.take.compiler</a>
+<br>
+<a href="#PKnz.org.take.compiler.util">nz.org.take.compiler.util</a>
+<br>
+<a href="#PKorg.apache.log4j">org.apache.log4j</a>
+<br>
+<a href="#PKorg.apache.velocity">org.apache.velocity</a>
+<br>
+<a href="#PKorg.apache.velocity.app">org.apache.velocity.app</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKnz.org.take.compiler.util">nz.org.take.compiler.util</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 2</td><td><a href="#EXefferent">Efferent Couplings</a>: 3</td><td><a href="#EXabstractness">Abstractness</a>: 0.33</td><td><a href="#EXinstability">Instability</a>: 0.6</td><td><a href="#EXdistance">Distance</a>: 0.07</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%">
+                    nz.org.take.compiler.util.Agenda
+                <br>
+                    nz.org.take.compiler.util.Logging
+                <br>
+</td><td valign="top" width="25%">
+                    nz.org.take.compiler.util.DefaultLocation
+                <br>
+                    nz.org.take.compiler.util.DefaultNameGenerator
+                <br>
+                    nz.org.take.compiler.util.Slot
+                <br>
+                    nz.org.take.compiler.util.TmpVarGenerator
+                <br>
+</td><td valign="top" width="25%"><a href="#PKexample.nz.org.take.compiler.example1">example.nz.org.take.compiler.example1</a>
+<br>
+<a href="#PKnz.org.take.compiler.reference">nz.org.take.compiler.reference</a>
+<br>
+</td><td valign="top" width="25%"><a href="#PKnz.org.take">nz.org.take</a>
+<br>
+<a href="#PKnz.org.take.compiler">nz.org.take.compiler</a>
+<br>
+<a href="#PKorg.apache.log4j">org.apache.log4j</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKnz.org.take.compiler.util.jalopy">nz.org.take.compiler.util.jalopy</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 1</td><td><a href="#EXefferent">Efferent Couplings</a>: 3</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 0.75</td><td><a href="#EXdistance">Distance</a>: 0.25</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    nz.org.take.compiler.util.jalopy.JalopyCodeFormatter
+                <br>
+</td><td valign="top" width="25%"><a href="#PKexample.nz.org.take.compiler.example1">example.nz.org.take.compiler.example1</a>
+<br>
+</td><td valign="top" width="25%"><a href="#PKde.hunsicker.jalopy">de.hunsicker.jalopy</a>
+<br>
+<a href="#PKnz.org.take.compiler">nz.org.take.compiler</a>
+<br>
+<a href="#PKorg.apache.log4j">org.apache.log4j</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKnz.org.take.rt">nz.org.take.rt</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 2</td><td><a href="#EXefferent">Efferent Couplings</a>: 0</td><td><a href="#EXabstractness">Abstractness</a>: 0.4</td><td><a href="#EXinstability">Instability</a>: 0</td><td><a href="#EXdistance">Distance</a>: 0.6</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%">
+                    nz.org.take.rt.AbstractIterator
+                <br>
+                    nz.org.take.rt.DerivationController
+                <br>
+                    nz.org.take.rt.DerivationListener
+                <br>
+                    nz.org.take.rt.IteratorChain
+                <br>
+                    nz.org.take.rt.NestedIterator
+                <br>
+                    nz.org.take.rt.ResourceIterator
+                <br>
+</td><td valign="top" width="25%">
+                    nz.org.take.rt.DefaultDerivationController
+                <br>
+                    nz.org.take.rt.DerivationCancelledException
+                <br>
+                    nz.org.take.rt.DerivationException
+                <br>
+                    nz.org.take.rt.DerivationLogEntry
+                <br>
+                    nz.org.take.rt.EmptyIterator
+                <br>
+                    nz.org.take.rt.IteratorChain$1
+                <br>
+                    nz.org.take.rt.IteratorChain$ReusableSingletonIterator
+                <br>
+                    nz.org.take.rt.ResultSet
+                <br>
+                    nz.org.take.rt.SingletonIterator
+                <br>
+</td><td valign="top" width="25%"><a href="#PKexample.nz.org.take.compiler.example1.impl">example.nz.org.take.compiler.example1.impl</a>
+<br>
+<a href="#PKexample.nz.org.take.compiler.example1.spec">example.nz.org.take.compiler.example1.spec</a>
+<br>
+</td><td valign="top" width="25%"><i>None</i></td>
+</tr>
+</table>
+<h3>
+<a name="PKnz.org.take.script">nz.org.take.script</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 2</td><td><a href="#EXefferent">Efferent Couplings</a>: 3</td><td><a href="#EXabstractness">Abstractness</a>: 0.09</td><td><a href="#EXinstability">Instability</a>: 0.6</td><td><a href="#EXdistance">Distance</a>: 0.31</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%">
+                    nz.org.take.script.Term
+                <br>
+                    nz.org.take.script.TermContainer
+                <br>
+</td><td valign="top" width="25%">
+                    nz.org.take.script.Annotation
+                <br>
+                    nz.org.take.script.Comment
+                <br>
+                    nz.org.take.script.ComplexTerm
+                <br>
+                    nz.org.take.script.Condition
+                <br>
+                    nz.org.take.script.ConstantTerm
+                <br>
+                    nz.org.take.script.Declaration
+                <br>
+                    nz.org.take.script.FeatureNotSupportedException
+                <br>
+                    nz.org.take.script.KnowledgeBaseReader
+                <br>
+                    nz.org.take.script.PredicateType
+                <br>
+                    nz.org.take.script.QuerySpec
+                <br>
+                    nz.org.take.script.RefDeclaration
+                <br>
+                    nz.org.take.script.Rule
+                <br>
+                    nz.org.take.script.Script
+                <br>
+                    nz.org.take.script.ScriptElement
+                <br>
+                    nz.org.take.script.ScriptException
+                <br>
+                    nz.org.take.script.ScriptSemanticsException
+                <br>
+                    nz.org.take.script.ScriptSyntaxException
+                <br>
+                    nz.org.take.script.TakeScriptEngine
+                <br>
+                    nz.org.take.script.TakeScriptEngineFactory
+                <br>
+                    nz.org.take.script.VariableDeclaration
+                <br>
+                    nz.org.take.script.VariableTerm
+                <br>
+</td><td valign="top" width="25%"><a href="#PKexample.nz.org.take.compiler.example1">example.nz.org.take.compiler.example1</a>
+<br>
+<a href="#PKnz.org.take.script.parser">nz.org.take.script.parser</a>
+<br>
+</td><td valign="top" width="25%"><a href="#PKnz.org.take">nz.org.take</a>
+<br>
+<a href="#PKnz.org.take.script.parser">nz.org.take.script.parser</a>
+<br>
+<a href="#PKorg.apache.log4j">org.apache.log4j</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKnz.org.take.script.parser">nz.org.take.script.parser</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 1</td><td><a href="#EXefferent">Efferent Couplings</a>: 1</td><td><a href="#EXabstractness">Abstractness</a>: 0.1</td><td><a href="#EXinstability">Instability</a>: 0.5</td><td><a href="#EXdistance">Distance</a>: 0.4</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%">
+                    nz.org.take.script.parser.ParserConstants
+                <br>
+</td><td valign="top" width="25%">
+                    nz.org.take.script.parser.ParseException
+                <br>
+                    nz.org.take.script.parser.Parser
+                <br>
+                    nz.org.take.script.parser.Parser$1
+                <br>
+                    nz.org.take.script.parser.Parser$JJCalls
+                <br>
+                    nz.org.take.script.parser.Parser$LookaheadSuccess
+                <br>
+                    nz.org.take.script.parser.ParserTokenManager
+                <br>
+                    nz.org.take.script.parser.SimpleCharStream
+                <br>
+                    nz.org.take.script.parser.Token
+                <br>
+                    nz.org.take.script.parser.TokenMgrError
+                <br>
+</td><td valign="top" width="25%"><a href="#PKnz.org.take.script">nz.org.take.script</a>
+<br>
+</td><td valign="top" width="25%"><a href="#PKnz.org.take.script">nz.org.take.script</a>
+<br>
+</td>
+</tr>
+</table>
+<table width="100%">
+<tr>
+<td><a name="NVcycles">
+<h2>Cycles</h2>
+</a></td><td align="right">
+    [<a href="#NVsummary">summary</a>]
+    [<a href="#NVpackages">packages</a>]
+    [<a href="#NVcycles">cycles</a>]
+    [<a href="#NVexplanations">explanations</a>]
+    </td>
+</tr>
+</table>
+<h3>example.nz.org.take.compiler.example1</h3>
+<p>nz.org.take.script<br>nz.org.take.script.parser<br>nz.org.take.script<br>
+</p>
+<h3>nz.org.take.script</h3>
+<p>nz.org.take.script.parser<br>nz.org.take.script<br>
+</p>
+<h3>nz.org.take.script.parser</h3>
+<p>nz.org.take.script<br>nz.org.take.script.parser<br>
+</p>
+<table width="100%">
+<tr>
+<td><a name="NVexplanations">
+<h2>Explanations</h2>
+</a></td><td align="right">
+    [<a href="#NVsummary">summary</a>]
+    [<a href="#NVpackages">packages</a>]
+    [<a href="#NVcycles">cycles</a>]
+    [<a href="#NVexplanations">explanations</a>]
+    </td>
+</tr>
+</table>
+<p>The following explanations are for quick reference and are lifted directly from the original <a href="http://www.clarkware.com/software/JDepend.html">JDepend documentation</a>.</p>
+<h3>
+<a name="EXnumber">Number of Classes</a>
+</h3>
+<p>The number of concrete and abstract classes (and interfaces) in the package is an indicator of the extensibility of the package.</p>
+<h3>
+<a name="EXafferent">Afferent Couplings</a>
+</h3>
+<p>The number of other packages that depend upon classes within the package is an indicator of the package's responsibility. </p>
+<h3>
+<a name="EXefferent">Efferent Couplings</a>
+</h3>
+<p>The number of other packages that the classes in the package depend upon is an indicator of the package's independence. </p>
+<h3>
+<a name="EXabstractness">Abstractness</a>
+</h3>
+<p>The ratio of the number of abstract classes (and interfaces) in the analyzed package to the total number of classes in the analyzed package. </p>
+<p>The range for this metric is 0 to 1, with A=0 indicating a completely concrete package and A=1 indicating a completely abstract package. </p>
+<h3>
+<a name="EXinstability">Instability</a>
+</h3>
+<p>The ratio of efferent coupling (Ce) to total coupling (Ce / (Ce + Ca)). This metric is an indicator of the package's resilience to change. </p>
+<p>The range for this metric is 0 to 1, with I=0 indicating a completely stable package and I=1 indicating a completely instable package. </p>
+<h3>
+<a name="EXdistance">Distance</a>
+</h3>
+<p>The perpendicular distance of a package from the idealized line A + I = 1. This metric is an indicator of the package's balance between abstractness and stability. </p>
+<p>A package squarely on the main sequence is optimally balanced with respect to its abstractness and stability. Ideal packages are either completely abstract and stable (x=0, y=1) or completely concrete and instable (x=1, y=0). </p>
+<p>The range for this metric is 0 to 1, with D=0 indicating a package that is coincident with the main sequence and D=1 indicating a package that is as far from the main sequence as possible. </p>
+</body>
+</html>

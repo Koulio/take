@@ -1,0 +1,6 @@
+1. rule2
+2. fact6
+3. fact3
+test.nz.org.take.compiler.scenario6.Person@40fb991
+test.nz.org.take.compiler.scenario6.Person@232c7f
+test.nz.org.take.compiler.scenario6.Person@26c028
