@@ -92,6 +92,17 @@ public interface Compiler {
 	 */
 	public String[] getInterfaceNames();
 	/**
+	 * Set the import statements (without ; at the end) to be used in the generated kb class.
+	 * @param names the names.
+	 */
+	public void setImportStatements(String... statements);
+	/**
+	 * Get the import statements (without ; at the end) to be used in the generated kb class.
+	 * Can be null (no imports)
+	 * @return Returns import statements.
+	 */
+	public String[] getImportStatements();
+	/**
 	 * Set the (fully qualified) names of  interfaces to be implemented by the generated kb class.
 	 * @param names the names.
 	 */
