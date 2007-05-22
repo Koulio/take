@@ -31,6 +31,27 @@ import nz.org.take.compiler.Location;
 
 public class DefaultLocation implements Location {
 	
+	private String srcFolder = "src";
+	private String binFolder = "bin";
+	
+	public DefaultLocation(String srcFolder, String binFolder) {
+		super();
+		this.srcFolder = srcFolder;
+		this.binFolder = binFolder;
+		checkFolders();
+	}
+	public DefaultLocation(String outputFolder) {
+		super();
+		this.srcFolder = outputFolder;
+		this.binFolder = outputFolder;
+		checkFolders();
+	}
+	public DefaultLocation() {
+		super();
+		checkFolders();
+	}
+	
+	
 	/**
 	 * Get the file location.
 	 * @param c a fully qualified class name
@@ -39,10 +60,34 @@ public class DefaultLocation implements Location {
 	 */
 	private String getLocation(String c,boolean isSrc) {
 		String p = c.replace('.','/');
-		if (isSrc)
-			return "src/"+p+".java";
+		if (isSrc) { // Java compiler will create folders
+			int idx = p.lastIndexOf('/');
+			if (idx!=-1) {
+				String folder = p.substring(0,idx);
+				folder = srcFolder+"/" + folder;
+				this.checkFolder(folder);
+			}
+		}
+		if (isSrc) 
+			return srcFolder+"/"+p+".java";
 		else 
-			return "bin/"+p+".class";
+			return binFolder+"/"+p+".class";
+	}
+	/**
+	 * Check whether folders exist. Try to create them if not.
+	 */
+	private void checkFolders() {
+		checkFolder(this.binFolder);
+		checkFolder(this.srcFolder);
+	}
+	/**
+	 * Check whether a folder exists. Try to create them if not.
+	 */
+	private void checkFolder(String folder) {
+		File f = new File(folder);
+		if (!f.exists()) 
+			f.mkdirs();
+		
 	}
 
 	/**
@@ -105,4 +150,24 @@ public class DefaultLocation implements Location {
 	public File getSrcFile(String c) throws CompilerException {
 		return new File(getLocation(c,true));		
 	}
+
+	public String getBinFolder() {
+		return binFolder;
+	}
+
+	public void setBinFolder(String binFolder) {
+		this.binFolder = binFolder;
+		this.checkFolder(binFolder);
+	}
+
+	public String getSrcFolder() {
+		return srcFolder;
+	}
+
+	public void setSrcFolder(String srcFolder) {
+		this.srcFolder = srcFolder;
+		this.checkFolder(srcFolder);
+	}
+
+
 }

@@ -31,6 +31,7 @@ import java.util.Arrays;
 
 import example.nz.org.take.compiler.example1.spec.FamilyKnowledge;
 import nz.org.take.KnowledgeBase;
+import nz.org.take.compiler.Location;
 import nz.org.take.compiler.NameGenerator;
 import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
@@ -51,15 +52,17 @@ public class Example {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		BasicConfigurator.configure();
-		DefaultLocation location = new DefaultLocation();
-		NameGenerator nameGenerator = new DefaultNameGenerator();
+
 		
 		// STEP 0: prepare
 		String source = "src/example/nz/org/take/compiler/example1/family.take";
 		String packageName = "example.nz.org.take.compiler.example1.impl";
 		String className = "KB";
 		File tmp = new File("tmp");
+		
+		BasicConfigurator.configure();
+		Location location = new DefaultLocation("tmp");
+		NameGenerator nameGenerator = new DefaultNameGenerator();
 		
 		if (!tmp.exists())
 			tmp.mkdir();
