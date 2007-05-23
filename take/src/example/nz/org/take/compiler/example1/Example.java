@@ -20,16 +20,20 @@
 package example.nz.org.take.compiler.example1;
 
 import java.io.FileReader;
-
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 import org.apache.log4j.BasicConfigurator;
-import java.io.File;
-import java.util.Arrays;
 
 import example.nz.org.take.compiler.example1.spec.FamilyKnowledge;
+
+import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.compiler.Location;
 import nz.org.take.compiler.NameGenerator;
@@ -55,6 +59,8 @@ public class Example {
 
 		
 		// STEP 0: prepare
+		FamilyKnowledge KB = null;
+		
 		String source = "src/example/nz/org/take/compiler/example1/family.take";
 		String packageName = "example.nz.org.take.compiler.example1.impl";
 		String className = "KB";
@@ -80,13 +86,29 @@ public class Example {
 		kbCompiler.compile(kb);
 		
 		// STEP 2: compile
-		File[] sources = tmp.listFiles();
-		FamilyKnowledge KB = null;
+		File[] files = new File("tmp/example/nz/org/take/compiler/example1/impl/").listFiles();
+		List<File> sources = new ArrayList<File>();
+		for (File f:files) {
+			if (f.getAbsolutePath().endsWith(".java"))
+				sources.add(f);
+		}
+		
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
         Iterable<? extends JavaFileObject> compilationUnits1 =
-        	fileManager.getJavaFileObjectsFromFiles(Arrays.asList(sources));
+        	fileManager.getJavaFileObjectsFromFiles(sources);
 	    compiler.getTask(null, fileManager, null, null, null, compilationUnits1).call();
+	    
+	    
+	    
+	    File classLocation = new File("tmp");
+	    URLClassLoader classloader = new URLClassLoader(new URL[]{classLocation.toURL()});
+	    Class clazz = classloader.loadClass("example.nz.org.take.compiler.example1.impl.KB");
+	    
+	    KB = (FamilyKnowledge)clazz.newInstance();
+	    // KB.getGrandfather(new Person("Max"));
+	    System.out.println("it worked !");
+	    
 
 	}
 }
