@@ -103,6 +103,12 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		out.println("@SuppressWarnings(\"unchecked\")");
 		out.print("public interface ");
 		out.print(className);
+		
+		if (this.interfaceNames!=null && this.interfaceNames.length>0) {
+			out.print(" extends ");
+			printCommaSeparatedList(out,this.interfaceNames);
+		}
+		
 		out.println("{");
 		// abstract methods
 		for (Query q:kb.getQueries()) {
@@ -237,6 +243,11 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		out.println("@SuppressWarnings(\"unchecked\")");
 		out.print("public class ");
 		out.print(clazz);
+		
+		if (this.interfaceNames!=null && this.interfaceNames.length>0) {
+			out.print(" implements ");
+			printCommaSeparatedList(out,this.interfaceNames);
+		}
 		out.println("{");
 
 		while (!this.isAgendaEmpty()) {
