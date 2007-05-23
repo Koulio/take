@@ -689,5 +689,35 @@ public abstract class CompilerUtils {
 		collectTerms(terms,r.getHead());
 		return terms;
 	}
+	/**
+	 * Print a comma separated list.
+	 * @param out
+	 * @param list an iterable
+	 */
+	protected void printCommaSeparatedList(PrintWriter out,Iterable<String> list) {
+		boolean f = true;
+		for (String s:list) {
+			if (f)
+				f = false;
+			else 
+				out.print(',');
+			out.print(s);
+		}
+	}
+	/**
+	 * Print a comma separated list.
+	 * @param out
+	 * @param list an array
+	 */
+	protected void printCommaSeparatedList(PrintWriter out,String[] list) {
+		boolean f = true;
+		for (String s:list) {
+			if (f)
+				f = false;
+			else 
+				out.print(',');
+			out.print(s);
+		}
+	}
 
 }

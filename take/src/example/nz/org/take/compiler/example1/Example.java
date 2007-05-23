@@ -82,6 +82,7 @@ public class Example {
 		kbCompiler.setGenerateDataClassesForQueryPredicates(false); // part of interface !
 		kbCompiler.setPackageName(packageName);
 		kbCompiler.setClassName(className);
+		kbCompiler.setInterfaceNames(FamilyKnowledge.class.getName());
 		kbCompiler.setImportStatements("example.nz.org.take.compiler.example1.spec.*"); // the interface
 		kbCompiler.compile(kb);
 		
