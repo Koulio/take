@@ -30,7 +30,8 @@ import java.lang.reflect.Proxy;
 
 public class KnowledgeBaseManager<I> {
 
-	public I getKnowledgeBase(I publicInterface,Class implClass) throws Exception {
+	public I getKnowledgeBase(Class clazz,Class implClass) throws Exception {
+		
 		final Object delegate = implClass.newInstance();
 		InvocationHandler handler = new InvocationHandler() {
 
@@ -41,8 +42,7 @@ public class KnowledgeBaseManager<I> {
 			
 		};
 		
-		return (I) Proxy.newProxyInstance(publicInterface.getClass().getClassLoader(),
-                new Class[] { publicInterface.getClass() },
-                handler);
+		return (I) Proxy.newProxyInstance(clazz.getClassLoader(),
+                new Class[] { clazz },handler);
 	}
 }

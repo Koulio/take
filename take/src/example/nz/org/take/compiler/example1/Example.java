@@ -25,14 +25,12 @@ import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 import org.apache.log4j.BasicConfigurator;
-
 import example.nz.org.take.compiler.example1.spec.FamilyKnowledge;
-
+import example.nz.org.take.compiler.example1.spec.IsGrandfatherOf;
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.compiler.Location;
@@ -40,7 +38,7 @@ import nz.org.take.compiler.NameGenerator;
 import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.DefaultNameGenerator;
-import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
+import nz.org.take.rt.ResultSet;
 import nz.org.take.script.KnowledgeBaseReader;
 
 
@@ -93,23 +91,28 @@ public class Example {
 			if (f.getAbsolutePath().endsWith(".java"))
 				sources.add(f);
 		}
-		
+
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
         Iterable<? extends JavaFileObject> compilationUnits1 =
         	fileManager.getJavaFileObjectsFromFiles(sources);
 	    compiler.getTask(null, fileManager, null, null, null, compilationUnits1).call();
-	    
-	    
-	    
-	    File classLocation = new File("tmp");
-	    URLClassLoader classloader = new URLClassLoader(new URL[]{classLocation.toURL()});
-	    Class clazz = classloader.loadClass("example.nz.org.take.compiler.example1.impl.KB");
-	    
-	    KB = (FamilyKnowledge)clazz.newInstance();
-	    // KB.getGrandfather(new Person("Max"));
-	    System.out.println("it worked !");
-	    
 
+	    File classLocation = new File("tmp/");
+	    URLClassLoader classloader = new URLClassLoader(new URL[]{classLocation.toURL()},FamilyKnowledge.class.getClassLoader());
+	    Class clazz = classloader.loadClass("example.nz.org.take.compiler.example1.impl.KB");
+	    System.out.println("class loaded");
+	    ClassLoader c = FamilyKnowledge.class.getClassLoader();
+	    System.out.println(c==classloader.getParent());
+
+	    
+	   // KnowledgeBaseManager<FamilyKnowledge> kbm = new KnowledgeBaseManager<FamilyKnowledge>();
+	    //KB =  kbm.getKnowledgeBase(FamilyKnowledge.class,clazz);
+	    
+	    ResultSet<IsGrandfatherOf> result =  KB.getGrandfather(new Person("Max"));
+	   System.out.println( result.next().grandfather);
+	    
+	    
+	    System.out.println("done");
 	}
 }

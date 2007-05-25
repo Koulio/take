@@ -1,9 +1,9 @@
 // script for test scenario 6
 @@dc:creator=jens dietrich
 @@dc:date=26/04/2007
-var test.nz.org.take.compiler.scenario6.Person person1,person2,person3
-var test.nz.org.take.compiler.scenario6.Person grandchild,father,grandfather
-ref test.nz.org.take.compiler.scenario6.Person Frank,Lutz,Guenther,Otto,Jens,Klaus,Max,Ralf,Werner 
+var example.nz.org.take.compiler.example1.Person person1,person2,person3
+var example.nz.org.take.compiler.example1.Person grandchild,father,grandfather
+ref example.nz.org.take.compiler.example1.Person Frank,Lutz,Guenther,Otto,Jens,Klaus,Max,Ralf,Werner 
 // queries - annotations are optional and are used to generate 
 // custom classes and methods
 @take.compilerhint.class=IsFatherOf
