@@ -22,7 +22,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import javax.tools.JavaCompiler;
+import javax.tools.JavaFileObject;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
 
 import org.apache.log4j.BasicConfigurator;
 
@@ -53,33 +60,47 @@ public class KnowledgeBaseManager<I> {
 	
 		assert(spec.isInterface());
 		NameGenerator nameGenerator = new DefaultNameGenerator();
-		File workDir = new File(workingDirRoot);
-		if (!workDir.exists())
-			workDir.mkdir();
-		
-		String srcFolder = workDir+"src/";
-		String binFolder = workDir+"bin/";
+		checkFolder(workingDirRoot);
+		String srcFolder = workingDirRoot+"src/";
+		String binFolder = workingDirRoot+"src/";
+		checkFolder(srcFolder);
+		checkFolder(binFolder);
 		
 		Location location = new DefaultLocation(srcFolder,binFolder);
-		
 		Date now = new Date();
+		
 		String version = "impl_v"+now.getYear()+(now.getMonth()+1)+now.getDate()+"_"+now.getHours()+now.getMinutes()+now.getSeconds();
 		
-		String packageName = spec.getName() + '.'+version;
-				nz.org.take.compiler.Compiler kbCompiler = new DefaultCompiler();
+		String packageName = spec.getPackage().getName() +  '.'+version;
+		nz.org.take.compiler.Compiler kbCompiler = new DefaultCompiler();
 		kbCompiler.setLocation(location);
 		kbCompiler.setGenerateDataClassesForQueryPredicates(false); // part of interface !
 		kbCompiler.setPackageName(packageName);
 		kbCompiler.setClassName(className);
 		kbCompiler.setInterfaceNames(spec.getName());
 		String interfacePackageName = spec.getPackage().getName();
-		kbCompiler.setImportStatements(interfacePackageName); // the interface
+		kbCompiler.setImportStatements(interfacePackageName+".*"); // the interface
 		kbCompiler.compile(kb);
 		
+		// java compilation
+		String javaFolder = srcFolder + packageName.replace('.','/');
+		
+		File[] files = new File(javaFolder).listFiles();
+		List<File> sources = new ArrayList<File>();
+		for (File f:files) {
+			if (f.getAbsolutePath().endsWith(".java"))
+				sources.add(f);
+		}
+		
+		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+        StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
+        Iterable<? extends JavaFileObject> compilationUnits1 =
+        	fileManager.getJavaFileObjectsFromFiles(sources);
+	    compiler.getTask(null, fileManager, null, null, null, compilationUnits1).call();
+	    
+		// load class
 		URL classLoc = new File(binFolder).toURL();
 		String fullClassName = packageName+'.'+className;
-		
-		// loading
 		Class clazz = new URLClassLoader(new URL[]{classLoc}).loadClass(fullClassName);
 		return (I)clazz.newInstance();
 		
@@ -91,5 +112,10 @@ public class KnowledgeBaseManager<I> {
 
 	public void setWorkingDirRoot(String workingDirRoot) {
 		this.workingDirRoot = workingDirRoot;
+	}
+	private void checkFolder(String folder) {
+		File f = new File(folder);
+		if (!f.exists())
+			f.mkdir();
 	}
 }

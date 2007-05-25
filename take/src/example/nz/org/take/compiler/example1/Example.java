@@ -38,6 +38,7 @@ import nz.org.take.compiler.NameGenerator;
 import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.DefaultNameGenerator;
+import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.ResultSet;
 import nz.org.take.script.KnowledgeBaseReader;
 
@@ -74,42 +75,13 @@ public class Example {
 		
 		// STEP 1: generate sources into tmp
 		KnowledgeBaseReader reader = new KnowledgeBaseReader();
-		nz.org.take.compiler.Compiler kbCompiler = new DefaultCompiler();
 		KnowledgeBase kb = reader.read(new FileReader(source));
-		kbCompiler.setLocation(location);
-		kbCompiler.setGenerateDataClassesForQueryPredicates(false); // part of interface !
-		kbCompiler.setPackageName(packageName);
-		kbCompiler.setClassName(className);
-		kbCompiler.setInterfaceNames(FamilyKnowledge.class.getName());
-		kbCompiler.setImportStatements("example.nz.org.take.compiler.example1.spec.*"); // the interface
-		kbCompiler.compile(kb);
 		
 		// STEP 2: compile
-		File[] files = new File("tmp/example/nz/org/take/compiler/example1/impl/").listFiles();
-		List<File> sources = new ArrayList<File>();
-		for (File f:files) {
-			if (f.getAbsolutePath().endsWith(".java"))
-				sources.add(f);
-		}
-
-		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-        StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
-        Iterable<? extends JavaFileObject> compilationUnits1 =
-        	fileManager.getJavaFileObjectsFromFiles(sources);
-	    compiler.getTask(null, fileManager, null, null, null, compilationUnits1).call();
-
-	    File classLocation = new File("tmp/");
-	    URLClassLoader classloader = new URLClassLoader(new URL[]{classLocation.toURL()},FamilyKnowledge.class.getClassLoader());
-	    Class clazz = classloader.loadClass("example.nz.org.take.compiler.example1.impl.KB");
-	    System.out.println("class loaded");
-	    ClassLoader c = FamilyKnowledge.class.getClassLoader();
-	    System.out.println(c==classloader.getParent());
-
-	    
-	   // KnowledgeBaseManager<FamilyKnowledge> kbm = new KnowledgeBaseManager<FamilyKnowledge>();
-	    //KB =  kbm.getKnowledgeBase(FamilyKnowledge.class,clazz);
-	    
-	    ResultSet<IsGrandfatherOf> result =  KB.getGrandfather(new Person("Max"));
+		
+		KnowledgeBaseManager<FamilyKnowledge> kbm = new KnowledgeBaseManager<FamilyKnowledge>();
+		KB = kbm.getKnowledgeBase(FamilyKnowledge.class, kb);
+		ResultSet<IsGrandfatherOf> result =  KB.getGrandfather(new Person("Max"));
 	   System.out.println( result.next().grandfather);
 	    
 	    
