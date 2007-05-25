@@ -18,9 +18,23 @@
 
 package nz.org.take.deployment;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
+import java.io.File;
+import java.io.FileReader;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Date;
+
+import org.apache.log4j.BasicConfigurator;
+
+import example.nz.org.take.compiler.example1.spec.FamilyKnowledge;
+import nz.org.take.KnowledgeBase;
+import nz.org.take.compiler.Location;
+import nz.org.take.compiler.NameGenerator;
+import nz.org.take.compiler.reference.DefaultCompiler;
+import nz.org.take.compiler.util.DefaultLocation;
+import nz.org.take.compiler.util.DefaultNameGenerator;
+import nz.org.take.script.KnowledgeBaseReader;
+
 
 /**
  * Utility class used to instantiate the generated interface with an instance of the
@@ -29,20 +43,53 @@ import java.lang.reflect.Proxy;
  */
 
 public class KnowledgeBaseManager<I> {
+	
+	// the folder where files are stored
+	private String workingDirRoot = "takeWorkingDir/";
+	private String className = "KBImpl";
+	private ClassLoader baseClassLoader = this.getClass().getClassLoader();
 
-	public I getKnowledgeBase(Class clazz,Class implClass) throws Exception {
+	public I getKnowledgeBase(Class spec,KnowledgeBase kb) throws Exception {
+	
+		assert(spec.isInterface());
+		NameGenerator nameGenerator = new DefaultNameGenerator();
+		File workDir = new File(workingDirRoot);
+		if (!workDir.exists())
+			workDir.mkdir();
 		
-		final Object delegate = implClass.newInstance();
-		InvocationHandler handler = new InvocationHandler() {
+		String srcFolder = workDir+"src/";
+		String binFolder = workDir+"bin/";
+		
+		Location location = new DefaultLocation(srcFolder,binFolder);
+		
+		Date now = new Date();
+		String version = "impl_v"+now.getYear()+(now.getMonth()+1)+now.getDate()+"_"+now.getHours()+now.getMinutes()+now.getSeconds();
+		
+		String packageName = spec.getName() + '.'+version;
+				nz.org.take.compiler.Compiler kbCompiler = new DefaultCompiler();
+		kbCompiler.setLocation(location);
+		kbCompiler.setGenerateDataClassesForQueryPredicates(false); // part of interface !
+		kbCompiler.setPackageName(packageName);
+		kbCompiler.setClassName(className);
+		kbCompiler.setInterfaceNames(spec.getName());
+		String interfacePackageName = spec.getPackage().getName();
+		kbCompiler.setImportStatements(interfacePackageName); // the interface
+		kbCompiler.compile(kb);
+		
+		URL classLoc = new File(binFolder).toURL();
+		String fullClassName = packageName+'.'+className;
+		
+		// loading
+		Class clazz = new URLClassLoader(new URL[]{classLoc}).loadClass(fullClassName);
+		return (I)clazz.newInstance();
+		
+	}
 
-			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-				Method delegateMethod = delegate.getClass().getMethod(method.getName(), method.getParameterTypes());
-				return delegateMethod.invoke(delegate, args);
-			}
-			
-		};
-		
-		return (I) Proxy.newProxyInstance(clazz.getClassLoader(),
-                new Class[] { clazz },handler);
+	public String getWorkingDirRoot() {
+		return workingDirRoot;
+	}
+
+	public void setWorkingDirRoot(String workingDirRoot) {
+		this.workingDirRoot = workingDirRoot;
 	}
 }
