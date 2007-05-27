@@ -25,8 +25,10 @@ import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 import org.apache.log4j.BasicConfigurator;
-import example.nz.org.take.compiler.example1.spec.FamilyKnowledge;
-import example.nz.org.take.compiler.example1.spec.IsGrandfatherOf;
+
+import example.nz.org.take.compiler.example1.spec.CustomerDiscount;
+import example.nz.org.take.compiler.example1.spec.DiscountPolicy;
+
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -40,7 +42,7 @@ import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.DefaultNameGenerator;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.ResultSet;
-import nz.org.take.script.KnowledgeBaseReader;
+import nz.org.take.script.ScriptKnowledgeSource;
 
 
 /**
@@ -58,9 +60,9 @@ public class Example {
 
 		
 		// STEP 0: prepare
-		FamilyKnowledge KB = null;
+		DiscountPolicy KB = null;
 		
-		String source = "src/example/nz/org/take/compiler/example1/family.take";
+		String script = "src/example/nz/org/take/compiler/example1/crm-example.take"; // TODO - do not ref in src folder
 		String packageName = "example.nz.org.take.compiler.example1.impl";
 		String className = "KB";
 		File tmp = new File("tmp");
@@ -74,14 +76,14 @@ public class Example {
 		
 		
 		// STEP 1: generate sources into tmp
-		KnowledgeBaseReader reader = new KnowledgeBaseReader();
-		KnowledgeBase kb = reader.read(new FileReader(source));
+		ScriptKnowledgeSource ksource = new ScriptKnowledgeSource(script);
+		KnowledgeBase kb = ksource.getKnowledgeBase();
 		
 		// STEP 2: compile
 		
-		KnowledgeBaseManager<FamilyKnowledge> kbm = new KnowledgeBaseManager<FamilyKnowledge>();
-		KB = kbm.getKnowledgeBase(FamilyKnowledge.class, kb);
-		ResultSet<IsGrandfatherOf> result =  KB.getGrandfather(new Person("Max"));
+		KnowledgeBaseManager<CustomerDiscount> kbm = new KnowledgeBaseManager<CustomerDiscount>();
+		KB = kbm.getKnowledgeBase(CustomerDiscount.class, kb);
+		ResultSet<CustomerDiscount> result =  null;
 	   System.out.println( result.next().grandfather);
 	    
 	    

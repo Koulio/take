@@ -66,5 +66,11 @@ public interface NameGenerator {
 	 * @return a name
 	 */
 	public String getVariableNameForSlot(Predicate p, int slot);
+	/**
+	 * Get the (local, without package name) name of the class for the constants.
+	 * @return
+	 */
+	public String getConstantClassName();
+	
 
 }

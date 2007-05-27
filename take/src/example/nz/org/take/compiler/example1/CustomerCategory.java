@@ -16,30 +16,51 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take.script;
-
-import nz.org.take.TakeException;
+package example.nz.org.take.compiler.example1;
 
 /**
- * Exceptions that occur when reading a script.
+ * Bean class referenced in tests. 
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class ScriptException extends TakeException {
+public class CustomerCategory {
+	private String name = null;
 
-	public ScriptException() {
+	public CustomerCategory(String name) {
+		super();
+		this.name = name;
 	}
 
-	public ScriptException(String arg0) {
-		super(arg0);
+	@Override
+	public int hashCode() {
+		final int PRIME = 31;
+		int result = 1;
+		result = PRIME * result + ((name == null) ? 0 : name.hashCode());
+		return result;
 	}
 
-	public ScriptException(Throwable arg0) {
-		super(arg0);
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final CustomerCategory other = (CustomerCategory) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
 	}
 
-	public ScriptException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
+	public String getName() {
+		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
 }

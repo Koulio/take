@@ -27,7 +27,7 @@ import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.DefaultNameGenerator;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
-import nz.org.take.script.KnowledgeBaseReader;
+import nz.org.take.script.ScriptKnowledgeSource;
 import nz.org.take.script.ScriptException;
 import org.apache.log4j.BasicConfigurator;
 
@@ -53,11 +53,11 @@ public class GenerateClasses {
 		compiler.setNameGenerator(nameGenerator);
 		
 		// generate kb
-		String script = "src/test/nz/org/take/compiler/scenario1/rules1.take";
-		KnowledgeBaseReader reader = new KnowledgeBaseReader();
 		KnowledgeBase kb = null;
 		try {
-			kb = reader.read(new FileReader(script));
+			String script = "src/test/nz/org/take/compiler/scenario1/rules1.take";
+			ScriptKnowledgeSource KSrc = new ScriptKnowledgeSource(script);
+			kb = KSrc.getKnowledgeBase();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (ScriptException e) {

@@ -24,10 +24,11 @@ import java.util.List;
 
 /**
  * Interface for containers managing knowledge.
+ * Knowledge bases are also knowlegde sources, the getKnowledgeBase  method should return <b>this</b>.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public interface KnowledgeBase extends Annotatable , Visitable {
+public interface KnowledgeBase extends Annotatable , Visitable, KnowledgeSource {
 	
 	/**
 	 * Retrieve knowledge by id.

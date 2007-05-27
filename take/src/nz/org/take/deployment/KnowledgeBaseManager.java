@@ -19,28 +19,25 @@
 package nz.org.take.deployment;
 
 import java.io.File;
-import java.io.FileReader;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.script.Bindings;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
-
-import org.apache.log4j.BasicConfigurator;
-
-import example.nz.org.take.compiler.example1.spec.FamilyKnowledge;
 import nz.org.take.KnowledgeBase;
+import nz.org.take.KnowledgeSource;
+import nz.org.take.TakeException;
 import nz.org.take.compiler.Location;
 import nz.org.take.compiler.NameGenerator;
 import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.DefaultNameGenerator;
-import nz.org.take.script.KnowledgeBaseReader;
 
 
 /**
@@ -56,8 +53,9 @@ public class KnowledgeBaseManager<I> {
 	private String className = "KBImpl";
 	private ClassLoader baseClassLoader = this.getClass().getClassLoader();
 
-	public I getKnowledgeBase(Class spec,KnowledgeBase kb) throws Exception {
+	public I getKnowledgeBase(Class spec,KnowledgeSource ksource,Bindings bindings) throws TakeException {
 	
+		KnowledgeBase kb = ksource.getKnowledgeBase();
 		assert(spec.isInterface());
 		NameGenerator nameGenerator = new DefaultNameGenerator();
 		checkFolder(workingDirRoot);
@@ -98,12 +96,26 @@ public class KnowledgeBaseManager<I> {
         	fileManager.getJavaFileObjectsFromFiles(sources);
 	    compiler.getTask(null, fileManager, null, null, null, compilationUnits1).call();
 	    
+	    // handle bindings, i.e. bind names to objects that are referenced in rules as constant terms
+	    String constantClassName = packageName+'.'+kbCompiler.getNameGenerator().getConstantClassName();
+	    setupBindings(bindings,constantClassName);
+	    
+	    
 		// load class
-		URL classLoc = new File(binFolder).toURL();
-		String fullClassName = packageName+'.'+className;
-		Class clazz = new URLClassLoader(new URL[]{classLoc}).loadClass(fullClassName);
-		return (I)clazz.newInstance();
+	    String fullClassName = packageName+'.'+className;
+	    try {
+	    	URL classLoc = new File(binFolder).toURL();	    	
+	    	Class clazz = new URLClassLoader(new URL[]{classLoc}).loadClass(fullClassName);
+	    	return (I)clazz.newInstance();
+	    }
+	    catch (Exception x) {
+	    	throw new DeploymentException ("Cannot load generated class "+fullClassName,x);
+	    }
 		
+	}
+
+	private void setupBindings(Bindings bindings, String constantClassName) throws TakeException{
+		throw new TakeException ("not yet implemented");		
 	}
 
 	public String getWorkingDirRoot() {

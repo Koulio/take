@@ -16,29 +16,28 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take.script;
-
-import nz.org.take.TakeException;
+package nz.org.take;
 
 /**
- * Exceptions that occur when reading a script.
+ * Root class for all take exceptions. 
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class ScriptException extends TakeException {
+public class TakeException extends Exception {
 
-	public ScriptException() {
+	public TakeException() {
+		super();
 	}
 
-	public ScriptException(String arg0) {
+	public TakeException(String arg0) {
 		super(arg0);
 	}
 
-	public ScriptException(Throwable arg0) {
+	public TakeException(Throwable arg0) {
 		super(arg0);
 	}
 
-	public ScriptException(String arg0, Throwable arg1) {
+	public TakeException(String arg0, Throwable arg1) {
 		super(arg0, arg1);
 	}
 
