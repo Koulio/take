@@ -48,7 +48,6 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	private Map<DerivationRule, String> bindingClassNames = new HashMap<DerivationRule, String>();
 	private int bindingClassCounter = 1;
 	private Map<String,String> methodNames4QueriesFromAnnotations = new HashMap<String,String>();
-	private String constantClassName = "Constants";
 	private List<CompilerPlugin> plugins = new ArrayList<CompilerPlugin>();
 	private Location location = null;
 	private String packageName = null;
@@ -61,7 +60,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	/**
 	 * Constructor.
 	 */
-	public DefaultCompiler() throws Exception {
+	public DefaultCompiler()  {
 		super();
 		this.install(new CompilerPlugin4JPredicates(this));
 		this.install(new CompilerPlugin4PropertyPredicates(this));
@@ -630,7 +629,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 				out.print(".equals(");
 				Term t = f.getTerms()[slot.position];
 				assert (t instanceof Constant);
-				out.print(getRef(constantClassName,(Constant)t));
+				out.print(getRef(this.getNameGenerator().getConstantClassName(),(Constant)t));
 				out.print(")");
 			}
 			out.println("){");
@@ -643,7 +642,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			out.print("=");
 			Term t = f.getTerms()[slot.position];
 			assert (t instanceof Constant);
-			out.print(getRef(constantClassName,(Constant) t));
+			out.print(getRef(this.getNameGenerator().getConstantClassName(),(Constant) t));
 			out.println(";");
 		}
 		out.print("return ");
@@ -683,7 +682,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		// bind all constant terms
 		for (Term t:terms) {
 			if (t instanceof Constant) {
-				bindings.put(t,getRef(constantClassName,(Constant)t));
+				bindings.put(t,getRef(this.getNameGenerator().getConstantClassName(),(Constant)t));
 			}
 		}
 
@@ -780,7 +779,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 						bindings.put(vt, refs.get(vt));						
 					} else if (t instanceof Constant) {
 						Constant vt = (Constant) t;						
-						printVariableAssignment(out, "bindings",ref,getRef(constantClassName,vt),null,cast);
+						printVariableAssignment(out, "bindings",ref,getRef(this.getNameGenerator().getConstantClassName(),vt),null,cast);
 						bindings.put(vt, refs.get(vt));						
 					}
 					else {
@@ -984,14 +983,6 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	 */
 	public void install(CompilerPlugin plugin) {
 		this.plugins.add(plugin);
-	}
-
-	public String getConstantClassName() {
-		return constantClassName;
-	}
-
-	public void setConstantClassName(String constantClassName) {
-		this.constantClassName = constantClassName;
 	}
 
 	public String getClassName() {

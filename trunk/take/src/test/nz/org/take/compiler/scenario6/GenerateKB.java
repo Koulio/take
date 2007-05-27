@@ -22,7 +22,7 @@ package test.nz.org.take.compiler.scenario6;
 import java.io.FileReader;
 import org.apache.log4j.BasicConfigurator;
 import nz.org.take.KnowledgeBase;
-import nz.org.take.script.KnowledgeBaseReader;
+import nz.org.take.script.ScriptKnowledgeSource;
 
 /**
  * Script to generate a KB.
@@ -38,8 +38,8 @@ public class GenerateKB {
 		public static KnowledgeBase buildKB() throws Exception {
 			BasicConfigurator.configure();			
 			// generate kb
-			KnowledgeBaseReader reader = new KnowledgeBaseReader();
-			KnowledgeBase kb = reader.read(new FileReader("src/test/nz/org/take/compiler/scenario6/rules6.take"));
+			ScriptKnowledgeSource kSrc = new ScriptKnowledgeSource("src/test/nz/org/take/compiler/scenario6/rules6.take");
+			KnowledgeBase kb = kSrc.getKnowledgeBase();
 			return kb;
 		}
 }

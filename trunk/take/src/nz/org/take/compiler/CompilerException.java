@@ -16,16 +16,16 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 package nz.org.take.compiler;
+
+import nz.org.take.TakeException;
+
 /**
  * Compiler exception.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-public class CompilerException extends Exception {
+public class CompilerException extends TakeException {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5961995027233446277L;
+
 
 	/**
 	 * 

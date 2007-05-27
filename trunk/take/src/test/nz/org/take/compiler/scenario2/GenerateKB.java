@@ -19,12 +19,14 @@
 
 package test.nz.org.take.compiler.scenario2;
 
+import java.io.FileNotFoundException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.BasicConfigurator;
 import nz.org.take.KnowledgeBase;
-import nz.org.take.script.KnowledgeBaseReader;
+import nz.org.take.script.ScriptException;
+import nz.org.take.script.ScriptKnowledgeSource;
 
 /**
  * Script to generate a KB.
@@ -42,8 +44,14 @@ public class GenerateKB {
 		public static KnowledgeBase buildKB() throws Exception {
 			BasicConfigurator.configure();			
 			// generate kb
-			KnowledgeBaseReader reader = new KnowledgeBaseReader();
-			KnowledgeBase kb = reader.read(new StringReader(buildScript()));
+			// generate kb
+			KnowledgeBase kb = null;
+			try {
+				ScriptKnowledgeSource KSrc = new ScriptKnowledgeSource(new StringReader(buildScript()));
+				kb = KSrc.getKnowledgeBase();
+			} catch (ScriptException e) {
+				e.printStackTrace();
+			}
 			return kb;
 		}
 		/**

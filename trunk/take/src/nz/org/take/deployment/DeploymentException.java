@@ -15,41 +15,46 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+package nz.org.take.deployment;
 
-package nz.org.take.script;
-
-import java.io.Reader;
-import java.io.StringReader;
-
-import javax.script.AbstractScriptEngine;
-import javax.script.Bindings;
-import javax.script.ScriptContext;
-import javax.script.ScriptEngineFactory;
-import javax.script.ScriptException;
-import javax.script.SimpleBindings;
+import nz.org.take.TakeException;
 
 /**
- * Take script engine implementation.
+ * Compiler exception.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-public class TakeScriptEngine extends AbstractScriptEngine {
+public class DeploymentException extends TakeException {
 
-	public Bindings createBindings() {
-		return new SimpleBindings();
+
+	/**
+	 * 
+	 */
+	public DeploymentException() {
+		super();
 	}
 
-	public Object eval(String script, ScriptContext context) throws ScriptException {
-		return eval(new StringReader(script),context);
+	/**
+	 * @param message
+	 * @param cause
+	 */
+	public DeploymentException(String message, Throwable cause) {
+		super(message, cause);
 	}
 
-	public Object eval(Reader reader, ScriptContext context) throws ScriptException {
-		try {
-			return new KnowledgeBaseReader().read(reader);
-		} catch (nz.org.take.script.ScriptException e) {
-			throw new ScriptException(e);
-		}
+	/**
+	 * @param message
+	 */
+	public DeploymentException(String message) {
+		super(message);
 	}
 
-	public ScriptEngineFactory getFactory() {return null;}
+	/**
+	 * @param cause
+	 */
+	public DeploymentException(Throwable cause) {
+		super(cause);
+	}
+
+
 
 }

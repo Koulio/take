@@ -19,6 +19,10 @@
 package nz.org.take.script;
 
 import java.beans.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.*;
 import java.util.*;
@@ -33,10 +37,39 @@ import nz.org.take.script.parser.Parser;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class KnowledgeBaseReader {
-	private ClassLoader classloader = KnowledgeBaseReader.class.getClassLoader();
+public class ScriptKnowledgeSource implements KnowledgeSource  {
+	private ClassLoader classloader = ScriptKnowledgeSource.class.getClassLoader();
 	private static Parser parser =null;
-	public Logger LOGGER = Logger.getLogger(KnowledgeBaseReader.class);
+	public Logger LOGGER = Logger.getLogger(ScriptKnowledgeSource.class);
+	private Reader reader = null;
+	private KnowledgeBase kb = null;
+	
+	public ScriptKnowledgeSource (Reader reader) {
+		super();
+		this.reader = reader;
+	}	
+	
+	public ScriptKnowledgeSource (File file) throws FileNotFoundException {
+		super();
+		this.reader = new FileReader(file);
+	}	
+	
+	public ScriptKnowledgeSource (String fileName) throws FileNotFoundException {
+		super();
+		File file = new File(fileName);
+		this.reader = new FileReader(file);
+	}	
+	
+	/**
+	 * Get a knowledge base.
+	 * @return a knowledge base
+	 */
+	public KnowledgeBase getKnowledgeBase()  throws TakeException {
+		if (kb==null)
+			kb = this.read(reader);
+		return kb;
+	}
+	
 	
 	/**
 	 * Parse a script. 
@@ -67,10 +100,14 @@ public class KnowledgeBaseReader {
 	 * @param input the reader
 	 * @return the knowledge base 
 	 */
-	public KnowledgeBase read(Reader input) throws ScriptException {
+	private KnowledgeBase read(Reader input) throws ScriptException {
 		Script script = null;
 		try {
 			script = parse(input);
+			try {
+				input.close();
+			}
+			catch (IOException x) {}
 		} catch (Exception e) {
 			throw new ScriptSyntaxException("Cannot parse script",e);
 		}

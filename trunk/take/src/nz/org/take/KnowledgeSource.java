@@ -15,31 +15,19 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+package nz.org.take;
 
-package nz.org.take.script;
-
-import nz.org.take.TakeException;
 
 /**
- * Exceptions that occur when reading a script.
+ * Source for a knowledge base.
+ * Examples: memory sources (see KnowledgeBase), scripts/R2ML from files or streams. 
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class ScriptException extends TakeException {
-
-	public ScriptException() {
-	}
-
-	public ScriptException(String arg0) {
-		super(arg0);
-	}
-
-	public ScriptException(Throwable arg0) {
-		super(arg0);
-	}
-
-	public ScriptException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
-	}
-
+public interface KnowledgeSource {
+	/**
+	 * Get a knowledge base.
+	 * @return a knowledge base
+	 */
+	public KnowledgeBase getKnowledgeBase()  throws TakeException ; 
 }

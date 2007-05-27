@@ -123,4 +123,11 @@ public class DefaultKnowledgeBase extends AbstractAnnotatable implements Knowled
 		}		
 		visitor.endVisit(this);
 	}
+	/**
+	 * Get a knowledge base.
+	 * @return a knowledge base
+	 */
+	public KnowledgeBase getKnowledgeBase()  throws TakeException {
+		return this;
+	}
 }

@@ -28,7 +28,7 @@ import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.DefaultNameGenerator;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
-import nz.org.take.script.KnowledgeBaseReader;
+import nz.org.take.script.ScriptKnowledgeSource;
 
 
 /**
@@ -51,11 +51,10 @@ public class GenerateInterface {
 		compiler.setNameGenerator(nameGenerator);
 		BasicConfigurator.configure();			
 		// generate kb
-		KnowledgeBaseReader reader = new KnowledgeBaseReader();
-		KnowledgeBase kb = reader.read(new FileReader("src/example/nz/org/take/compiler/example1/family.take"));
+		ScriptKnowledgeSource ksource = new ScriptKnowledgeSource("src/example/nz/org/take/compiler/example1/crm-example.take");
 		compiler.setLocation(location);
 		compiler.setPackageName("example.nz.org.take.compiler.example1.spec");
-		compiler.setClassName("FamilyKnowledge");
-		compiler.compileInterface(kb);
+		compiler.setClassName("DiscountPolicy");
+		compiler.compileInterface(ksource.getKnowledgeBase());
 	}
 }
