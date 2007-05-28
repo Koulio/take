@@ -1,9 +1,9 @@
 // example 
 @@dc:creator=jens dietrich
 @@dc:date=27/05/2007
-var test.nz.org.take.compiler.scenario5.Customer customer
-ref test.nz.org.take.compiler.scenario5.Discount goldCustomerDiscount
-ref test.nz.org.take.compiler.scenario5.CustomerCategory goldCustomer
+var example.nz.org.take.compiler.example1.Customer customer
+ref example.nz.org.take.compiler.example1.Discount goldCustomerDiscount
+ref example.nz.org.take.compiler.example1.CustomerCategory goldCustomer
 @take.compilerhint.class=CustomerDiscount
 @take.compilerhint.slots=customer,discount
 @take.compilerhint.method=getDiscount

@@ -20,6 +20,9 @@
 package example.nz.org.take.compiler.example1;
 
 import java.io.FileReader;
+
+import javax.script.Bindings;
+import javax.script.SimpleBindings;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
@@ -41,6 +44,7 @@ import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.DefaultNameGenerator;
 import nz.org.take.deployment.KnowledgeBaseManager;
+import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
 import nz.org.take.script.ScriptKnowledgeSource;
 
@@ -59,32 +63,34 @@ public class Example {
 	public static void main(String[] args) throws Exception {
 
 		
-		// STEP 0: prepare
-		DiscountPolicy KB = null;
-		
-		String script = "src/example/nz/org/take/compiler/example1/crm-example.take"; // TODO - do not ref in src folder
-		String packageName = "example.nz.org.take.compiler.example1.impl";
-		String className = "KB";
-		File tmp = new File("tmp");
-		
+		// prepare
+		DiscountPolicy KB = null; // this is the generated interface
 		BasicConfigurator.configure();
-		Location location = new DefaultLocation("tmp");
-		NameGenerator nameGenerator = new DefaultNameGenerator();
+
+		// compile and bind constants referenced in rules
+		KnowledgeBaseManager<DiscountPolicy> kbm = new KnowledgeBaseManager<DiscountPolicy>();
+		Bindings bindings = new SimpleBindings();		
+		bindings.put("goldCustomer",new CustomerCategory("gold"));
+		bindings.put("goldCustomerDiscount",new Discount(20,true));
+		KB = kbm.getKnowledgeBase(
+				DiscountPolicy.class, 
+				new ScriptKnowledgeSource("exampledata/example1/crm-example.take"),
+				bindings);
+
 		
-		if (!tmp.exists())
-			tmp.mkdir();
-		
-		
-		// STEP 1: generate sources into tmp
-		ScriptKnowledgeSource ksource = new ScriptKnowledgeSource(script);
-		KnowledgeBase kb = ksource.getKnowledgeBase();
-		
-		// STEP 2: compile
-		
-		KnowledgeBaseManager<CustomerDiscount> kbm = new KnowledgeBaseManager<CustomerDiscount>();
-		KB = kbm.getKnowledgeBase(CustomerDiscount.class, kb);
-		ResultSet<CustomerDiscount> result =  null;
-	   System.out.println( result.next().grandfather);
+		// now use the generated classes to query the kb
+		Customer john = new Customer("John");
+		john.setCategory(new CustomerCategory("gold"));
+		ResultSet<CustomerDiscount> result =  KB.getDiscount(john);
+	    System.out.println("The discount for John is: " + result.next().discount);
+	    
+	    // print rules used
+	    System.out.println("The following rules have been used to calculate the discount: ");
+	    for (DerivationLogEntry e:result.getDerivationLog()) {
+	    	System.out.print(e.getCategory());
+	    	System.out.print(" : ");
+	    	System.out.println(e.getName());
+	    }
 	    
 	    
 	    System.out.println("done");

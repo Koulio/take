@@ -73,4 +73,17 @@ public class DerivationLogEntry {
 			return false;
 		return true;
 	}
+	/**
+	 * Get the type of the node as string.
+	 * @return a string
+	 */
+	public String getCategory() {
+		switch (kind) {
+			case DerivationController.RULE:return "rule";
+			case DerivationController.FACT:return "fact";
+			case DerivationController.BEAN_PROPERTY: return "property";
+			case DerivationController.JAVA_METHOD: return "method";
+			default: return "other";
+		}
+	}
 }
