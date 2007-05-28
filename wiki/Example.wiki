@@ -35,7 +35,7 @@ Note that this mechanism works very much like JavaServerPages (JSPs)! The workin
 	bindings.put("goldCustomerDiscount",new Discount(20,true));
 	KB = kbm.getKnowledgeBase(DiscountPolicy.class, new ScriptKnowledgeSource(script),bindings);
 		
-	// query
+	// now use the generated classes to query the kb
 	Customer john = new Customer("John");
 	john.setCategory(new CustomerCategory("gold"));
 	ResultSet<CustomerDiscount> result =  KB.getDiscount(john);
@@ -50,5 +50,4 @@ Note that this mechanism works very much like JavaServerPages (JSPs)! The workin
 	}
 	    
 }}}
-
 
