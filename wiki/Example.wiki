@@ -23,23 +23,34 @@ The `Example` script then does the following:
 Note that this mechanism works very much like JavaServerPages (JSPs)! The working directory containing the generated sources and compiled classes is in `/takeWorkingDir`.
 
 {{{
-	public static void main(String[] args) throws Exception {
+	// prepare
+		DiscountPolicy KB = null;
+		String script = "src/example/nz/org/take/compiler/example1/crm-example.take"; // TODO - do not ref in src folder
 		BasicConfigurator.configure();
-		DefaultLocation location = new DefaultLocation();
-		NameGenerator nameGenerator = new DefaultNameGenerator();
-		nz.org.take.compiler.Compiler compiler = new DefaultCompiler();
-		compiler.add(new JalopyCodeFormatter());
-		compiler.setNameGenerator(nameGenerator);
-		BasicConfigurator.configure();			
-		// generate kb
-		ScriptKnowledgeSource ksource = new ScriptKnowledgeSource("src/example/nz/org/take/compiler/example1/crm-example.take");
-		compiler.setLocation(location);
-		compiler.setPackageName("example.nz.org.take.compiler.example1.spec");
-		compiler.setClassName("DiscountPolicy");
-		compiler.compileInterface(ksource.getKnowledgeBase());
-	}
-}}}
 
+		// compile and bind constants referenced in rules
+		KnowledgeBaseManager<DiscountPolicy> kbm = new KnowledgeBaseManager<DiscountPolicy>();
+		Bindings bindings = new SimpleBindings();		
+		bindings.put("goldCustomer",new CustomerCategory("gold"));
+		bindings.put("goldCustomerDiscount",new Discount(20,true));
+		KB = kbm.getKnowledgeBase(DiscountPolicy.class, new ScriptKnowledgeSource(script),bindings);
+
+		
+		// query
+		Customer john = new Customer("John");
+		john.setCategory(new CustomerCategory("gold"));
+		ResultSet<CustomerDiscount> result =  KB.getDiscount(john);
+	    System.out.println("The discount for John is: " + result.next().discount);
+	    
+	    // print rules used
+	    System.out.println("The following rules have been used to calculate the discount: ");
+	    for (DerivationLogEntry e:result.getDerivationLog()) {
+	    	System.out.print(e.getCategory());
+	    	System.out.print(" : ");
+	    	System.out.println(e.getName());
+	    }
+	    
+}}}
 
 
 
