@@ -68,6 +68,8 @@ public class Discount {
 			return false;
 		return true;
 	}
-	
+	public String toString() {
+		return ""+value+(relative?"%":"$");
+	}
 
 }

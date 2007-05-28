@@ -19,10 +19,7 @@
 
 package example.nz.org.take.compiler.example1;
 
-import java.io.FileReader;
-
 import org.apache.log4j.BasicConfigurator;
-import nz.org.take.KnowledgeBase;
 import nz.org.take.compiler.NameGenerator;
 import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
@@ -51,7 +48,7 @@ public class GenerateInterface {
 		compiler.setNameGenerator(nameGenerator);
 		BasicConfigurator.configure();			
 		// generate kb
-		ScriptKnowledgeSource ksource = new ScriptKnowledgeSource("src/example/nz/org/take/compiler/example1/crm-example.take");
+		ScriptKnowledgeSource ksource = new ScriptKnowledgeSource("exampledata/example1/crm-example.take");
 		compiler.setLocation(location);
 		compiler.setPackageName("example.nz.org.take.compiler.example1.spec");
 		compiler.setClassName("DiscountPolicy");
