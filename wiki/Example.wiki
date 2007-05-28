@@ -25,7 +25,6 @@ Note that this mechanism works very much like JavaServerPages (JSPs)! The workin
 {{{
 	// prepare
 	DiscountPolicy KB = null; // this is the generated interface
-	String script = "src/example/nz/org/take/compiler/example1/crm-example.take"; 
 	BasicConfigurator.configure();
 
 	// compile and bind constants referenced in rules
