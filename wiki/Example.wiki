@@ -33,7 +33,10 @@ Note that this mechanism works very much like JavaServerPages (JSPs)! The workin
 	Bindings bindings = new SimpleBindings();		
 	bindings.put("goldCustomer",new CustomerCategory("gold"));
 	bindings.put("goldCustomerDiscount",new Discount(20,true));
-	KB = kbm.getKnowledgeBase(DiscountPolicy.class, new ScriptKnowledgeSource(script),bindings);
+	KB = kbm.getKnowledgeBase(
+	   DiscountPolicy.class, 
+	   new ScriptKnowledgeSource("exampledata/example1/crm-example.take"),
+	   bindings);
 		
 	// now use the generated classes to query the kb
 	Customer john = new Customer("John");
@@ -50,4 +53,3 @@ Note that this mechanism works very much like JavaServerPages (JSPs)! The workin
 	}
 	    
 }}}
-
