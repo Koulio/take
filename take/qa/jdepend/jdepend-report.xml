@@ -8,14 +8,14 @@
 
         <Package name="example.nz.org.take.compiler.example1">
             <Stats>
-                <TotalClasses>4</TotalClasses>
-                <ConcreteClasses>4</ConcreteClasses>
+                <TotalClasses>6</TotalClasses>
+                <ConcreteClasses>6</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>0</Ca>
-                <Ce>6</Ce>
+                <Ca>1</Ca>
+                <Ce>9</Ce>
                 <A>0</A>
-                <I>1</I>
-                <D>0</D>
+                <I>0.9</I>
+                <D>0.1</D>
                 <V>1</V>
             </Stats>
 
@@ -23,11 +23,17 @@
             </AbstractClasses>
 
             <ConcreteClasses>
+                <Class sourceFile="Customer.java">
+                    example.nz.org.take.compiler.example1.Customer
+                </Class>
+                <Class sourceFile="CustomerCategory.java">
+                    example.nz.org.take.compiler.example1.CustomerCategory
+                </Class>
+                <Class sourceFile="Discount.java">
+                    example.nz.org.take.compiler.example1.Discount
+                </Class>
                 <Class sourceFile="Example.java">
                     example.nz.org.take.compiler.example1.Example
-                </Class>
-                <Class sourceFile="GenerateClasses.java">
-                    example.nz.org.take.compiler.example1.GenerateClasses
                 </Class>
                 <Class sourceFile="GenerateInterface.java">
                     example.nz.org.take.compiler.example1.GenerateInterface
@@ -38,135 +44,67 @@
             </ConcreteClasses>
 
             <DependsUpon>
+                <Package>example.nz.org.take.compiler.example1.spec</Package>
                 <Package>nz.org.take.compiler</Package>
                 <Package>nz.org.take.compiler.reference</Package>
                 <Package>nz.org.take.compiler.util</Package>
                 <Package>nz.org.take.compiler.util.jalopy</Package>
+                <Package>nz.org.take.deployment</Package>
+                <Package>nz.org.take.rt</Package>
                 <Package>nz.org.take.script</Package>
                 <Package>org.apache.log4j</Package>
             </DependsUpon>
 
             <UsedBy>
-            </UsedBy>
-        </Package>
-
-        <Package name="example.nz.org.take.compiler.example1.impl">
-            <Stats>
-                <TotalClasses>14</TotalClasses>
-                <ConcreteClasses>14</ConcreteClasses>
-                <AbstractClasses>0</AbstractClasses>
-                <Ca>0</Ca>
-                <Ce>2</Ce>
-                <A>0</A>
-                <I>1</I>
-                <D>0</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="Constants.java">
-                    example.nz.org.take.compiler.example1.impl.Constants
-                </Class>
-                <Class sourceFile="KB.java">
-                    example.nz.org.take.compiler.example1.impl.KB
-                </Class>
-                <Class sourceFile="KB.java">
-                    example.nz.org.take.compiler.example1.impl.KB$1
-                </Class>
-                <Class sourceFile="KB.java">
-                    example.nz.org.take.compiler.example1.impl.KB$10
-                </Class>
-                <Class sourceFile="KB.java">
-                    example.nz.org.take.compiler.example1.impl.KB$1bindingsInRule1
-                </Class>
-                <Class sourceFile="KB.java">
-                    example.nz.org.take.compiler.example1.impl.KB$2
-                </Class>
-                <Class sourceFile="KB.java">
-                    example.nz.org.take.compiler.example1.impl.KB$2bindingsInRule1
-                </Class>
-                <Class sourceFile="KB.java">
-                    example.nz.org.take.compiler.example1.impl.KB$3
-                </Class>
-                <Class sourceFile="KB.java">
-                    example.nz.org.take.compiler.example1.impl.KB$4
-                </Class>
-                <Class sourceFile="KB.java">
-                    example.nz.org.take.compiler.example1.impl.KB$5
-                </Class>
-                <Class sourceFile="KB.java">
-                    example.nz.org.take.compiler.example1.impl.KB$6
-                </Class>
-                <Class sourceFile="KB.java">
-                    example.nz.org.take.compiler.example1.impl.KB$7
-                </Class>
-                <Class sourceFile="KB.java">
-                    example.nz.org.take.compiler.example1.impl.KB$8
-                </Class>
-                <Class sourceFile="KB.java">
-                    example.nz.org.take.compiler.example1.impl.KB$9
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
                 <Package>example.nz.org.take.compiler.example1.spec</Package>
-                <Package>nz.org.take.rt</Package>
-            </DependsUpon>
-
-            <UsedBy>
             </UsedBy>
         </Package>
 
         <Package name="example.nz.org.take.compiler.example1.spec">
             <Stats>
-                <TotalClasses>3</TotalClasses>
-                <ConcreteClasses>2</ConcreteClasses>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>1</Ca>
-                <Ce>1</Ce>
-                <A>0.33</A>
-                <I>0.5</I>
+                <Ce>2</Ce>
+                <A>0.5</A>
+                <I>0.67</I>
                 <D>0.17</D>
                 <V>1</V>
             </Stats>
 
             <AbstractClasses>
-                <Class sourceFile="FamilyKnowledge.java">
-                    example.nz.org.take.compiler.example1.spec.FamilyKnowledge
+                <Class sourceFile="DiscountPolicy.java">
+                    example.nz.org.take.compiler.example1.spec.DiscountPolicy
                 </Class>
             </AbstractClasses>
 
             <ConcreteClasses>
-                <Class sourceFile="IsFatherOf.java">
-                    example.nz.org.take.compiler.example1.spec.IsFatherOf
-                </Class>
-                <Class sourceFile="IsGrandfatherOf.java">
-                    example.nz.org.take.compiler.example1.spec.IsGrandfatherOf
+                <Class sourceFile="CustomerDiscount.java">
+                    example.nz.org.take.compiler.example1.spec.CustomerDiscount
                 </Class>
             </ConcreteClasses>
 
             <DependsUpon>
+                <Package>example.nz.org.take.compiler.example1</Package>
                 <Package>nz.org.take.rt</Package>
             </DependsUpon>
 
             <UsedBy>
-                <Package>example.nz.org.take.compiler.example1.impl</Package>
+                <Package>example.nz.org.take.compiler.example1</Package>
             </UsedBy>
         </Package>
 
         <Package name="nz.org.take">
             <Stats>
-                <TotalClasses>28</TotalClasses>
-                <ConcreteClasses>14</ConcreteClasses>
-                <AbstractClasses>14</AbstractClasses>
-                <Ca>4</Ca>
+                <TotalClasses>30</TotalClasses>
+                <ConcreteClasses>15</ConcreteClasses>
+                <AbstractClasses>15</AbstractClasses>
+                <Ca>5</Ca>
                 <Ce>1</Ce>
                 <A>0.5</A>
-                <I>0.2</I>
-                <D>0.3</D>
+                <I>0.17</I>
+                <D>0.33</D>
                 <V>1</V>
             </Stats>
 
@@ -203,6 +141,9 @@
                 </Class>
                 <Class sourceFile="KnowledgeIterator.java">
                     nz.org.take.KnowledgeIterator
+                </Class>
+                <Class sourceFile="KnowledgeSource.java">
+                    nz.org.take.KnowledgeSource
                 </Class>
                 <Class sourceFile="Predicate.java">
                     nz.org.take.Predicate
@@ -255,6 +196,9 @@
                 <Class sourceFile="SimplePredicate.java">
                     nz.org.take.SimplePredicate
                 </Class>
+                <Class sourceFile="TakeException.java">
+                    nz.org.take.TakeException
+                </Class>
                 <Class sourceFile="Variable.java">
                     nz.org.take.Variable
                 </Class>
@@ -268,6 +212,7 @@
                 <Package>nz.org.take.compiler</Package>
                 <Package>nz.org.take.compiler.reference</Package>
                 <Package>nz.org.take.compiler.util</Package>
+                <Package>nz.org.take.deployment</Package>
                 <Package>nz.org.take.script</Package>
             </UsedBy>
         </Package>
@@ -277,11 +222,11 @@
                 <TotalClasses>5</TotalClasses>
                 <ConcreteClasses>1</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
-                <Ca>4</Ca>
+                <Ca>5</Ca>
                 <Ce>1</Ce>
                 <A>0.8</A>
-                <I>0.2</I>
-                <D>0</D>
+                <I>0.17</I>
+                <D>0.03</D>
                 <V>1</V>
             </Stats>
 
@@ -315,6 +260,7 @@
                 <Package>nz.org.take.compiler.reference</Package>
                 <Package>nz.org.take.compiler.util</Package>
                 <Package>nz.org.take.compiler.util.jalopy</Package>
+                <Package>nz.org.take.deployment</Package>
             </UsedBy>
         </Package>
 
@@ -323,11 +269,11 @@
                 <TotalClasses>9</TotalClasses>
                 <ConcreteClasses>7</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>1</Ca>
+                <Ca>2</Ca>
                 <Ce>6</Ce>
                 <A>0.22</A>
-                <I>0.86</I>
-                <D>0.08</D>
+                <I>0.75</I>
+                <D>0.03</D>
                 <V>1</V>
             </Stats>
 
@@ -375,6 +321,7 @@
 
             <UsedBy>
                 <Package>example.nz.org.take.compiler.example1</Package>
+                <Package>nz.org.take.deployment</Package>
             </UsedBy>
         </Package>
 
@@ -383,11 +330,11 @@
                 <TotalClasses>6</TotalClasses>
                 <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>2</Ca>
+                <Ca>3</Ca>
                 <Ce>3</Ce>
                 <A>0.33</A>
-                <I>0.6</I>
-                <D>0.07</D>
+                <I>0.5</I>
+                <D>0.17</D>
                 <V>1</V>
             </Stats>
 
@@ -424,6 +371,7 @@
             <UsedBy>
                 <Package>example.nz.org.take.compiler.example1</Package>
                 <Package>nz.org.take.compiler.reference</Package>
+                <Package>nz.org.take.deployment</Package>
             </UsedBy>
         </Package>
 
@@ -453,6 +401,43 @@
                 <Package>de.hunsicker.jalopy</Package>
                 <Package>nz.org.take.compiler</Package>
                 <Package>org.apache.log4j</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>example.nz.org.take.compiler.example1</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="nz.org.take.deployment">
+            <Stats>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>2</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>4</Ce>
+                <A>0</A>
+                <I>0.8</I>
+                <D>0.2</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="DeploymentException.java">
+                    nz.org.take.deployment.DeploymentException
+                </Class>
+                <Class sourceFile="KnowledgeBaseManager.java">
+                    nz.org.take.deployment.KnowledgeBaseManager
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>nz.org.take</Package>
+                <Package>nz.org.take.compiler</Package>
+                <Package>nz.org.take.compiler.reference</Package>
+                <Package>nz.org.take.compiler.util</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -528,15 +513,15 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>example.nz.org.take.compiler.example1.impl</Package>
+                <Package>example.nz.org.take.compiler.example1</Package>
                 <Package>example.nz.org.take.compiler.example1.spec</Package>
             </UsedBy>
         </Package>
 
         <Package name="nz.org.take.script">
             <Stats>
-                <TotalClasses>23</TotalClasses>
-                <ConcreteClasses>21</ConcreteClasses>
+                <TotalClasses>22</TotalClasses>
+                <ConcreteClasses>20</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>2</Ca>
                 <Ce>3</Ce>
@@ -577,9 +562,6 @@
                 <Class sourceFile="FeatureNotSupportedException.java">
                     nz.org.take.script.FeatureNotSupportedException
                 </Class>
-                <Class sourceFile="KnowledgeBaseReader.java">
-                    nz.org.take.script.KnowledgeBaseReader
-                </Class>
                 <Class sourceFile="PredicateType.java">
                     nz.org.take.script.PredicateType
                 </Class>
@@ -601,14 +583,14 @@
                 <Class sourceFile="ScriptException.java">
                     nz.org.take.script.ScriptException
                 </Class>
+                <Class sourceFile="ScriptKnowledgeSource.java">
+                    nz.org.take.script.ScriptKnowledgeSource
+                </Class>
                 <Class sourceFile="ScriptSemanticsException.java">
                     nz.org.take.script.ScriptSemanticsException
                 </Class>
                 <Class sourceFile="ScriptSyntaxException.java">
                     nz.org.take.script.ScriptSyntaxException
-                </Class>
-                <Class sourceFile="TakeScriptEngine.java">
-                    nz.org.take.script.TakeScriptEngine
                 </Class>
                 <Class sourceFile="TakeScriptEngineFactory.java">
                     nz.org.take.script.TakeScriptEngineFactory
@@ -710,6 +692,13 @@
 
     <Cycles>
         <Package Name="example.nz.org.take.compiler.example1">
+            <Package>nz.org.take.script</Package>
+            <Package>nz.org.take.script.parser</Package>
+            <Package>nz.org.take.script</Package>
+        </Package>
+
+        <Package Name="example.nz.org.take.compiler.example1.spec">
+            <Package>example.nz.org.take.compiler.example1</Package>
             <Package>nz.org.take.script</Package>
             <Package>nz.org.take.script.parser</Package>
             <Package>nz.org.take.script</Package>
