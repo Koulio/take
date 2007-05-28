@@ -200,8 +200,36 @@ public class ParserTests extends TestCase {
 		assertEquals("Max",((ConstantTerm)t1).getValue());
 		assertTrue(t2 instanceof VariableTerm);
 	}
-	// complex terms
+	// int literals
 	public void test15() throws Exception {
+		String input = 
+			"fact1: p(42,y)\n";
+		Script script = parse(input);
+		Rule r = this.getRuleAt(script,0);
+		Condition f = r.getConditions().get(0);
+		Term t1 = f.getTerms().get(0);
+		Term t2 = f.getTerms().get(1);
+		assertTrue(t1 instanceof ConstantTerm);
+		assertEquals("42",((ConstantTerm)t1).getValue());
+		assertEquals(Integer.class.getName(),((ConstantTerm)t1).getType());
+		assertTrue(t2 instanceof VariableTerm);
+	}
+	// decimal literals
+	public void test16() throws Exception {
+		String input = 
+			"fact1: p(42.42,y)\n";
+		Script script = parse(input);
+		Rule r = this.getRuleAt(script,0);
+		Condition f = r.getConditions().get(0);
+		Term t1 = f.getTerms().get(0);
+		Term t2 = f.getTerms().get(1);
+		assertTrue(t1 instanceof ConstantTerm);
+		assertEquals("42.42",((ConstantTerm)t1).getValue());
+		assertEquals(Double.class.getName(),((ConstantTerm)t1).getType());
+		assertTrue(t2 instanceof VariableTerm);
+	}
+	// complex terms
+	public void test17() throws Exception {
 		String input = "fact: p(f(x),g(y,z))\n";
 		Script script = parse(input);
 		Condition f = this.getRuleAt(script,0).getConditions().get(0);
