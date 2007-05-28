@@ -438,6 +438,16 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 				c.setObject(ct.getValue());
 				return c;
 			}
+			else if (ct.getType().equals("java.lang.Integer")) {
+				Constant c = new Constant();
+				c.setObject(Integer.parseInt(ct.getValue()));
+				return c;
+			}
+			else if (ct.getType().equals("java.lang.Double")) {
+				Constant c = new Constant();
+				c.setObject(Double.parseDouble(ct.getValue()));
+				return c;
+			}
 			
 			else 
 				throw new ScriptSemanticsException("Constant terms of this type are not yet supported: " + ct.getType() + " " + printPosInfo((Term)ct));

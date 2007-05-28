@@ -16,57 +16,27 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take.script;
+package nz.org.take;
 
 /**
- * Condition.
+ * Predicates to compare numbers (==,!=, < etc).
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Condition extends TermContainer {
+
+public class Comparison extends AbstractPredicate {
+	private Class[] types = new Class[]{Double.class,Double.class};
+	private String name = null;
 	
-	private String predicate = null;
-	private boolean isNegated = false;
-	private boolean isPrimitiveComparison = false;
-	public boolean isNegated() {
-		return isNegated;
+	public String getName() {
+		return name;
 	}
 
-	public void setNegated(boolean isNegated) {
-		this.isNegated = isNegated;
+	public Class[] getSlotTypes() {
+		return types;
 	}
 
-	public String getPredicate() {
-		return predicate;
-	}
-
-	public void setPredicate(String predicate) {
-		this.predicate = predicate;
-	}
 	public String toString() {
-		StringBuffer b = new StringBuffer();
-		if (this.isNegated())
-			b.append("not_");
-		b.append(predicate);
-		b.append('(');
-		boolean f = true;
-		for (Term t:terms) {			
-			if (f)
-				f=false;
-			else
-				b.append(',');
-			b.append(t);
-		}
-		b.append(')');
-		return b.toString();
+		return getName();
 	}
-
-	public boolean isPrimitiveComparison() {
-		return isPrimitiveComparison;
-	}
-
-	public void setPrimitiveComparison(boolean isPrimitiveComparison) {
-		this.isPrimitiveComparison = isPrimitiveComparison;
-	}
-	
 }

@@ -26,6 +26,7 @@ public interface ParserConstants {
   int STRING_LITERAL = 24;
   int WHITESPACE = 25;
   int SEMICOLON = 26;
+  int COMPARISON = 27;
 
   int DEFAULT = 0;
 
@@ -57,6 +58,7 @@ public interface ParserConstants {
     "<STRING_LITERAL>",
     "<WHITESPACE>",
     "\";\"",
+    "<COMPARISON>",
     "\"(\"",
     "\",\"",
     "\")\"",
