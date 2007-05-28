@@ -24,34 +24,32 @@ Note that this mechanism works very much like JavaServerPages (JSPs)! The workin
 
 {{{
 	// prepare
-		DiscountPolicy KB = null;
-		String script = "src/example/nz/org/take/compiler/example1/crm-example.take"; // TODO - do not ref in src folder
-		BasicConfigurator.configure();
+	DiscountPolicy KB = null;
+	String script = "src/example/nz/org/take/compiler/example1/crm-example.take"; 
+	BasicConfigurator.configure();
 
-		// compile and bind constants referenced in rules
-		KnowledgeBaseManager<DiscountPolicy> kbm = new KnowledgeBaseManager<DiscountPolicy>();
-		Bindings bindings = new SimpleBindings();		
-		bindings.put("goldCustomer",new CustomerCategory("gold"));
-		bindings.put("goldCustomerDiscount",new Discount(20,true));
-		KB = kbm.getKnowledgeBase(DiscountPolicy.class, new ScriptKnowledgeSource(script),bindings);
-
+	// compile and bind constants referenced in rules
+	KnowledgeBaseManager<DiscountPolicy> kbm = new KnowledgeBaseManager<DiscountPolicy>();
+	Bindings bindings = new SimpleBindings();		
+	bindings.put("goldCustomer",new CustomerCategory("gold"));
+	bindings.put("goldCustomerDiscount",new Discount(20,true));
+	KB = kbm.getKnowledgeBase(DiscountPolicy.class, new ScriptKnowledgeSource(script),bindings);
 		
-		// query
-		Customer john = new Customer("John");
-		john.setCategory(new CustomerCategory("gold"));
-		ResultSet<CustomerDiscount> result =  KB.getDiscount(john);
-	    System.out.println("The discount for John is: " + result.next().discount);
+	// query
+	Customer john = new Customer("John");
+	john.setCategory(new CustomerCategory("gold"));
+	ResultSet<CustomerDiscount> result =  KB.getDiscount(john);
+	System.out.println("The discount for John is: " + result.next().discount);
 	    
-	    // print rules used
-	    System.out.println("The following rules have been used to calculate the discount: ");
-	    for (DerivationLogEntry e:result.getDerivationLog()) {
-	    	System.out.print(e.getCategory());
+	// print rules used
+	System.out.println("The following rules have been used to calculate the discount: ");
+	for (DerivationLogEntry e:result.getDerivationLog()) {
+	        System.out.print(e.getCategory());
 	    	System.out.print(" : ");
 	    	System.out.println(e.getName());
-	    }
+	}
 	    
 }}}
-
 
 
 
