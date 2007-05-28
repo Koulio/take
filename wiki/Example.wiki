@@ -1,0 +1,46 @@
+#summary An example to explain the big picture.
+#labels Featured,Phase-Requirements,Phase-Deploy,Example
+
+= Example =
+
+The code for this example is in the [http://take.googlecode.com/svn/trunk/take/src/example/nz/org/take/compiler/example1/ repository]. The [http://take.googlecode.com/svn/trunk/take/src/example/nz/org/take/compiler/example1/crm-example.take script] contains only one rule: 
+
+{{{
+rule1: if equals(category(customer),goldCustomer) then discount(customer,goldCustomerDiscount) 
+}}}
+
+The utility `GenerateInterface` is used to generate a [http://take.googlecode.com/svn/trunk/take/src/example/nz/org/take/compiler/example1/spec/ public interface] for this script. In particular, the class `DiscountPolicy` with the method `getDiscount(Customer)` is generated. 
+
+The `Example` script then does the following: 
+  * reads the script from the rule
+  * compiles the (rule) into Java sources
+  * compiles the sources using the Java compiler API
+  * binds the object references in the script
+  * loads the generated class
+  * queries the class for the discount for a given customer
+  * prints the results and lists the rules used
+
+Note that this mechanism works very much like JavaServerPages (JSPs)! The working directory containing the generated sources and compiled classes is in `/takeWorkingDir`.
+
+{{{
+	public static void main(String[] args) throws Exception {
+		BasicConfigurator.configure();
+		DefaultLocation location = new DefaultLocation();
+		NameGenerator nameGenerator = new DefaultNameGenerator();
+		nz.org.take.compiler.Compiler compiler = new DefaultCompiler();
+		compiler.add(new JalopyCodeFormatter());
+		compiler.setNameGenerator(nameGenerator);
+		BasicConfigurator.configure();			
+		// generate kb
+		ScriptKnowledgeSource ksource = new ScriptKnowledgeSource("src/example/nz/org/take/compiler/example1/crm-example.take");
+		compiler.setLocation(location);
+		compiler.setPackageName("example.nz.org.take.compiler.example1.spec");
+		compiler.setClassName("DiscountPolicy");
+		compiler.compileInterface(ksource.getKnowledgeBase());
+	}
+}}}
+
+
+
+
+
