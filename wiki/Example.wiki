@@ -12,19 +12,19 @@ rule1: if equals(category(customer),goldCustomer) then discount(customer,goldCus
 The utility `GenerateInterface` is used to generate a [http://take.googlecode.com/svn/trunk/take/src/example/nz/org/take/compiler/example1/spec/ public interface] for this script. In particular, the class `DiscountPolicy` with the method `getDiscount(Customer)` is generated. 
 
 The `Example` script then does the following: 
-  * reads the script from the rule
-  * compiles the (rule) into Java sources
-  * compiles the sources using the Java compiler API
-  * binds the object references in the script
-  * loads the generated class
-  * queries the class for the discount for a given customer
-  * prints the results and lists the rules used
+  # reads the script from the rule
+  # compiles the (rule) into Java sources
+  # compiles the sources using the Java compiler API
+  # binds the object references in the script
+  # loads the generated class
+  # queries the class for the discount for a given customer
+  # prints the results and lists the rules used
 
 Note that this mechanism works very much like JavaServerPages (JSPs)! The working directory containing the generated sources and compiled classes is in `/takeWorkingDir`.
 
 {{{
 	// prepare
-	DiscountPolicy KB = null;
+	DiscountPolicy KB = null; // this is the generated interface
 	String script = "src/example/nz/org/take/compiler/example1/crm-example.take"; 
 	BasicConfigurator.configure();
 
@@ -50,6 +50,5 @@ Note that this mechanism works very much like JavaServerPages (JSPs)! The workin
 	}
 	    
 }}}
-
 
 
