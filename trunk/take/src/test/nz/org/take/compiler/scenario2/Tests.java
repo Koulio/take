@@ -25,9 +25,11 @@ import nz.org.take.DerivationRule;
 import nz.org.take.Fact;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.KnowledgeElement;
+import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.DerivationController;
 import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
+import nz.org.take.script.ScriptKnowledgeSource;
 import test.nz.org.take.compiler.scenario2.generated.*;
 import junit.framework.TestCase;
 
@@ -40,7 +42,8 @@ import junit.framework.TestCase;
 
 public class Tests extends TestCase
 {
-	private KnowledgeBase kb = null;
+	private KB kb = null;
+	private KnowledgeBase memoryKB = null;
 	/**
 	 * Construct new test instance	 *
 	 * @param name the test name
@@ -59,7 +62,10 @@ public class Tests extends TestCase
 	 */
 	protected void setUp() throws Exception
 	{
-		kb = GenerateKB.buildKB();
+		memoryKB = new GenerateKB().getKnowledgeBase();
+		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
+		kb = kbm.getKnowledgeBase(KB.class,memoryKB); 
+		
 	}
 
 	/**
@@ -79,8 +85,6 @@ public class Tests extends TestCase
 	public void test1(){
 		
 		System.out.println("starting test case 1");
-		
-		_KB kb = new _KB();
 		nz.org.take.rt.ResultSet<AncestorRelationship> results = kb.isAncestor("r0","r");	
 		assertTrue(results.hasNext());
 		AncestorRelationship next = results.next();
@@ -95,7 +99,6 @@ public class Tests extends TestCase
 		
 		System.out.println("starting test case 2");
 		
-		_KB kb = new _KB();
 		ResultSet<AncestorRelationship> results = kb.isAncestor("r1","r");	
 		assertTrue(results.hasNext());
 		AncestorRelationship next = results.next();
@@ -110,7 +113,6 @@ public class Tests extends TestCase
 		
 		System.out.println("starting test case 3");
 		
-		_KB kb = new _KB();
 		ResultSet<AncestorRelationship> results = kb.isAncestor("r00","r");	
 		assertTrue(results.hasNext());
 		AncestorRelationship next = results.next();
@@ -126,7 +128,6 @@ public class Tests extends TestCase
 		
 		System.out.println("starting test case 4");
 		
-		_KB kb = new _KB();
 		ResultSet<AncestorRelationship> results = kb.isAncestor("r11","r");	
 		assertTrue(results.hasNext());
 		AncestorRelationship next = results.next();
@@ -142,7 +143,6 @@ public class Tests extends TestCase
 		
 		System.out.println("starting test case 5");
 		
-		_KB kb = new _KB();
 		ResultSet<AncestorRelationship> results = kb.isAncestor("r000","r");	
 		assertTrue(results.hasNext());
 		AncestorRelationship next = results.next();
@@ -158,7 +158,7 @@ public class Tests extends TestCase
 	
 	private boolean checkFatherFact(List<DerivationLogEntry> list,String name1,String name2) {
 		for (DerivationLogEntry l:list) {
-			KnowledgeElement e = kb.getElement(l.getName());
+			KnowledgeElement e = memoryKB.getElement(l.getName());
 			if (e instanceof Fact) {
 				Fact f = (Fact)e;
 				boolean ok = "isFather".equals(f.getPredicate().getName());

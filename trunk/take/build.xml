@@ -61,59 +61,26 @@
         optimize="off"
         srcdir="${src.dir}"
         classpathref="build.classpath"
-		excludes="test/**/generated/*.*,test/**/*Tests.*"
 	/>
-	<!-- copy velocity templates (they are loaded by the class loader) -->
-	<copy todir="${build.classes}">
+	<!-- copy velocity templates and test scripts (they are loaded by the class loader) -->
+    <copy todir="${build.classes}">
 	    <fileset dir="${src.dir}">
-	      <include name="**/*.vm"/>
+	      	<include name="**/*.vm"/>
+	    	<include name="**/*.take"/>
 	    </fileset>
 	</copy>
+
 </target>
-<!-- Compiles the tests -->	
-<target name="compiletests" depends="generatetestcode" description="Compile the tests">
-	<javac destdir="${build.classes}" 
-        debug="${debug}" 
-        deprecation="on"
-        optimize="off"
-        srcdir="${src.dir}"
-        classpathref="build.classpath"
-		includes="test/**/*.*,/**/*.*"
-	/>
-</target>
-<!-- Generate tests sources -->
-<target name="generatetestcode" depends="compile" description="Compiles the test cases with the take compiler">
-	<path id="path4generatingtests">
-		<pathelement location="${build.classes}"/>
-	    <fileset dir="lib">
-	        <include name="**/*.jar"/>
-	    </fileset>
-	</path>
-	<java classname="test.nz.org.take.compiler.scenario1.GenerateClasses">
-		<classpath><path refid="path4generatingtests"/></classpath>
-	</java>
-	<java classname="test.nz.org.take.compiler.scenario2.GenerateClasses">
-		<classpath><path refid="path4generatingtests"/></classpath>
-	</java>
-	<java classname="test.nz.org.take.compiler.scenario3.GenerateClasses">
-		<classpath><path refid="path4generatingtests"/></classpath>
-	</java>
-	<java classname="test.nz.org.take.compiler.scenario4.GenerateClasses">
-		<classpath><path refid="path4generatingtests"/></classpath>
-	</java>
-	<java classname="test.nz.org.take.compiler.scenario5.GenerateClasses">
-		<classpath><path refid="path4generatingtests"/></classpath>
-	</java>
-	<java classname="test.nz.org.take.compiler.scenario6.GenerateClasses">
-		<classpath><path refid="path4generatingtests"/></classpath>
-	</java>
-</target>
+
 <!-- Tests the project, using JUnit tests -->
-<target name="tests" depends="compiletests" description="Tests the project">
-	<junit printsummary="yes" haltonfailure="no">
+<target name="tests" depends="compile" description="Tests the project">
+	<!-- fork has to be true, otherwise the generated classes will not be loaded -->
+	<junit printsummary="yes" haltonfailure="no" fork="yes">
 		<classpath>
 			<pathelement location="${build.classes}"/>
-			<pathelement path="${java.class.path}"/>
+	        <fileset dir="lib">
+	            <include name="**/*.jar" />
+	        </fileset>						
 		</classpath>
 		<formatter type="xml"/>
 		<test todir="${report.junit}" name="test.nz.org.take.script.ParserTests"/>

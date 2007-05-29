@@ -18,8 +18,13 @@
 
 package test.nz.org.take.compiler.scenario5;
 
+import javax.script.Bindings;
+import javax.script.SimpleBindings;
+
 import nz.org.take.KnowledgeBase;
+import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.ResultSet;
+import nz.org.take.script.ScriptKnowledgeSource;
 import test.nz.org.take.compiler.scenario5.generated.*;
 import junit.framework.TestCase;
 
@@ -32,8 +37,7 @@ import junit.framework.TestCase;
 
 public class Tests extends TestCase
 {
-
-	private KnowledgeBase kb = null;
+	private KB kb= null;
 	/**
 	 * Construct new test instance
 	 * @param name the test name
@@ -53,8 +57,15 @@ public class Tests extends TestCase
 	protected void setUp() throws Exception
 	{
 		super.setUp();
-		Constants.goldCustomer = new CustomerCategory("gold");
-		Constants.goldCustomerDiscount = new Discount(42,true);
+		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
+		Bindings bindings = new SimpleBindings();
+		bindings.put("goldCustomer", new CustomerCategory("gold"));
+		bindings.put("goldCustomerDiscount",new Discount(42,true));
+		kb = kbm.getKnowledgeBase(
+				KB.class, 
+				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/scenario5/rules5.take")),
+				bindings
+				); 
 	}
 
 	/**
@@ -74,7 +85,7 @@ public class Tests extends TestCase
 	public void test1(){
 		
 		System.out.println("starting test case 1");		
-		_KB kb = new _KB();
+
 		Customer c = new Customer("John");
 		c.setCategory(new CustomerCategory("gold"));		
 		ResultSet<discount> rs = kb.getDiscount(c);

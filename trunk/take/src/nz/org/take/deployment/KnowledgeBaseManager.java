@@ -149,29 +149,32 @@ public class KnowledgeBaseManager<I> {
 
 	private void setupBindings(Bindings bindings, String constantClassName,ClassLoader classloader) throws TakeException{
 		Class constantClass = null;
-		try {
-			constantClass = classloader.loadClass(constantClassName);
-		}
-		catch (Exception x) {
-			throw new DeploymentException("Cannot load generated constant class " + constantClassName,x);
-		}
-		for (Entry<String,Object> binding:bindings.entrySet()) {
+		if (bindings.size()>0) {			
 			try {
-				Field field = constantClass.getField(binding.getKey());
-				field.set(null,binding.getValue()); // fields are static 
-			} catch (Exception x) {
-				throw new DeploymentException("Cannot set field " + binding.getKey() + " to value " + binding.getValue()+ " in generated constant class " + constantClassName,x);
+				constantClass = classloader.loadClass(constantClassName);
 			}
-			
+			catch (Exception x) {
+				throw new DeploymentException("Cannot load generated constant class " + constantClassName,x);
+			}
+			for (Entry<String,Object> binding:bindings.entrySet()) {
+				try {
+					Field field = constantClass.getField(binding.getKey());
+					field.set(null,binding.getValue()); // fields are static 
+				} catch (Exception x) {
+					throw new DeploymentException("Cannot set field " + binding.getKey() + " to value " + binding.getValue()+ " in generated constant class " + constantClassName,x);
+				}
+				
+			}
 		}
 		
-		if (this.checkBindingsForCompleteness) {
+		if (this.checkBindingsForCompleteness && constantClass!=null) {
 			for (Field field:constantClass.getFields()) {
 				if (!bindings.containsKey(field.getName())) {
 					throw new DeploymentException("There is no binding for field " + field.getName() + " in class " + constantClass);
 				}
 			}
 		}
+
 	}
 
 	public String getWorkingDirRoot() {

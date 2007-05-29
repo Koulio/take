@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 <A href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
+ * Copyright (C) 2006 <A href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,39 +17,45 @@
  */
 
 
-package test.nz.org.take.compiler.scenario4;
+package test.nz.org.take.compiler.scenario1;
 
-import org.apache.log4j.BasicConfigurator;
 import nz.org.take.KnowledgeBase;
-import nz.org.take.compiler.NameGenerator;
 import nz.org.take.compiler.reference.DefaultCompiler;
-import nz.org.take.compiler.util.DefaultLocation;
-import nz.org.take.compiler.util.DefaultNameGenerator;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
+import nz.org.take.script.ScriptKnowledgeSource;
+import nz.org.take.script.ScriptException;
+import org.apache.log4j.BasicConfigurator;
 
 
 /**
- * Script to generate classes for the test kb.
+ * Script to generate the interface for the test kb.
+ * @see KBFactory
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class GenerateClasses {
-		
+public class GenerateInterfaces {
+
 	/**
-	 * Generate the sources for the example.
+	 * Generate the interface for the example.
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
 		BasicConfigurator.configure();
-		DefaultLocation location = new DefaultLocation();
-		NameGenerator nameGenerator = new DefaultNameGenerator();
 		nz.org.take.compiler.Compiler compiler = new DefaultCompiler();
 		compiler.add(new JalopyCodeFormatter());
-		compiler.setNameGenerator(nameGenerator);
-		KnowledgeBase kb = GenerateKB.buildKB();
-		compiler.setLocation(location);
-		compiler.setPackageName("test.nz.org.take.compiler.scenario4.generated");
-		compiler.setClassName("_KB");
-		compiler.compile(kb);
+		
+		// generate kb
+		KnowledgeBase kb = null;
+		try {
+			ScriptKnowledgeSource KSrc = new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/scenario1/rules1.take"));
+			kb = KSrc.getKnowledgeBase();
+		} catch (ScriptException e) {
+			e.printStackTrace();
+		}
+		compiler.setPackageName("test.nz.org.take.compiler.scenario1.generated");
+		compiler.setClassName("KB");
+		compiler.compileInterface(kb);
+
 	}
+
 }
