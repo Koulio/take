@@ -23,6 +23,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.*;
 import java.util.*;
@@ -42,11 +44,18 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 	private static Parser parser =null;
 	public Logger LOGGER = Logger.getLogger(ScriptKnowledgeSource.class);
 	private Reader reader = null;
+	private InputStream in = null;
 	private KnowledgeBase kb = null;
 	
 	public ScriptKnowledgeSource (Reader reader) {
 		super();
 		this.reader = reader;
+	}	
+	
+	public ScriptKnowledgeSource (InputStream in) {
+		super();
+		this.in = in;
+		this.reader = new InputStreamReader(in);
 	}	
 	
 	public ScriptKnowledgeSource (File file) throws FileNotFoundException {
@@ -108,6 +117,12 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 				input.close();
 			}
 			catch (IOException x) {}
+			if (in!=null){
+				try {
+					in.close();
+				}
+				catch (IOException x) {}
+			}
 		} catch (Exception e) {
 			throw new ScriptSyntaxException("Cannot parse script",e);
 		}
@@ -292,6 +307,16 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		p.setTerms(terms);
 		return p;
 	}
+	// try to find the comparison predicate
+	private Comparison getComparison(String name) throws ScriptException {
+		if ( "<".equals(name)) return Comparison.LESS_THAN;
+		else if ( "<=".equals(name)) return Comparison.LESS_THAN_OR_EQUALS;
+		else if ( ">".equals(name)) return Comparison.GREATER_THAN;
+		else if ( ">=".equals(name)) return Comparison.GREATER_THAN_OR_EQUALS;
+		else if ( "==".equals(name)) return Comparison.EQUALS;
+		else if ( "!=".equals(name)) return Comparison.NOT_EQUALS;
+		throw new ScriptException("Ilegal name for a comparison: " + name);
+	}
 	// try to find a method for the term (types) and the name
 	// this is used to decide the predicate type
 	private Method getMethod(String name,nz.org.take.Term[] terms) throws ScriptException  {		
@@ -346,6 +371,10 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		Predicate predicate = null;
 		boolean negated = c.isNegated();
 		String name = c.getPredicate();
+		
+		if (c.isPrimitiveComparison())
+			return this.getComparison(name);
+		
 		Method m = getMethod(name,terms);
 		PropertyDescriptor property = null;
 		if (m==null)

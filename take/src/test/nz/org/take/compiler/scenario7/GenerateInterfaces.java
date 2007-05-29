@@ -17,27 +17,44 @@
  */
 
 
-package test.nz.org.take.compiler.scenario3;
+package test.nz.org.take.compiler.scenario7;
 
 import org.apache.log4j.BasicConfigurator;
 import nz.org.take.KnowledgeBase;
+import nz.org.take.compiler.reference.DefaultCompiler;
+import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
+import nz.org.take.script.ScriptException;
 import nz.org.take.script.ScriptKnowledgeSource;
 
+
 /**
- * Script to generate a KB.
+ * Script to generate the interface for the test kb.
+ * @see KBFactory
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class GenerateKB {
+public class GenerateInterfaces {
+
+	/**
+	 * Generate the interface for the example.
+	 * @param args
+	 */
+	public static void main(String[] args) throws Exception {
+		BasicConfigurator.configure();
+		nz.org.take.compiler.Compiler compiler = new DefaultCompiler();
+		compiler.add(new JalopyCodeFormatter());
 		
-		/**
-		 * Generate the sources for the example.
-		 * @param args
-		 */
-		public static KnowledgeBase buildKB() throws Exception {
-			BasicConfigurator.configure();			
-			// generate kb
-			ScriptKnowledgeSource kSrc = new ScriptKnowledgeSource("src/test/nz/org/take/compiler/scenario3/rules3.take");
-			return kSrc.getKnowledgeBase();
+		// generate kb
+		KnowledgeBase kb = null;
+		try {
+			ScriptKnowledgeSource KSrc = new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/scenario7/rules7.take"));
+			kb = KSrc.getKnowledgeBase();
+		} catch (ScriptException e) {
+			e.printStackTrace();
 		}
+		compiler.setPackageName("test.nz.org.take.compiler.scenario7.generated");
+		compiler.setClassName("KB");
+		compiler.compileInterface(kb);
+
+	}
 }

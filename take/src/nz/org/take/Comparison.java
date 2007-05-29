@@ -25,9 +25,27 @@ package nz.org.take;
 
 
 public class Comparison extends AbstractPredicate {
+	
+	// constant instances
+	public static Comparison LESS_THAN = new Comparison("<");
+	public static Comparison LESS_THAN_OR_EQUALS = new Comparison("<=");
+	public static Comparison GREATER_THAN = new Comparison(">");
+	public static Comparison GREATER_THAN_OR_EQUALS = new Comparison(">=");
+	public static Comparison EQUALS = new Comparison("==");
+	public static Comparison NOT_EQUALS = new Comparison("!=");
+	
+	
+	public Comparison(String name) {
+		super();
+		this.name = name;
+	}
+	
+	
 	private Class[] types = new Class[]{Double.class,Double.class};
 	private String name = null;
 	
+
+
 	public String getName() {
 		return name;
 	}
