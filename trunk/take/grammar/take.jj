@@ -38,6 +38,7 @@ TOKEN:{<COMMENT: "//"(["a"-"z","A"-"Z","_","-","?","#","*","%","_","/",",","\\",
 TOKEN:{<STRING_LITERAL:"\"" (["a"-"z","A"-"Z","_","-","?","#","*","%","_","/",",","\\",";","!","@","0"-"9"," "] )* "\"">}
 TOKEN:{<WHITESPACE: (" ")+>}
 TOKEN:{<SEMICOLON:";">}
+TOKEN:{<COMPARISON:"<="|">="|"<"|">"|"=="|"!=">}
 
 
 void parse(Script script):
@@ -189,6 +190,19 @@ void condition(Rule r):
 void buildCondition(Condition c):
 {}
 {
+	LOOKAHEAD(buildCondition2(c))
+	buildCondition2(c)
+	|
+	buildCondition1(c)
+}
+void buildCondition1(Condition c):
+{}
+{
+	term(c)comparison(c)term(c)
+}
+void buildCondition2(Condition c):
+{}
+{
 	[negation(c)]predicate(c)"("terms(c)")"
 }
 void negation(Condition c):
@@ -209,7 +223,7 @@ void term(TermContainer c):
 {}
 {
 	LOOKAHEAD(3)
-	complexTerm(c) | variableTerm(c) | stringLiteral(c) 
+	complexTerm(c) | variableTerm(c) | stringLiteral(c) | intLiteral(c) | doubleLiteral(c)
 }
 void variableTerm(TermContainer c) :
 {
@@ -231,6 +245,32 @@ void stringLiteral(TermContainer c) :
 	t = <STRING_LITERAL>
 	{v.setValue(t.image.substring(1,t.image.length()-1));}
 	{v.setType("java.lang.String");}
+	{v.setPosition(t.beginLine,t.beginColumn);}
+	{c.add(v);}
+	
+}
+void intLiteral(TermContainer c) :
+{
+	Token t;
+}
+{
+	{ConstantTerm v = new ConstantTerm();}	
+	t = <INTEGER_NUMBER>
+	{v.setValue(t.image);}
+	{v.setType("java.lang.Integer");}
+	{v.setPosition(t.beginLine,t.beginColumn);}
+	{c.add(v);}
+	
+}
+void doubleLiteral(TermContainer c) :
+{
+	Token t;
+}
+{
+	{ConstantTerm v = new ConstantTerm();}	
+	t = <DECIMAL_NUMBER>
+	{v.setValue(t.image);}
+	{v.setType("java.lang.Double");}
 	{v.setPosition(t.beginLine,t.beginColumn);}
 	{c.add(v);}
 	
@@ -260,4 +300,15 @@ void predicate(Condition c) :
 	t = <NAME>
 	{c.setPosition(t.beginLine,t.beginColumn);}
 	{c.setPredicate(t.image);}	
+	{c.setPrimitiveComparison(false);}
+}
+void comparison(Condition c) :
+{
+	Token t;
+}
+{	
+	t = <COMPARISON>
+	{c.setPosition(t.beginLine,t.beginColumn);}
+	{c.setPredicate(t.image);}	
+	{c.setPrimitiveComparison(true);}
 }
