@@ -20,9 +20,13 @@ package test.nz.org.take.compiler.scenario6;
 
 import java.util.Iterator;
 
+import javax.script.Bindings;
+import javax.script.SimpleBindings;
 import test.nz.org.take.compiler.scenario6.generated.*;
+import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.DerivationController;
 import nz.org.take.rt.ResultSet;
+import nz.org.take.script.ScriptKnowledgeSource;
 import junit.framework.TestCase;
 
 /**
@@ -36,6 +40,9 @@ import junit.framework.TestCase;
 public class Tests extends TestCase
 {
 
+	static String SCRIPT_URL = "/test/nz/org/take/compiler/scenario6/rules6.take";
+	private KB kb= null;
+	
 	/**
 	 * Construct new test instance
 	 *
@@ -56,15 +63,23 @@ public class Tests extends TestCase
 	protected void setUp() throws Exception
 	{
 		super.setUp();
-		Constants.Frank = new Person("Frank");
-		Constants.Guenther = new Person("Guenther");
-		Constants.Jens = new Person("Jens");
-		Constants.Klaus = new Person("Klaus");
-		Constants.Lutz = new Person("Lutz");
-		Constants.Max = new Person("Max");
-		Constants.Otto = new Person("Otto");
-		Constants.Ralf = new Person("Ralf");
-		Constants.Werner = new Person("Werner");
+		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
+		Bindings bindings = new SimpleBindings();
+		bindings.put("Frank",new Person("Frank"));
+		bindings.put("Guenther",new Person("Guenther"));
+		bindings.put("Jens",new Person("Jens"));
+		bindings.put("Klaus",new Person("Klaus"));
+		bindings.put("Lutz",new Person("Lutz"));
+		bindings.put("Max",new Person("Max"));
+		bindings.put("Otto",new Person("Otto"));
+		bindings.put("Ralf",new Person("Ralf"));
+		bindings.put("Werner",new Person("Werner"));
+		kb = kbm.getKnowledgeBase(
+				KB.class, 
+				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/scenario6/rules6.take")),
+				bindings
+				); 
+
 	}
 
 	/**
@@ -84,7 +99,6 @@ public class Tests extends TestCase
 	 * Test 1.
 	 */
 	public void test1(){
-		_KB kb = new _KB();		
 		Iterator<IsFatherOf> results = kb.getFather(new Person("Max"));	
 		assertTrue(results.hasNext());
 		IsFatherOf r = results.next();
@@ -96,7 +110,6 @@ public class Tests extends TestCase
 	 * Test 2.
 	 */
 	public void test2(){
-		_KB kb = new _KB();
 		ResultSet<IsGrandfatherOf> results = kb.getGrandfather(new Person("Max"));	
 		assertTrue(results.hasNext());
 		IsGrandfatherOf r = results.next();
@@ -112,7 +125,6 @@ public class Tests extends TestCase
 	 * Test 3.
 	 */
 	public void test3(){
-		_KB kb = new _KB();
 		Iterator<IsFatherOf> results = kb.getSons(new Person("Jens"));	
 		assertTrue(results.hasNext());
 		IsFatherOf r = results.next();
@@ -126,7 +138,6 @@ public class Tests extends TestCase
 	 * Test 4.
 	 */
 	public void test4(){
-		_KB kb = new _KB();
 		Iterator<IsFatherOf> results = kb.getSons(new Person("Otto"));	
 		assertTrue(results.hasNext());
 		assertEquals(new Person("Guenther"),results.next().son);
@@ -140,7 +151,6 @@ public class Tests extends TestCase
 	 * Test 4.
 	 */
 	public void test5(){
-		_KB kb = new _KB();
 		Iterator<IsGrandfatherOf> results = kb.getGrandchildren(new Person("Otto"));	
 		assertTrue(results.hasNext());
 		while(results.hasNext()) {

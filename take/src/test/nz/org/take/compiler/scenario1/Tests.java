@@ -19,9 +19,18 @@
 package test.nz.org.take.compiler.scenario1;
 
 import java.util.Iterator;
+
+import javax.script.Bindings;
+import javax.script.SimpleBindings;
+
+import example.nz.org.take.compiler.example1.CustomerCategory;
+import example.nz.org.take.compiler.example1.Discount;
+import example.nz.org.take.compiler.example1.spec.DiscountPolicy;
 import test.nz.org.take.compiler.scenario1.generated.*;
+import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.DerivationController;
 import nz.org.take.rt.ResultSet;
+import nz.org.take.script.ScriptKnowledgeSource;
 import junit.framework.TestCase;
 
 /**
@@ -34,7 +43,7 @@ import junit.framework.TestCase;
 
 public class Tests extends TestCase
 {
-
+	private KB kb= null;
 	/**
 	 * Construct new test instance
 	 *
@@ -55,6 +64,11 @@ public class Tests extends TestCase
 	protected void setUp() throws Exception
 	{
 		super.setUp();
+		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
+		kb = kbm.getKnowledgeBase(
+				KB.class, 
+				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/scenario1/rules1.take"))
+				); 
 	}
 
 	/**
@@ -75,8 +89,6 @@ public class Tests extends TestCase
 	 * Test 1.
 	 */
 	public void test1(){
-		_KB kb = new _KB();
-		
 		Iterator<IsFatherOf> results = kb.getFather("Max");	
 		assertTrue(results.hasNext());
 		IsFatherOf r = results.next();
@@ -88,7 +100,6 @@ public class Tests extends TestCase
 	 * Test 2.
 	 */
 	public void test2(){
-		_KB kb = new _KB();
 		ResultSet<IsGrandfatherOf> results = kb.getGrandfather("Max");	
 		assertTrue(results.hasNext());
 		IsGrandfatherOf r = results.next();
@@ -104,7 +115,6 @@ public class Tests extends TestCase
 	 * Test 3.
 	 */
 	public void test3(){
-		_KB kb = new _KB();
 		Iterator<IsFatherOf> results = kb.getSons("Jens");	
 		assertTrue(results.hasNext());
 		IsFatherOf r = results.next();
@@ -118,7 +128,6 @@ public class Tests extends TestCase
 	 * Test 4.
 	 */
 	public void test4(){
-		_KB kb = new _KB();
 		Iterator<IsFatherOf> results = kb.getSons("Otto");	
 		assertTrue(results.hasNext());
 		assertEquals("Guenther",results.next().son);
@@ -132,7 +141,6 @@ public class Tests extends TestCase
 	 * Test 4.
 	 */
 	public void test5(){
-		_KB kb = new _KB();
 		Iterator<IsGrandfatherOf> results = kb.getGrandchildren("Otto");	
 		assertTrue(results.hasNext());
 		while(results.hasNext()) {

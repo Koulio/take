@@ -23,7 +23,9 @@ import java.util.*;
 import nz.org.take.DerivationRule;
 import nz.org.take.Fact;
 import nz.org.take.KnowledgeBase;
+import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.ResultSet;
+import nz.org.take.script.ScriptKnowledgeSource;
 import test.nz.org.take.compiler.scenario4.generated.*;
 import junit.framework.TestCase;
 
@@ -36,8 +38,7 @@ import junit.framework.TestCase;
 
 public class Tests extends TestCase
 {
-
-	private KnowledgeBase kb = null;
+	private KB kb= null;
 	/**
 	 * Construct new test instance
 	 * @param name the test name
@@ -57,7 +58,11 @@ public class Tests extends TestCase
 	protected void setUp() throws Exception
 	{
 		super.setUp();
-		kb = GenerateKB.buildKB();
+		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
+		kb = kbm.getKnowledgeBase(
+				KB.class, 
+				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/scenario4/rules4.take"))
+				); 
 	}
 
 	/**
@@ -78,7 +83,6 @@ public class Tests extends TestCase
 		
 		System.out.println("starting test case 1");
 		
-		_KB kb = new _KB();
 		Student s1 = new Student("John");
 		Student s2 = new Student("Tom");
 		Course c1 = new Course("comp101");
@@ -103,8 +107,7 @@ public class Tests extends TestCase
 	public void test2(){
 		
 		System.out.println("starting test case 2");
-		
-		_KB kb = new _KB();
+
 		Student s1 = new Student("John");
 		Student s2 = new Student("Tom");
 		Course c1 = new Course("comp101");
@@ -132,7 +135,6 @@ public class Tests extends TestCase
 		
 		System.out.println("starting test case 2");
 		
-		_KB kb = new _KB();
 		Student s1 = new Student("John");
 		Student s2 = new Student("Tom");
 		Course c1 = new Course("comp101");
@@ -163,33 +165,5 @@ public class Tests extends TestCase
 		assertTrue(!result.hasNext());
 	}
 
-	private int countRules(List<String> x) {
-		Set set = new HashSet(); // remove duplicates
-		set.addAll(x);
-		int count = 0;
-		for (Object e:set) {
-			String r = e.toString();
-			if (isRule(r))
-				count = count+1;
-		}
-		return count;
-	} 
-	private int countFacts(List<String> x) {
-		Set set = new HashSet(); // remove duplicates
-		set.addAll(x);
-		int count = 0;
-		for (Object e:set) {
-			String r = e.toString();
-			if (isFact(r))
-				count = count+1;
-		}
-		return count;
-	} 
-	private boolean isRule(String id) {
-		return kb.getElement(id) instanceof DerivationRule;
-	}
-	private boolean isFact(String id) {
-		return kb.getElement(id) instanceof Fact;
-	}
 }
 	

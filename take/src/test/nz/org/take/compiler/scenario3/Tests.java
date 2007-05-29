@@ -19,17 +19,12 @@
 package test.nz.org.take.compiler.scenario3;
 
 import java.util.*;
-
-import nz.org.take.DerivationRule;
-import nz.org.take.Fact;
-import nz.org.take.KnowledgeBase;
+import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.DerivationController;
 import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
-import test.nz.org.take.compiler.scenario2.GenerateKB;
-import test.nz.org.take.compiler.scenario3.generated.IsBrotherRelationship;
-import test.nz.org.take.compiler.scenario3.generated.IsBrotherRelationship2;
-import test.nz.org.take.compiler.scenario3.generated._KB;
+import nz.org.take.script.ScriptKnowledgeSource;
+import test.nz.org.take.compiler.scenario3.generated.*;
 import junit.framework.TestCase;
 
 /**
@@ -41,8 +36,8 @@ import junit.framework.TestCase;
 
 public class Tests extends TestCase
 {
-
-	private KnowledgeBase kb = null;
+	private KB kb= null;
+	
 	/**
 	 * Construct new test instance
 	 * @param name the test name
@@ -62,7 +57,11 @@ public class Tests extends TestCase
 	protected void setUp() throws Exception
 	{
 		super.setUp();
-		kb = GenerateKB.buildKB();
+		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
+		kb = kbm.getKnowledgeBase(
+				KB.class, 
+				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/scenario3/rules3.take"))
+				); 
 	}
 
 	/**
@@ -82,8 +81,7 @@ public class Tests extends TestCase
 	public void test1(){
 		
 		System.out.println("starting test case 1");
-		
-		_KB kb = new _KB();
+
 		Person p1 = new Person("Klaus");
 		Person p2 = new Person("Lutz");
 		ResultSet<IsBrotherRelationship> results = kb.isBrother(p1,p2);	
@@ -96,7 +94,6 @@ public class Tests extends TestCase
 		
 		System.out.println("starting test case 2");
 		
-		_KB kb = new _KB();
 		Person p1 = new Person("Klaus");
 		Person p2 = new Person("Lutz");
 		ResultSet<IsBrotherRelationship2> results = kb.isBrother2(p1,p2);	

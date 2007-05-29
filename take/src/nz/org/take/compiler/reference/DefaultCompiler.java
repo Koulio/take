@@ -49,7 +49,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	private int bindingClassCounter = 1;
 	private Map<String,String> methodNames4QueriesFromAnnotations = new HashMap<String,String>();
 	private List<CompilerPlugin> plugins = new ArrayList<CompilerPlugin>();
-	private Location location = null;
+	private Location location = new DefaultLocation();
 	private String packageName = null;
 	private String className = "_KB";
 	private String[] interfaceNames = null;

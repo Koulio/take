@@ -19,21 +19,21 @@
 
 package test.nz.org.take.compiler.scenario2;
 
-import java.io.FileNotFoundException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.log4j.BasicConfigurator;
 import nz.org.take.KnowledgeBase;
+import nz.org.take.KnowledgeSource;
+import nz.org.take.TakeException;
 import nz.org.take.script.ScriptException;
 import nz.org.take.script.ScriptKnowledgeSource;
 
 /**
- * Script to generate a KB.
+ * Script to generate a memory KB.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class GenerateKB {
+public class GenerateKB implements KnowledgeSource {
 	public static final String ROOT = "r";
 	public static final int DEPTH=3;
 		
@@ -41,9 +41,7 @@ public class GenerateKB {
 		 * Generate the sources for the example.
 		 * @param args
 		 */
-		public static KnowledgeBase buildKB() throws Exception {
-			BasicConfigurator.configure();			
-			// generate kb
+		public KnowledgeBase getKnowledgeBase() throws TakeException {
 			// generate kb
 			KnowledgeBase kb = null;
 			try {
@@ -57,7 +55,7 @@ public class GenerateKB {
 		/**
 		 * Generate the script. 
 		 */
-		private static String buildScript() {
+		private String buildScript() {
 			StringBuffer b = new StringBuffer(); 
 			
 			appendLine(b,"// script for test scenario 1");
@@ -105,7 +103,7 @@ public class GenerateKB {
 			
 			return b.toString();
 		}
-		private static void appendLine(StringBuffer b,String...strings ){
+		private void appendLine(StringBuffer b,String...strings ){
 			for (String s:strings) {
 				b.append(s);
 				System.out.print(s);
@@ -113,4 +111,6 @@ public class GenerateKB {
 			b.append('\n');
 			System.out.println();
 		}
+
+
 }
