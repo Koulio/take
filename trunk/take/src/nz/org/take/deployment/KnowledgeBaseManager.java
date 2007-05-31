@@ -22,6 +22,8 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -52,6 +54,8 @@ import nz.org.take.compiler.util.DefaultNameGenerator;
 
 public class KnowledgeBaseManager<I> {
 	
+	// data format used in generated class names
+	private DateFormat dateFormat = new SimpleDateFormat("yyMMdd_HHmmss");
 	// the folder where files are stored
 	private String workingDirRoot = "takeWorkingDir/";
 	// the name of the kb class
@@ -94,9 +98,7 @@ public class KnowledgeBaseManager<I> {
 		checkFolder(binFolder);
 		
 		Location location = new DefaultLocation(srcFolder,binFolder);
-		Date now = new Date();
-		
-		String version = "impl_v"+now.getYear()+(now.getMonth()+1)+now.getDate()+"_"+now.getHours()+now.getMinutes()+now.getSeconds();
+		String version = "impl_v"+dateFormat.format(new Date());
 		
 		String packageName = spec.getPackage().getName() +  '.'+version;
 		nz.org.take.compiler.Compiler kbCompiler = new DefaultCompiler();
