@@ -307,16 +307,6 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		p.setTerms(terms);
 		return p;
 	}
-	// try to find the comparison predicate
-	private Comparison getComparison(String name) throws ScriptException {
-		if ( "<".equals(name)) return Comparison.LESS_THAN;
-		else if ( "<=".equals(name)) return Comparison.LESS_THAN_OR_EQUALS;
-		else if ( ">".equals(name)) return Comparison.GREATER_THAN;
-		else if ( ">=".equals(name)) return Comparison.GREATER_THAN_OR_EQUALS;
-		else if ( "==".equals(name)) return Comparison.EQUALS;
-		else if ( "!=".equals(name)) return Comparison.NOT_EQUALS;
-		throw new ScriptException("Ilegal name for a comparison: " + name);
-	}
 	// try to find a method for the term (types) and the name
 	// this is used to decide the predicate type
 	private Method getMethod(String name,nz.org.take.Term[] terms) throws ScriptException  {		
@@ -371,9 +361,21 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		Predicate predicate = null;
 		boolean negated = c.isNegated();
 		String name = c.getPredicate();
-		
-		if (c.isPrimitiveComparison())
-			return this.getComparison(name);
+
+		if (c.isPrimitiveComparison()) {
+			try {
+				Comparison comp = new Comparison(name);
+				Class[] types = new Class[2];
+				types[0] = terms[0].getType();
+				types[1] = terms[1].getType();
+				// TODO validate numerical types
+				comp.setTypes(types);
+				return comp;
+			}
+			catch (TakeException x) {
+				throw new ScriptException("Cannot build comparison for predicate symbol " + name,x);
+			}
+		}
 		
 		Method m = getMethod(name,terms);
 		PropertyDescriptor property = null;

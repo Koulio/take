@@ -18,6 +18,8 @@
 
 package nz.org.take;
 
+import nz.org.take.compiler.CompilerException;
+
 /**
  * Constant terms. Basically those are just aribtrary (wrapped) objects.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
@@ -73,8 +75,9 @@ public class Constant extends AbstractAnnotatable implements Term {
 	 * @return
 	 */
 	public boolean isLiteral() {
-		// TODO support for numeric types
-		return this.object!=null && getType()==String.class;
+		Class type = getType();
+		if (this.object==null) return false; // proxy
+		else return (type==String.class)  || type.isPrimitive() || java.lang.Number.class.isAssignableFrom(type);
 	}
 	public String toString() {
 		StringBuffer b = new StringBuffer();
@@ -88,5 +91,15 @@ public class Constant extends AbstractAnnotatable implements Term {
 	public void accept(KnowledgeBaseVisitor visitor) {
 		visitor.visit(this);
 		visitor.endVisit(this);
+	}
+	// return a Java literal prepresenting thsi object, or null if this isn't possible
+	public String getLiteral() {
+		if (object!=null) {
+			if (object instanceof String)
+				return "\"" + object + "\"";
+			else if (object instanceof Number || object instanceof Boolean || object.getClass().isPrimitive())
+				return String.valueOf(object);
+		}
+		return null;
 	}
 }

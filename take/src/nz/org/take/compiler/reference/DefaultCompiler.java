@@ -64,6 +64,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		super();
 		this.install(new CompilerPlugin4JPredicates(this));
 		this.install(new CompilerPlugin4PropertyPredicates(this));
+		this.install(new CompilerPlugin4Comparisons(this));
 	}
 
 	/**
@@ -527,7 +528,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		out.println("};"); // end inner class
 		out.print("return "); // end inner class
 		out.println(RESULT);
-		out.println(";} // blabla");
+		out.println(";}");
 		
 		// generate a method for each clause set
 		for (int i = 0; i < css.size(); i++) {
@@ -727,7 +728,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			// bind all constant terms
 			for (Term t:prereq.getTerms()) {
 				if (t instanceof Constant) {
-					bindings.put(t,"Constants."+((Constant)t).getRef());
+					bindings.put(t,getRef(this.getNameGenerator().getConstantClassName(),(Constant)t));
 				}
 			}
 
