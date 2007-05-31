@@ -19,30 +19,11 @@
 
 package example.nz.org.take.compiler.example1;
 
-import java.io.FileReader;
-
+import java.io.InputStream;
 import javax.script.Bindings;
 import javax.script.SimpleBindings;
-import javax.tools.JavaCompiler;
-import javax.tools.JavaFileObject;
-import javax.tools.StandardJavaFileManager;
-import javax.tools.ToolProvider;
 import org.apache.log4j.BasicConfigurator;
-
-import example.nz.org.take.compiler.example1.spec.CustomerDiscount;
-import example.nz.org.take.compiler.example1.spec.DiscountPolicy;
-
-import java.io.File;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.List;
-import nz.org.take.KnowledgeBase;
-import nz.org.take.compiler.Location;
-import nz.org.take.compiler.NameGenerator;
-import nz.org.take.compiler.reference.DefaultCompiler;
-import nz.org.take.compiler.util.DefaultLocation;
-import nz.org.take.compiler.util.DefaultNameGenerator;
+import example.nz.org.take.compiler.example1.spec.*;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
@@ -72,9 +53,10 @@ public class Example {
 		Bindings bindings = new SimpleBindings();		
 		bindings.put("goldCustomer",new CustomerCategory("gold"));
 		bindings.put("goldCustomerDiscount",new Discount(20,true));
+		InputStream scriptSource = GenerateInterface.class.getResourceAsStream("/example/nz/org/take/compiler/example1/crm-example.take");
 		KB = kbm.getKnowledgeBase(
 				DiscountPolicy.class, 
-				new ScriptKnowledgeSource("exampledata/example1/crm-example.take"),
+				new ScriptKnowledgeSource(scriptSource),
 				bindings);
 
 		
@@ -92,6 +74,11 @@ public class Example {
 	    	System.out.println(e.getName());
 	    }
 	    
+	    // query again (first query is slow as kb has to be compiled, like in JSPs), measure time
+	    long before = System.currentTimeMillis();
+	    result =  KB.getDiscount(john);
+	    long after = System.currentTimeMillis();
+	    System.out.println("Second query took " + (after-before) + "ms");
 	    
 	    System.out.println("done");
 	}
