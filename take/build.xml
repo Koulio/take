@@ -90,6 +90,7 @@
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario4.Tests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario5.Tests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario6.Tests"/>
+		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario7.Tests"/>
 	</junit>
 	<!-- report -->
 	<junitreport todir="${report.junit}">
@@ -161,8 +162,7 @@
 	      <exclude name="javax.*"/>
 	  	  <exclude name="test.*"/>
 		  <classespath>
-			<pathelement location="${build.classes}"/>
-			
+			<pathelement location="${build.classes}"/>			
 		  </classespath>
 	  	<classpath location="${build.classes}" />
 	  </jdepend>
@@ -176,5 +176,9 @@
 <target name="clean">
 	<delete dir = "${classes}"/>
 	<delete dir = "${build}"/>
+</target>
+<!-- clean the working dir -->	
+<target name="cleanWorkingDir">
+	<delete dir = "takeWorkingDir"/>
 </target>
 </project>
