@@ -97,16 +97,47 @@ public abstract class CompilerUtils {
 		Slot s = new Slot();
 		s.position = i;
 		s.name = p.getSlotNames()[i];
-		s.type = p.getSlotTypes()[i].getName();
+		s.type = getTypeName(p.getSlotTypes()[i]);
 		s.accessor = this.getNameGenerator().getAccessorNameForSlot(p, i);
 		s.mutator = this.getNameGenerator().getMutatorNameForSlot(p, i);
 		s.var = this.getNameGenerator().getVariableNameForSlot(p, i);
 		return s;
 	}
+	
+	/**
+	 * Get the type name for a class.
+	 * 
+	 */
+	protected String getTypeName(Class clazz) {
+		if (clazz==Boolean.class)
+			return Boolean.TYPE.getName();
+		
+	 	else if (clazz==Character.class)
+	 		return Character.TYPE.getName();
+		
+	 	else if (clazz==Byte.class)
+	 		return Byte.TYPE.getName();
+		
+	 	else if (clazz==Short.class)
+	 		return Short.TYPE.getName();
+		
+		else if (clazz==Integer.class)
+			return Integer.TYPE.getName();
+		
+		else if (clazz==Long.class)
+			return Long.TYPE.getName();
+		
+		else if (clazz==Float.class)
+			return Float.TYPE.getName();
+		
+		else if (clazz==Double.class)
+			return Byte.TYPE.getName();
+		
+		else return clazz.getName();
+	}
 
 	/**
 	 * Build the input slots for a query.
-	 * 
 	 * @param q
 	 * @return an array of slots
 	 */

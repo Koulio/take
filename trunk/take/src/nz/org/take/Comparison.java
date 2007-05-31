@@ -36,13 +36,20 @@ public class Comparison extends AbstractPredicate {
 	public Comparison(String symbol) throws TakeException {
 		super();
 		this.symbol = symbol;
-		if ( "<".equals(symbol)) name = "less_than";
-		else if ( "<=".equals(symbol)) name = "less_than_or_equal";
-		else if ( ">".equals(symbol)) name = "greater_than";
-		else if ( ">=".equals(symbol)) name = "greater_than_or_equal";
-		else if ( "==".equals(symbol)) name = "equal";
-		else if ( "!=".equals(symbol)) name = "not_equal";
-		else throw new TakeException("This comparison operator is unknown: " + symbol);
+		String n = createName();
+		if (n!=null)
+			name = n;
+		else 
+			throw new TakeException("This comparison operator is unknown: " + symbol);
+	}
+	private String createName() {
+		if ( "<".equals(symbol)) return "less_than";
+		else if ( "<=".equals(symbol)) return "less_than_or_equal";
+		else if ( ">".equals(symbol)) return "greater_than";
+		else if ( ">=".equals(symbol)) return "greater_than_or_equal";
+		else if ( "==".equals(symbol)) return "equal";
+		else if ( "!=".equals(symbol)) return "not_equal";
+		else return null;
 	}
 	
 	public String getName() {
@@ -66,7 +73,20 @@ public class Comparison extends AbstractPredicate {
 	}
 
 	public void setTypes(Class[] types) {
+		if (types.length!=2)
+			throw new IllegalArgumentException("Comparisons are compare exactly two terms, but the number of arguments is " + types.length);
+		checkType(types[0]);
+		checkType(types[1]);
 		this.types = types;
+		this.name = createName() + "_" + computeTypeTag();
+	}
+	
+	private void checkType(Class c) {
+		if (c.isPrimitive()) 
+			return;
+		if (!Number.class.isAssignableFrom(c))
+			throw new IllegalArgumentException("Comparisons are for numeric data types only");
+			
 	}
 
 	@Override
@@ -96,4 +116,23 @@ public class Comparison extends AbstractPredicate {
 			return false;
 		return true;
 	}
+	/**
+	 * compute a short string representing the associated types
+	 * used as part of the name in order to make names unique if overloading 
+	 * occurs.
+	 * @return a string
+	 */
+	private String computeTypeTag() {
+		return ""+computeTypeTag(this.types[0])+computeTypeTag(this.types[1]);
+	}
+
+	private char computeTypeTag(Class clazz) {
+		if (clazz.isPrimitive())
+			return clazz.getName().charAt(0);
+		else if (clazz.getName().startsWith("java.lang."))
+			return Character.toLowerCase(clazz.getName().charAt("java.lang.".length()));
+		else throw new IllegalArgumentException("Illegal primitive class name: " + clazz.getName());
+		
+	}
+	
 }

@@ -356,10 +356,20 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	 */
 	@SuppressWarnings("unchecked")
 	private void createMethod(PrintWriter out, Query q)	throws CompilerException {
-		createPublicMethod(out,q,true);
+		if (mustCreatePublicMethod(q))
+			createPublicMethod(out,q,true);
 		createPrivateMethod(out,q);
 	}
-	
+	/**
+	 * Define for which predicates (queries) not to define a public method. 
+	 * E.g., not public methods are generated for numerical comparisons. 
+	 * @param q
+	 * @return
+	 */
+	protected boolean mustCreatePublicMethod(Query q) {
+		Predicate p = q.getPredicate();
+		return !(p instanceof Comparison);
+	} 
 	
 	/**
 	 * Create a public method for the given query.
