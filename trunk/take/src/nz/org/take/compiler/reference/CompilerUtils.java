@@ -536,16 +536,12 @@ public abstract class CompilerUtils {
 			return constantClassName+'.'+t.getRef();
 		}
 		else {
-			Object obj = t.getObject();
-			if (t.getType() == String.class)
-				return "\"" + obj + "\"";
-			else if (t.getType() == Integer.class)
-				return obj.toString();
-			else if (t.getType() == Double.class)
-				return obj.toString();
+			String lit = t.getLiteral();
+			if (lit!=null)
+				return lit;
 			else
 				throw new CompilerException(
-						"Don't know how to reference this object: " + obj);
+						"Don't know how to reference this constant term: " + t);
 		}
 	}
 

@@ -18,6 +18,8 @@
 
 package nz.org.take;
 
+import java.util.Arrays;
+
 /**
  * Predicates to compare numbers (==,!=, < etc).
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
@@ -26,26 +28,23 @@ package nz.org.take;
 
 public class Comparison extends AbstractPredicate {
 	
-	// constant instances
-	public static Comparison LESS_THAN = new Comparison("<");
-	public static Comparison LESS_THAN_OR_EQUALS = new Comparison("<=");
-	public static Comparison GREATER_THAN = new Comparison(">");
-	public static Comparison GREATER_THAN_OR_EQUALS = new Comparison(">=");
-	public static Comparison EQUALS = new Comparison("==");
-	public static Comparison NOT_EQUALS = new Comparison("!=");
 	
-	
-	public Comparison(String name) {
-		super();
-		this.name = name;
-	}
-	
-	
+	private String symbol = null;
 	private Class[] types = new Class[]{Double.class,Double.class};
 	private String name = null;
 	
-
-
+	public Comparison(String symbol) throws TakeException {
+		super();
+		this.symbol = symbol;
+		if ( "<".equals(symbol)) name = "less_than";
+		else if ( "<=".equals(symbol)) name = "less_than_or_equal";
+		else if ( ">".equals(symbol)) name = "greater_than";
+		else if ( ">=".equals(symbol)) name = "greater_than_or_equal";
+		else if ( "==".equals(symbol)) name = "equal";
+		else if ( "!=".equals(symbol)) name = "not_equal";
+		else throw new TakeException("This comparison operator is unknown: " + symbol);
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -56,5 +55,45 @@ public class Comparison extends AbstractPredicate {
 
 	public String toString() {
 		return getName();
+	}
+
+	public String getSymbol() {
+		return symbol;
+	}
+
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
+	}
+
+	public void setTypes(Class[] types) {
+		this.types = types;
+	}
+
+	@Override
+	public int hashCode() {
+		final int PRIME = 31;
+		int result = 1;
+		result = PRIME * result + ((symbol == null) ? 0 : symbol.hashCode());
+		result = PRIME * result + Arrays.hashCode(types);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final Comparison other = (Comparison) obj;
+		if (symbol == null) {
+			if (other.symbol != null)
+				return false;
+		} else if (!symbol.equals(other.symbol))
+			return false;
+		if (!Arrays.equals(types, other.types))
+			return false;
+		return true;
 	}
 }

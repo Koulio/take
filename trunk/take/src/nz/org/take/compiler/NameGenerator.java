@@ -20,7 +20,6 @@ package nz.org.take.compiler;
 
 import nz.org.take.Predicate;
 import nz.org.take.Query;
-import nz.org.take.script.Rule;
 
 /**
  * Service used to generate the names for artifacts (classes,methods)

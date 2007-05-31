@@ -1,0 +1,22 @@
+    /**
+     * Method generated for query $query
+     * @param $slot1 
+     * @param $slot2  
+     * @return an iterator
+     * code generated using velocity template $templatename
+    */
+    private ResourceIterator< $resulttype > $methodname (
+		final $slot1.type $slot1.getVar(),
+   		final $slot2.type $slot2.getVar(),
+        final DerivationController _derivation) {
+        
+        _derivation.log("$symbol",DerivationController.COMPARISON);
+        
+        if ($slot1.getVar() $symbol $slot2.getVar()) {        	
+        	$resulttype result = new $resulttype();
+        	result. $slot1.getName() = $slot1.getVar() ;
+        	result. $slot2.getName() = $slot2.getVar() ;
+        	return new SingletonIterator<$resulttype>(result);
+        }
+        return EmptyIterator.DEFAULT;
+    }

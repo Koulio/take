@@ -46,6 +46,7 @@ public interface DerivationController  {
 	public static final int FACT = 2;
 	public static final int BEAN_PROPERTY = 3;
 	public static final int JAVA_METHOD = 4;
+	public static final int COMPARISON = 5;
 	
 	/**
 	 * Log the use of a clause set
