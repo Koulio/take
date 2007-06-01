@@ -7,6 +7,6 @@ ref test.nz.org.take.compiler.scenario5.CustomerCategory goldCustomer
 @take.compilerhint.class=discount
 @take.compilerhint.slots=customer,discount
 @take.compilerhint.method=getDiscount
-query discount(in,out)
+query discount[in,out]
 // rules
-rule1: if equals(category(customer),goldCustomer) then discount(customer,goldCustomerDiscount) 
+rule1: if equals[category(customer),goldCustomer] then discount[customer,goldCustomerDiscount] 

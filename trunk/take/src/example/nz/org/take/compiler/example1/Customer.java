@@ -25,7 +25,15 @@ package example.nz.org.take.compiler.example1;
 
 public class Customer {
 	private String name = null;
-	private CustomerCategory category = null;
+	private int turnover = 0;
+
+	public int getTurnover() {
+		return turnover;
+	}
+
+	public void setTurnover(int turnover) {
+		this.turnover = turnover;
+	}
 
 	public Customer(String name) {
 		super();
@@ -65,12 +73,6 @@ public class Customer {
 		return true;
 	}
 
-	public CustomerCategory getCategory() {
-		return category;
-	}
 
-	public void setCategory(CustomerCategory category) {
-		this.category = category;
-	}
 	
 }

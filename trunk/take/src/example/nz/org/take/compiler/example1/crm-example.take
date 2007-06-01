@@ -6,7 +6,7 @@ ref example.nz.org.take.compiler.example1.Discount goldCustomerDiscount
 @take.compilerhint.class=CustomerDiscount
 @take.compilerhint.slots=customer,discount
 @take.compilerhint.method=getDiscount
-query discount(in,out)
+query discount[in,out]
 // rules
-rule1: if category(customer,"gold") then discount(customer,goldCustomerDiscount) 
-rule2: if turnover(customer)>500 then category(customer,"gold")
+rule1: if category[customer,"gold"] then discount[customer,goldCustomerDiscount] 
+rule2: if 500<turnover(customer) then category[customer,"gold"]

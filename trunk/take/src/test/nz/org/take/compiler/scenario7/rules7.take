@@ -2,8 +2,8 @@
 @@dc:creator=jens dietrich
 @@dc:date=29/04/2007
 var test.nz.org.take.compiler.scenario7.Person person
-query overtaxed(in)
-query highincome(in)
+query overtaxed[in]
+query highincome[in]
 // rules
-rule1: if 25<=taxrate(person) then overtaxed(person)
-rule2: if 100000<=taxrate(person)then highincome(person)
+rule1: if taxrate(person)>=25 then overtaxed[person]
+rule2: if 100000<=taxrate(person) then highincome[person]

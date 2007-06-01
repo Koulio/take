@@ -59,8 +59,10 @@ public interface ParserConstants {
     "<WHITESPACE>",
     "\";\"",
     "<COMPARISON>",
-    "\"(\"",
+    "\"[\"",
     "\",\"",
+    "\"]\"",
+    "\"(\"",
     "\")\"",
   };
 

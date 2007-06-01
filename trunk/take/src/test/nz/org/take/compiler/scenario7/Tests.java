@@ -18,15 +18,8 @@
 
 package test.nz.org.take.compiler.scenario7;
 
-import java.util.Iterator;
-
-import javax.script.Bindings;
-import javax.script.SimpleBindings;
-
 import test.nz.org.take.compiler.scenario7.generated.KB;
 import nz.org.take.deployment.KnowledgeBaseManager;
-import nz.org.take.rt.DerivationController;
-import nz.org.take.rt.ResultSet;
 import nz.org.take.script.ScriptKnowledgeSource;
 import junit.framework.TestCase;
 
