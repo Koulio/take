@@ -60,7 +60,7 @@ public class ParserTests extends TestCase {
 	private QuerySpec getQueryAt(Script script,int i) {
 		return (QuerySpec)script.getElements().get(i);
 	}
-	public void test1() throws Exception {
+	public void testVariables1() throws Exception {
 		String input = 
 			"var int x\n";
 		Script script = parse(input);
@@ -69,7 +69,7 @@ public class ParserTests extends TestCase {
 		assertEquals("x",this.getVarDecAt(script,0).getNames().get(0));
 		assertEquals("int",this.getVarDecAt(script,0).getType());
 	}
-	public void test2() throws Exception {
+	public void testVariables2() throws Exception {
 		String input = 
 			"var java.lang.String aVar\n";
 		Script script = parse(input);
@@ -78,7 +78,7 @@ public class ParserTests extends TestCase {
 		assertEquals("aVar",this.getVarDecAt(script,0).getNames().get(0));
 		assertEquals("java.lang.String",this.getVarDecAt(script,0).getType());
 	}
-	public void test3() throws Exception {
+	public void testVariables3() throws Exception {
 		String input = 
 			"var int x\n"+
 			"var java.lang.String aVar\n";
@@ -92,7 +92,7 @@ public class ParserTests extends TestCase {
 		assertEquals("java.lang.String",this.getVarDecAt(script,1).getType());
 		
 	}
-	public void test4() throws Exception {
+	public void testVariables4() throws Exception {
 		String input = 
 			"var int x,y\n"+
 			"var java.lang.String a,b,c\n";
@@ -109,7 +109,7 @@ public class ParserTests extends TestCase {
 		
 	}
 	
-	public void test5() throws Exception {
+	public void testObjectRefs1() throws Exception {
 		String input = 
 			"ref int x\n"+
 			"ref java.lang.String aVar\n";
@@ -123,7 +123,7 @@ public class ParserTests extends TestCase {
 		assertEquals("java.lang.String",this.getRefDecAt(script,1).getType());
 		
 	}
-	public void test6() throws Exception {
+	public void testObjectRefs2() throws Exception {
 		String input = 
 			"ref int x,y\n"+
 			"ref java.lang.String a,b,c\n";
@@ -141,7 +141,7 @@ public class ParserTests extends TestCase {
 	}
 	
 	
-	public void test10() throws Exception {
+	public void testRules1() throws Exception {
 		String input = 
 			"rule1: if p(x,y) then q(y,x)\n";
 		Script script = parse(input);
@@ -154,7 +154,7 @@ public class ParserTests extends TestCase {
 		assertEquals("q",concl.getPredicate());
 		assertEquals(new VariableTerm("x"),prereq1.getTerms().get(0));
 	}
-	public void test11() throws Exception {
+	public void testRules2() throws Exception {
 		String input = "rule2: if equals(x,y) then q(y,x)\n";
 		Script script = parse(input);
 		Rule r = this.getRuleAt(script,0);
@@ -165,7 +165,7 @@ public class ParserTests extends TestCase {
 		assertEquals("q",concl.getPredicate());
 		assertEquals(new VariableTerm("x"),prereq1.getTerms().get(0));		
 	}
-	public void test12() throws Exception {
+	public void testRules3() throws Exception {
 		String input = 
 			"rule3: if p1(x,y) and p2(x,y) then p3(y,x)\n";
 		Script script = parse(input);
@@ -178,7 +178,7 @@ public class ParserTests extends TestCase {
 		assertEquals("p2",prereq2.getPredicate());
 		assertEquals("p3",concl.getPredicate());	
 	}
-	public void test13() throws Exception {
+	public void testFacts1() throws Exception {
 		String input = 
 			"fact1: p(x,y)\n";
 		Script script = parse(input);
@@ -188,7 +188,7 @@ public class ParserTests extends TestCase {
 		assertEquals("p",f.getPredicate());
 	}
 	// string literals
-	public void test14() throws Exception {
+	public void testStringLiterals1() throws Exception {
 		String input = 
 			"fact1: p(\"Max\",y)\n";
 		Script script = parse(input);
@@ -201,7 +201,7 @@ public class ParserTests extends TestCase {
 		assertTrue(t2 instanceof VariableTerm);
 	}
 	// int literals
-	public void test15() throws Exception {
+	public void testIntLiterals1() throws Exception {
 		String input = 
 			"fact1: p(42,y)\n";
 		Script script = parse(input);
@@ -215,7 +215,7 @@ public class ParserTests extends TestCase {
 		assertTrue(t2 instanceof VariableTerm);
 	}
 	// decimal literals
-	public void test16() throws Exception {
+	public void testDoubleLiterals1() throws Exception {
 		String input = 
 			"fact1: p(42.42,y)\n";
 		Script script = parse(input);
@@ -229,7 +229,7 @@ public class ParserTests extends TestCase {
 		assertTrue(t2 instanceof VariableTerm);
 	}
 	// complex terms
-	public void test17() throws Exception {
+	public void testComplexTerms1() throws Exception {
 		String input = "fact: p(f(x),g(y,z))\n";
 		Script script = parse(input);
 		Condition f = this.getRuleAt(script,0).getConditions().get(0);
@@ -253,7 +253,7 @@ public class ParserTests extends TestCase {
 		assertEquals("z",((VariableTerm)c2.getTerms().get(1)).getName());
 	}
 	
-	public void test20() throws Exception {
+	public void testQueryIOSignature1() throws Exception {
 		String input = 
 			"query p(in,out)\n";
 		Script script = parse(input);
@@ -264,7 +264,7 @@ public class ParserTests extends TestCase {
 		assertTrue(q.getIoSpec().get(0));
 		assertFalse(q.getIoSpec().get(1));
 	}
-	public void test30() throws Exception {
+	public void testIntegration1() throws Exception {
 		String input = 
 			"// variables\n"+
 			"var int x,y\n"+
@@ -282,7 +282,7 @@ public class ParserTests extends TestCase {
 		assertEquals("queries",c2.getText().trim());
 		assertEquals("rules and facts",c3.getText().trim());
 	}
-	public void test40() throws Exception {
+	public void testAnnotations1() throws Exception {
 		String input = 
 			"@@dc:Creator=Jens\n"+
 			"@@dc:Date=01/01/07\n"+
@@ -312,7 +312,7 @@ public class ParserTests extends TestCase {
 		assertEquals("a query",a3.getValue().trim());
 		assertFalse(a3.isGlobal());
 	}
-	public void test50() throws Exception {
+	public void testLineNumbers1() throws Exception {
 		String input = 
 			"@@dc:Creator=Jens\n"+
 			"@@dc:Date=01/01/07\n"+
@@ -336,7 +336,7 @@ public class ParserTests extends TestCase {
 		
 
 	}
-	public void test60() throws Exception {
+	public void testNegation1() throws Exception {
 		String input = "rule1: if not p(x,y) then q(y,x)\n";
 		Script script = parse(input);
 		assertEquals(1,script.getElements().size());
@@ -349,7 +349,7 @@ public class ParserTests extends TestCase {
 		assertEquals("q",concl.getPredicate());
 		assertEquals(false,concl.isNegated());
 	}
-	public void test61() throws Exception {
+	public void testNegation2() throws Exception {
 		String input = "rule1: if p(x,y) then not q(y,x)\n";
 		Script script = parse(input);
 		assertEquals(1,script.getElements().size());
@@ -362,7 +362,7 @@ public class ParserTests extends TestCase {
 		assertEquals("q",concl.getPredicate());
 		assertEquals(true,concl.isNegated());
 	}
-	public void test62() throws Exception {
+	public void testNegation3() throws Exception {
 		String input = "query not p(in,in)"+"query q(in,in)";
 		Script script = parse(input);
 		assertEquals(2,script.getElements().size());

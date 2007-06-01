@@ -20,10 +20,7 @@
 package example.nz.org.take.compiler.example1;
 
 import java.io.InputStream;
-
 import org.apache.log4j.BasicConfigurator;
-
-import test.nz.org.take.compiler.scenario5.Tests;
 import nz.org.take.compiler.NameGenerator;
 import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;

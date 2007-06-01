@@ -3,10 +3,10 @@
 @@dc:date=27/05/2007
 var example.nz.org.take.compiler.example1.Customer customer
 ref example.nz.org.take.compiler.example1.Discount goldCustomerDiscount
-ref example.nz.org.take.compiler.example1.CustomerCategory goldCustomer
 @take.compilerhint.class=CustomerDiscount
 @take.compilerhint.slots=customer,discount
 @take.compilerhint.method=getDiscount
 query discount(in,out)
 // rules
-rule1: if equals(category(customer),goldCustomer) then discount(customer,goldCustomerDiscount) 
+rule1: if category(customer,"gold") then discount(customer,goldCustomerDiscount) 
+rule2: if turnover(customer)>500 then category(customer,"gold")
