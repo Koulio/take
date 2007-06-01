@@ -20,8 +20,6 @@ package test.nz.org.take.compiler.scenario5;
 
 import javax.script.Bindings;
 import javax.script.SimpleBindings;
-
-import nz.org.take.KnowledgeBase;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.ResultSet;
 import nz.org.take.script.ScriptKnowledgeSource;

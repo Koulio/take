@@ -87,7 +87,7 @@ void query(Script script):
 }
 {
 	{QuerySpec q = new QuerySpec();}
-	t=<QUERY> [negated(q)] predicateQ(q)"("io(q)(","io(q))*")"
+	t=<QUERY> [negated(q)] predicateQ(q)"["io(q)(","io(q))*"]"
 	{q.setPosition(t.beginLine,t.beginColumn);}
 	{script.add(q);}
 }
@@ -203,7 +203,7 @@ void buildCondition1(Condition c):
 void buildCondition2(Condition c):
 {}
 {
-	[negation(c)]predicate(c)"("terms(c)")"
+	[negation(c)]predicate(c)"["terms(c)"]"
 }
 void negation(Condition c):
 {

@@ -51,7 +51,6 @@ public class Example {
 		// compile and bind constants referenced in rules
 		KnowledgeBaseManager<DiscountPolicy> kbm = new KnowledgeBaseManager<DiscountPolicy>();
 		Bindings bindings = new SimpleBindings();		
-		bindings.put("goldCustomer",new CustomerCategory("gold"));
 		bindings.put("goldCustomerDiscount",new Discount(20,true));
 		InputStream scriptSource = GenerateInterface.class.getResourceAsStream("/example/nz/org/take/compiler/example1/crm-example.take");
 		KB = kbm.getKnowledgeBase(
@@ -62,7 +61,7 @@ public class Example {
 		
 		// now use the generated classes to query the kb
 		Customer john = new Customer("John");
-		john.setCategory(new CustomerCategory("gold"));
+		john.setTurnover(1000);
 		ResultSet<CustomerDiscount> result =  KB.getDiscount(john);
 	    System.out.println("The discount for John is: " + result.next().discount);
 	    

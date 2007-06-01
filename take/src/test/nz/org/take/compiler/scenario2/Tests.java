@@ -19,9 +19,7 @@
 package test.nz.org.take.compiler.scenario2;
 
 import java.util.*;
-
 import nz.org.take.Constant;
-import nz.org.take.DerivationRule;
 import nz.org.take.Fact;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.KnowledgeElement;
@@ -29,7 +27,6 @@ import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.DerivationController;
 import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
-import nz.org.take.script.ScriptKnowledgeSource;
 import test.nz.org.take.compiler.scenario2.generated.*;
 import junit.framework.TestCase;
 

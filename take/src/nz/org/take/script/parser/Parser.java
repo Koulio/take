@@ -412,9 +412,9 @@
   static final public void complexTerm(TermContainer c) throws ParseException {
          ComplexTerm ct = new ComplexTerm();
     function(ct);
-    jj_consume_token(28);
+    jj_consume_token(31);
     terms(ct);
-    jj_consume_token(30);
+    jj_consume_token(32);
          c.add(ct);
   }
 
@@ -563,9 +563,9 @@
 
   static final private boolean jj_3R_10() {
     if (jj_3R_14()) return true;
-    if (jj_scan_token(28)) return true;
+    if (jj_scan_token(31)) return true;
     if (jj_3R_13()) return true;
-    if (jj_scan_token(30)) return true;
+    if (jj_scan_token(32)) return true;
     return false;
   }
 
@@ -591,11 +591,16 @@
   static private int jj_gen;
   static final private int[] jj_la1 = new int[15];
   static private int[] jj_la1_0;
+  static private int[] jj_la1_1;
   static {
       jj_la1_0();
+      jj_la1_1();
    }
    private static void jj_la1_0() {
       jj_la1_0 = new int[] {0xa64500,0xa64500,0x200,0x20000000,0x18000,0x20,0x20000000,0x20,0x20000000,0x800,0x1000,0x1580000,0x200,0x20000000,0x1580000,};
+   }
+   private static void jj_la1_1() {
+      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
   static final private JJCalls[] jj_2_rtns = new JJCalls[2];
   static private boolean jj_rescan = false;
@@ -793,8 +798,8 @@
 
   static public ParseException generateParseException() {
     jj_expentries.removeAllElements();
-    boolean[] la1tokens = new boolean[31];
-    for (int i = 0; i < 31; i++) {
+    boolean[] la1tokens = new boolean[33];
+    for (int i = 0; i < 33; i++) {
       la1tokens[i] = false;
     }
     if (jj_kind >= 0) {
@@ -807,10 +812,13 @@
           if ((jj_la1_0[i] & (1<<j)) != 0) {
             la1tokens[j] = true;
           }
+          if ((jj_la1_1[i] & (1<<j)) != 0) {
+            la1tokens[32+j] = true;
+          }
         }
       }
     }
-    for (int i = 0; i < 31; i++) {
+    for (int i = 0; i < 33; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

@@ -18,11 +18,6 @@
 
 package test.nz.org.take.compiler.scenario4;
 
-import java.util.*;
-
-import nz.org.take.DerivationRule;
-import nz.org.take.Fact;
-import nz.org.take.KnowledgeBase;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.ResultSet;
 import nz.org.take.script.ScriptKnowledgeSource;

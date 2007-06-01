@@ -5,11 +5,11 @@ var test.nz.org.take.compiler.scenario3.Person person1,person2
 @take.compilerhint.class=IsBrotherRelationship
 @take.compilerhint.slots=person1,person2
 @take.compilerhint.method=isBrother
-query isBrother(in,in)
+query isBrother[in,in]
 @take.compilerhint.class=IsBrotherRelationship2
 @take.compilerhint.slots=person1,person2
 @take.compilerhint.method=isBrother2
-query isBrother2(in,in)
+query isBrother2[in,in]
 // rules
-rule1: if sameAs(getFather(person1),getFather(person2)) then isBrother(person1,person2) 
-rule2: if equals(getFather(person1),getFather(person2)) then isBrother2(person1,person2) 
+rule1: if sameAs[getFather(person1),getFather(person2)] then isBrother[person1,person2] 
+rule2: if equals[getFather(person1),getFather(person2)] then isBrother2[person1,person2] 

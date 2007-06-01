@@ -7,10 +7,10 @@ var test.nz.org.take.compiler.scenario4.College college
 @take.compilerhint.class=IsEnrolled
 @take.compilerhint.slots=student,college
 @take.compilerhint.method=isEnrolled
-query isEnrolled(in,out)
+query isEnrolled[in,out]
 @take.compilerhint.class=IsEnrolled
 @take.compilerhint.slots=student,college
 @take.compilerhint.method=isEnrolled
-query isEnrolled(in,in)
+query isEnrolled[in,in]
 // rules
-rule1: if courses(student,course) and college(course,college) then isEnrolled(student,college)
+rule1: if courses[student,course] and college[course,college] then isEnrolled[student,college]
