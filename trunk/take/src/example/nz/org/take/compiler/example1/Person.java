@@ -24,7 +24,16 @@ package example.nz.org.take.compiler.example1;
 public class Person {
 	
 	private String name = null;
+	private int turnover = 0;
 	
+
+	public int getTurnover() {
+		return turnover;
+	}
+
+	public void setTurnover(int turnover) {
+		this.turnover = turnover;
+	}
 
 	public Person(String name) {
 		super();
