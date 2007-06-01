@@ -373,4 +373,36 @@ public class ParserTests extends TestCase {
 		assertEquals("q",q2.getPredicate());
 		assertEquals(false,q2.isNegated());
 	}
+	public void testComparison1() throws Exception {
+		String input = "rule1: 1<2";
+		Script script = parse(input);
+		assertEquals(1,script.getElements().size());
+		Rule rule = this.getRuleAt(script,0);
+		Condition fact = rule.getConditions().get(0);
+		assertTrue(fact.isPrimitiveComparison());
+	}
+	public void testComparison2() throws Exception {
+		String input = "rule1: 1<=2";
+		Script script = parse(input);
+		assertEquals(1,script.getElements().size());
+		Rule rule = this.getRuleAt(script,0);
+		Condition fact = rule.getConditions().get(0);
+		assertTrue(fact.isPrimitiveComparison());
+	}
+	public void testComparison3() throws Exception {
+		String input = "rule1: 2<=funct(3)";
+		Script script = parse(input);
+		assertEquals(1,script.getElements().size());
+		Rule rule = this.getRuleAt(script,0);
+		Condition fact = rule.getConditions().get(0);
+		assertTrue(fact.isPrimitiveComparison());
+	}
+	public void testComparison4() throws Exception {
+		String input = "rule1: funct(2)<42";
+		Script script = parse(input);
+		assertEquals(1,script.getElements().size());
+		Rule rule = this.getRuleAt(script,0);
+		Condition fact = rule.getConditions().get(0);
+		assertTrue(fact.isPrimitiveComparison());
+	}
 }
