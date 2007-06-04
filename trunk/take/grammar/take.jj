@@ -1,4 +1,4 @@
-/* a simple version of sql */
+
 options {
 	IGNORE_CASE = true;
 }
@@ -223,7 +223,12 @@ void term(TermContainer c):
 {}
 {
 	LOOKAHEAD(3)
-	complexTerm(c) | variableTerm(c) | stringLiteral(c) | intLiteral(c) | doubleLiteral(c)
+	complexTerm(c) | simpleTerm(c)
+}
+void simpleTerm(TermContainer c):
+{}
+{
+	variableTerm(c) | stringLiteral(c) | intLiteral(c) | doubleLiteral(c)
 }
 void variableTerm(TermContainer c) :
 {
