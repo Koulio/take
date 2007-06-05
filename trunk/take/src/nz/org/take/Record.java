@@ -16,49 +16,34 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take.script;
 
-import java.util.ArrayList;
-import java.util.List;
+package nz.org.take;
+
 
 /**
- * Derivation rule.
+ * A record is more or less fact without variables (=ground).
+ * Records are imported into the kb from external fact stores,
+ * such as relational databases or web services. 
+ * The predicate is usually simple, i.e. it consists of a name and 
+ * the types associated by the predicate.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Rule extends Identifiable  {
-	@Override
-	public int getLine() {
-		if (this.line==-1 && this.getConditions().size()>1)
-			return this.conditions.get(0).getLine();
-		else
-			return super.getLine();
-	}
-
-	private List<Condition> conditions = new ArrayList<Condition>();
-
-	public List<Condition> getConditions() {
-		return conditions;
-	}
+public interface Record {
 	
-	public void add(Condition c) {
-		this.conditions.add(c);
-	}
-
-	public String toString() {
-		StringBuffer b = new StringBuffer();
-		b.append("if ");
-		for (int i=0;i<this.conditions.size()-1;i++) {			
-			if (i>0)
-				b.append("and ");
-			b.append(this.conditions.get(i));
-			b.append(' ');
-		}
-		if (this.conditions.size()>1)
-			b.append(" then ");
-		b.append(this.conditions.get(this.conditions.size()-1));
-		return b.toString();
-	}
-
+	/**
+	 * Get the predicate.
+	 */
+	public SimplePredicate getPredicate() ;
+	
+	/**
+	 * Get the object at a given position.
+	 * The type of this object must be consistent with the type of the respective predicate slot.
+	 * I.e. the following constarint must be satisfied: 
+	 * assert(this.getPredicate().getSlotTypes()[i].isAssignableFrom(this.getObject(i).getClass()))
+	 * @param pos a position
+	 * @return an object
+	 */
+	public Object getObject(int pos) throws ExternalFactStoreException;
 
 }

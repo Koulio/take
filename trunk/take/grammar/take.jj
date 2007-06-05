@@ -26,6 +26,7 @@ TOKEN:{<AND:"and">}
 TOKEN:{<IF:"if">}
 TOKEN:{<THEN:"then">}
 TOKEN:{<QUERY:"query">}
+TOKEN:{<EXTERNAL:"external">}
 TOKEN:{<IN:"in">}
 TOKEN:{<OUT:"out">}
 TOKEN:{<GLOBALANNOTATION: "@@"(["a"-"z","A"-"Z","_","-","?",":","=","#","*","%","_","/",",","\\",";","!","0"-"9"," ","."] )*>}
@@ -41,10 +42,11 @@ TOKEN:{<SEMICOLON:";">}
 TOKEN:{<COMPARISON:"<="|">="|"<"|">"|"=="|"!=">}
 
 
+
 void parse(Script script):
 {}
 {
-	(var(script)|ref(script)|comment(script)|globalannotation(script)|localannotation(script)|query(script)|rule(script))*
+	(var(script)|ref(script)|comment(script)|globalannotation(script)|localannotation(script)|query(script)|factStore(script)|rule(script))*
 }
 void localannotation(Script script):
 {
@@ -172,13 +174,30 @@ void rule(Script script):
 	{script.add(r);}
 	
 }
-void id(Rule r):
+void factStore(Script script):
+{}
+{
+	{FactStore fs = new FactStore();}	
+	<EXTERNAL> id(fs) className(fs)(<DOT>className(fs))*
+	{script.add(fs);}
+	
+}
+void id(Identifiable r):
 {
 	Token t;
 }
 {
 	t = <LABEL>
 	{r.setId(t.image.substring(0,t.image.length()-1));}
+}
+void className(FactStore fs):
+{
+	Token t;
+}
+{
+	t = <NAME>
+	{fs.addToName(t.image);}
+	{fs.setPosition(t.beginLine,t.beginColumn);}
 }
 void condition(Rule r):
 {}
@@ -247,7 +266,6 @@ void variableToken(VariableTerm v) :
 	t = <NAME>
 	{v.addName(t.image);}
 	{v.setPosition(t.beginLine,t.beginColumn);}
-	{System.out.println(t.image);}
 }
 void stringLiteral(TermContainer c) :
 {

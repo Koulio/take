@@ -47,6 +47,9 @@ public class Script {
 	public void add(Annotation a) {
 		this.elements.add(a);
 	}
+	public void add(FactStore fs) {
+		this.elements.add(fs);
+	}
 	public List getElements() {
 		return elements;
 	}

@@ -35,7 +35,7 @@ public class AbstractKnowledgeBaseVisitor implements KnowledgeBaseVisitor {
 
 	}
 
-	public void endVisit(ExternalKnowledge k) {
+	public void endVisit(ExternalFactStore k) {
 		
 
 	}
@@ -75,7 +75,7 @@ public class AbstractKnowledgeBaseVisitor implements KnowledgeBaseVisitor {
 		return true;
 	}
 
-	public boolean visit(ExternalKnowledge k) {
+	public boolean visit(ExternalFactStore k) {
 		
 		return true;
 	}

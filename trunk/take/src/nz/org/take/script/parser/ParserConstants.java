@@ -14,19 +14,20 @@ public interface ParserConstants {
   int IF = 12;
   int THEN = 13;
   int QUERY = 14;
-  int IN = 15;
-  int OUT = 16;
-  int GLOBALANNOTATION = 17;
-  int LOCALANNOTATION = 18;
-  int INTEGER_NUMBER = 19;
-  int DECIMAL_NUMBER = 20;
-  int LABEL = 21;
-  int NAME = 22;
-  int COMMENT = 23;
-  int STRING_LITERAL = 24;
-  int WHITESPACE = 25;
-  int SEMICOLON = 26;
-  int COMPARISON = 27;
+  int EXTERNAL = 15;
+  int IN = 16;
+  int OUT = 17;
+  int GLOBALANNOTATION = 18;
+  int LOCALANNOTATION = 19;
+  int INTEGER_NUMBER = 20;
+  int DECIMAL_NUMBER = 21;
+  int LABEL = 22;
+  int NAME = 23;
+  int COMMENT = 24;
+  int STRING_LITERAL = 25;
+  int WHITESPACE = 26;
+  int SEMICOLON = 27;
+  int COMPARISON = 28;
 
   int DEFAULT = 0;
 
@@ -46,6 +47,7 @@ public interface ParserConstants {
     "\"if\"",
     "\"then\"",
     "\"query\"",
+    "\"external\"",
     "\"in\"",
     "\"out\"",
     "<GLOBALANNOTATION>",

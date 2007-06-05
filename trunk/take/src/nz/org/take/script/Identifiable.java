@@ -18,47 +18,21 @@
 
 package nz.org.take.script;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Derivation rule.
+ * Superclass for script elements with ids.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Rule extends Identifiable  {
-	@Override
-	public int getLine() {
-		if (this.line==-1 && this.getConditions().size()>1)
-			return this.conditions.get(0).getLine();
-		else
-			return super.getLine();
-	}
+public abstract class Identifiable extends ScriptElement  {
 
-	private List<Condition> conditions = new ArrayList<Condition>();
-
-	public List<Condition> getConditions() {
-		return conditions;
-	}
+	private String id = null;
 	
-	public void add(Condition c) {
-		this.conditions.add(c);
+	public String getId() {
+		return id;
 	}
 
-	public String toString() {
-		StringBuffer b = new StringBuffer();
-		b.append("if ");
-		for (int i=0;i<this.conditions.size()-1;i++) {			
-			if (i>0)
-				b.append("and ");
-			b.append(this.conditions.get(i));
-			b.append(' ');
-		}
-		if (this.conditions.size()>1)
-			b.append(" then ");
-		b.append(this.conditions.get(this.conditions.size()-1));
-		return b.toString();
+	public void setId(String id) {
+		this.id = id;
 	}
-
 
 }

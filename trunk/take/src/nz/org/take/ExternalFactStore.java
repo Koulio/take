@@ -16,49 +16,20 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take.script;
-
-import java.util.ArrayList;
-import java.util.List;
+package nz.org.take;
 
 /**
- * Derivation rule.
+ * Facts imported from external sources such as web services or relational databases.
+ * Returns a knowledge iterator. All clauses returned by this iterator must have the same predicate.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Rule extends Identifiable  {
-	@Override
-	public int getLine() {
-		if (this.line==-1 && this.getConditions().size()>1)
-			return this.conditions.get(0).getLine();
-		else
-			return super.getLine();
-	}
+public interface ExternalFactStore extends KnowledgeElement {
 
-	private List<Condition> conditions = new ArrayList<Condition>();
-
-	public List<Condition> getConditions() {
-		return conditions;
-	}
-	
-	public void add(Condition c) {
-		this.conditions.add(c);
-	}
-
-	public String toString() {
-		StringBuffer b = new StringBuffer();
-		b.append("if ");
-		for (int i=0;i<this.conditions.size()-1;i++) {			
-			if (i>0)
-				b.append("and ");
-			b.append(this.conditions.get(i));
-			b.append(' ');
-		}
-		if (this.conditions.size()>1)
-			b.append(" then ");
-		b.append(this.conditions.get(this.conditions.size()-1));
-		return b.toString();
-	}
-
+	/**
+	 * Get external knowledge. 
+	 * @return a knowledge iterator
+	 */
+	public RecordIterator getKnowledge();
 
 }
