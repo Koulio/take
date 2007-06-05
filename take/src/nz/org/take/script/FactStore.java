@@ -18,46 +18,28 @@
 
 package nz.org.take.script;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Derivation rule.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Rule extends Identifiable  {
-	@Override
-	public int getLine() {
-		if (this.line==-1 && this.getConditions().size()>1)
-			return this.conditions.get(0).getLine();
-		else
-			return super.getLine();
-	}
+public class FactStore extends Identifiable  {
 
-	private List<Condition> conditions = new ArrayList<Condition>();
-
-	public List<Condition> getConditions() {
-		return conditions;
-	}
+	private String className = null;
 	
-	public void add(Condition c) {
-		this.conditions.add(c);
+	public void addToName(String token) {
+		if (className==null)
+			className = token;
+		else 
+			className = className+'.'+token;
 	}
 
 	public String toString() {
-		StringBuffer b = new StringBuffer();
-		b.append("if ");
-		for (int i=0;i<this.conditions.size()-1;i++) {			
-			if (i>0)
-				b.append("and ");
-			b.append(this.conditions.get(i));
-			b.append(' ');
-		}
-		if (this.conditions.size()>1)
-			b.append(" then ");
-		b.append(this.conditions.get(this.conditions.size()-1));
-		return b.toString();
+		return "external " + className;
+	}
+
+	public String getClassName() {
+		return className;
 	}
 
 

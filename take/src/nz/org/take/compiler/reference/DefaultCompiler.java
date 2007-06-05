@@ -575,7 +575,11 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		// generate method body
 		if (cs instanceof Fact) {
 			createBody(out, q, islots, oslots, (Fact) cs);
-		} else if (cs instanceof DerivationRule) {
+		} 
+		else if (cs instanceof ExternalFactStore){
+			createBody(out, q, islots, oslots, (ExternalFactStore) cs);
+		}
+		else if (cs instanceof DerivationRule) {
 			createBody(out, q, islots, oslots, (DerivationRule) cs);
 		} else {
 			out.print("// this clause set type is not yet supported: ");
@@ -588,24 +592,18 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 
 	/**
 	 * Create a proof for a query.
-	 * 
-	 * @param out -
-	 *            a print writer
-	 * @param q -
-	 *            the query
-	 * @param islots -
-	 *            the input slots (known)
-	 * @param oslots -
-	 *            the output slots (to be bound)
-	 * @param f -
-	 *            the fact
+	 * @param out a print writer
+	 * @param q the query
+	 * @param islots the input slots (known)
+	 * @param oslots the output slots (to be bound)
+	 * @param fs the fact store
 	 * @throws CompilerException
 	 */
 	private void createBody(PrintWriter out, Query q, Slot[] islots,
-			Slot[] oslots, Fact f) throws CompilerException {
+			Slot[] oslots, ExternalFactStore fs) throws CompilerException {
 		
 		// log 
-		printLogStatement(out,f);
+		printLogStatement(out,fs);
 		
 		// start creating return var
 		Predicate p = q.getPredicate();
@@ -638,9 +636,9 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 					out.print("&&");
 				out.print(slot.var);
 				out.print(".equals(");
-				Term t = f.getTerms()[slot.position];
-				assert (t instanceof Constant);
-				out.print(getRef(this.getNameGenerator().getConstantClassName(),(Constant)t));
+				//Term t = fs.getObject([slot.position];
+				//assert (t instanceof Constant);
+				//out.print(getRef(this.getNameGenerator().getConstantClassName(),(Constant)t));
 				out.print(")");
 			}
 			out.println("){");

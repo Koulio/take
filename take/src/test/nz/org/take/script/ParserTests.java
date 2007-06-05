@@ -110,7 +110,15 @@ public class ParserTests extends TestCase {
 		assertEquals("java.lang.String",this.getVarDecAt(script,1).getType());
 		
 	}
-	
+	public void testFactStore1() throws Exception {
+		String input = 
+			"external fs1: com.mydomain.MyFactStore\n";
+		Script script = parse(input);
+		assertEquals(1,script.getElements().size());
+		assertTrue(script.getElements().get(0) instanceof FactStore);
+		FactStore fs = (FactStore)script.getElements().get(0);
+		assertEquals("com.mydomain.MyFactStore",fs.getClassName());
+	}
 	public void testObjectRefs1() throws Exception {
 		String input = 
 			"ref int x\n"+

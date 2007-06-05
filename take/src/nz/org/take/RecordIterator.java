@@ -21,12 +21,12 @@ package nz.org.take;
 import java.util.Iterator;
 
 /**
- * Knowledge iterator. The additional close method can be used to release resources,
+ * Record iterator. The additional close method can be used to release resources,
  * e.g. database connections.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public interface KnowledgeIterator extends Iterator<Clause> {
+public interface RecordIterator extends Iterator<Record> {
 	
 	/**
 	 * Close the iterator, release external resources if necessary.
