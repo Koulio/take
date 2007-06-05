@@ -18,41 +18,46 @@
 
 package nz.org.take.script;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * variable term.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
 public class VariableTerm extends ScriptElement implements Term {
-	private String name = null;
+	private List<String> names = new ArrayList<String>();
+	private String fullName =null;
 
 	public VariableTerm() {
 		super();
 	}
-	
-	public VariableTerm(String name) {
+	public VariableTerm(String... args) {
 		super();
-		this.name = name;
+		for (String arg:args)
+			addName(arg);
 	}
-
+	
 	public String getName() {
-		return name;
+		return fullName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void addName(String name) {
+		this.names.add(name);
+		if (fullName==null)
+			fullName=name;
+		else
+			this.fullName = this.fullName + '.' + name;
 	}
 	
 	public String toString() {
-		return name;
+		return fullName;
 	}
 
 	@Override
 	public int hashCode() {
-		final int PRIME = 31;
-		int result = 1;
-		result = PRIME * result + ((name == null) ? 0 : name.hashCode());
-		return result;
+		return fullName==null?0:fullName.hashCode();
 	}
 
 	@Override
@@ -64,11 +69,20 @@ public class VariableTerm extends ScriptElement implements Term {
 		if (getClass() != obj.getClass())
 			return false;
 		final VariableTerm other = (VariableTerm) obj;
-		if (name == null) {
-			if (other.name != null)
+		if (fullName == null) {
+			if (other.fullName != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!fullName.equals(other.fullName))
 			return false;
 		return true;
+	}
+	public List<String> getNames() {
+		return names;
+	}
+	public void setNames(List<String> names) {
+		this.names = names;
+	}
+	public boolean isSimple() {
+		return names.size()==1;
 	}
 }

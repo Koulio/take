@@ -236,10 +236,18 @@ void variableTerm(TermContainer c) :
 }
 {
 	{VariableTerm v = new VariableTerm();}	
-	t = <NAME>
-	{v.setName(t.image);}
-	{v.setPosition(t.beginLine,t.beginColumn);}
+	variableToken(v)(<DOT>variableToken(v))*
 	{c.add(v);}
+}
+void variableToken(VariableTerm v) :
+{
+	Token t;
+}
+{
+	t = <NAME>
+	{v.addName(t.image);}
+	{v.setPosition(t.beginLine,t.beginColumn);}
+	{System.out.println(t.image);}
 }
 void stringLiteral(TermContainer c) :
 {
