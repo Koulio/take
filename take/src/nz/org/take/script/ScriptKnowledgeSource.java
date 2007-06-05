@@ -29,7 +29,6 @@ import java.io.Reader;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.Map.Entry;
-import javax.script.SimpleBindings;
 import org.apache.log4j.Logger;
 import nz.org.take.*;
 import nz.org.take.script.parser.Parser;
@@ -452,7 +451,7 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 	}
 
 	private nz.org.take.Term buildTerm(Map<String,Variable> variables,Map<String,Constant> constants,Term t) throws ScriptException {
-		if (t instanceof VariableTerm) {
+		if (t instanceof VariableTerm && ((VariableTerm)t).isSimple()) {
 			String name = ((VariableTerm)t).getName();
 			Variable var = variables.get(name);
 			Constant con = constants.get(name);
@@ -461,6 +460,30 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 			if (var!=null && con!=null)
 				throw new ScriptSemanticsException("Symbol is used to define an object reference and a variable: " + name);
 			return var==null?con:var;
+		}
+		else if (t instanceof VariableTerm && !((VariableTerm)t).isSimple()) {
+			List<String> names = ((VariableTerm)t).getNames();
+			// base term
+			VariableTerm v = new VariableTerm(names.get(0));
+			nz.org.take.Term part = buildTerm(variables,constants,v);
+			
+			for (int i=1;i<names.size();i++) {
+				String f = names.get(i);
+				nz.org.take.Term[] args = new nz.org.take.Term[1];
+				args[0] = part;
+				Method m = this.findMethod(f, args);
+				if (m==null) // check whether there is such a property
+					m = findPropertyAccessor(f, args);
+				if (m==null)
+					throw new ScriptSemanticsException("No method or property found for symbol: " + f);
+				JFunction function = new JFunction();
+				function.setMethod(m);
+				nz.org.take.ComplexTerm  cplxTerm = new nz.org.take.ComplexTerm ();
+				cplxTerm.setFunction(function);
+				cplxTerm.setTerms(args);
+				part = cplxTerm;
+			}
+			return part;
 		}
 		else if (t instanceof ConstantTerm) {
 			ConstantTerm ct = (ConstantTerm)t;

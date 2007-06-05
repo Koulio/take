@@ -52,7 +52,7 @@
 	/>
 </target>	
 <!-- Compiles the classes -->	
-<!-- we dop not compile the generated test and example code-->
+<!-- we do not compile the generated test and example code-->
 <!-- this will should be compiled (code generated) using the output of this task -->	
 <target name="compile" depends="prepare,generateparser" description="Compile the whole project except the generated test code tests">
 	<javac destdir="${build.classes}" 

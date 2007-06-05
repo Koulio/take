@@ -19,6 +19,8 @@
 package test.nz.org.take.script;
 
 import java.io.StringReader;
+import java.util.List;
+
 import nz.org.take.script.*;
 import nz.org.take.script.parser.Parser;
 import junit.framework.TestCase;
@@ -252,7 +254,21 @@ public class ParserTests extends TestCase {
 		assertTrue(c2.getTerms().get(1) instanceof VariableTerm);
 		assertEquals("z",((VariableTerm)c2.getTerms().get(1)).getName());
 	}
-	
+	// property terms
+	public void testPropertyTerms1() throws Exception {
+		String input = "fact: p[x.f.g]\n";
+		Script script = parse(input);
+		Condition f = this.getRuleAt(script,0).getConditions().get(0);
+		assertEquals("p",f.getPredicate());
+		Term t1 = f.getTerms().get(0);
+		assertTrue(t1 instanceof VariableTerm);
+		VariableTerm v = (VariableTerm)t1;		
+		List<String> names = v.getNames();
+		assertEquals("x",names.get(0));
+		assertEquals("f",names.get(1));
+		assertEquals("g",names.get(2));
+		
+	}
 	public void testQueryIOSignature1() throws Exception {
 		String input = 
 			"query p[in,out]\n";

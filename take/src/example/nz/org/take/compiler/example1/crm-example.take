@@ -9,4 +9,4 @@ ref example.nz.org.take.compiler.example1.Discount goldCustomerDiscount
 query discount[in,out]
 // rules
 rule1: if category[customer,"gold"] then discount[customer,goldCustomerDiscount] 
-rule2: if 500<turnover(customer) then category[customer,"gold"]
+rule2: if 500<customer.turnover then category[customer,"gold"]
