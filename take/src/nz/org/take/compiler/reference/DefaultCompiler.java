@@ -117,6 +117,8 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 
 		out.println("}");
 		out.close();
+		String fullClassName = packageName + "." + className;
+		endorseClazz(location, fullClassName);
 		
 		
 	}
