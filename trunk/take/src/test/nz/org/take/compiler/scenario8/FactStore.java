@@ -19,6 +19,7 @@
 
 package test.nz.org.take.compiler.scenario8;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,11 +28,13 @@ import org.apache.log4j.BasicConfigurator;
 
 import nz.org.take.AbstractAnnotatable;
 import nz.org.take.ExternalFactStore;
+import nz.org.take.ExternalFactStoreException;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.KnowledgeBaseVisitor;
 import nz.org.take.Predicate;
 import nz.org.take.Record;
 import nz.org.take.RecordIterator;
+import nz.org.take.SimplePredicate;
 import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
 import nz.org.take.script.ScriptException;
@@ -47,6 +50,30 @@ import java.io.*;
 public class FactStore extends AbstractAnnotatable implements ExternalFactStore {
 
 	private String id = null;
+	
+	class FamilyRecord implements Record {
+		private Person person1 = null;
+		private Person person2 = null;
+		private static Predicate predicate = newe SimplePredicate("father",new Class[]{Person.class,Person.class}); 
+		FamilyRecord(String p1,String p2) {
+			super();
+			person1 = new Person(p1);
+			person2 = new Person(p2);
+		}
+		public Object getObject(int pos) throws ExternalFactStoreException {
+			if (pos==0) 
+				return person1;
+			else
+				return person2;
+		}
+
+		public SimplePredicate getPredicate() {
+			return null;
+		}
+		
+	};
+	
+	
 	/**
 	 * Generate the interface for the example.
 	 * @param args
@@ -57,33 +84,29 @@ public class FactStore extends AbstractAnnotatable implements ExternalFactStore 
 	}
 
 	public RecordIterator getKnowledge() {
-		// read data into memory buffer 
-		InputStream factSrc = this.getClass().getResourceAsStream("/test/nz/org/take/compiler/scenario8/facts.txt");
-		final BufferedReader reader = new BufferedReader(new InputStreamReader(factSrc));
-		final List<String> lines = new ArrayList<String>();
-		String line = null;
-		while ((line=reader.readLine())!=null) {
-			lines.add(line);
-		}
+		Connection connection = null;
+		Statement statement = null;;
+		ResultSet result = null;
 		try {
-			reader.close();
+			connection = DriverManager.getConnection("jdbc:hsqldb:file:testdata/example8/example8db", "sa", "");
+			statement = connection.createStatement();
+			result = statement.executeQuery("select son,father from people");
 		}
 		catch (Exception x) {
 			x.printStackTrace();
 		}
 		
+		// read data into memory buffer 
+		final ResultSet rs = result;
 		RecordIterator iter = new RecordIterator() {
-			private int cursor = -1;
-			public void close() {}
+			
 
 			public boolean hasNext() {
-				return cursor<lines.size()-1;
+				return rs.next();
 			}
 
 			public Record next() {
-				cursor=cursor+1;
-				String line = lines.get(cursor); 
-				return buildRecord(line);
+				
 			}
 
 			public void remove() {
