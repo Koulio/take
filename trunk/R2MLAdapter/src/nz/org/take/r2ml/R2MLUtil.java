@@ -10,10 +10,12 @@ import nz.org.take.Prerequisite;
  * @author Bastian Schenke (bastian.schenke@googlemail.com)
  *
  */
-public class R2MLUtil {
+class R2MLUtil {
 	
-	static Prerequisite FactAsPrerequisite (Fact fact) {
+	static Prerequisite factAsPrerequisite (Fact fact) {
 		
+		if (fact instanceof Prerequisite)
+			return (Prerequisite)fact;
 		Prerequisite prereq = new Prerequisite();
 		prereq.addAnnotations(fact.getAnnotations());
 		prereq.setId(fact.getId());

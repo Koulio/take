@@ -1,28 +1,44 @@
+/*
+ * Copyright (C) 2007 Bastian Schenke (bastian.schenke(at)gmail.com) and 
+ * <a href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 package nz.org.take.r2ml;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.namespace.QName;
-
 import de.tu_cottbus.r2ml.DerivationRuleSet;
 import de.tu_cottbus.r2ml.Term;
 import nz.org.take.Clause;
+import nz.org.take.DerivationRule;
 import nz.org.take.KnowledgeElement;
-import nz.org.take.Variable;
+import nz.org.take.Prerequisite;
 
 /**
  * @author Bastian Schenke (bastian.schenke@googlemail.com)
  * 
  */
-public class DerivationRuleSetHandler implements XmlTypeHandler {
+class DerivationRuleSetHandler implements XmlTypeHandler {
 
 	/**
 	 * Maps a DerivationRuleSet to a List containing KnowledgeElements
 	 * where each rule is transformed into one KnowledgeElement.
 	 * 
 	 * TODO implement protected Vocabulary vocabulary;
-	 * TODO implement protected List<Term> genericVariableOrObjectVariableOrDataVariable; (Map them to Facts in the KnowledgeBase!!!)
 	 * TODO implement protected String externalVocabularyID;
 	 * TODO implement protected String externalVocabularyLanguage;
 	 * 
@@ -53,15 +69,16 @@ public class DerivationRuleSetHandler implements XmlTypeHandler {
 		context.enter(this);
 		for (de.tu_cottbus.r2ml.DerivationRule derivationRule : dRuleSet.getDerivationRule()) {
 			try {
-				Clause rule = (Clause) dRuleHandler.importObject(derivationRule, context, driver);
-				if (id != null) {
-					rule.addAnnotation(RULE_SET_ID, id);
-				}
-				ret.add(rule);
+				for (DerivationRule rule : (List<DerivationRule>) dRuleHandler.importObject(derivationRule, context, driver)) {
+					if (id != null)
+						rule.addAnnotation(RULE_SET_ID_KEY, id);
+					ret.add(rule);
+				} // for
 			} catch (R2MLException e) {
-				driver.logger.error("Error while importing DerivationRuleSet " + id + ".", e);
-				
-			}
+				driver.logger.info(e.getMessage());
+				driver.logger.error("Error while importing DerivationRuleSet "
+						+ id + ".", e);
+			} // try-catch
 		}
 		context.leave(this);
 
