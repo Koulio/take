@@ -1,46 +1,61 @@
+/*
+ * Copyright (C) 2007 Bastian Schenke (bastian.schenke(at)gmail.com) and 
+ * <a href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 package test.nz.org.take.r2ml.a;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.io.StringReader;
+import java.util.Iterator;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Unmarshaller;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
-
-import de.tu_cottbus.r2ml.Conclusion;
 import de.tu_cottbus.r2ml.DerivationRule;
 import de.tu_cottbus.r2ml.DerivationRuleSet;
 import de.tu_cottbus.r2ml.GenericAtom;
 import de.tu_cottbus.r2ml.RuleBase;
 import nz.org.take.Fact;
 import nz.org.take.KnowledgeBase;
-import nz.org.take.r2ml.DefaultSlotNameGenerator;
+import nz.org.take.KnowledgeElement;
+import nz.org.take.r2ml.CheckOnlyNormalizer;
+import nz.org.take.r2ml.DefaultDatatypeMapper;
+import nz.org.take.r2ml.DefaultNameMapper;
 import nz.org.take.r2ml.MappingContext;
 import nz.org.take.r2ml.R2MLDriver;
 import nz.org.take.r2ml.R2MLException;
-import nz.org.take.r2ml.SlotNameGenerator;
 import nz.org.take.r2ml.XmlTypeHandler;
 import junit.framework.TestCase;
 
-public class TestR2MLDriver extends TestCase {
+public class R2MLDriverTest extends TestCase {
 
-	static {
-		BasicConfigurator.configure();
-	}
 	R2MLDriver driver = null;
+
+	public R2MLDriverTest() {
+		super("R2MLDriverTest");
+	}
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		driver = new R2MLDriver();
-		driver.setSlotNameGenerator(new DefaultSlotNameGenerator());
-		driver.setDatatypeMapper(new TestDatatypeMapper());
+		driver.setNameMapper(new DefaultNameMapper());
+		driver.setDatatypeMapper(new DefaultDatatypeMapper());
+		driver.setNormalizer(new CheckOnlyNormalizer());
 		driver.initialize();
 	}
 
@@ -60,18 +75,46 @@ public class TestR2MLDriver extends TestCase {
 
 	public void test2() {
 		driver.logger.info("testImportKB01 started");
+		String testXml =
+			"<r2ml:RuleBase " +
+			"		xmlns:xs='http://www.w3.org/2001/XMLSchema' " +
+			"		xmlns:r2ml='http://www.rewerse.net/I1/2006/R2ML'>" +
+			"	<r2ml:DerivationRuleSet r2ml:ruleSetID='DRS0047'> " +
+			"		<r2ml:DerivationRule r2ml:ruleID='DR047a'>" +
+			"			<r2ml:conditions>" +
+			"				<r2ml:qf.Disjunction>" +
+			"					<r2ml:GenericAtom r2ml:predicateID='pred1'>" +
+			"						<r2ml:arguments>" +
+			"							<r2ml:TypedLiteral r2ml:datatypeID='xs:string' r2ml:lexicalValue='A'/>" +
+			"						</r2ml:arguments>" +
+			"					</r2ml:GenericAtom>" +
+			"					<r2ml:GenericAtom r2ml:predicateID='pred2'>" +
+			"						<r2ml:arguments>" +
+			"							<r2ml:TypedLiteral r2ml:datatypeID='xs:string' r2ml:lexicalValue='B'/>" +
+			"						</r2ml:arguments>" +
+			"					</r2ml:GenericAtom>" +
+			"				</r2ml:qf.Disjunction>" +
+			"			</r2ml:conditions>" +
+			"			<r2ml:conclusion>" +
+			"				<r2ml:GenericAtom r2ml:predicateID='pred3'>" +
+			"					<r2ml:arguments>" +
+			"						<r2ml:TypedLiteral r2ml:datatypeID='xs:string' r2ml:lexicalValue='C'/>" +
+			"					</r2ml:arguments>" +
+			"				</r2ml:GenericAtom>" +
+			"			</r2ml:conclusion>" +
+			"		</r2ml:DerivationRule>" +
+			"	</r2ml:DerivationRuleSet>" +
+			"</r2ml:RuleBase>";
+
 		KnowledgeBase kb = null;
 		try {
-			InputStream is = new FileInputStream(new File(
-					"resources/default.r2ml.xml"));
-			kb = driver.importKB(is);
+			StringReader input = new StringReader(testXml);
+			kb = driver.importKB(input);
 		} catch (R2MLException r2mle) {
 			fail("Internal Error: " + r2mle.toString());
-		} catch (FileNotFoundException e) {
-			fail("Exception occured:/n" + e.toString());
 		}
 		assertNotNull("No Knowledgebase returned!", kb);
-		assertEquals("More or less then one rule (expected exactly one)!", 1, kb.getElements().size());
+		assertEquals("Wrong number of rules:", 2, kb.getElements().size());
 		driver.logger.info("testImportKB01 finished");
 	}
 	
