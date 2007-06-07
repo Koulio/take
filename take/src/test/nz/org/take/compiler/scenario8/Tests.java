@@ -18,6 +18,10 @@
 
 package test.nz.org.take.compiler.scenario8;
 
+import java.util.Iterator;
+
+import test.nz.org.take.compiler.scenario8.generated.IsFatherOf;
+import test.nz.org.take.compiler.scenario8.generated.IsGrandfatherOf;
 import test.nz.org.take.compiler.scenario8.generated.KB;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.script.ScriptKnowledgeSource;
@@ -80,14 +84,13 @@ public class Tests extends TestCase
 	/**
 	 * Test 1.
 	 */
-	public void test1(){/*
-		Iterator<IsFatherOf> results = kb.getFather(new Person("Max"));	
+	public void test1(){
+		Iterator<IsGrandfatherOf> results = kb.getGrandfather(new Person("Max"));	
 		assertTrue(results.hasNext());
-		IsFatherOf r = results.next();
-		Person father = r.father;
-		assertEquals(new Person("Jens"),father);
+		IsGrandfatherOf r = results.next();
+		Person father = r.grandfather;
+		assertEquals(new Person("Klaus"),father);
 		assertFalse(results.hasNext());
-		*/
 	}
 	
 }

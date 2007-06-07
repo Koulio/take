@@ -20,26 +20,13 @@
 package test.nz.org.take.compiler.scenario8;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.log4j.BasicConfigurator;
-
-import nz.org.take.AbstractAnnotatable;
-import nz.org.take.ExternalFactStore;
-import nz.org.take.ExternalFactStoreException;
-import nz.org.take.KnowledgeBase;
-import nz.org.take.KnowledgeBaseVisitor;
-import nz.org.take.Predicate;
-import nz.org.take.Record;
-import nz.org.take.RecordIterator;
 import nz.org.take.SimplePredicate;
-import nz.org.take.compiler.reference.DefaultCompiler;
-import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
-import nz.org.take.script.ScriptException;
-import nz.org.take.script.ScriptKnowledgeSource;
-import java.io.*;
+import nz.org.take.rt.DBFactStore;
+import nz.org.take.rt.ExternalFactStoreException;
+import nz.org.take.rt.Record;
+import nz.org.take.rt.RecordIterator;
 
 
 /**
@@ -47,18 +34,18 @@ import java.io.*;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class FactStore extends AbstractAnnotatable implements ExternalFactStore {
+public class FactStore extends DBFactStore {
 
-	private String id = null;
+	private SimplePredicate predicate = null;
+	private static Map<String,Person> peopleByName = new HashMap<String,Person>();
 	
 	class FamilyRecord implements Record {
 		private Person person1 = null;
 		private Person person2 = null;
-		private static Predicate predicate = newe SimplePredicate("father",new Class[]{Person.class,Person.class}); 
-		FamilyRecord(String p1,String p2) {
+		FamilyRecord(Person p1,Person p2) {
 			super();
-			person1 = new Person(p1);
-			person2 = new Person(p2);
+			person1 = p1;
+			person2 = p2;
 		}
 		public Object getObject(int pos) throws ExternalFactStoreException {
 			if (pos==0) 
@@ -68,72 +55,80 @@ public class FactStore extends AbstractAnnotatable implements ExternalFactStore 
 		}
 
 		public SimplePredicate getPredicate() {
-			return null;
+			return FactStore.this.getPredicate();
+		}
+		public String toString() {
+			return "father["+person1.getName()+","+person2.getName()+"]";
 		}
 		
 	};
 	
 	
+	public FactStore() {
+		super();
+	}
 	/**
 	 * Generate the interface for the example.
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		
+		RecordIterator records = new FactStore().getFacts();
+		while (records.hasNext())
+			System.out.println(records.next());
 
 	}
-
-	public RecordIterator getKnowledge() {
-		Connection connection = null;
-		Statement statement = null;;
-		ResultSet result = null;
+	private Person getOrAddPerson(String name) {
+		Person p = peopleByName.get(name);
+		if (p==null) {
+			p=new Person(name);
+			peopleByName.put(name,p);
+		}
+		return p;
+	}
+	public void preQueryDo(Connection con) throws SQLException {
 		try {
-			connection = DriverManager.getConnection("jdbc:hsqldb:file:testdata/example8/example8db", "sa", "");
-			statement = connection.createStatement();
-			result = statement.executeQuery("select son,father from people");
+			Statement statement = con.createStatement();
+			statement.execute("CREATE TEXT TABLE people (son VARCHAR(20),father VARCHAR(20),PRIMARY KEY(son))");
+			statement.execute("SET TABLE people SOURCE \"people.csv\"");
+			statement.close();
 		}
 		catch (Exception x) {
-			x.printStackTrace();
+			// exception is thrown if table already exists
 		}
-		
-		// read data into memory buffer 
-		final ResultSet rs = result;
-		RecordIterator iter = new RecordIterator() {
-			
-
-			public boolean hasNext() {
-				return rs.next();
-			}
-
-			public Record next() {
-				
-			}
-
-			public void remove() {
-				throw new UnsupportedOperationException();				
-			}
-			
-		} ;
-
-		return iter;
 	}
 
-	protected Record buildRecord(String line) {
-		
-		return null;
+	public SimplePredicate getPredicate() {
+		if (predicate==null) {
+			predicate = new SimplePredicate();
+			predicate.setName("is_father_of");
+			predicate.setSlotTypes(new Class[]{Person.class,Person.class});
+			predicate.setSlotNames(new String[]{"son","father"});
+		}
+		return predicate;
 	}
-
-	public Predicate getPredicate() {
-		return null;
+	@Override
+	public String buildQuery() {
+		return "SELECT * FROM people";
 	}
-
-	public String getId() {
-		return id;
+	@Override
+	public Record buildRecord(ResultSet rs) throws SQLException {
+		return new FamilyRecord(
+				getOrAddPerson(rs.getString("son")),
+				getOrAddPerson(rs.getString("father"))
+			);
 	}
-
-	public void accept(KnowledgeBaseVisitor visitor) {
+	@Override
+	public void dispose(Connection con) throws SQLException {
+		con.close();
 		
-		
+	}
+	@Override
+	public Connection getConnection() throws SQLException {
+		return DriverManager.getConnection("jdbc:hsqldb:file:testdata/example8/example8db", "sa", "");
+	}
+	@Override
+	public String getDriverClass() {
+		return "org.hsqldb.jdbcDriver";
 	}
 
 }

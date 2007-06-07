@@ -16,21 +16,28 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take;
 
-import java.util.Iterator;
+package nz.org.take.rt;
+
 
 /**
- * Record iterator. The additional close method can be used to release resources,
- * e.g. database connections.
+ * A record is more or less fact without variables (=ground).
+ * Records are imported into the kb from external fact stores,
+ * such as relational databases or web services. 
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public interface RecordIterator extends Iterator<Record> {
+public interface Record {
 	
+
 	/**
-	 * Close the iterator, release external resources if necessary.
+	 * Get the object at a given position.
+	 * The type of this object must be consistent with the type of the respective predicate slot.
+	 * I.e. the following constarint must be satisfied: 
+	 * assert(this.getPredicate().getSlotTypes()[i].isAssignableFrom(this.getObject(i).getClass()))
+	 * @param pos a position
+	 * @return an object
 	 */
-	public void close();
+	public Object getObject(int pos) throws ExternalFactStoreException;
 
 }

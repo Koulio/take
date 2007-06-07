@@ -31,6 +31,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import org.apache.log4j.Logger;
 import nz.org.take.*;
+import nz.org.take.rt.ExternalFactStore;
 import nz.org.take.script.parser.Parser;
 
 /**
@@ -160,6 +161,10 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 				querySpecs.add((QuerySpec)part); 
 				annotate((QuerySpec)part,annotations); 
 			}
+			else if (part instanceof FactStore) {
+				ExternalFactSource fs = buildFactStore((FactStore)part); 
+				annotate(fs,annotations); 
+			}
 			else if (part instanceof Rule) {
 				Rule rule = (Rule)part;
 				
@@ -179,7 +184,7 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 			}
 			// ignore everything else, in particular comments
 		}
-		// now do the predicates
+		// now do the queries
 		for (QuerySpec q:querySpecs) {
 			Query query = buildQuery(predicatesByName,q);
 			for (Entry<String,String> e:q.getAnnotations().entrySet())  
@@ -190,6 +195,12 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		}
 		return kb;
 	}
+	private ExternalFactSource buildFactStore(FactStore store) throws ScriptSemanticsException {
+		String clazz = store.getClassName();
+
+		return null;
+	}
+
 	private String getId(Constant c) {
 		return c.getRef()==null?(c.getObject()==null?null:c.getObject().toString()):c.getRef();
 	}
