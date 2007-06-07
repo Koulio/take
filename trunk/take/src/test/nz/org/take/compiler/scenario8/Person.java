@@ -16,34 +16,51 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
-package nz.org.take;
-
-
+package test.nz.org.take.compiler.scenario8;
 /**
- * A record is more or less fact without variables (=ground).
- * Records are imported into the kb from external fact stores,
- * such as relational databases or web services. 
- * The predicate is usually simple, i.e. it consists of a name and 
- * the types associated by the predicate.
+ * Bean class referenced in tests. 
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-
-public interface Record {
+public class Person {
 	
-	/**
-	 * Get the predicate.
-	 */
-	public SimplePredicate getPredicate() ;
+	private String name = null;
 	
-	/**
-	 * Get the object at a given position.
-	 * The type of this object must be consistent with the type of the respective predicate slot.
-	 * I.e. the following constarint must be satisfied: 
-	 * assert(this.getPredicate().getSlotTypes()[i].isAssignableFrom(this.getObject(i).getClass()))
-	 * @param pos a position
-	 * @return an object
-	 */
-	public Object getObject(int pos) throws ExternalFactStoreException;
 
+	public Person(String name) {
+		super();
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public int hashCode() {
+		final int PRIME = 31;
+		int result = 1;
+		result = PRIME * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final Person other = (Person) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
 }

@@ -16,28 +16,22 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take;
+package nz.org.take.rt;
+
+import nz.org.take.KnowledgeElement;
 
 /**
- * Visitor for knowledge bases.
+ * Facts imported from external sources such as web services or relational databases.
+ * Returns a knowledge iterator. All clauses returned by this iterator must have the same predicate.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-public interface KnowledgeBaseVisitor {
-	public boolean visit(KnowledgeBase kb);
-	public void endVisit(KnowledgeBase kb);
-	public boolean visit(DerivationRule r);
-	public void endVisit(DerivationRule r);
-	public boolean visit(ExternalFactSource k);
-	public void endVisit(ExternalFactSource k);
-	public boolean visit(Fact f);
-	public void endVisit(Fact f);
-	public boolean visit(ComplexTerm t);
-	public void endVisit(ComplexTerm t);
-	public boolean visit(Constant t);
-	public void endVisit(Constant t);
-	public boolean visit(Variable t);
-	public void endVisit(Variable t);
-	public boolean visit(Query q);
-	public void endVisit(Query q);
-	
+
+public interface ExternalFactStore extends KnowledgeElement,Iterable {
+
+	/**
+	 * Get external knowledge. 
+	 * @return a knowledge iterator
+	 */
+	public RecordIterator getFacts();
+
 }

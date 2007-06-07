@@ -16,20 +16,21 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take;
+package nz.org.take.rt;
+
+import java.util.Iterator;
 
 /**
- * Facts imported from external sources such as web services or relational databases.
- * Returns a knowledge iterator. All clauses returned by this iterator must have the same predicate.
+ * Record iterator. The additional close method can be used to release resources,
+ * e.g. database connections.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public interface ExternalFactStore extends KnowledgeElement {
-
+public interface RecordIterator extends Iterator<Record> {
+	
 	/**
-	 * Get external knowledge. 
-	 * @return a knowledge iterator
+	 * Close the iterator, release external resources if necessary.
 	 */
-	public RecordIterator getKnowledge();
+	public void close();
 
 }
