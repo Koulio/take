@@ -112,12 +112,28 @@ public class ParserTests extends TestCase {
 	}
 	public void testFactStore1() throws Exception {
 		String input = 
-			"external fs1: com.mydomain.MyFactStore\n";
+			"external fs1: father[com.example.Person]\n";
 		Script script = parse(input);
 		assertEquals(1,script.getElements().size());
 		assertTrue(script.getElements().get(0) instanceof FactStore);
 		FactStore fs = (FactStore)script.getElements().get(0);
-		assertEquals("com.mydomain.MyFactStore",fs.getClassName());
+		assertEquals("fs1",fs.getId());
+		assertEquals("father",fs.getPredicate());
+		assertEquals(1,fs.getTypeNames().size());
+		assertEquals("com.example.Person",fs.getTypeNames().get(0));
+	}
+	public void testFactStore2() throws Exception {
+		String input = 
+			"external fs2: father[com.example.Person,int]\n";
+		Script script = parse(input);
+		assertEquals(1,script.getElements().size());
+		assertTrue(script.getElements().get(0) instanceof FactStore);
+		FactStore fs = (FactStore)script.getElements().get(0);
+		assertEquals("fs2",fs.getId());
+		assertEquals("father",fs.getPredicate());
+		assertEquals(2,fs.getTypeNames().size());
+		assertEquals("com.example.Person",fs.getTypeNames().get(0));
+		assertEquals("int",fs.getTypeNames().get(1));
 	}
 	public void testObjectRefs1() throws Exception {
 		String input = 
