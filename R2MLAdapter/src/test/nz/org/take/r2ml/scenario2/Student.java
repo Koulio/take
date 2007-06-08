@@ -24,7 +24,7 @@ package test.nz.org.take.r2ml.scenario2;
 
 
 public class Student extends Bean {
-	private java.util.List<Course> courses = new java.util.ArrayList<Course>();
+	private Course course = new Course();
 
 	public Student(String name) {
 		super(name);
@@ -33,11 +33,11 @@ public class Student extends Bean {
 		super();
 	}
 
-	public java.util.List<Course> getCourses() {
-		return courses;
+	public Course getCourse() {
+		return course;
 	}
 
-	public void setCourse(java.util.List<Course> courses) {
-		this.courses = courses;
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 }

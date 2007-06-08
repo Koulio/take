@@ -18,28 +18,10 @@ public class KBUtil {
 
 		KnowledgeBase kb = src.getKnowledgeBase();
 
-		// there is only one predicate
-		Predicate lastnamePred = kb.getSupportedPredicates().iterator().next();
-		query.setPredicate(lastnamePred);
-		query.setInputParams(new boolean[] { true, false });
+		query.setPredicate(kb.getSupportedPredicates().iterator().next());
+		query.setInputParams(new boolean[] { false, true });
 
 		kb.add(query);
-
-		Fact fact = new Fact();
-		SimplePredicate isFather = new SimplePredicate();
-		isFather.setName("isFather");
-		isFather.setNegated(false);
-		isFather.setSlotNames(new String[] { "son", "father" });
-		isFather.setSlotTypes(new Class[] { Person.class, Person.class });
-		
-		fact.setPredicate(isFather);
-// add Fact for Jens is Father of Max
-		Term[] terms = new Term[2];
-		term[0] = new Person("Max");
-		term[1] = new Person("Jens");
-		fact.setTerms(new Term[]{ ,  });
-
-		kb.add(fact);
 
 	}
 }

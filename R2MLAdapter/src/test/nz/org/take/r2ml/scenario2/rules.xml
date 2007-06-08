@@ -30,8 +30,8 @@
 	<r2ml:DerivationRuleSet r2ml:ruleSetID="DRS001">
 		
 		<r2ml:ObjectVariable r2ml:name="student" r2ml:classID="Student" />
-		<r2ml:ObjectVariable r2ml:name="course" r2ml:classID="Course" />
-		<r2ml:ObjectVariable r2ml:name="college" r2ml:classID="College" />
+		<r2ml:DataVariable r2ml:name="course" r2ml:datatypeID="Course" />
+		<r2ml:DataVariable r2ml:name="college" r2ml:datatypeID="College" />
 		
 		<r2ml:DerivationRule r2ml:ruleID="DR000">
             <r2ml:Documentation>
@@ -41,24 +41,20 @@
 				</r2ml:RuleText>
             </r2ml:Documentation>
 			<r2ml:conditions>
-				<r2ml:GenericAtom r2ml:predicateID="courses">
-					<r2ml:arguments>
+				<r2ml:AttributionAtom r2ml:attributeID="course">
+					<r2ml:subject>
 						<r2ml:ObjectVariable r2ml:name="student"/>
-						<r2ml:ObjectVariable r2ml:name="course"/>
-					</r2ml:arguments>
-				</r2ml:GenericAtom>
-				<r2ml:GenericAtom r2ml:predicateID="college">
-					<r2ml:arguments>
-						<r2ml:ObjectVariable r2ml:name="course"/>
-						<r2ml:ObjectVariable r2ml:name="college"/>
-					</r2ml:arguments>
-				</r2ml:GenericAtom>
+					</r2ml:subject>
+					<r2ml:dataValue>
+						<r2ml:DataVariable r2ml:name="course" />
+					</r2ml:dataValue>
+				</r2ml:AttributionAtom>
 			</r2ml:conditions>
             <r2ml:conclusion>
 				<r2ml:GenericAtom r2ml:predicateID="isEnrolled">
 					<r2ml:arguments>
+						<r2ml:DataVariable r2ml:name="college" />
 						<r2ml:ObjectVariable r2ml:name="student" />
-						<r2ml:ObjectVariable r2ml:name="college" />
 					</r2ml:arguments>
 				</r2ml:GenericAtom>
             </r2ml:conclusion>

@@ -23,15 +23,13 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
-import test.nz.org.take.r2ml.b.Person;
-
-
 public class DefaultDatatypeMapper implements DatatypeMapper {
 	
 	static Map<QName, Class> types = new HashMap<QName, Class>();
 
 	public DefaultDatatypeMapper () {
 		super();
+		types.put(new QName("string"), String.class);
 	}
 	
 	public Class getType (QName key) {
