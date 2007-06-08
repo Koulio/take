@@ -39,6 +39,7 @@ TOKEN:{<COMMENT: "//"(["a"-"z","A"-"Z","_","-","?","#","*","%","_","/",",","\\",
 TOKEN:{<STRING_LITERAL:"\"" (["a"-"z","A"-"Z","_","-","?","#","*","%","_","/",",","\\",";","!","@","0"-"9"," "] )* "\"">}
 TOKEN:{<WHITESPACE: (" ")+>}
 TOKEN:{<SEMICOLON:";">}
+TOKEN:{<COMMA:",">}
 TOKEN:{<COMPARISON:"<="|">="|"<"|">"|"=="|"!=">}
 
 
@@ -178,7 +179,7 @@ void factStore(Script script):
 {}
 {
 	{FactStore fs = new FactStore();}	
-	<EXTERNAL> id(fs) className(fs)(<DOT>className(fs))*
+	<EXTERNAL> id(fs) predicateName(fs)"["className(fs)(<COMMA>className(fs))*"]"
 	{script.add(fs);}
 	
 }
@@ -190,14 +191,29 @@ void id(Identifiable r):
 	t = <LABEL>
 	{r.setId(t.image.substring(0,t.image.length()-1));}
 }
-void className(FactStore fs):
+void predicateName(FactStore fs):
 {
 	Token t;
 }
 {
 	t = <NAME>
-	{fs.addToName(t.image);}
-	{fs.setPosition(t.beginLine,t.beginColumn);}
+	{fs.setPredicate(t.image);}
+}
+void className(FactStore fs):
+{
+	Token t;
+}
+{
+	{fs.nextClass();}
+	classNameToken(fs)(<DOT>classNameToken(fs))*
+}
+void classNameToken(FactStore fs):
+{
+	Token t;
+}
+{
+	t = <NAME>
+	{fs.addToClassName(t.image);}
 }
 void condition(Rule r):
 {}
