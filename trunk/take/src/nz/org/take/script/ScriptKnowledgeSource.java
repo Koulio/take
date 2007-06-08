@@ -31,7 +31,6 @@ import java.util.*;
 import java.util.Map.Entry;
 import org.apache.log4j.Logger;
 import nz.org.take.*;
-import nz.org.take.rt.ExternalFactStore;
 import nz.org.take.script.parser.Parser;
 
 /**
@@ -162,8 +161,9 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 				annotate((QuerySpec)part,annotations); 
 			}
 			else if (part instanceof FactStore) {
-				ExternalFactSource fs = buildFactStore((FactStore)part); 
+				ExternalFactStore fs = buildFactStore((FactStore)part,predicatesByName); 
 				annotate(fs,annotations); 
+				kb.add(fs);
 			}
 			else if (part instanceof Rule) {
 				Rule rule = (Rule)part;
@@ -195,10 +195,33 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		}
 		return kb;
 	}
-	private ExternalFactSource buildFactStore(FactStore store) throws ScriptSemanticsException {
-		String clazz = store.getClassName();
-
-		return null;
+	private ExternalFactStore buildFactStore(FactStore store,Map<String,Predicate> predicatesByName) throws ScriptSemanticsException {
+		ExternalFactStore fs = new ExternalFactStore();
+		fs.setId(store.getId());
+		SimplePredicate p = new SimplePredicate();
+		p.setName(store.getPredicate());
+		Class[] types = new Class[store.getTypeNames().size()];
+		for (int i=0;i<types.length;i++) {
+			try {
+				types[i] = classloader.loadClass(store.getTypeNames().get(i));
+			}
+			catch (Exception x) {
+				throw new ScriptSemanticsException("Cannot load class " + store.getTypeNames().get(i) + this.printPosInfo(store),x);
+			}
+		}
+		p.setSlotTypes(types);
+		
+		String id = this.getId(p);
+		Predicate existingPredicate = predicatesByName.get(id);
+		if (existingPredicate==null) {
+			predicatesByName.put(this.getId(p),p);
+		}
+		else
+			p = (SimplePredicate)existingPredicate;
+		
+		fs.setPredicate(p);
+		
+		return fs;
 	}
 
 	private String getId(Constant c) {

@@ -18,29 +18,44 @@
 
 package nz.org.take.script;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Derivation rule.
+ * External facts stores.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
 public class FactStore extends Identifiable  {
 
-	private String className = null;
+	private String predicate = null;
+	private List<String> typeNames= new ArrayList<String>();
 	
-	public void addToName(String token) {
-		if (className==null)
+	public void nextClass() {
+		typeNames.add("");
+	}
+	public void addToClassName(String token) {
+		String className = typeNames.get(typeNames.size()-1);
+		if (className.length()==0)
 			className = token;
 		else 
 			className = className+'.'+token;
+		typeNames.set(typeNames.size()-1, className);
 	}
 
 	public String toString() {
-		return "external " + className;
+		return "external " + this.getId();
+	}
+	public List<String> getTypeNames() {
+		return typeNames;
+	}
+	public String getPredicate() {
+		return predicate;
+	}
+	public void setPredicate(String predicate) {
+		this.predicate = predicate;
 	}
 
-	public String getClassName() {
-		return className;
-	}
 
 
 }
