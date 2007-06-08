@@ -46,6 +46,7 @@ public interface XmlTypeHandler {
 	public static final String RULE_TEXT_DIAGRAM_KEY = RuleText.class.getCanonicalName() + ".diagram";
 	public static final String RULE_TEXT_VOCABULARY_DIAGRAM_KEY = RuleText.class.getCanonicalName() + "vocabulary.diagram";
 	
+	public static final String TYPE_CATEGORY_INDIVIDUAL = "individual";
 	
 	/**
 	 * @param obj

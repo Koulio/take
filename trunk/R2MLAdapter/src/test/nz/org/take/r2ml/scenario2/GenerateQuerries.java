@@ -21,9 +21,9 @@ public class GenerateQuerries {
 		query1.setPredicate(predicate);
 		query2.setPredicate(predicate);
 		query1.setInputParams(new boolean[] { true, true });
-		query2.setInputParams(new boolean[] { true, false });
+		query2.setInputParams(new boolean[] { false, true });
 
-		kb.add(query1);
+//		kb.add(query1);
 		kb.add(query2);
 
 	}

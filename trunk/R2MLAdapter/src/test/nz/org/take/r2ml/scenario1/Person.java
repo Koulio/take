@@ -24,6 +24,7 @@ package test.nz.org.take.r2ml.scenario1;
 public class Person {
 	
 	private String lastname = null;
+	private String firstname = null;
 	
 
 	public Person(String name) {
@@ -62,6 +63,14 @@ public class Person {
 		} else if (!lastname.equals(other.lastname))
 			return false;
 		return true;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 	
 //	public Person getFather() {

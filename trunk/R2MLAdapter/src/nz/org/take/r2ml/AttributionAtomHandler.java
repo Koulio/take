@@ -33,7 +33,7 @@ import de.tu_cottbus.r2ml.AttributionAtom;
 class AttributionAtomHandler implements XmlTypeHandler {
 
 	/**
-	 * Map an AttributionAtom to a PropertyPredicate.
+	 * Map an AttributionAtom to a PropertyPredicate. TODO implement
 	 * 
 	 * @param obj
 	 *            an AttributionAtom
@@ -48,32 +48,36 @@ class AttributionAtomHandler implements XmlTypeHandler {
 			R2MLDriver driver) throws R2MLException {
 		AttributionAtom atom = (AttributionAtom) obj;
 		context.enter(this);
-		
+
 		Fact fact = new Fact();
 		String attributeName = atom.getAttributeID().getLocalPart();
 		fact.setId(attributeName);
 		// domain
-		XmlTypeHandler subjectHandler = driver.getHandlerByXmlType(atom.getSubject()
-				.getClass());
-		Term domain = (Term) subjectHandler.importObject(atom.getSubject(), context,
-				driver);
+		XmlTypeHandler subjectHandler = driver.getHandlerByXmlType(atom
+				.getSubject().getClass());
+		Term domain = (Term) subjectHandler.importObject(atom.getSubject(),
+				context, driver);
 		// range
-		XmlTypeHandler valueHandler = driver.getHandlerByXmlType(atom.getDataValue().getDataTerm().getValue().getClass());
-		Term range = (Term) valueHandler.importObject(atom.getDataValue().getDataTerm().getValue(), context, driver);
-		
-		fact.setTerms( new Term[]{ domain, range } );
-		
+		XmlTypeHandler valueHandler = driver.getHandlerByXmlType(atom
+				.getDataValue().getDataTerm().getValue().getClass());
+		Term range = (Term) valueHandler.importObject(atom.getDataValue()
+				.getDataTerm().getValue(), context, driver);
+
+		fact.setTerms(new Term[] { domain, range });
+
 		// build Predicate
 		PropertyPredicate prop = new PropertyPredicate();
 		// set negation
-		prop.setNegated((atom.isIsNegated()==null)?false:atom.isIsNegated());
+		prop.setNegated((atom.isIsNegated() == null) ? false : atom
+				.isIsNegated());
 		// Attribution is everytime one2one
 		// TODO check typeCategory-attribute of the datavalue-dataterm
 		prop.setOne2One(true);
 		// look up slotnames
-		prop.setSlotNames(driver.getNameMapper().getSlotNames(atom.getAttributeID()));
+		prop.setSlotNames(driver.getNameMapper().getSlotNames(
+				atom.getAttributeID()));
 		prop.setOwnerType(domain.getType());
-		
+
 		// create PropertyDescriptor with datavalue as range
 		PropertyDescriptor pd = null;
 		try {
