@@ -22,11 +22,10 @@ package test.nz.org.take.compiler.scenario8;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
-import nz.org.take.SimplePredicate;
-import nz.org.take.rt.DBFactStore;
-import nz.org.take.rt.ExternalFactStoreException;
-import nz.org.take.rt.Record;
-import nz.org.take.rt.RecordIterator;
+
+import test.nz.org.take.compiler.scenario8.generated.ExternalFactStore_IsFatherOf;
+import test.nz.org.take.compiler.scenario8.generated.IsFatherOf;
+import nz.org.take.rt.ResourceIterator;
 
 
 /**
@@ -34,45 +33,25 @@ import nz.org.take.rt.RecordIterator;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class FactStore extends DBFactStore {
+public class FactStore implements ExternalFactStore_IsFatherOf  {
 
-	private SimplePredicate predicate = null;
 	private static Map<String,Person> peopleByName = new HashMap<String,Person>();
-	
-	class FamilyRecord implements Record {
-		private Person person1 = null;
-		private Person person2 = null;
-		FamilyRecord(Person p1,Person p2) {
-			super();
-			person1 = p1;
-			person2 = p2;
-		}
-		public Object getObject(int pos) throws ExternalFactStoreException {
-			if (pos==0) 
-				return person1;
-			else
-				return person2;
-		}
-
-		public SimplePredicate getPredicate() {
-			return FactStore.this.getPredicate();
-		}
-		public String toString() {
-			return "father["+person1.getName()+","+person2.getName()+"]";
-		}
-		
-	};
-	
 	
 	public FactStore() {
 		super();
+		try {
+			Class.forName("org.hsqldb.jdbcDriver" );
+		}
+		catch (Exception x) {
+			throw new RuntimeException("Cannot find JDBC driver class",x);
+		}
 	}
 	/**
 	 * Generate the interface for the example.
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		RecordIterator records = new FactStore().getFacts();
+		ResourceIterator<IsFatherOf> records = new FactStore().fetch(null,null);
 		while (records.hasNext())
 			System.out.println(records.next());
 
@@ -85,50 +64,64 @@ public class FactStore extends DBFactStore {
 		}
 		return p;
 	}
-	public void preQueryDo(Connection con) throws SQLException {
+	 public ResourceIterator<IsFatherOf> fetch(final Person son,final Person father) {
+		
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet result = null;
 		try {
-			Statement statement = con.createStatement();
+			connection = DriverManager.getConnection("jdbc:hsqldb:file:testdata/example8/example8db", "sa", "");
+			statement = connection.createStatement();
 			statement.execute("CREATE TEXT TABLE people (son VARCHAR(20),father VARCHAR(20),PRIMARY KEY(son))");
 			statement.execute("SET TABLE people SOURCE \"people.csv\"");
-			statement.close();
+			String query = null;
+			if (son==null && father==null)
+				query = "SELECT * FROM people";
+			if (son!=null && father==null)
+				query = "SELECT * FROM people WHERE son='"+son.getName()+"'";
+			if (father==null && father!=null)
+				query = "SELECT * FROM people WHERE father='"+father.getName()+"'";
+			if (son!=null && father!=null)
+				query = "SELECT * FROM people WHERE son='"+son.getName()+"' AND father='"+father.getName()+"'";
+			result = statement.executeQuery(query);
 		}
 		catch (Exception x) {
-			// exception is thrown if table already exists
+			x.printStackTrace();
 		}
+		final ResultSet rs = result;
+		ResourceIterator<IsFatherOf> iter = new ResourceIterator<IsFatherOf>() {
+			public boolean hasNext() {
+				try{
+					return rs.next();
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+			}
+			public IsFatherOf next() {
+				try {
+					return new IsFatherOf(
+						getOrAddPerson(rs.getString("son")),
+						getOrAddPerson(rs.getString("father"))
+					);
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+			}
+			public void remove() {
+				throw new UnsupportedOperationException();				
+			}
+			public void close() {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		} ;
+
+		return iter;
 	}
 
-	public SimplePredicate getPredicate() {
-		if (predicate==null) {
-			predicate = new SimplePredicate();
-			predicate.setName("is_father_of");
-			predicate.setSlotTypes(new Class[]{Person.class,Person.class});
-			predicate.setSlotNames(new String[]{"son","father"});
-		}
-		return predicate;
-	}
-	@Override
-	public String buildQuery() {
-		return "SELECT * FROM people";
-	}
-	@Override
-	public Record buildRecord(ResultSet rs) throws SQLException {
-		return new FamilyRecord(
-				getOrAddPerson(rs.getString("son")),
-				getOrAddPerson(rs.getString("father"))
-			);
-	}
-	@Override
-	public void dispose(Connection con) throws SQLException {
-		con.close();
-		
-	}
-	@Override
-	public Connection getConnection() throws SQLException {
-		return DriverManager.getConnection("jdbc:hsqldb:file:testdata/example8/example8db", "sa", "");
-	}
-	@Override
-	public String getDriverClass() {
-		return "org.hsqldb.jdbcDriver";
-	}
 
 }
