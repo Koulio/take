@@ -16,28 +16,40 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
-package nz.org.take.rt;
-
+package nz.org.take;
 
 /**
- * A record is more or less fact without variables (=ground).
- * Records are imported into the kb from external fact stores,
- * such as relational databases or web services. 
+ * Represents external fact stores.
+ * The compiler will generate a resourec iterator factory interface
+ * for these fact stores that can then be implemented.
+ * Typically, an implementation is based on a database or web service.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public interface Record {
-	
+public class ExternalFactStore extends AbstractAnnotatable implements KnowledgeElement {
 
-	/**
-	 * Get the object at a given position.
-	 * The type of this object must be consistent with the type of the respective predicate slot.
-	 * I.e. the following constarint must be satisfied: 
-	 * assert(this.getPredicate().getSlotTypes()[i].isAssignableFrom(this.getObject(i).getClass()))
-	 * @param pos a position
-	 * @return an object
-	 */
-	public Object getObject(int pos) throws ExternalFactStoreException;
+	private String id = null;
+	private SimplePredicate predicate = null;
+
+	public void accept(KnowledgeBaseVisitor visitor) {
+		visitor.visit(this);
+		visitor.endVisit(this);
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public SimplePredicate getPredicate() {
+		return predicate;
+	}
+
+	public void setPredicate(SimplePredicate predicate) {
+		this.predicate = predicate;
+	}
 
 }

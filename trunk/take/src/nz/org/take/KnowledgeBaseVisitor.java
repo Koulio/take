@@ -27,8 +27,8 @@ public interface KnowledgeBaseVisitor {
 	public void endVisit(KnowledgeBase kb);
 	public boolean visit(DerivationRule r);
 	public void endVisit(DerivationRule r);
-	public boolean visit(ExternalFactSource k);
-	public void endVisit(ExternalFactSource k);
+	public boolean visit(ExternalFactStore k);
+	public void endVisit(ExternalFactStore k);
 	public boolean visit(Fact f);
 	public void endVisit(Fact f);
 	public boolean visit(ComplexTerm t);

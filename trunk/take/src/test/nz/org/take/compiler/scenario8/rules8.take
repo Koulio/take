@@ -19,4 +19,4 @@ query is_grandfather_of[in,out]
 query is_grandfather_of[out,in]
 // rules
 rule1: if is_father_of[grandchild,father] and is_father_of[father,grandfather] then is_grandfather_of[grandchild,grandfather]
-external facts1: test.nz.org.take.compiler.scenario8.FactStore
+external facts1: is_father_of[test.nz.org.take.compiler.scenario8.Person, test.nz.org.take.compiler.scenario8.Person]
