@@ -75,18 +75,32 @@ public class KnowledgeBaseManager<I> {
 	 */
 	
 	public I getKnowledgeBase(Class spec,KnowledgeSource ksource) throws TakeException {
-		return this.getKnowledgeBase(spec, ksource,new SimpleBindings());
+		return this.getKnowledgeBase(spec, ksource,new SimpleBindings(),new SimpleBindings());
 	}
+	
+	/**
+	 * Get an instance of the compiled knowledge base.
+	 * @param spec the interface to be implemented by the compiled knowledge base
+	 * @param ksource the knowledge source (a kb, a script, xml file or similar)
+	 * @param constants bindings for the objects referenced in the kb
+	 * @return an instance of the kb
+	 * @throws TakeException
+	 */
+	public I getKnowledgeBase(Class spec,KnowledgeSource ksource,Bindings constants) throws TakeException {
+		return this.getKnowledgeBase(spec, ksource,constants,new SimpleBindings());
+	}
+	
 
 	/**
 	 * Get an instance of the compiled knowledge base.
 	 * @param spec the interface to be implemented by the compiled knowledge base
 	 * @param ksource the knowledge source (a kb, a script, xml file or similar)
-	 * @param bindings bindings for the objects referenced in the kb
+	 * @param constants bindings for the objects referenced in the kb
+	 * @param factStores bindings for the fact stores referenced in the kb
 	 * @return an instance of the kb
 	 * @throws TakeException
 	 */
-	public I getKnowledgeBase(Class spec,KnowledgeSource ksource,Bindings bindings) throws TakeException {
+	public I getKnowledgeBase(Class spec,KnowledgeSource ksource,Bindings constants,Bindings factStores) throws TakeException {
 	
 		KnowledgeBase kb = ksource.getKnowledgeBase();
 		assert(spec.isInterface());
@@ -137,8 +151,10 @@ public class KnowledgeBaseManager<I> {
 	    	URL classLoc = new File(binFolder).toURL();	  
 	    	ClassLoader classloader = new URLClassLoader(new URL[]{classLoc});
 	    	// handle bindings, i.e. bind names to objects that are referenced in rules as constant terms
-		    String constantClassName = packageName+'.'+kbCompiler.getNameGenerator().getConstantClassName();
-		    setupBindings(bindings,constantClassName,classloader);		    
+		    String constantClassName = packageName+'.'+kbCompiler.getNameGenerator().getConstantRegistryClassName();
+		    setupBindings(constants,constantClassName,classloader);	
+		    String factStoreClassName = packageName+'.'+kbCompiler.getNameGenerator().getFactStoreRegistryClassName();
+		    setupBindings(factStores,factStoreClassName,classloader);		    
 	    	// load class
 		    Class clazz = classloader.loadClass(fullClassName);
 	    	return (I)clazz.newInstance();

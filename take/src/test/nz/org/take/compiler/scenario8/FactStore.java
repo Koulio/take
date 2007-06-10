@@ -23,7 +23,7 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import test.nz.org.take.compiler.scenario8.generated.ExternalFactStore_IsFatherOf;
+import test.nz.org.take.compiler.scenario8.generated.ExternalFactStore4IsFatherOf;
 import test.nz.org.take.compiler.scenario8.generated.IsFatherOf;
 import nz.org.take.rt.ResourceIterator;
 
@@ -33,7 +33,7 @@ import nz.org.take.rt.ResourceIterator;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class FactStore implements ExternalFactStore_IsFatherOf  {
+public class FactStore implements ExternalFactStore4IsFatherOf  {
 
 	private static Map<String,Person> peopleByName = new HashMap<String,Person>();
 	
