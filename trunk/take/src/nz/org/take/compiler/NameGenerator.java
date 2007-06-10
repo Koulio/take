@@ -66,10 +66,15 @@ public interface NameGenerator {
 	 */
 	public String getVariableNameForSlot(Predicate p, int slot);
 	/**
-	 * Get the (local, without package name) name of the class for the constants.
+	 * Get the (local, without package name) name of the registry class for the constants.
 	 * @return
 	 */
-	public String getConstantClassName();
+	public String getConstantRegistryClassName();
+	/**
+	 * Get the (local, without package name) name of the registry class for fact stores.
+	 * @return
+	 */
+	public String getFactStoreRegistryClassName();
 	
 
 }

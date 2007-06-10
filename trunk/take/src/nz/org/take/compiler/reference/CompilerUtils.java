@@ -750,5 +750,20 @@ public abstract class CompilerUtils {
 			out.print(s);
 		}
 	}
+	/**
+	 * Get the package name of a class. The class is given as a name.
+	 * If the class cannot be loaded, return null.
+	 * @param clazz a class
+	 * @return a package name 
+	 */
+	protected String getPackageName(String className) {
+		try {
+			Class clazz = Class.forName(className);
+			return clazz.getPackage().getName();
+		}
+		catch (Throwable t) {
+			return null;
+		}
+	}
 
 }

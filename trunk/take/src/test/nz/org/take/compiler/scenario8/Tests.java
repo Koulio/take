@@ -20,6 +20,9 @@ package test.nz.org.take.compiler.scenario8;
 
 import java.util.Iterator;
 
+import javax.script.Bindings;
+import javax.script.SimpleBindings;
+
 import test.nz.org.take.compiler.scenario8.generated.IsFatherOf;
 import test.nz.org.take.compiler.scenario8.generated.IsGrandfatherOf;
 import test.nz.org.take.compiler.scenario8.generated.KB;
@@ -61,10 +64,14 @@ public class Tests extends TestCase
 	{
 		super.setUp();
 		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
+		Bindings factStores = new SimpleBindings();
+		factStores.put("facts1", new FactStore());
 		kb = kbm.getKnowledgeBase(
 				KB.class, 
-				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/scenario8/rules8.take"))
-				); 
+				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/scenario8/rules8.take")),
+				new SimpleBindings(),
+				factStores
+		); 
 
 	}
 

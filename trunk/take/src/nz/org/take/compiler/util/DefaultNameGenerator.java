@@ -115,7 +115,11 @@ public class DefaultNameGenerator implements NameGenerator {
 			b.append( f ? "1" : "0" );
 		return b.toString();
 	}
-	public String getConstantClassName() {
+	public String getConstantRegistryClassName() {
 		return "Constants";
+	}
+
+	public String getFactStoreRegistryClassName() {
+		return "FactStores";
 	}
 }
