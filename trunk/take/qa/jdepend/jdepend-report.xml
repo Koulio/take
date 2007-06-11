@@ -97,14 +97,14 @@
 
         <Package name="nz.org.take">
             <Stats>
-                <TotalClasses>30</TotalClasses>
-                <ConcreteClasses>15</ConcreteClasses>
-                <AbstractClasses>15</AbstractClasses>
+                <TotalClasses>37</TotalClasses>
+                <ConcreteClasses>19</ConcreteClasses>
+                <AbstractClasses>18</AbstractClasses>
                 <Ca>5</Ca>
                 <Ce>1</Ce>
-                <A>0.5</A>
+                <A>0.49</A>
                 <I>0.17</I>
-                <D>0.33</D>
+                <D>0.35</D>
                 <V>1</V>
             </Stats>
 
@@ -123,6 +123,9 @@
                 </Class>
                 <Class sourceFile="Clause.java">
                     nz.org.take.Clause
+                </Class>
+                <Class sourceFile="DBFactStore.java">
+                    nz.org.take.DBFactStore
                 </Class>
                 <Class sourceFile="ExternalKnowledge.java">
                     nz.org.take.ExternalKnowledge
@@ -148,6 +151,12 @@
                 <Class sourceFile="Predicate.java">
                     nz.org.take.Predicate
                 </Class>
+                <Class sourceFile="Record.java">
+                    nz.org.take.Record
+                </Class>
+                <Class sourceFile="RecordIterator.java">
+                    nz.org.take.RecordIterator
+                </Class>
                 <Class sourceFile="Term.java">
                     nz.org.take.Term
                 </Class>
@@ -160,11 +169,17 @@
                 <Class sourceFile="AbstractKnowledgeBaseVisitor.java">
                     nz.org.take.AbstractKnowledgeBaseVisitor
                 </Class>
+                <Class sourceFile="Comparison.java">
+                    nz.org.take.Comparison
+                </Class>
                 <Class sourceFile="ComplexTerm.java">
                     nz.org.take.ComplexTerm
                 </Class>
                 <Class sourceFile="Constant.java">
                     nz.org.take.Constant
+                </Class>
+                <Class sourceFile="DBFactStore.java">
+                    nz.org.take.DBFactStore$1
                 </Class>
                 <Class sourceFile="DefaultKnowledgeBase.java">
                     nz.org.take.DefaultKnowledgeBase
@@ -174,6 +189,12 @@
                 </Class>
                 <Class sourceFile="DerivationRule.java">
                     nz.org.take.DerivationRule
+                </Class>
+                <Class sourceFile="ExternalFactStore.java">
+                    nz.org.take.ExternalFactStore
+                </Class>
+                <Class sourceFile="ExternalFactStoreException.java">
+                    nz.org.take.ExternalFactStoreException
                 </Class>
                 <Class sourceFile="Fact.java">
                     nz.org.take.Fact
@@ -266,14 +287,14 @@
 
         <Package name="nz.org.take.compiler.reference">
             <Stats>
-                <TotalClasses>9</TotalClasses>
-                <ConcreteClasses>7</ConcreteClasses>
+                <TotalClasses>11</TotalClasses>
+                <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>2</Ca>
                 <Ce>6</Ce>
-                <A>0.22</A>
+                <A>0.18</A>
                 <I>0.75</I>
-                <D>0.03</D>
+                <D>0.07</D>
                 <V>1</V>
             </Stats>
 
@@ -290,6 +311,9 @@
                 <Class sourceFile="Bindings.java">
                     nz.org.take.compiler.reference.Bindings
                 </Class>
+                <Class sourceFile="CompilerPlugin4Comparisons.java">
+                    nz.org.take.compiler.reference.CompilerPlugin4Comparisons
+                </Class>
                 <Class sourceFile="CompilerPlugin4JPredicates.java">
                     nz.org.take.compiler.reference.CompilerPlugin4JPredicates
                 </Class>
@@ -301,6 +325,9 @@
                 </Class>
                 <Class sourceFile="DefaultCompiler.java">
                     nz.org.take.compiler.reference.DefaultCompiler$1
+                </Class>
+                <Class sourceFile="DefaultCompiler.java">
+                    nz.org.take.compiler.reference.DefaultCompiler$2
                 </Class>
                 <Class sourceFile="QueryRef.java">
                     nz.org.take.compiler.reference.QueryRef
@@ -520,18 +547,21 @@
 
         <Package name="nz.org.take.script">
             <Stats>
-                <TotalClasses>22</TotalClasses>
-                <ConcreteClasses>20</ConcreteClasses>
-                <AbstractClasses>2</AbstractClasses>
+                <TotalClasses>24</TotalClasses>
+                <ConcreteClasses>21</ConcreteClasses>
+                <AbstractClasses>3</AbstractClasses>
                 <Ca>2</Ca>
                 <Ce>3</Ce>
-                <A>0.09</A>
+                <A>0.12</A>
                 <I>0.6</I>
-                <D>0.31</D>
+                <D>0.27</D>
                 <V>1</V>
             </Stats>
 
             <AbstractClasses>
+                <Class sourceFile="Identifiable.java">
+                    nz.org.take.script.Identifiable
+                </Class>
                 <Class sourceFile="Term.java">
                     nz.org.take.script.Term
                 </Class>
@@ -558,6 +588,9 @@
                 </Class>
                 <Class sourceFile="Declaration.java">
                     nz.org.take.script.Declaration
+                </Class>
+                <Class sourceFile="FactStore.java">
+                    nz.org.take.script.FactStore
                 </Class>
                 <Class sourceFile="FeatureNotSupportedException.java">
                     nz.org.take.script.FeatureNotSupportedException

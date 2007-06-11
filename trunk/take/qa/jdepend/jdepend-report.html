@@ -83,13 +83,13 @@
 <td align="left"><a href="#PKexample.nz.org.take.compiler.example1.spec">example.nz.org.take.compiler.example1.spec</a></td><td align="right">2</td><td align="right">1</td><td align="right">1</td><td align="right">1</td><td align="right">2</td><td align="right">0.5</td><td align="right">0.67</td><td align="right">0.17</td>
 </tr>
 <tr>
-<td align="left"><a href="#PKnz.org.take">nz.org.take</a></td><td align="right">30</td><td align="right">15</td><td align="right">15</td><td align="right">5</td><td align="right">1</td><td align="right">0.5</td><td align="right">0.17</td><td align="right">0.33</td>
+<td align="left"><a href="#PKnz.org.take">nz.org.take</a></td><td align="right">37</td><td align="right">18</td><td align="right">19</td><td align="right">5</td><td align="right">1</td><td align="right">0.49</td><td align="right">0.17</td><td align="right">0.35</td>
 </tr>
 <tr>
 <td align="left"><a href="#PKnz.org.take.compiler">nz.org.take.compiler</a></td><td align="right">5</td><td align="right">4</td><td align="right">1</td><td align="right">5</td><td align="right">1</td><td align="right">0.8</td><td align="right">0.17</td><td align="right">0.03</td>
 </tr>
 <tr>
-<td align="left"><a href="#PKnz.org.take.compiler.reference">nz.org.take.compiler.reference</a></td><td align="right">9</td><td align="right">2</td><td align="right">7</td><td align="right">2</td><td align="right">6</td><td align="right">0.22</td><td align="right">0.75</td><td align="right">0.03</td>
+<td align="left"><a href="#PKnz.org.take.compiler.reference">nz.org.take.compiler.reference</a></td><td align="right">11</td><td align="right">2</td><td align="right">9</td><td align="right">2</td><td align="right">6</td><td align="right">0.18</td><td align="right">0.75</td><td align="right">0.07</td>
 </tr>
 <tr>
 <td align="left"><a href="#PKnz.org.take.compiler.util">nz.org.take.compiler.util</a></td><td align="right">6</td><td align="right">2</td><td align="right">4</td><td align="right">3</td><td align="right">3</td><td align="right">0.33</td><td align="right">0.5</td><td align="right">0.17</td>
@@ -104,7 +104,7 @@
 <td align="left"><a href="#PKnz.org.take.rt">nz.org.take.rt</a></td><td align="right">15</td><td align="right">6</td><td align="right">9</td><td align="right">2</td><td align="right">0</td><td align="right">0.4</td><td align="right">0</td><td align="right">0.6</td>
 </tr>
 <tr>
-<td align="left"><a href="#PKnz.org.take.script">nz.org.take.script</a></td><td align="right">22</td><td align="right">2</td><td align="right">20</td><td align="right">2</td><td align="right">3</td><td align="right">0.09</td><td align="right">0.6</td><td align="right">0.31</td>
+<td align="left"><a href="#PKnz.org.take.script">nz.org.take.script</a></td><td align="right">24</td><td align="right">3</td><td align="right">21</td><td align="right">2</td><td align="right">3</td><td align="right">0.12</td><td align="right">0.6</td><td align="right">0.27</td>
 </tr>
 <tr>
 <td align="left"><a href="#PKnz.org.take.script.parser">nz.org.take.script.parser</a></td><td align="right">10</td><td align="right">1</td><td align="right">9</td><td align="right">1</td><td align="right">1</td><td align="right">0.1</td><td align="right">0.5</td><td align="right">0.4</td>
@@ -219,7 +219,7 @@
 </h3>
 <table width="100%">
 <tr>
-<td><a href="#EXafferent">Afferent Couplings</a>: 5</td><td><a href="#EXefferent">Efferent Couplings</a>: 1</td><td><a href="#EXabstractness">Abstractness</a>: 0.5</td><td><a href="#EXinstability">Instability</a>: 0.17</td><td><a href="#EXdistance">Distance</a>: 0.33</td>
+<td><a href="#EXafferent">Afferent Couplings</a>: 5</td><td><a href="#EXefferent">Efferent Couplings</a>: 1</td><td><a href="#EXabstractness">Abstractness</a>: 0.49</td><td><a href="#EXinstability">Instability</a>: 0.17</td><td><a href="#EXdistance">Distance</a>: 0.35</td>
 </tr>
 </table>
 <table width="100%" class="details">
@@ -238,6 +238,8 @@
                 <br>
                     nz.org.take.Clause
                 <br>
+                    nz.org.take.DBFactStore
+                <br>
                     nz.org.take.ExternalKnowledge
                 <br>
                     nz.org.take.Function
@@ -254,6 +256,10 @@
                 <br>
                     nz.org.take.Predicate
                 <br>
+                    nz.org.take.Record
+                <br>
+                    nz.org.take.RecordIterator
+                <br>
                     nz.org.take.Term
                 <br>
                     nz.org.take.Visitable
@@ -261,15 +267,23 @@
 </td><td valign="top" width="25%">
                     nz.org.take.AbstractKnowledgeBaseVisitor
                 <br>
+                    nz.org.take.Comparison
+                <br>
                     nz.org.take.ComplexTerm
                 <br>
                     nz.org.take.Constant
+                <br>
+                    nz.org.take.DBFactStore$1
                 <br>
                     nz.org.take.DefaultKnowledgeBase
                 <br>
                     nz.org.take.DefaultKnowledgeBase$1
                 <br>
                     nz.org.take.DerivationRule
+                <br>
+                    nz.org.take.ExternalFactStore
+                <br>
+                    nz.org.take.ExternalFactStoreException
                 <br>
                     nz.org.take.Fact
                 <br>
@@ -349,7 +363,7 @@
 </h3>
 <table width="100%">
 <tr>
-<td><a href="#EXafferent">Afferent Couplings</a>: 2</td><td><a href="#EXefferent">Efferent Couplings</a>: 6</td><td><a href="#EXabstractness">Abstractness</a>: 0.22</td><td><a href="#EXinstability">Instability</a>: 0.75</td><td><a href="#EXdistance">Distance</a>: 0.03</td>
+<td><a href="#EXafferent">Afferent Couplings</a>: 2</td><td><a href="#EXefferent">Efferent Couplings</a>: 6</td><td><a href="#EXabstractness">Abstractness</a>: 0.18</td><td><a href="#EXinstability">Instability</a>: 0.75</td><td><a href="#EXdistance">Distance</a>: 0.07</td>
 </tr>
 </table>
 <table width="100%" class="details">
@@ -365,6 +379,8 @@
 </td><td valign="top" width="25%">
                     nz.org.take.compiler.reference.Bindings
                 <br>
+                    nz.org.take.compiler.reference.CompilerPlugin4Comparisons
+                <br>
                     nz.org.take.compiler.reference.CompilerPlugin4JPredicates
                 <br>
                     nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates
@@ -372,6 +388,8 @@
                     nz.org.take.compiler.reference.DefaultCompiler
                 <br>
                     nz.org.take.compiler.reference.DefaultCompiler$1
+                <br>
+                    nz.org.take.compiler.reference.DefaultCompiler$2
                 <br>
                     nz.org.take.compiler.reference.QueryRef
                 <br>
@@ -553,7 +571,7 @@
 </h3>
 <table width="100%">
 <tr>
-<td><a href="#EXafferent">Afferent Couplings</a>: 2</td><td><a href="#EXefferent">Efferent Couplings</a>: 3</td><td><a href="#EXabstractness">Abstractness</a>: 0.09</td><td><a href="#EXinstability">Instability</a>: 0.6</td><td><a href="#EXdistance">Distance</a>: 0.31</td>
+<td><a href="#EXafferent">Afferent Couplings</a>: 2</td><td><a href="#EXefferent">Efferent Couplings</a>: 3</td><td><a href="#EXabstractness">Abstractness</a>: 0.12</td><td><a href="#EXinstability">Instability</a>: 0.6</td><td><a href="#EXdistance">Distance</a>: 0.27</td>
 </tr>
 </table>
 <table width="100%" class="details">
@@ -562,6 +580,8 @@
 </tr>
 <tr>
 <td valign="top" width="25%">
+                    nz.org.take.script.Identifiable
+                <br>
                     nz.org.take.script.Term
                 <br>
                     nz.org.take.script.TermContainer
@@ -578,6 +598,8 @@
                     nz.org.take.script.ConstantTerm
                 <br>
                     nz.org.take.script.Declaration
+                <br>
+                    nz.org.take.script.FactStore
                 <br>
                     nz.org.take.script.FeatureNotSupportedException
                 <br>
