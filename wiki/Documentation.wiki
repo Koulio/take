@@ -1,0 +1,6 @@
+#summary take documentation
+#labels Phase-Support,Documentation,Featured
+
+= Take Documentation =
+
+[http://docs.google.com/Doc?id=dgzzp6gn_23fx23xx take manual]
