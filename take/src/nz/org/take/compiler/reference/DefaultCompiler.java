@@ -23,6 +23,7 @@ import java.util.*;
 import nz.org.take.compiler.*;
 import nz.org.take.compiler.Compiler;
 import nz.org.take.compiler.util.*;
+import nz.org.take.rt.DerivationController;
 import nz.org.take.*;
 
 /**
@@ -289,6 +290,9 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			
 			// look for package where interfaces are located
 			String fullClassName = null;
+			if (this.interfaceNames==null)
+				throw new CompilerException("Cannot find interface for external fact stores - no interface package set");
+			
 			for (String i:this.interfaceNames) {
 				try {
 					Class intfc = Class.forName(i);
@@ -301,9 +305,13 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 					catch (ClassNotFoundException x) {}
 				}
 				catch (ClassNotFoundException x) {
-					throw new CompilerException("Cannot load interface " + i);
+					throw new CompilerException("Cannot find interface for external fact store " + i);
 				}
 			}
+			
+			if (fullClassName==null) 
+				throw new CompilerException();
+			
 			out.print("public static ");
 			out.print(fullClassName);
 			out.print(" ");
@@ -826,7 +834,39 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		
 		String regClass = this.getNameGenerator().getFactStoreRegistryClassName();
 		String factStoreRef = regClass +'.'+fs.getId();
-		out.println("code fort external fact sources - not yet supported");
+		// iterator
+		out.print(varName4DerivationController);
+		out.print(".log(\"");
+		out.print(fs.getId());
+		out.println("\",DerivationController.EXTERNAL_FACT_SET);");
+		
+		// invoke external fact set
+		out.print("return ");
+		out.print(factStoreRef);
+		out.print('.');
+		out.print("fetch");
+		out.print('(');
+		// parameter list
+		boolean f = true;
+		for (int i=0;i<fs.getPredicate().getSlotTypes().length;i++) {
+			if (f)
+				f = false;
+			else 
+				out.print(',');
+			// see whether we can use a parameter, iotherwise use null
+			String param = "null";
+			for (int j=0;j<islots.length;j++) {
+				if (i==j) {
+					param = islots[j].name;
+					break;
+				}					
+			}
+			out.print(param);
+			
+		}
+		
+		
+		out.print(");");
 
 	}
 

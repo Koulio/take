@@ -72,8 +72,13 @@ public class FactStore implements ExternalFactStore4IsFatherOf  {
 		try {
 			connection = DriverManager.getConnection("jdbc:hsqldb:file:testdata/example8/example8db", "sa", "");
 			statement = connection.createStatement();
-			statement.execute("CREATE TEXT TABLE people (son VARCHAR(20),father VARCHAR(20),PRIMARY KEY(son))");
-			statement.execute("SET TABLE people SOURCE \"people.csv\"");
+			try {
+				statement.execute("CREATE TEXT TABLE people (son VARCHAR(20),father VARCHAR(20),PRIMARY KEY(son))");
+				statement.execute("SET TABLE people SOURCE \"people.csv\"");
+			}
+			catch (Exception x) {
+				// assume table already exists
+			}
 			String query = null;
 			if (son==null && father==null)
 				query = "SELECT * FROM people";
@@ -90,19 +95,32 @@ public class FactStore implements ExternalFactStore4IsFatherOf  {
 		}
 		final ResultSet rs = result;
 		ResourceIterator<IsFatherOf> iter = new ResourceIterator<IsFatherOf>() {
+			int NEXT_AVAILABLE = 0;
+			int NEXT_CONSUMED = 1;
+			int status = NEXT_CONSUMED;
+			
 			public boolean hasNext() {
+				if (status==NEXT_AVAILABLE)
+					return true;
 				try{
-					return rs.next();
+					boolean next = rs.next();
+					//System.out.println("has next");
+					status = NEXT_AVAILABLE;
+					return next;
 				} catch (SQLException e) {
 					throw new RuntimeException(e);
 				}
 			}
 			public IsFatherOf next() {
 				try {
-					return new IsFatherOf(
+					//System.out.println("try next");
+					IsFatherOf isFatherOf = new IsFatherOf(
 						getOrAddPerson(rs.getString("son")),
 						getOrAddPerson(rs.getString("father"))
 					);
+					//System.out.println("next: " + isFatherOf.son.getName() + " " + isFatherOf.father.getName());
+					status = NEXT_CONSUMED;
+					return isFatherOf;
 				} catch (SQLException e) {
 					throw new RuntimeException(e);
 				}
@@ -111,6 +129,7 @@ public class FactStore implements ExternalFactStore4IsFatherOf  {
 				throw new UnsupportedOperationException();				
 			}
 			public void close() {
+				System.out.println("closing external fact set");
 				try {
 					rs.close();
 				} catch (SQLException e) {

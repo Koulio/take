@@ -47,6 +47,7 @@ public interface DerivationController  {
 	public static final int BEAN_PROPERTY = 3;
 	public static final int JAVA_METHOD = 4;
 	public static final int COMPARISON = 5;
+	public static final int EXTERNAL_FACT_SET = 6;
 	
 	/**
 	 * Log the use of a clause set

@@ -27,6 +27,7 @@ import test.nz.org.take.compiler.scenario8.generated.IsFatherOf;
 import test.nz.org.take.compiler.scenario8.generated.IsGrandfatherOf;
 import test.nz.org.take.compiler.scenario8.generated.KB;
 import nz.org.take.deployment.KnowledgeBaseManager;
+import nz.org.take.rt.ResultSet;
 import nz.org.take.script.ScriptKnowledgeSource;
 import junit.framework.TestCase;
 
@@ -92,12 +93,26 @@ public class Tests extends TestCase
 	 * Test 1.
 	 */
 	public void test1(){
-		Iterator<IsGrandfatherOf> results = kb.getGrandfather(new Person("Max"));	
+		ResultSet<IsFatherOf> results = kb.getFather(new Person("Max"));	
+		assertTrue(results.hasNext());
+		IsFatherOf r = results.next();
+		Person father = r.father;
+		assertEquals(new Person("Jens"),father);
+		assertFalse(results.hasNext());
+		results.close();
+		
+	}
+	/**
+	 * Test 2.
+	 */
+	public void test2(){
+		ResultSet<IsGrandfatherOf> results = kb.getGrandfather(new Person("Max"));	
 		assertTrue(results.hasNext());
 		IsGrandfatherOf r = results.next();
 		Person father = r.grandfather;
 		assertEquals(new Person("Klaus"),father);
 		assertFalse(results.hasNext());
+		results.close();
 	}
 	
 }
