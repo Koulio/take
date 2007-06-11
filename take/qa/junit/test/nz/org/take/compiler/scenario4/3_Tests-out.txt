@@ -1,21 +1,3 @@
-0 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol courses[in line 17] as bean property
-32 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol college[in line 17] as bean property
-32 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isEnrolled[in line 17] as simple predicate
 starting test case 1
-188 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol courses[in line 17] as bean property
-188 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol courses[in line 17] as bean property
-188 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol college[in line 17] as bean property
-188 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol college[in line 17] as bean property
-188 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isEnrolled[in line 17] as simple predicate
-188 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isEnrolled[in line 17] as simple predicate
 starting test case 2
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol courses[in line 17] as bean property
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol courses[in line 17] as bean property
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol courses[in line 17] as bean property
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol college[in line 17] as bean property
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol college[in line 17] as bean property
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol college[in line 17] as bean property
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isEnrolled[in line 17] as simple predicate
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isEnrolled[in line 17] as simple predicate
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isEnrolled[in line 17] as simple predicate
 starting test case 2

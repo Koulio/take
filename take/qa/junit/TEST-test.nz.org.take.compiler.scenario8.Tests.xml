@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" name="test.nz.org.take.compiler.scenario6.Tests" tests="5" time="3.14">
+<testsuite errors="0" failures="0" name="test.nz.org.take.compiler.scenario8.Tests" tests="2" time="2.719">
   <properties>
     <property name="java.vendor" value="Sun Microsystems Inc."></property>
     <property name="lib.dir" value="lib"></property>
@@ -88,17 +88,11 @@
     <property name="java.specification.version" value="1.6"></property>
     <property name="src.dir" value="src"></property>
   </properties>
-  <testcase classname="test.nz.org.take.compiler.scenario6.Tests" name="test1" time="1.625"></testcase>
-  <testcase classname="test.nz.org.take.compiler.scenario6.Tests" name="test2" time="0.453"></testcase>
-  <testcase classname="test.nz.org.take.compiler.scenario6.Tests" name="test3" time="0.391"></testcase>
-  <testcase classname="test.nz.org.take.compiler.scenario6.Tests" name="test4" time="0.312"></testcase>
-  <testcase classname="test.nz.org.take.compiler.scenario6.Tests" name="test5" time="0.328"></testcase>
-  <system-out><![CDATA[1. rule2
-2. fact6
-3. fact3
-test.nz.org.take.compiler.scenario6.Person@40fb991
-test.nz.org.take.compiler.scenario6.Person@232c7f
-test.nz.org.take.compiler.scenario6.Person@26c028
+  <testcase classname="test.nz.org.take.compiler.scenario8.Tests" name="test1" time="2.109"></testcase>
+  <testcase classname="test.nz.org.take.compiler.scenario8.Tests" name="test2" time="0.594"></testcase>
+  <system-out><![CDATA[closing external fact set
+closing external fact set
+closing external fact set
 ]]></system-out>
   <system-err><![CDATA[log4j:WARN No appenders could be found for logger (nz.org.take.script.ScriptKnowledgeSource).
 log4j:WARN Please initialize the log4j system properly.

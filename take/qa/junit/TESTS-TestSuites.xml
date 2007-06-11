@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-  <testsuite errors="0" failures="0" id="0" name="Tests" package="test.nz.org.take.compiler.scenario1" tests="5" time="0.297">
+  <testsuite errors="0" failures="0" id="0" name="Tests" package="test.nz.org.take.compiler.scenario1" tests="5" time="3.422">
   
     <properties>
     
@@ -10,7 +10,7 @@
 
           <property name="sun.java.launcher" value="SUN_STANDARD"></property>
 
-          <property name="eclipse.pdebuild.templates" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/templates/"></property>
+          <property name="eclipse.pdebuild.templates" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/templates/"></property>
 
           <property name="sun.management.compiler" value="HotSpot Client Compiler"></property>
 
@@ -22,21 +22,21 @@
 
           <property name="build.tmp" value="build/tmp"></property>
 
-          <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0_01\jre\classes"></property>
+          <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0\jre\classes"></property>
 
           <property name="sun.desktop" value="windows"></property>
 
           <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."></property>
 
-          <property name="ant.home" value="C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5"></property>
+          <property name="ant.home" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5"></property>
 
           <property name="report.junit" value="qa/junit"></property>
 
-          <property name="java.runtime.version" value="1.6.0_01-b06"></property>
+          <property name="java.runtime.version" value="1.6.0-b105"></property>
 
           <property name="version_suffix" value="0.1"></property>
 
-          <property name="user.name" value="jens"></property>
+          <property name="user.name" value="jbdietri"></property>
 
           <property name="debug" value="on"></property>
 
@@ -46,13 +46,13 @@
 
           <property name="build" value="./build"></property>
 
-          <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0_01\jre\bin"></property>
+          <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin"></property>
 
-          <property name="ant.file.take" value="C:\Documents and Settings\jens\workspace3.2\take5\build.xml"></property>
+          <property name="ant.file.take" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
 
           <property name="ant.project.name" value="take"></property>
 
-          <property name="java.version" value="1.6.0_01"></property>
+          <property name="java.version" value="1.6.0"></property>
 
           <property name="classes" value="./build/classes"></property>
 
@@ -64,7 +64,7 @@
 
           <property name="build.doc" value="build/doc"></property>
 
-          <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\endorsed"></property>
+          <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\endorsed"></property>
 
           <property name="sun.cpu.isalist" value=""></property>
 
@@ -84,11 +84,11 @@
 
           <property name="report.jdepend" value="qa/jdepend"></property>
 
-          <property name="java.home" value="C:\Program Files\Java\jdk1.6.0_01\jre"></property>
+          <property name="java.home" value="C:\Program Files\Java\jdk1.6.0\jre"></property>
 
           <property name="java.vm.info" value="mixed mode, sharing"></property>
 
-          <property name="ant.file" value="C:\Documents and Settings\jens\workspace3.2\take5\build.xml"></property>
+          <property name="ant.file" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
 
           <property name="os.version" value="5.1"></property>
 
@@ -96,11 +96,11 @@
 
           <property name="path.separator" value=";"></property>
 
-          <property name="java.vm.version" value="1.6.0_01-b06"></property>
+          <property name="java.vm.version" value="1.6.0-b105"></property>
 
           <property name="user.variant" value=""></property>
 
-          <property name="ant.library.dir" value="C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib"></property>
+          <property name="ant.library.dir" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib"></property>
 
           <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"></property>
 
@@ -108,13 +108,13 @@
 
           <property name="awt.toolkit" value="sun.awt.windows.WToolkit"></property>
 
-          <property name="eclipse.pdebuild.scripts" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/scripts/"></property>
+          <property name="eclipse.pdebuild.scripts" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/scripts/"></property>
 
-          <property name="user.home" value="C:\Documents and Settings\jens"></property>
+          <property name="user.home" value="C:\Documents and Settings\jbdietri"></property>
 
           <property name="java.specification.vendor" value="Sun Microsystems Inc."></property>
 
-          <property name="java.library.path" value="C:\WINDOWS\system32;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\IBMVJava\eab\bin;C:\texmf\miktex\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\Sonic\MyDVD;;C:\PROGRA~1\ATT\Graphviz\bin;C:\PROGRA~1\ATT\Graphviz\bin\tools;C:\j2sdk1.4.2_03\bin;C:\Program Files\Common Files\GTK\2.0\bin;C:\IMNnq_NT;C:\Development\eclipse3.2\configuration\org.eclipse.osgi\bundles\86\1\.cp"></property>
+          <property name="java.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\IBMVJava\eab\bin;C:\texmf\miktex\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\OpenSSH\bin;C:\IMNnq_NT;C:\Program Files\Subversion\bin;C:\Program Files\Java\jdk1.6.0\bin;C:\Sun\jwsdp-2.0\jwsdp-shared\bin"></property>
 
           <property name="name" value="take"></property>
 
@@ -124,7 +124,7 @@
 
           <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"></property>
 
-          <property name="java.class.path" value="C:\Documents and Settings\jens\workspace3.2\take5\lib\commons-collections-3.1.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\commons-logging.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\jalopy.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\junit-4.1.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\log4j-1.2.7.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\velocity-dep-1.5.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-antlr.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-bcel.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-bsf.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-log4j.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-oro.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-regexp.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-resolver.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-commons-logging.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-commons-net.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-icontract.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jai.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-javamail.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jdepend.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jmf.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jsch.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-junit.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-launcher.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-netrexx.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-nodeps.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-starteam.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-stylebook.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-swing.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-trax.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-vaj.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-weblogic.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-xalan1.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-xslp.jar;C:\Development\eclipse3.2\configuration\org.eclipse.osgi\bundles\17\1\.cp\lib\remoteAnt.jar;C:\Program Files\Java\jdk1.6.0_01\lib\tools.jar;C:\Development\eclipse3.2\plugins\org.eclipse.swt.win32.win32.x86_3.2.0.v3232m.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\jdepend-2.9.jar"></property>
+          <property name="java.class.path" value="C:\Documents and Settings\jbdietri\workspace\take\build\classes;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-collections-3.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-logging.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\hsqldb.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jalopy.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jdepend-2.9.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\junit-4.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\log4j-1.2.7.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\velocity-dep-1.5.jar;C:\IBMVJava\eab\runtime20;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-launcher.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-junit.jar"></property>
 
           <property name="ant.version" value="Apache Ant version 1.6.5 compiled on June 2 2005"></property>
 
@@ -140,9 +140,9 @@
 
           <property name="sun.os.patch.level" value="Service Pack 2"></property>
 
-          <property name="eclipse.pdebuild.home" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/./"></property>
+          <property name="eclipse.pdebuild.home" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/./"></property>
 
-          <property name="java.io.tmpdir" value="C:\DOCUME~1\jens\LOCALS~1\Temp\"></property>
+          <property name="java.io.tmpdir" value="C:\DOCUME~1\jbdietri\LOCALS~1\Temp\"></property>
 
           <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"></property>
 
@@ -150,15 +150,15 @@
 
           <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"></property>
 
-          <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"></property>
+          <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"></property>
 
-          <property name="user.dir" value="C:\Documents and Settings\jens\workspace3.2\take5"></property>
+          <property name="user.dir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
 
           <property name="line.separator" value=" "></property>
 
           <property name="java.vm.name" value="Java HotSpot(TM) Client VM"></property>
 
-          <property name="basedir" value="C:\Documents and Settings\jens\workspace3.2\take5"></property>
+          <property name="basedir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
 
           <property name="ant.java.version" value="1.5"></property>
 
@@ -176,15 +176,15 @@
 
       </properties>
 
-      <testcase classname="test.nz.org.take.compiler.scenario1.Tests" name="test1" time="0.156"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario1.Tests" name="test1" time="1.796"></testcase>
 
-      <testcase classname="test.nz.org.take.compiler.scenario1.Tests" name="test2" time="0.032"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario1.Tests" name="test2" time="0.5"></testcase>
 
-      <testcase classname="test.nz.org.take.compiler.scenario1.Tests" name="test3" time="0.015"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario1.Tests" name="test3" time="0.407"></testcase>
 
-      <testcase classname="test.nz.org.take.compiler.scenario1.Tests" name="test4" time="0.0"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario1.Tests" name="test4" time="0.328"></testcase>
 
-      <testcase classname="test.nz.org.take.compiler.scenario1.Tests" name="test5" time="0.047"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario1.Tests" name="test5" time="0.344"></testcase>
 
       <system-out><![CDATA[1. rule2
 2. fact6
@@ -194,10 +194,12 @@ Jens
 Ralf
 ]]></system-out>
 
-      <system-err><![CDATA[]]></system-err>
+      <system-err><![CDATA[log4j:WARN No appenders could be found for logger (nz.org.take.script.ScriptKnowledgeSource).
+log4j:WARN Please initialize the log4j system properly.
+]]></system-err>
 
   </testsuite>
-  <testsuite errors="0" failures="0" id="1" name="Tests" package="test.nz.org.take.compiler.scenario2" tests="5" time="1.047">
+  <testsuite errors="0" failures="0" id="1" name="Tests" package="test.nz.org.take.compiler.scenario2" tests="5" time="3.297">
   
     <properties>
     
@@ -207,7 +209,7 @@ Ralf
 
           <property name="sun.java.launcher" value="SUN_STANDARD"></property>
 
-          <property name="eclipse.pdebuild.templates" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/templates/"></property>
+          <property name="eclipse.pdebuild.templates" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/templates/"></property>
 
           <property name="sun.management.compiler" value="HotSpot Client Compiler"></property>
 
@@ -219,21 +221,21 @@ Ralf
 
           <property name="build.tmp" value="build/tmp"></property>
 
-          <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0_01\jre\classes"></property>
+          <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0\jre\classes"></property>
 
           <property name="sun.desktop" value="windows"></property>
 
           <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."></property>
 
-          <property name="ant.home" value="C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5"></property>
+          <property name="ant.home" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5"></property>
 
           <property name="report.junit" value="qa/junit"></property>
 
-          <property name="java.runtime.version" value="1.6.0_01-b06"></property>
+          <property name="java.runtime.version" value="1.6.0-b105"></property>
 
           <property name="version_suffix" value="0.1"></property>
 
-          <property name="user.name" value="jens"></property>
+          <property name="user.name" value="jbdietri"></property>
 
           <property name="debug" value="on"></property>
 
@@ -243,13 +245,13 @@ Ralf
 
           <property name="build" value="./build"></property>
 
-          <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0_01\jre\bin"></property>
+          <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin"></property>
 
-          <property name="ant.file.take" value="C:\Documents and Settings\jens\workspace3.2\take5\build.xml"></property>
+          <property name="ant.file.take" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
 
           <property name="ant.project.name" value="take"></property>
 
-          <property name="java.version" value="1.6.0_01"></property>
+          <property name="java.version" value="1.6.0"></property>
 
           <property name="classes" value="./build/classes"></property>
 
@@ -261,7 +263,7 @@ Ralf
 
           <property name="build.doc" value="build/doc"></property>
 
-          <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\endorsed"></property>
+          <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\endorsed"></property>
 
           <property name="sun.cpu.isalist" value=""></property>
 
@@ -281,11 +283,11 @@ Ralf
 
           <property name="report.jdepend" value="qa/jdepend"></property>
 
-          <property name="java.home" value="C:\Program Files\Java\jdk1.6.0_01\jre"></property>
+          <property name="java.home" value="C:\Program Files\Java\jdk1.6.0\jre"></property>
 
           <property name="java.vm.info" value="mixed mode, sharing"></property>
 
-          <property name="ant.file" value="C:\Documents and Settings\jens\workspace3.2\take5\build.xml"></property>
+          <property name="ant.file" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
 
           <property name="os.version" value="5.1"></property>
 
@@ -293,11 +295,11 @@ Ralf
 
           <property name="path.separator" value=";"></property>
 
-          <property name="java.vm.version" value="1.6.0_01-b06"></property>
+          <property name="java.vm.version" value="1.6.0-b105"></property>
 
           <property name="user.variant" value=""></property>
 
-          <property name="ant.library.dir" value="C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib"></property>
+          <property name="ant.library.dir" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib"></property>
 
           <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"></property>
 
@@ -305,13 +307,13 @@ Ralf
 
           <property name="awt.toolkit" value="sun.awt.windows.WToolkit"></property>
 
-          <property name="eclipse.pdebuild.scripts" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/scripts/"></property>
+          <property name="eclipse.pdebuild.scripts" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/scripts/"></property>
 
-          <property name="user.home" value="C:\Documents and Settings\jens"></property>
+          <property name="user.home" value="C:\Documents and Settings\jbdietri"></property>
 
           <property name="java.specification.vendor" value="Sun Microsystems Inc."></property>
 
-          <property name="java.library.path" value="C:\WINDOWS\system32;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\IBMVJava\eab\bin;C:\texmf\miktex\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\Sonic\MyDVD;;C:\PROGRA~1\ATT\Graphviz\bin;C:\PROGRA~1\ATT\Graphviz\bin\tools;C:\j2sdk1.4.2_03\bin;C:\Program Files\Common Files\GTK\2.0\bin;C:\IMNnq_NT;C:\Development\eclipse3.2\configuration\org.eclipse.osgi\bundles\86\1\.cp"></property>
+          <property name="java.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\IBMVJava\eab\bin;C:\texmf\miktex\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\OpenSSH\bin;C:\IMNnq_NT;C:\Program Files\Subversion\bin;C:\Program Files\Java\jdk1.6.0\bin;C:\Sun\jwsdp-2.0\jwsdp-shared\bin"></property>
 
           <property name="name" value="take"></property>
 
@@ -321,7 +323,7 @@ Ralf
 
           <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"></property>
 
-          <property name="java.class.path" value="C:\Documents and Settings\jens\workspace3.2\take5\lib\commons-collections-3.1.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\commons-logging.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\jalopy.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\junit-4.1.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\log4j-1.2.7.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\velocity-dep-1.5.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-antlr.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-bcel.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-bsf.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-log4j.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-oro.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-regexp.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-resolver.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-commons-logging.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-commons-net.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-icontract.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jai.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-javamail.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jdepend.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jmf.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jsch.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-junit.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-launcher.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-netrexx.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-nodeps.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-starteam.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-stylebook.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-swing.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-trax.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-vaj.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-weblogic.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-xalan1.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-xslp.jar;C:\Development\eclipse3.2\configuration\org.eclipse.osgi\bundles\17\1\.cp\lib\remoteAnt.jar;C:\Program Files\Java\jdk1.6.0_01\lib\tools.jar;C:\Development\eclipse3.2\plugins\org.eclipse.swt.win32.win32.x86_3.2.0.v3232m.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\jdepend-2.9.jar"></property>
+          <property name="java.class.path" value="C:\Documents and Settings\jbdietri\workspace\take\build\classes;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-collections-3.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-logging.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\hsqldb.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jalopy.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jdepend-2.9.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\junit-4.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\log4j-1.2.7.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\velocity-dep-1.5.jar;C:\IBMVJava\eab\runtime20;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-launcher.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-junit.jar"></property>
 
           <property name="ant.version" value="Apache Ant version 1.6.5 compiled on June 2 2005"></property>
 
@@ -337,9 +339,9 @@ Ralf
 
           <property name="sun.os.patch.level" value="Service Pack 2"></property>
 
-          <property name="eclipse.pdebuild.home" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/./"></property>
+          <property name="eclipse.pdebuild.home" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/./"></property>
 
-          <property name="java.io.tmpdir" value="C:\DOCUME~1\jens\LOCALS~1\Temp\"></property>
+          <property name="java.io.tmpdir" value="C:\DOCUME~1\jbdietri\LOCALS~1\Temp\"></property>
 
           <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"></property>
 
@@ -347,15 +349,15 @@ Ralf
 
           <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"></property>
 
-          <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"></property>
+          <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"></property>
 
-          <property name="user.dir" value="C:\Documents and Settings\jens\workspace3.2\take5"></property>
+          <property name="user.dir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
 
           <property name="line.separator" value=" "></property>
 
           <property name="java.vm.name" value="Java HotSpot(TM) Client VM"></property>
 
-          <property name="basedir" value="C:\Documents and Settings\jens\workspace3.2\take5"></property>
+          <property name="basedir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
 
           <property name="ant.java.version" value="1.5"></property>
 
@@ -373,15 +375,15 @@ Ralf
 
       </properties>
 
-      <testcase classname="test.nz.org.take.compiler.scenario2.Tests" name="test1" time="0.718"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario2.Tests" name="test1" time="1.719"></testcase>
 
-      <testcase classname="test.nz.org.take.compiler.scenario2.Tests" name="test2" time="0.047"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario2.Tests" name="test2" time="0.453"></testcase>
 
-      <testcase classname="test.nz.org.take.compiler.scenario2.Tests" name="test3" time="0.078"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario2.Tests" name="test3" time="0.391"></testcase>
 
-      <testcase classname="test.nz.org.take.compiler.scenario2.Tests" name="test4" time="0.047"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario2.Tests" name="test4" time="0.359"></testcase>
 
-      <testcase classname="test.nz.org.take.compiler.scenario2.Tests" name="test5" time="0.063"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario2.Tests" name="test5" time="0.344"></testcase>
 
       <system-out><![CDATA[// script for test scenario 1
 @@dc:date=30/02/2007
@@ -390,42 +392,23 @@ var java.lang.String descendant,ancestor,x
 @take.compilerhint.slots=person1,person2
 @take.compilerhint.method=isAncestor
 @take.compilerhint.class=AncestorRelationship
-query isAncestor(in,in)
-rule1: if isFather(descendant,ancestor) then isAncestor(descendant,ancestor)
-rule2: if isAncestor(x,ancestor) and isFather(descendant,x) then isAncestor(descendant,ancestor)
-fact1: isFather("r0","r")
-fact2: isFather("r1","r")
-fact3: isFather("r00","r0")
-fact4: isFather("r01","r0")
-fact5: isFather("r10","r1")
-fact6: isFather("r11","r1")
-fact7: isFather("r000","r00")
-fact8: isFather("r001","r00")
-fact9: isFather("r010","r01")
-fact10: isFather("r011","r01")
-fact11: isFather("r100","r10")
-fact12: isFather("r101","r10")
-fact13: isFather("r110","r11")
-fact14: isFather("r111","r11")
-0 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-15 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-31 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-31 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-31 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-31 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-31 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-31 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-31 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-31 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-31 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-31 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-31 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-31 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-31 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-31 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-31 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-31 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-31 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
+query isAncestor[in,in]
+rule1: if isFather[descendant,ancestor] then isAncestor[descendant,ancestor]
+rule2: if isAncestor[x,ancestor] and isFather[descendant,x] then isAncestor[descendant,ancestor]
+fact1: isFather["r0","r"]
+fact2: isFather["r1","r"]
+fact3: isFather["r00","r0"]
+fact4: isFather["r01","r0"]
+fact5: isFather["r10","r1"]
+fact6: isFather["r11","r1"]
+fact7: isFather["r000","r00"]
+fact8: isFather["r001","r00"]
+fact9: isFather["r010","r01"]
+fact10: isFather["r011","r01"]
+fact11: isFather["r100","r10"]
+fact12: isFather["r101","r10"]
+fact13: isFather["r110","r11"]
+fact14: isFather["r111","r11"]
 starting test case 1
 1. rule1
 2. fact1
@@ -436,61 +419,23 @@ var java.lang.String descendant,ancestor,x
 @take.compilerhint.slots=person1,person2
 @take.compilerhint.method=isAncestor
 @take.compilerhint.class=AncestorRelationship
-query isAncestor(in,in)
-rule1: if isFather(descendant,ancestor) then isAncestor(descendant,ancestor)
-rule2: if isAncestor(x,ancestor) and isFather(descendant,x) then isAncestor(descendant,ancestor)
-fact1: isFather("r0","r")
-fact2: isFather("r1","r")
-fact3: isFather("r00","r0")
-fact4: isFather("r01","r0")
-fact5: isFather("r10","r1")
-fact6: isFather("r11","r1")
-fact7: isFather("r000","r00")
-fact8: isFather("r001","r00")
-fact9: isFather("r010","r01")
-fact10: isFather("r011","r01")
-fact11: isFather("r100","r10")
-fact12: isFather("r101","r10")
-fact13: isFather("r110","r11")
-fact14: isFather("r111","r11")
-234 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-234 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-250 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-265 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-265 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-265 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-265 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-265 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-265 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-265 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-265 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-265 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-265 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-265 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-265 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-265 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-265 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-265 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
-265 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
+query isAncestor[in,in]
+rule1: if isFather[descendant,ancestor] then isAncestor[descendant,ancestor]
+rule2: if isAncestor[x,ancestor] and isFather[descendant,x] then isAncestor[descendant,ancestor]
+fact1: isFather["r0","r"]
+fact2: isFather["r1","r"]
+fact3: isFather["r00","r0"]
+fact4: isFather["r01","r0"]
+fact5: isFather["r10","r1"]
+fact6: isFather["r11","r1"]
+fact7: isFather["r000","r00"]
+fact8: isFather["r001","r00"]
+fact9: isFather["r010","r01"]
+fact10: isFather["r011","r01"]
+fact11: isFather["r100","r10"]
+fact12: isFather["r101","r10"]
+fact13: isFather["r110","r11"]
+fact14: isFather["r111","r11"]
 starting test case 2
 1. rule1
 2. fact2
@@ -501,80 +446,23 @@ var java.lang.String descendant,ancestor,x
 @take.compilerhint.slots=person1,person2
 @take.compilerhint.method=isAncestor
 @take.compilerhint.class=AncestorRelationship
-query isAncestor(in,in)
-rule1: if isFather(descendant,ancestor) then isAncestor(descendant,ancestor)
-rule2: if isAncestor(x,ancestor) and isFather(descendant,x) then isAncestor(descendant,ancestor)
-fact1: isFather("r0","r")
-fact2: isFather("r1","r")
-fact3: isFather("r00","r0")
-fact4: isFather("r01","r0")
-fact5: isFather("r10","r1")
-fact6: isFather("r11","r1")
-fact7: isFather("r000","r00")
-fact8: isFather("r001","r00")
-fact9: isFather("r010","r01")
-fact10: isFather("r011","r01")
-fact11: isFather("r100","r10")
-fact12: isFather("r101","r10")
-fact13: isFather("r110","r11")
-fact14: isFather("r111","r11")
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-281 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
-297 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
+query isAncestor[in,in]
+rule1: if isFather[descendant,ancestor] then isAncestor[descendant,ancestor]
+rule2: if isAncestor[x,ancestor] and isFather[descendant,x] then isAncestor[descendant,ancestor]
+fact1: isFather["r0","r"]
+fact2: isFather["r1","r"]
+fact3: isFather["r00","r0"]
+fact4: isFather["r01","r0"]
+fact5: isFather["r10","r1"]
+fact6: isFather["r11","r1"]
+fact7: isFather["r000","r00"]
+fact8: isFather["r001","r00"]
+fact9: isFather["r010","r01"]
+fact10: isFather["r011","r01"]
+fact11: isFather["r100","r10"]
+fact12: isFather["r101","r10"]
+fact13: isFather["r110","r11"]
+fact14: isFather["r111","r11"]
 starting test case 3
 1. rule2
 2. rule1
@@ -587,99 +475,23 @@ var java.lang.String descendant,ancestor,x
 @take.compilerhint.slots=person1,person2
 @take.compilerhint.method=isAncestor
 @take.compilerhint.class=AncestorRelationship
-query isAncestor(in,in)
-rule1: if isFather(descendant,ancestor) then isAncestor(descendant,ancestor)
-rule2: if isAncestor(x,ancestor) and isFather(descendant,x) then isAncestor(descendant,ancestor)
-fact1: isFather("r0","r")
-fact2: isFather("r1","r")
-fact3: isFather("r00","r0")
-fact4: isFather("r01","r0")
-fact5: isFather("r10","r1")
-fact6: isFather("r11","r1")
-fact7: isFather("r000","r00")
-fact8: isFather("r001","r00")
-fact9: isFather("r010","r01")
-fact10: isFather("r011","r01")
-fact11: isFather("r100","r10")
-fact12: isFather("r101","r10")
-fact13: isFather("r110","r11")
-fact14: isFather("r111","r11")
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-359 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
-375 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
+query isAncestor[in,in]
+rule1: if isFather[descendant,ancestor] then isAncestor[descendant,ancestor]
+rule2: if isAncestor[x,ancestor] and isFather[descendant,x] then isAncestor[descendant,ancestor]
+fact1: isFather["r0","r"]
+fact2: isFather["r1","r"]
+fact3: isFather["r00","r0"]
+fact4: isFather["r01","r0"]
+fact5: isFather["r10","r1"]
+fact6: isFather["r11","r1"]
+fact7: isFather["r000","r00"]
+fact8: isFather["r001","r00"]
+fact9: isFather["r010","r01"]
+fact10: isFather["r011","r01"]
+fact11: isFather["r100","r10"]
+fact12: isFather["r101","r10"]
+fact13: isFather["r110","r11"]
+fact14: isFather["r111","r11"]
 starting test case 4
 1. rule2
 2. rule1
@@ -692,118 +504,23 @@ var java.lang.String descendant,ancestor,x
 @take.compilerhint.slots=person1,person2
 @take.compilerhint.method=isAncestor
 @take.compilerhint.class=AncestorRelationship
-query isAncestor(in,in)
-rule1: if isFather(descendant,ancestor) then isAncestor(descendant,ancestor)
-rule2: if isAncestor(x,ancestor) and isFather(descendant,x) then isAncestor(descendant,ancestor)
-fact1: isFather("r0","r")
-fact2: isFather("r1","r")
-fact3: isFather("r00","r0")
-fact4: isFather("r01","r0")
-fact5: isFather("r10","r1")
-fact6: isFather("r11","r1")
-fact7: isFather("r000","r00")
-fact8: isFather("r001","r00")
-fact9: isFather("r010","r01")
-fact10: isFather("r011","r01")
-fact11: isFather("r100","r10")
-fact12: isFather("r101","r10")
-fact13: isFather("r110","r11")
-fact14: isFather("r111","r11")
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-406 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
-422 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
+query isAncestor[in,in]
+rule1: if isFather[descendant,ancestor] then isAncestor[descendant,ancestor]
+rule2: if isAncestor[x,ancestor] and isFather[descendant,x] then isAncestor[descendant,ancestor]
+fact1: isFather["r0","r"]
+fact2: isFather["r1","r"]
+fact3: isFather["r00","r0"]
+fact4: isFather["r01","r0"]
+fact5: isFather["r10","r1"]
+fact6: isFather["r11","r1"]
+fact7: isFather["r000","r00"]
+fact8: isFather["r001","r00"]
+fact9: isFather["r010","r01"]
+fact10: isFather["r011","r01"]
+fact11: isFather["r100","r10"]
+fact12: isFather["r101","r10"]
+fact13: isFather["r110","r11"]
+fact14: isFather["r111","r11"]
 starting test case 5
 1. rule2
 2. rule2
@@ -813,10 +530,12 @@ starting test case 5
 6. fact7
 ]]></system-out>
 
-      <system-err><![CDATA[]]></system-err>
+      <system-err><![CDATA[log4j:WARN No appenders could be found for logger (nz.org.take.script.ScriptKnowledgeSource).
+log4j:WARN Please initialize the log4j system properly.
+]]></system-err>
 
   </testsuite>
-  <testsuite errors="0" failures="0" id="2" name="Tests" package="test.nz.org.take.compiler.scenario3" tests="2" time="1.125">
+  <testsuite errors="0" failures="0" id="2" name="Tests" package="test.nz.org.take.compiler.scenario3" tests="2" time="1.891">
   
     <properties>
     
@@ -826,7 +545,7 @@ starting test case 5
 
           <property name="sun.java.launcher" value="SUN_STANDARD"></property>
 
-          <property name="eclipse.pdebuild.templates" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/templates/"></property>
+          <property name="eclipse.pdebuild.templates" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/templates/"></property>
 
           <property name="sun.management.compiler" value="HotSpot Client Compiler"></property>
 
@@ -838,21 +557,21 @@ starting test case 5
 
           <property name="build.tmp" value="build/tmp"></property>
 
-          <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0_01\jre\classes"></property>
+          <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0\jre\classes"></property>
 
           <property name="sun.desktop" value="windows"></property>
 
           <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."></property>
 
-          <property name="ant.home" value="C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5"></property>
+          <property name="ant.home" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5"></property>
 
           <property name="report.junit" value="qa/junit"></property>
 
-          <property name="java.runtime.version" value="1.6.0_01-b06"></property>
+          <property name="java.runtime.version" value="1.6.0-b105"></property>
 
           <property name="version_suffix" value="0.1"></property>
 
-          <property name="user.name" value="jens"></property>
+          <property name="user.name" value="jbdietri"></property>
 
           <property name="debug" value="on"></property>
 
@@ -862,13 +581,13 @@ starting test case 5
 
           <property name="build" value="./build"></property>
 
-          <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0_01\jre\bin"></property>
+          <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin"></property>
 
-          <property name="ant.file.take" value="C:\Documents and Settings\jens\workspace3.2\take5\build.xml"></property>
+          <property name="ant.file.take" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
 
           <property name="ant.project.name" value="take"></property>
 
-          <property name="java.version" value="1.6.0_01"></property>
+          <property name="java.version" value="1.6.0"></property>
 
           <property name="classes" value="./build/classes"></property>
 
@@ -880,7 +599,7 @@ starting test case 5
 
           <property name="build.doc" value="build/doc"></property>
 
-          <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\endorsed"></property>
+          <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\endorsed"></property>
 
           <property name="sun.cpu.isalist" value=""></property>
 
@@ -900,11 +619,11 @@ starting test case 5
 
           <property name="report.jdepend" value="qa/jdepend"></property>
 
-          <property name="java.home" value="C:\Program Files\Java\jdk1.6.0_01\jre"></property>
+          <property name="java.home" value="C:\Program Files\Java\jdk1.6.0\jre"></property>
 
           <property name="java.vm.info" value="mixed mode, sharing"></property>
 
-          <property name="ant.file" value="C:\Documents and Settings\jens\workspace3.2\take5\build.xml"></property>
+          <property name="ant.file" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
 
           <property name="os.version" value="5.1"></property>
 
@@ -912,11 +631,11 @@ starting test case 5
 
           <property name="path.separator" value=";"></property>
 
-          <property name="java.vm.version" value="1.6.0_01-b06"></property>
+          <property name="java.vm.version" value="1.6.0-b105"></property>
 
           <property name="user.variant" value=""></property>
 
-          <property name="ant.library.dir" value="C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib"></property>
+          <property name="ant.library.dir" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib"></property>
 
           <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"></property>
 
@@ -924,13 +643,13 @@ starting test case 5
 
           <property name="awt.toolkit" value="sun.awt.windows.WToolkit"></property>
 
-          <property name="eclipse.pdebuild.scripts" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/scripts/"></property>
+          <property name="eclipse.pdebuild.scripts" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/scripts/"></property>
 
-          <property name="user.home" value="C:\Documents and Settings\jens"></property>
+          <property name="user.home" value="C:\Documents and Settings\jbdietri"></property>
 
           <property name="java.specification.vendor" value="Sun Microsystems Inc."></property>
 
-          <property name="java.library.path" value="C:\WINDOWS\system32;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\IBMVJava\eab\bin;C:\texmf\miktex\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\Sonic\MyDVD;;C:\PROGRA~1\ATT\Graphviz\bin;C:\PROGRA~1\ATT\Graphviz\bin\tools;C:\j2sdk1.4.2_03\bin;C:\Program Files\Common Files\GTK\2.0\bin;C:\IMNnq_NT;C:\Development\eclipse3.2\configuration\org.eclipse.osgi\bundles\86\1\.cp"></property>
+          <property name="java.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\IBMVJava\eab\bin;C:\texmf\miktex\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\OpenSSH\bin;C:\IMNnq_NT;C:\Program Files\Subversion\bin;C:\Program Files\Java\jdk1.6.0\bin;C:\Sun\jwsdp-2.0\jwsdp-shared\bin"></property>
 
           <property name="name" value="take"></property>
 
@@ -940,7 +659,7 @@ starting test case 5
 
           <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"></property>
 
-          <property name="java.class.path" value="C:\Documents and Settings\jens\workspace3.2\take5\lib\commons-collections-3.1.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\commons-logging.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\jalopy.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\junit-4.1.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\log4j-1.2.7.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\velocity-dep-1.5.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-antlr.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-bcel.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-bsf.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-log4j.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-oro.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-regexp.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-resolver.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-commons-logging.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-commons-net.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-icontract.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jai.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-javamail.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jdepend.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jmf.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jsch.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-junit.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-launcher.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-netrexx.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-nodeps.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-starteam.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-stylebook.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-swing.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-trax.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-vaj.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-weblogic.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-xalan1.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-xslp.jar;C:\Development\eclipse3.2\configuration\org.eclipse.osgi\bundles\17\1\.cp\lib\remoteAnt.jar;C:\Program Files\Java\jdk1.6.0_01\lib\tools.jar;C:\Development\eclipse3.2\plugins\org.eclipse.swt.win32.win32.x86_3.2.0.v3232m.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\jdepend-2.9.jar"></property>
+          <property name="java.class.path" value="C:\Documents and Settings\jbdietri\workspace\take\build\classes;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-collections-3.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-logging.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\hsqldb.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jalopy.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jdepend-2.9.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\junit-4.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\log4j-1.2.7.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\velocity-dep-1.5.jar;C:\IBMVJava\eab\runtime20;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-launcher.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-junit.jar"></property>
 
           <property name="ant.version" value="Apache Ant version 1.6.5 compiled on June 2 2005"></property>
 
@@ -956,9 +675,9 @@ starting test case 5
 
           <property name="sun.os.patch.level" value="Service Pack 2"></property>
 
-          <property name="eclipse.pdebuild.home" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/./"></property>
+          <property name="eclipse.pdebuild.home" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/./"></property>
 
-          <property name="java.io.tmpdir" value="C:\DOCUME~1\jens\LOCALS~1\Temp\"></property>
+          <property name="java.io.tmpdir" value="C:\DOCUME~1\jbdietri\LOCALS~1\Temp\"></property>
 
           <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"></property>
 
@@ -966,15 +685,15 @@ starting test case 5
 
           <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"></property>
 
-          <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"></property>
+          <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"></property>
 
-          <property name="user.dir" value="C:\Documents and Settings\jens\workspace3.2\take5"></property>
+          <property name="user.dir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
 
           <property name="line.separator" value=" "></property>
 
           <property name="java.vm.name" value="Java HotSpot(TM) Client VM"></property>
 
-          <property name="basedir" value="C:\Documents and Settings\jens\workspace3.2\take5"></property>
+          <property name="basedir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
 
           <property name="ant.java.version" value="1.5"></property>
 
@@ -992,127 +711,24 @@ starting test case 5
 
       </properties>
 
-      <testcase classname="test.nz.org.take.compiler.scenario3.Tests" name="test1" time="0.906"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario3.Tests" name="test1" time="1.515"></testcase>
 
-      <testcase classname="test.nz.org.take.compiler.scenario3.Tests" name="test2" time="0.141"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario3.Tests" name="test2" time="0.36"></testcase>
 
-      <system-out><![CDATA[// script for test scenario 1
-@@dc:date=30/02/2007
-@@dc:creator=author jens dietrich
-var java.lang.String descendant,ancestor,x
-@take.compilerhint.slots=person1,person2
-@take.compilerhint.method=isAncestor
-@take.compilerhint.class=AncestorRelationship
-query isAncestor(in,in)
-rule1: if isFather(descendant,ancestor) then isAncestor(descendant,ancestor)
-rule2: if isAncestor(x,ancestor) and isFather(descendant,x) then isAncestor(descendant,ancestor)
-fact1: isFather("r0","r")
-fact2: isFather("r1","r")
-fact3: isFather("r00","r0")
-fact4: isFather("r01","r0")
-fact5: isFather("r10","r1")
-fact6: isFather("r11","r1")
-fact7: isFather("r000","r00")
-fact8: isFather("r001","r00")
-fact9: isFather("r010","r01")
-fact10: isFather("r011","r01")
-fact11: isFather("r100","r10")
-fact12: isFather("r101","r10")
-fact13: isFather("r110","r11")
-fact14: isFather("r111","r11")
-0 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-16 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-16 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-16 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-16 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-16 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-16 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-16 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-16 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-16 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-16 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-16 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-16 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-16 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-16 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-16 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-16 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-32 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-32 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
-starting test case 1
+      <system-out><![CDATA[starting test case 1
 1. rule1
 2. public boolean test.nz.org.take.compiler.scenario3.Person.sameAs(test.nz.org.take.compiler.scenario3.Person)
-// script for test scenario 1
-@@dc:date=30/02/2007
-@@dc:creator=author jens dietrich
-var java.lang.String descendant,ancestor,x
-@take.compilerhint.slots=person1,person2
-@take.compilerhint.method=isAncestor
-@take.compilerhint.class=AncestorRelationship
-query isAncestor(in,in)
-rule1: if isFather(descendant,ancestor) then isAncestor(descendant,ancestor)
-rule2: if isAncestor(x,ancestor) and isFather(descendant,x) then isAncestor(descendant,ancestor)
-fact1: isFather("r0","r")
-fact2: isFather("r1","r")
-fact3: isFather("r00","r0")
-fact4: isFather("r01","r0")
-fact5: isFather("r10","r1")
-fact6: isFather("r11","r1")
-fact7: isFather("r000","r00")
-fact8: isFather("r001","r00")
-fact9: isFather("r010","r01")
-fact10: isFather("r011","r01")
-fact11: isFather("r100","r10")
-fact12: isFather("r101","r10")
-fact13: isFather("r110","r11")
-fact14: isFather("r111","r11")
-329 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-329 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 9] as simple predicate
-329 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-329 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 9] as simple predicate
-329 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-329 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-329 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-329 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 10] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isAncestor[in line 10] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 11] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 12] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 13] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 14] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 15] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 16] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 17] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 18] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 19] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 20] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 21] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 22] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 23] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
-407 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isFather[in line 24] as simple predicate
 starting test case 2
 1. rule2
 2. public boolean test.nz.org.take.compiler.scenario3.Person.equals(java.lang.Object)
 ]]></system-out>
 
-      <system-err><![CDATA[]]></system-err>
+      <system-err><![CDATA[log4j:WARN No appenders could be found for logger (nz.org.take.script.ScriptKnowledgeSource).
+log4j:WARN Please initialize the log4j system properly.
+]]></system-err>
 
   </testsuite>
-  <testsuite errors="0" failures="0" id="3" name="Tests" package="test.nz.org.take.compiler.scenario4" tests="3" time="1.047">
+  <testsuite errors="0" failures="0" id="3" name="Tests" package="test.nz.org.take.compiler.scenario4" tests="3" time="2.438">
   
     <properties>
     
@@ -1122,7 +738,7 @@ starting test case 2
 
           <property name="sun.java.launcher" value="SUN_STANDARD"></property>
 
-          <property name="eclipse.pdebuild.templates" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/templates/"></property>
+          <property name="eclipse.pdebuild.templates" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/templates/"></property>
 
           <property name="sun.management.compiler" value="HotSpot Client Compiler"></property>
 
@@ -1134,21 +750,21 @@ starting test case 2
 
           <property name="build.tmp" value="build/tmp"></property>
 
-          <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0_01\jre\classes"></property>
+          <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0\jre\classes"></property>
 
           <property name="sun.desktop" value="windows"></property>
 
           <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."></property>
 
-          <property name="ant.home" value="C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5"></property>
+          <property name="ant.home" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5"></property>
 
           <property name="report.junit" value="qa/junit"></property>
 
-          <property name="java.runtime.version" value="1.6.0_01-b06"></property>
+          <property name="java.runtime.version" value="1.6.0-b105"></property>
 
           <property name="version_suffix" value="0.1"></property>
 
-          <property name="user.name" value="jens"></property>
+          <property name="user.name" value="jbdietri"></property>
 
           <property name="debug" value="on"></property>
 
@@ -1158,13 +774,13 @@ starting test case 2
 
           <property name="build" value="./build"></property>
 
-          <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0_01\jre\bin"></property>
+          <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin"></property>
 
-          <property name="ant.file.take" value="C:\Documents and Settings\jens\workspace3.2\take5\build.xml"></property>
+          <property name="ant.file.take" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
 
           <property name="ant.project.name" value="take"></property>
 
-          <property name="java.version" value="1.6.0_01"></property>
+          <property name="java.version" value="1.6.0"></property>
 
           <property name="classes" value="./build/classes"></property>
 
@@ -1176,7 +792,7 @@ starting test case 2
 
           <property name="build.doc" value="build/doc"></property>
 
-          <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\endorsed"></property>
+          <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\endorsed"></property>
 
           <property name="sun.cpu.isalist" value=""></property>
 
@@ -1196,11 +812,11 @@ starting test case 2
 
           <property name="report.jdepend" value="qa/jdepend"></property>
 
-          <property name="java.home" value="C:\Program Files\Java\jdk1.6.0_01\jre"></property>
+          <property name="java.home" value="C:\Program Files\Java\jdk1.6.0\jre"></property>
 
           <property name="java.vm.info" value="mixed mode, sharing"></property>
 
-          <property name="ant.file" value="C:\Documents and Settings\jens\workspace3.2\take5\build.xml"></property>
+          <property name="ant.file" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
 
           <property name="os.version" value="5.1"></property>
 
@@ -1208,11 +824,11 @@ starting test case 2
 
           <property name="path.separator" value=";"></property>
 
-          <property name="java.vm.version" value="1.6.0_01-b06"></property>
+          <property name="java.vm.version" value="1.6.0-b105"></property>
 
           <property name="user.variant" value=""></property>
 
-          <property name="ant.library.dir" value="C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib"></property>
+          <property name="ant.library.dir" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib"></property>
 
           <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"></property>
 
@@ -1220,13 +836,13 @@ starting test case 2
 
           <property name="awt.toolkit" value="sun.awt.windows.WToolkit"></property>
 
-          <property name="eclipse.pdebuild.scripts" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/scripts/"></property>
+          <property name="eclipse.pdebuild.scripts" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/scripts/"></property>
 
-          <property name="user.home" value="C:\Documents and Settings\jens"></property>
+          <property name="user.home" value="C:\Documents and Settings\jbdietri"></property>
 
           <property name="java.specification.vendor" value="Sun Microsystems Inc."></property>
 
-          <property name="java.library.path" value="C:\WINDOWS\system32;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\IBMVJava\eab\bin;C:\texmf\miktex\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\Sonic\MyDVD;;C:\PROGRA~1\ATT\Graphviz\bin;C:\PROGRA~1\ATT\Graphviz\bin\tools;C:\j2sdk1.4.2_03\bin;C:\Program Files\Common Files\GTK\2.0\bin;C:\IMNnq_NT;C:\Development\eclipse3.2\configuration\org.eclipse.osgi\bundles\86\1\.cp"></property>
+          <property name="java.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\IBMVJava\eab\bin;C:\texmf\miktex\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\OpenSSH\bin;C:\IMNnq_NT;C:\Program Files\Subversion\bin;C:\Program Files\Java\jdk1.6.0\bin;C:\Sun\jwsdp-2.0\jwsdp-shared\bin"></property>
 
           <property name="name" value="take"></property>
 
@@ -1236,7 +852,7 @@ starting test case 2
 
           <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"></property>
 
-          <property name="java.class.path" value="C:\Documents and Settings\jens\workspace3.2\take5\lib\commons-collections-3.1.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\commons-logging.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\jalopy.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\junit-4.1.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\log4j-1.2.7.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\velocity-dep-1.5.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-antlr.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-bcel.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-bsf.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-log4j.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-oro.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-regexp.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-resolver.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-commons-logging.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-commons-net.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-icontract.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jai.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-javamail.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jdepend.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jmf.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jsch.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-junit.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-launcher.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-netrexx.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-nodeps.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-starteam.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-stylebook.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-swing.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-trax.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-vaj.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-weblogic.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-xalan1.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-xslp.jar;C:\Development\eclipse3.2\configuration\org.eclipse.osgi\bundles\17\1\.cp\lib\remoteAnt.jar;C:\Program Files\Java\jdk1.6.0_01\lib\tools.jar;C:\Development\eclipse3.2\plugins\org.eclipse.swt.win32.win32.x86_3.2.0.v3232m.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\jdepend-2.9.jar"></property>
+          <property name="java.class.path" value="C:\Documents and Settings\jbdietri\workspace\take\build\classes;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-collections-3.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-logging.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\hsqldb.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jalopy.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jdepend-2.9.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\junit-4.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\log4j-1.2.7.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\velocity-dep-1.5.jar;C:\IBMVJava\eab\runtime20;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-launcher.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-junit.jar"></property>
 
           <property name="ant.version" value="Apache Ant version 1.6.5 compiled on June 2 2005"></property>
 
@@ -1252,9 +868,9 @@ starting test case 2
 
           <property name="sun.os.patch.level" value="Service Pack 2"></property>
 
-          <property name="eclipse.pdebuild.home" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/./"></property>
+          <property name="eclipse.pdebuild.home" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/./"></property>
 
-          <property name="java.io.tmpdir" value="C:\DOCUME~1\jens\LOCALS~1\Temp\"></property>
+          <property name="java.io.tmpdir" value="C:\DOCUME~1\jbdietri\LOCALS~1\Temp\"></property>
 
           <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"></property>
 
@@ -1262,15 +878,15 @@ starting test case 2
 
           <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"></property>
 
-          <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"></property>
+          <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"></property>
 
-          <property name="user.dir" value="C:\Documents and Settings\jens\workspace3.2\take5"></property>
+          <property name="user.dir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
 
           <property name="line.separator" value=" "></property>
 
           <property name="java.vm.name" value="Java HotSpot(TM) Client VM"></property>
 
-          <property name="basedir" value="C:\Documents and Settings\jens\workspace3.2\take5"></property>
+          <property name="basedir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
 
           <property name="ant.java.version" value="1.5"></property>
 
@@ -1288,39 +904,23 @@ starting test case 2
 
       </properties>
 
-      <testcase classname="test.nz.org.take.compiler.scenario4.Tests" name="test1" time="0.687"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario4.Tests" name="test1" time="1.704"></testcase>
 
-      <testcase classname="test.nz.org.take.compiler.scenario4.Tests" name="test2" time="0.063"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario4.Tests" name="test2" time="0.406"></testcase>
 
-      <testcase classname="test.nz.org.take.compiler.scenario4.Tests" name="test3" time="0.015"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario4.Tests" name="test3" time="0.297"></testcase>
 
-      <system-out><![CDATA[0 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol courses[in line 17] as bean property
-32 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol college[in line 17] as bean property
-32 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isEnrolled[in line 17] as simple predicate
-starting test case 1
-188 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol courses[in line 17] as bean property
-188 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol courses[in line 17] as bean property
-188 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol college[in line 17] as bean property
-188 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol college[in line 17] as bean property
-188 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isEnrolled[in line 17] as simple predicate
-188 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isEnrolled[in line 17] as simple predicate
+      <system-out><![CDATA[starting test case 1
 starting test case 2
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol courses[in line 17] as bean property
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol courses[in line 17] as bean property
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol courses[in line 17] as bean property
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol college[in line 17] as bean property
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol college[in line 17] as bean property
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol college[in line 17] as bean property
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isEnrolled[in line 17] as simple predicate
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isEnrolled[in line 17] as simple predicate
-219 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isEnrolled[in line 17] as simple predicate
 starting test case 2
 ]]></system-out>
 
-      <system-err><![CDATA[]]></system-err>
+      <system-err><![CDATA[log4j:WARN No appenders could be found for logger (nz.org.take.script.ScriptKnowledgeSource).
+log4j:WARN Please initialize the log4j system properly.
+]]></system-err>
 
   </testsuite>
-  <testsuite errors="0" failures="0" id="4" name="Tests" package="test.nz.org.take.compiler.scenario5" tests="1" time="0.203">
+  <testsuite errors="0" failures="0" id="4" name="Tests" package="test.nz.org.take.compiler.scenario5" tests="1" time="1.578">
   
     <properties>
     
@@ -1330,7 +930,7 @@ starting test case 2
 
           <property name="sun.java.launcher" value="SUN_STANDARD"></property>
 
-          <property name="eclipse.pdebuild.templates" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/templates/"></property>
+          <property name="eclipse.pdebuild.templates" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/templates/"></property>
 
           <property name="sun.management.compiler" value="HotSpot Client Compiler"></property>
 
@@ -1342,21 +942,21 @@ starting test case 2
 
           <property name="build.tmp" value="build/tmp"></property>
 
-          <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0_01\jre\classes"></property>
+          <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0\jre\classes"></property>
 
           <property name="sun.desktop" value="windows"></property>
 
           <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."></property>
 
-          <property name="ant.home" value="C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5"></property>
+          <property name="ant.home" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5"></property>
 
           <property name="report.junit" value="qa/junit"></property>
 
-          <property name="java.runtime.version" value="1.6.0_01-b06"></property>
+          <property name="java.runtime.version" value="1.6.0-b105"></property>
 
           <property name="version_suffix" value="0.1"></property>
 
-          <property name="user.name" value="jens"></property>
+          <property name="user.name" value="jbdietri"></property>
 
           <property name="debug" value="on"></property>
 
@@ -1366,13 +966,13 @@ starting test case 2
 
           <property name="build" value="./build"></property>
 
-          <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0_01\jre\bin"></property>
+          <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin"></property>
 
-          <property name="ant.file.take" value="C:\Documents and Settings\jens\workspace3.2\take5\build.xml"></property>
+          <property name="ant.file.take" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
 
           <property name="ant.project.name" value="take"></property>
 
-          <property name="java.version" value="1.6.0_01"></property>
+          <property name="java.version" value="1.6.0"></property>
 
           <property name="classes" value="./build/classes"></property>
 
@@ -1384,7 +984,7 @@ starting test case 2
 
           <property name="build.doc" value="build/doc"></property>
 
-          <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\endorsed"></property>
+          <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\endorsed"></property>
 
           <property name="sun.cpu.isalist" value=""></property>
 
@@ -1404,11 +1004,11 @@ starting test case 2
 
           <property name="report.jdepend" value="qa/jdepend"></property>
 
-          <property name="java.home" value="C:\Program Files\Java\jdk1.6.0_01\jre"></property>
+          <property name="java.home" value="C:\Program Files\Java\jdk1.6.0\jre"></property>
 
           <property name="java.vm.info" value="mixed mode, sharing"></property>
 
-          <property name="ant.file" value="C:\Documents and Settings\jens\workspace3.2\take5\build.xml"></property>
+          <property name="ant.file" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
 
           <property name="os.version" value="5.1"></property>
 
@@ -1416,11 +1016,11 @@ starting test case 2
 
           <property name="path.separator" value=";"></property>
 
-          <property name="java.vm.version" value="1.6.0_01-b06"></property>
+          <property name="java.vm.version" value="1.6.0-b105"></property>
 
           <property name="user.variant" value=""></property>
 
-          <property name="ant.library.dir" value="C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib"></property>
+          <property name="ant.library.dir" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib"></property>
 
           <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"></property>
 
@@ -1428,13 +1028,13 @@ starting test case 2
 
           <property name="awt.toolkit" value="sun.awt.windows.WToolkit"></property>
 
-          <property name="eclipse.pdebuild.scripts" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/scripts/"></property>
+          <property name="eclipse.pdebuild.scripts" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/scripts/"></property>
 
-          <property name="user.home" value="C:\Documents and Settings\jens"></property>
+          <property name="user.home" value="C:\Documents and Settings\jbdietri"></property>
 
           <property name="java.specification.vendor" value="Sun Microsystems Inc."></property>
 
-          <property name="java.library.path" value="C:\WINDOWS\system32;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\IBMVJava\eab\bin;C:\texmf\miktex\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\Sonic\MyDVD;;C:\PROGRA~1\ATT\Graphviz\bin;C:\PROGRA~1\ATT\Graphviz\bin\tools;C:\j2sdk1.4.2_03\bin;C:\Program Files\Common Files\GTK\2.0\bin;C:\IMNnq_NT;C:\Development\eclipse3.2\configuration\org.eclipse.osgi\bundles\86\1\.cp"></property>
+          <property name="java.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\IBMVJava\eab\bin;C:\texmf\miktex\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\OpenSSH\bin;C:\IMNnq_NT;C:\Program Files\Subversion\bin;C:\Program Files\Java\jdk1.6.0\bin;C:\Sun\jwsdp-2.0\jwsdp-shared\bin"></property>
 
           <property name="name" value="take"></property>
 
@@ -1444,7 +1044,7 @@ starting test case 2
 
           <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"></property>
 
-          <property name="java.class.path" value="C:\Documents and Settings\jens\workspace3.2\take5\lib\commons-collections-3.1.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\commons-logging.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\jalopy.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\junit-4.1.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\log4j-1.2.7.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\velocity-dep-1.5.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-antlr.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-bcel.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-bsf.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-log4j.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-oro.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-regexp.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-resolver.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-commons-logging.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-commons-net.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-icontract.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jai.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-javamail.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jdepend.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jmf.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jsch.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-junit.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-launcher.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-netrexx.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-nodeps.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-starteam.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-stylebook.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-swing.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-trax.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-vaj.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-weblogic.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-xalan1.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-xslp.jar;C:\Development\eclipse3.2\configuration\org.eclipse.osgi\bundles\17\1\.cp\lib\remoteAnt.jar;C:\Program Files\Java\jdk1.6.0_01\lib\tools.jar;C:\Development\eclipse3.2\plugins\org.eclipse.swt.win32.win32.x86_3.2.0.v3232m.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\jdepend-2.9.jar"></property>
+          <property name="java.class.path" value="C:\Documents and Settings\jbdietri\workspace\take\build\classes;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-collections-3.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-logging.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\hsqldb.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jalopy.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jdepend-2.9.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\junit-4.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\log4j-1.2.7.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\velocity-dep-1.5.jar;C:\IBMVJava\eab\runtime20;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-launcher.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-junit.jar"></property>
 
           <property name="ant.version" value="Apache Ant version 1.6.5 compiled on June 2 2005"></property>
 
@@ -1460,9 +1060,9 @@ starting test case 2
 
           <property name="sun.os.patch.level" value="Service Pack 2"></property>
 
-          <property name="eclipse.pdebuild.home" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/./"></property>
+          <property name="eclipse.pdebuild.home" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/./"></property>
 
-          <property name="java.io.tmpdir" value="C:\DOCUME~1\jens\LOCALS~1\Temp\"></property>
+          <property name="java.io.tmpdir" value="C:\DOCUME~1\jbdietri\LOCALS~1\Temp\"></property>
 
           <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"></property>
 
@@ -1470,15 +1070,15 @@ starting test case 2
 
           <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"></property>
 
-          <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"></property>
+          <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"></property>
 
-          <property name="user.dir" value="C:\Documents and Settings\jens\workspace3.2\take5"></property>
+          <property name="user.dir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
 
           <property name="line.separator" value=" "></property>
 
           <property name="java.vm.name" value="Java HotSpot(TM) Client VM"></property>
 
-          <property name="basedir" value="C:\Documents and Settings\jens\workspace3.2\take5"></property>
+          <property name="basedir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
 
           <property name="ant.java.version" value="1.5"></property>
 
@@ -1496,15 +1096,17 @@ starting test case 2
 
       </properties>
 
-      <testcase classname="test.nz.org.take.compiler.scenario5.Tests" name="test1" time="0.093"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario5.Tests" name="test1" time="1.547"></testcase>
 
       <system-out><![CDATA[starting test case 1
 ]]></system-out>
 
-      <system-err><![CDATA[]]></system-err>
+      <system-err><![CDATA[log4j:WARN No appenders could be found for logger (nz.org.take.script.ScriptKnowledgeSource).
+log4j:WARN Please initialize the log4j system properly.
+]]></system-err>
 
   </testsuite>
-  <testsuite errors="0" failures="0" id="5" name="Tests" package="test.nz.org.take.compiler.scenario6" tests="5" time="0.25">
+  <testsuite errors="0" failures="0" id="5" name="Tests" package="test.nz.org.take.compiler.scenario6" tests="5" time="3.14">
   
     <properties>
     
@@ -1514,7 +1116,7 @@ starting test case 2
 
           <property name="sun.java.launcher" value="SUN_STANDARD"></property>
 
-          <property name="eclipse.pdebuild.templates" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/templates/"></property>
+          <property name="eclipse.pdebuild.templates" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/templates/"></property>
 
           <property name="sun.management.compiler" value="HotSpot Client Compiler"></property>
 
@@ -1526,21 +1128,21 @@ starting test case 2
 
           <property name="build.tmp" value="build/tmp"></property>
 
-          <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0_01\jre\classes"></property>
+          <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0\jre\classes"></property>
 
           <property name="sun.desktop" value="windows"></property>
 
           <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."></property>
 
-          <property name="ant.home" value="C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5"></property>
+          <property name="ant.home" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5"></property>
 
           <property name="report.junit" value="qa/junit"></property>
 
-          <property name="java.runtime.version" value="1.6.0_01-b06"></property>
+          <property name="java.runtime.version" value="1.6.0-b105"></property>
 
           <property name="version_suffix" value="0.1"></property>
 
-          <property name="user.name" value="jens"></property>
+          <property name="user.name" value="jbdietri"></property>
 
           <property name="debug" value="on"></property>
 
@@ -1550,13 +1152,13 @@ starting test case 2
 
           <property name="build" value="./build"></property>
 
-          <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0_01\jre\bin"></property>
+          <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin"></property>
 
-          <property name="ant.file.take" value="C:\Documents and Settings\jens\workspace3.2\take5\build.xml"></property>
+          <property name="ant.file.take" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
 
           <property name="ant.project.name" value="take"></property>
 
-          <property name="java.version" value="1.6.0_01"></property>
+          <property name="java.version" value="1.6.0"></property>
 
           <property name="classes" value="./build/classes"></property>
 
@@ -1568,7 +1170,7 @@ starting test case 2
 
           <property name="build.doc" value="build/doc"></property>
 
-          <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\endorsed"></property>
+          <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\endorsed"></property>
 
           <property name="sun.cpu.isalist" value=""></property>
 
@@ -1588,11 +1190,11 @@ starting test case 2
 
           <property name="report.jdepend" value="qa/jdepend"></property>
 
-          <property name="java.home" value="C:\Program Files\Java\jdk1.6.0_01\jre"></property>
+          <property name="java.home" value="C:\Program Files\Java\jdk1.6.0\jre"></property>
 
           <property name="java.vm.info" value="mixed mode, sharing"></property>
 
-          <property name="ant.file" value="C:\Documents and Settings\jens\workspace3.2\take5\build.xml"></property>
+          <property name="ant.file" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
 
           <property name="os.version" value="5.1"></property>
 
@@ -1600,11 +1202,11 @@ starting test case 2
 
           <property name="path.separator" value=";"></property>
 
-          <property name="java.vm.version" value="1.6.0_01-b06"></property>
+          <property name="java.vm.version" value="1.6.0-b105"></property>
 
           <property name="user.variant" value=""></property>
 
-          <property name="ant.library.dir" value="C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib"></property>
+          <property name="ant.library.dir" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib"></property>
 
           <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"></property>
 
@@ -1612,13 +1214,13 @@ starting test case 2
 
           <property name="awt.toolkit" value="sun.awt.windows.WToolkit"></property>
 
-          <property name="eclipse.pdebuild.scripts" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/scripts/"></property>
+          <property name="eclipse.pdebuild.scripts" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/scripts/"></property>
 
-          <property name="user.home" value="C:\Documents and Settings\jens"></property>
+          <property name="user.home" value="C:\Documents and Settings\jbdietri"></property>
 
           <property name="java.specification.vendor" value="Sun Microsystems Inc."></property>
 
-          <property name="java.library.path" value="C:\WINDOWS\system32;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\IBMVJava\eab\bin;C:\texmf\miktex\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\Sonic\MyDVD;;C:\PROGRA~1\ATT\Graphviz\bin;C:\PROGRA~1\ATT\Graphviz\bin\tools;C:\j2sdk1.4.2_03\bin;C:\Program Files\Common Files\GTK\2.0\bin;C:\IMNnq_NT;C:\Development\eclipse3.2\configuration\org.eclipse.osgi\bundles\86\1\.cp"></property>
+          <property name="java.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\IBMVJava\eab\bin;C:\texmf\miktex\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\OpenSSH\bin;C:\IMNnq_NT;C:\Program Files\Subversion\bin;C:\Program Files\Java\jdk1.6.0\bin;C:\Sun\jwsdp-2.0\jwsdp-shared\bin"></property>
 
           <property name="name" value="take"></property>
 
@@ -1628,7 +1230,7 @@ starting test case 2
 
           <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"></property>
 
-          <property name="java.class.path" value="C:\Documents and Settings\jens\workspace3.2\take5\lib\commons-collections-3.1.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\commons-logging.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\jalopy.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\junit-4.1.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\log4j-1.2.7.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\velocity-dep-1.5.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-antlr.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-bcel.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-bsf.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-log4j.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-oro.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-regexp.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-resolver.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-commons-logging.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-commons-net.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-icontract.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jai.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-javamail.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jdepend.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jmf.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jsch.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-junit.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-launcher.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-netrexx.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-nodeps.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-starteam.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-stylebook.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-swing.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-trax.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-vaj.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-weblogic.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-xalan1.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-xslp.jar;C:\Development\eclipse3.2\configuration\org.eclipse.osgi\bundles\17\1\.cp\lib\remoteAnt.jar;C:\Program Files\Java\jdk1.6.0_01\lib\tools.jar;C:\Development\eclipse3.2\plugins\org.eclipse.swt.win32.win32.x86_3.2.0.v3232m.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\jdepend-2.9.jar"></property>
+          <property name="java.class.path" value="C:\Documents and Settings\jbdietri\workspace\take\build\classes;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-collections-3.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-logging.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\hsqldb.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jalopy.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jdepend-2.9.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\junit-4.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\log4j-1.2.7.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\velocity-dep-1.5.jar;C:\IBMVJava\eab\runtime20;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-launcher.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-junit.jar"></property>
 
           <property name="ant.version" value="Apache Ant version 1.6.5 compiled on June 2 2005"></property>
 
@@ -1644,9 +1246,9 @@ starting test case 2
 
           <property name="sun.os.patch.level" value="Service Pack 2"></property>
 
-          <property name="eclipse.pdebuild.home" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/./"></property>
+          <property name="eclipse.pdebuild.home" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/./"></property>
 
-          <property name="java.io.tmpdir" value="C:\DOCUME~1\jens\LOCALS~1\Temp\"></property>
+          <property name="java.io.tmpdir" value="C:\DOCUME~1\jbdietri\LOCALS~1\Temp\"></property>
 
           <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"></property>
 
@@ -1654,15 +1256,15 @@ starting test case 2
 
           <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"></property>
 
-          <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"></property>
+          <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"></property>
 
-          <property name="user.dir" value="C:\Documents and Settings\jens\workspace3.2\take5"></property>
+          <property name="user.dir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
 
           <property name="line.separator" value=" "></property>
 
           <property name="java.vm.name" value="Java HotSpot(TM) Client VM"></property>
 
-          <property name="basedir" value="C:\Documents and Settings\jens\workspace3.2\take5"></property>
+          <property name="basedir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
 
           <property name="ant.java.version" value="1.5"></property>
 
@@ -1680,15 +1282,15 @@ starting test case 2
 
       </properties>
 
-      <testcase classname="test.nz.org.take.compiler.scenario6.Tests" name="test1" time="0.062"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario6.Tests" name="test1" time="1.625"></testcase>
 
-      <testcase classname="test.nz.org.take.compiler.scenario6.Tests" name="test2" time="0.032"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario6.Tests" name="test2" time="0.453"></testcase>
 
-      <testcase classname="test.nz.org.take.compiler.scenario6.Tests" name="test3" time="0.015"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario6.Tests" name="test3" time="0.391"></testcase>
 
-      <testcase classname="test.nz.org.take.compiler.scenario6.Tests" name="test4" time="0.0"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario6.Tests" name="test4" time="0.312"></testcase>
 
-      <testcase classname="test.nz.org.take.compiler.scenario6.Tests" name="test5" time="0.047"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario6.Tests" name="test5" time="0.328"></testcase>
 
       <system-out><![CDATA[1. rule2
 2. fact6
@@ -1698,10 +1300,12 @@ test.nz.org.take.compiler.scenario6.Person@232c7f
 test.nz.org.take.compiler.scenario6.Person@26c028
 ]]></system-out>
 
-      <system-err><![CDATA[]]></system-err>
+      <system-err><![CDATA[log4j:WARN No appenders could be found for logger (nz.org.take.script.ScriptKnowledgeSource).
+log4j:WARN Please initialize the log4j system properly.
+]]></system-err>
 
   </testsuite>
-  <testsuite errors="0" failures="0" id="6" name="ParserTests" package="test.nz.org.take.script" tests="19" time="0.422">
+  <testsuite errors="0" failures="0" id="6" name="Tests" package="test.nz.org.take.compiler.scenario7" tests="1" time="1.547">
   
     <properties>
     
@@ -1711,7 +1315,7 @@ test.nz.org.take.compiler.scenario6.Person@26c028
 
           <property name="sun.java.launcher" value="SUN_STANDARD"></property>
 
-          <property name="eclipse.pdebuild.templates" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/templates/"></property>
+          <property name="eclipse.pdebuild.templates" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/templates/"></property>
 
           <property name="sun.management.compiler" value="HotSpot Client Compiler"></property>
 
@@ -1723,21 +1327,21 @@ test.nz.org.take.compiler.scenario6.Person@26c028
 
           <property name="build.tmp" value="build/tmp"></property>
 
-          <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0_01\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0_01\jre\classes"></property>
+          <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0\jre\classes"></property>
 
           <property name="sun.desktop" value="windows"></property>
 
           <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."></property>
 
-          <property name="ant.home" value="C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5"></property>
+          <property name="ant.home" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5"></property>
 
           <property name="report.junit" value="qa/junit"></property>
 
-          <property name="java.runtime.version" value="1.6.0_01-b06"></property>
+          <property name="java.runtime.version" value="1.6.0-b105"></property>
 
           <property name="version_suffix" value="0.1"></property>
 
-          <property name="user.name" value="jens"></property>
+          <property name="user.name" value="jbdietri"></property>
 
           <property name="debug" value="on"></property>
 
@@ -1747,13 +1351,13 @@ test.nz.org.take.compiler.scenario6.Person@26c028
 
           <property name="build" value="./build"></property>
 
-          <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0_01\jre\bin"></property>
+          <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin"></property>
 
-          <property name="ant.file.take" value="C:\Documents and Settings\jens\workspace3.2\take5\build.xml"></property>
+          <property name="ant.file.take" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
 
           <property name="ant.project.name" value="take"></property>
 
-          <property name="java.version" value="1.6.0_01"></property>
+          <property name="java.version" value="1.6.0"></property>
 
           <property name="classes" value="./build/classes"></property>
 
@@ -1765,7 +1369,7 @@ test.nz.org.take.compiler.scenario6.Person@26c028
 
           <property name="build.doc" value="build/doc"></property>
 
-          <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\endorsed"></property>
+          <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\endorsed"></property>
 
           <property name="sun.cpu.isalist" value=""></property>
 
@@ -1785,11 +1389,11 @@ test.nz.org.take.compiler.scenario6.Person@26c028
 
           <property name="report.jdepend" value="qa/jdepend"></property>
 
-          <property name="java.home" value="C:\Program Files\Java\jdk1.6.0_01\jre"></property>
+          <property name="java.home" value="C:\Program Files\Java\jdk1.6.0\jre"></property>
 
           <property name="java.vm.info" value="mixed mode, sharing"></property>
 
-          <property name="ant.file" value="C:\Documents and Settings\jens\workspace3.2\take5\build.xml"></property>
+          <property name="ant.file" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
 
           <property name="os.version" value="5.1"></property>
 
@@ -1797,11 +1401,11 @@ test.nz.org.take.compiler.scenario6.Person@26c028
 
           <property name="path.separator" value=";"></property>
 
-          <property name="java.vm.version" value="1.6.0_01-b06"></property>
+          <property name="java.vm.version" value="1.6.0-b105"></property>
 
           <property name="user.variant" value=""></property>
 
-          <property name="ant.library.dir" value="C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib"></property>
+          <property name="ant.library.dir" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib"></property>
 
           <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"></property>
 
@@ -1809,13 +1413,13 @@ test.nz.org.take.compiler.scenario6.Person@26c028
 
           <property name="awt.toolkit" value="sun.awt.windows.WToolkit"></property>
 
-          <property name="eclipse.pdebuild.scripts" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/scripts/"></property>
+          <property name="eclipse.pdebuild.scripts" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/scripts/"></property>
 
-          <property name="user.home" value="C:\Documents and Settings\jens"></property>
+          <property name="user.home" value="C:\Documents and Settings\jbdietri"></property>
 
           <property name="java.specification.vendor" value="Sun Microsystems Inc."></property>
 
-          <property name="java.library.path" value="C:\WINDOWS\system32;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\IBMVJava\eab\bin;C:\texmf\miktex\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\Sonic\MyDVD;;C:\PROGRA~1\ATT\Graphviz\bin;C:\PROGRA~1\ATT\Graphviz\bin\tools;C:\j2sdk1.4.2_03\bin;C:\Program Files\Common Files\GTK\2.0\bin;C:\IMNnq_NT;C:\Development\eclipse3.2\configuration\org.eclipse.osgi\bundles\86\1\.cp"></property>
+          <property name="java.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\IBMVJava\eab\bin;C:\texmf\miktex\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\OpenSSH\bin;C:\IMNnq_NT;C:\Program Files\Subversion\bin;C:\Program Files\Java\jdk1.6.0\bin;C:\Sun\jwsdp-2.0\jwsdp-shared\bin"></property>
 
           <property name="name" value="take"></property>
 
@@ -1825,7 +1429,7 @@ test.nz.org.take.compiler.scenario6.Person@26c028
 
           <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"></property>
 
-          <property name="java.class.path" value="C:\Documents and Settings\jens\workspace3.2\take5\lib\commons-collections-3.1.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\commons-logging.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\jalopy.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\junit-4.1.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\log4j-1.2.7.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\velocity-dep-1.5.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-antlr.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-bcel.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-bsf.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-log4j.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-oro.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-regexp.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-apache-resolver.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-commons-logging.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-commons-net.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-icontract.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jai.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-javamail.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jdepend.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jmf.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-jsch.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-junit.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-launcher.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-netrexx.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-nodeps.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-starteam.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-stylebook.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-swing.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-trax.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-vaj.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-weblogic.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-xalan1.jar;C:\Development\eclipse3.2\plugins\org.apache.ant_1.6.5\lib\ant-xslp.jar;C:\Development\eclipse3.2\configuration\org.eclipse.osgi\bundles\17\1\.cp\lib\remoteAnt.jar;C:\Program Files\Java\jdk1.6.0_01\lib\tools.jar;C:\Development\eclipse3.2\plugins\org.eclipse.swt.win32.win32.x86_3.2.0.v3232m.jar;C:\Documents and Settings\jens\workspace3.2\take5\lib\jdepend-2.9.jar"></property>
+          <property name="java.class.path" value="C:\Documents and Settings\jbdietri\workspace\take\build\classes;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-collections-3.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-logging.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\hsqldb.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jalopy.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jdepend-2.9.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\junit-4.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\log4j-1.2.7.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\velocity-dep-1.5.jar;C:\IBMVJava\eab\runtime20;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-launcher.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-junit.jar"></property>
 
           <property name="ant.version" value="Apache Ant version 1.6.5 compiled on June 2 2005"></property>
 
@@ -1841,9 +1445,9 @@ test.nz.org.take.compiler.scenario6.Person@26c028
 
           <property name="sun.os.patch.level" value="Service Pack 2"></property>
 
-          <property name="eclipse.pdebuild.home" value="/C:/Development/eclipse3.2/plugins/org.eclipse.pde.build_3.2.0.v20060603/./"></property>
+          <property name="eclipse.pdebuild.home" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/./"></property>
 
-          <property name="java.io.tmpdir" value="C:\DOCUME~1\jens\LOCALS~1\Temp\"></property>
+          <property name="java.io.tmpdir" value="C:\DOCUME~1\jbdietri\LOCALS~1\Temp\"></property>
 
           <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"></property>
 
@@ -1851,15 +1455,15 @@ test.nz.org.take.compiler.scenario6.Person@26c028
 
           <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"></property>
 
-          <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0_01\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"></property>
+          <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"></property>
 
-          <property name="user.dir" value="C:\Documents and Settings\jens\workspace3.2\take5"></property>
+          <property name="user.dir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
 
           <property name="line.separator" value=" "></property>
 
           <property name="java.vm.name" value="Java HotSpot(TM) Client VM"></property>
 
-          <property name="basedir" value="C:\Documents and Settings\jens\workspace3.2\take5"></property>
+          <property name="basedir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
 
           <property name="ant.java.version" value="1.5"></property>
 
@@ -1877,43 +1481,436 @@ test.nz.org.take.compiler.scenario6.Person@26c028
 
       </properties>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test1" time="0.063"></testcase>
+      <testcase classname="test.nz.org.take.compiler.scenario7.Tests" name="test1" time="1.515"></testcase>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test2" time="0.0"></testcase>
+      <system-out><![CDATA[]]></system-out>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test3" time="0.0"></testcase>
+      <system-err><![CDATA[log4j:WARN No appenders could be found for logger (nz.org.take.script.ScriptKnowledgeSource).
+log4j:WARN Please initialize the log4j system properly.
+]]></system-err>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test4" time="0.016"></testcase>
+  </testsuite>
+  <testsuite errors="0" failures="0" id="7" name="Tests" package="test.nz.org.take.compiler.scenario8" tests="2" time="2.719">
+  
+    <properties>
+    
+      <property name="java.vendor" value="Sun Microsystems Inc."></property>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test5" time="0.0"></testcase>
+          <property name="lib.dir" value="lib"></property>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test6" time="0.0"></testcase>
+          <property name="sun.java.launcher" value="SUN_STANDARD"></property>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test10" time="0.0"></testcase>
+          <property name="eclipse.pdebuild.templates" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/templates/"></property>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test11" time="0.0"></testcase>
+          <property name="sun.management.compiler" value="HotSpot Client Compiler"></property>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test12" time="0.0"></testcase>
+          <property name="build.lib" value="build/lib"></property>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test13" time="0.0"></testcase>
+          <property name="docs.dir" value="docs"></property>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test14" time="0.015"></testcase>
+          <property name="os.name" value="Windows XP"></property>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test15" time="0.0"></testcase>
+          <property name="build.tmp" value="build/tmp"></property>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test20" time="0.0"></testcase>
+          <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0\jre\classes"></property>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test30" time="0.0"></testcase>
+          <property name="sun.desktop" value="windows"></property>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test40" time="0.0"></testcase>
+          <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."></property>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test50" time="0.016"></testcase>
+          <property name="ant.home" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5"></property>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test60" time="0.0"></testcase>
+          <property name="report.junit" value="qa/junit"></property>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test61" time="0.0"></testcase>
+          <property name="java.runtime.version" value="1.6.0-b105"></property>
 
-      <testcase classname="test.nz.org.take.script.ParserTests" name="test62" time="0.0"></testcase>
+          <property name="version_suffix" value="0.1"></property>
+
+          <property name="user.name" value="jbdietri"></property>
+
+          <property name="debug" value="on"></property>
+
+          <property name="build.dir" value="build"></property>
+
+          <property name="user.language" value="en"></property>
+
+          <property name="build" value="./build"></property>
+
+          <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin"></property>
+
+          <property name="ant.file.take" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
+
+          <property name="ant.project.name" value="take"></property>
+
+          <property name="java.version" value="1.6.0"></property>
+
+          <property name="classes" value="./build/classes"></property>
+
+          <property name="version" value="0.1"></property>
+
+          <property name="user.timezone" value=""></property>
+
+          <property name="sun.arch.data.model" value="32"></property>
+
+          <property name="build.doc" value="build/doc"></property>
+
+          <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\endorsed"></property>
+
+          <property name="sun.cpu.isalist" value=""></property>
+
+          <property name="sun.jnu.encoding" value="Cp1252"></property>
+
+          <property name="file.encoding.pkg" value="sun.io"></property>
+
+          <property name="file.separator" value="\"></property>
+
+          <property name="java.specification.name" value="Java Platform API Specification"></property>
+
+          <property name="classes.dir" value="classes"></property>
+
+          <property name="java.class.version" value="50.0"></property>
+
+          <property name="user.country" value="NZ"></property>
+
+          <property name="report.jdepend" value="qa/jdepend"></property>
+
+          <property name="java.home" value="C:\Program Files\Java\jdk1.6.0\jre"></property>
+
+          <property name="java.vm.info" value="mixed mode, sharing"></property>
+
+          <property name="ant.file" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
+
+          <property name="os.version" value="5.1"></property>
+
+          <property name="build.script.jar" value="build/lib/take-script-0.1"></property>
+
+          <property name="path.separator" value=";"></property>
+
+          <property name="java.vm.version" value="1.6.0-b105"></property>
+
+          <property name="user.variant" value=""></property>
+
+          <property name="ant.library.dir" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib"></property>
+
+          <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"></property>
+
+          <property name="sun.io.unicode.encoding" value="UnicodeLittle"></property>
+
+          <property name="awt.toolkit" value="sun.awt.windows.WToolkit"></property>
+
+          <property name="eclipse.pdebuild.scripts" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/scripts/"></property>
+
+          <property name="user.home" value="C:\Documents and Settings\jbdietri"></property>
+
+          <property name="java.specification.vendor" value="Sun Microsystems Inc."></property>
+
+          <property name="java.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\IBMVJava\eab\bin;C:\texmf\miktex\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\OpenSSH\bin;C:\IMNnq_NT;C:\Program Files\Subversion\bin;C:\Program Files\Java\jdk1.6.0\bin;C:\Sun\jwsdp-2.0\jwsdp-shared\bin"></property>
+
+          <property name="name" value="take"></property>
+
+          <property name="java.vendor.url" value="http://java.sun.com/"></property>
+
+          <property name="java.vm.vendor" value="Sun Microsystems Inc."></property>
+
+          <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"></property>
+
+          <property name="java.class.path" value="C:\Documents and Settings\jbdietri\workspace\take\build\classes;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-collections-3.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-logging.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\hsqldb.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jalopy.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jdepend-2.9.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\junit-4.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\log4j-1.2.7.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\velocity-dep-1.5.jar;C:\IBMVJava\eab\runtime20;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-launcher.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-junit.jar"></property>
+
+          <property name="ant.version" value="Apache Ant version 1.6.5 compiled on June 2 2005"></property>
+
+          <property name="build.rt.jar" value="build/lib/take-rt-0.1"></property>
+
+          <property name="java.vm.specification.name" value="Java Virtual Machine Specification"></property>
+
+          <property name="java.vm.specification.version" value="1.0"></property>
+
+          <property name="build.classes" value="build/classes"></property>
+
+          <property name="sun.cpu.endian" value="little"></property>
+
+          <property name="sun.os.patch.level" value="Service Pack 2"></property>
+
+          <property name="eclipse.pdebuild.home" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/./"></property>
+
+          <property name="java.io.tmpdir" value="C:\DOCUME~1\jbdietri\LOCALS~1\Temp\"></property>
+
+          <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"></property>
+
+          <property name="os.arch" value="x86"></property>
+
+          <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"></property>
+
+          <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"></property>
+
+          <property name="user.dir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
+
+          <property name="line.separator" value=" "></property>
+
+          <property name="java.vm.name" value="Java HotSpot(TM) Client VM"></property>
+
+          <property name="basedir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
+
+          <property name="ant.java.version" value="1.5"></property>
+
+          <property name="config.dir" value="misc"></property>
+
+          <property name="file.encoding" value="Cp1252"></property>
+
+          <property name="build.main.jar" value="build/lib/take-0.1"></property>
+
+          <property name="build.test.jar" value="build/lib/take-tests-0.1"></property>
+
+          <property name="java.specification.version" value="1.6"></property>
+
+          <property name="src.dir" value="src"></property>
+
+      </properties>
+
+      <testcase classname="test.nz.org.take.compiler.scenario8.Tests" name="test1" time="2.109"></testcase>
+
+      <testcase classname="test.nz.org.take.compiler.scenario8.Tests" name="test2" time="0.594"></testcase>
+
+      <system-out><![CDATA[closing external fact set
+closing external fact set
+closing external fact set
+]]></system-out>
+
+      <system-err><![CDATA[log4j:WARN No appenders could be found for logger (nz.org.take.script.ScriptKnowledgeSource).
+log4j:WARN Please initialize the log4j system properly.
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" id="8" name="ParserTests" package="test.nz.org.take.script" tests="28" time="0.094">
+  
+    <properties>
+    
+      <property name="java.vendor" value="Sun Microsystems Inc."></property>
+
+          <property name="lib.dir" value="lib"></property>
+
+          <property name="sun.java.launcher" value="SUN_STANDARD"></property>
+
+          <property name="eclipse.pdebuild.templates" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/templates/"></property>
+
+          <property name="sun.management.compiler" value="HotSpot Client Compiler"></property>
+
+          <property name="build.lib" value="build/lib"></property>
+
+          <property name="docs.dir" value="docs"></property>
+
+          <property name="os.name" value="Windows XP"></property>
+
+          <property name="build.tmp" value="build/tmp"></property>
+
+          <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0\jre\classes"></property>
+
+          <property name="sun.desktop" value="windows"></property>
+
+          <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."></property>
+
+          <property name="ant.home" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5"></property>
+
+          <property name="report.junit" value="qa/junit"></property>
+
+          <property name="java.runtime.version" value="1.6.0-b105"></property>
+
+          <property name="version_suffix" value="0.1"></property>
+
+          <property name="user.name" value="jbdietri"></property>
+
+          <property name="debug" value="on"></property>
+
+          <property name="build.dir" value="build"></property>
+
+          <property name="user.language" value="en"></property>
+
+          <property name="build" value="./build"></property>
+
+          <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin"></property>
+
+          <property name="ant.file.take" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
+
+          <property name="ant.project.name" value="take"></property>
+
+          <property name="java.version" value="1.6.0"></property>
+
+          <property name="classes" value="./build/classes"></property>
+
+          <property name="version" value="0.1"></property>
+
+          <property name="user.timezone" value=""></property>
+
+          <property name="sun.arch.data.model" value="32"></property>
+
+          <property name="build.doc" value="build/doc"></property>
+
+          <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\endorsed"></property>
+
+          <property name="sun.cpu.isalist" value=""></property>
+
+          <property name="sun.jnu.encoding" value="Cp1252"></property>
+
+          <property name="file.encoding.pkg" value="sun.io"></property>
+
+          <property name="file.separator" value="\"></property>
+
+          <property name="java.specification.name" value="Java Platform API Specification"></property>
+
+          <property name="classes.dir" value="classes"></property>
+
+          <property name="java.class.version" value="50.0"></property>
+
+          <property name="user.country" value="NZ"></property>
+
+          <property name="report.jdepend" value="qa/jdepend"></property>
+
+          <property name="java.home" value="C:\Program Files\Java\jdk1.6.0\jre"></property>
+
+          <property name="java.vm.info" value="mixed mode, sharing"></property>
+
+          <property name="ant.file" value="C:\Documents and Settings\jbdietri\workspace\take\build.xml"></property>
+
+          <property name="os.version" value="5.1"></property>
+
+          <property name="build.script.jar" value="build/lib/take-script-0.1"></property>
+
+          <property name="path.separator" value=";"></property>
+
+          <property name="java.vm.version" value="1.6.0-b105"></property>
+
+          <property name="user.variant" value=""></property>
+
+          <property name="ant.library.dir" value="C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib"></property>
+
+          <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"></property>
+
+          <property name="sun.io.unicode.encoding" value="UnicodeLittle"></property>
+
+          <property name="awt.toolkit" value="sun.awt.windows.WToolkit"></property>
+
+          <property name="eclipse.pdebuild.scripts" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/scripts/"></property>
+
+          <property name="user.home" value="C:\Documents and Settings\jbdietri"></property>
+
+          <property name="java.specification.vendor" value="Sun Microsystems Inc."></property>
+
+          <property name="java.library.path" value="C:\Program Files\Java\jdk1.6.0\jre\bin;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\IBMVJava\eab\bin;C:\texmf\miktex\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\OpenSSH\bin;C:\IMNnq_NT;C:\Program Files\Subversion\bin;C:\Program Files\Java\jdk1.6.0\bin;C:\Sun\jwsdp-2.0\jwsdp-shared\bin"></property>
+
+          <property name="name" value="take"></property>
+
+          <property name="java.vendor.url" value="http://java.sun.com/"></property>
+
+          <property name="java.vm.vendor" value="Sun Microsystems Inc."></property>
+
+          <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"></property>
+
+          <property name="java.class.path" value="C:\Documents and Settings\jbdietri\workspace\take\build\classes;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-collections-3.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\commons-logging.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\hsqldb.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jalopy.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\jdepend-2.9.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\junit-4.1.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\log4j-1.2.7.jar;C:\Documents and Settings\jbdietri\workspace\take\lib\velocity-dep-1.5.jar;C:\IBMVJava\eab\runtime20;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-launcher.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant.jar;C:\Program Files\eclipse3.2.1\plugins\org.apache.ant_1.6.5\lib\ant-junit.jar"></property>
+
+          <property name="ant.version" value="Apache Ant version 1.6.5 compiled on June 2 2005"></property>
+
+          <property name="build.rt.jar" value="build/lib/take-rt-0.1"></property>
+
+          <property name="java.vm.specification.name" value="Java Virtual Machine Specification"></property>
+
+          <property name="java.vm.specification.version" value="1.0"></property>
+
+          <property name="build.classes" value="build/classes"></property>
+
+          <property name="sun.cpu.endian" value="little"></property>
+
+          <property name="sun.os.patch.level" value="Service Pack 2"></property>
+
+          <property name="eclipse.pdebuild.home" value="/C:/Program Files/eclipse3.2.1/plugins/org.eclipse.pde.build_3.2.1.r321_v20060823/./"></property>
+
+          <property name="java.io.tmpdir" value="C:\DOCUME~1\jbdietri\LOCALS~1\Temp\"></property>
+
+          <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"></property>
+
+          <property name="os.arch" value="x86"></property>
+
+          <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"></property>
+
+          <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"></property>
+
+          <property name="user.dir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
+
+          <property name="line.separator" value=" "></property>
+
+          <property name="java.vm.name" value="Java HotSpot(TM) Client VM"></property>
+
+          <property name="basedir" value="C:\Documents and Settings\jbdietri\workspace\take"></property>
+
+          <property name="ant.java.version" value="1.5"></property>
+
+          <property name="config.dir" value="misc"></property>
+
+          <property name="file.encoding" value="Cp1252"></property>
+
+          <property name="build.main.jar" value="build/lib/take-0.1"></property>
+
+          <property name="build.test.jar" value="build/lib/take-tests-0.1"></property>
+
+          <property name="java.specification.version" value="1.6"></property>
+
+          <property name="src.dir" value="src"></property>
+
+      </properties>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testVariables1" time="0.016"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testVariables2" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testVariables3" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testVariables4" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testFactStore1" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testFactStore2" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testObjectRefs1" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testObjectRefs2" time="0.016"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testRules1" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testRules2" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testRules3" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testFacts1" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testStringLiterals1" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testIntLiterals1" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testDoubleLiterals1" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testComplexTerms1" time="0.015"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testPropertyTerms1" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testQueryIOSignature1" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testIntegration1" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testAnnotations1" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testLineNumbers1" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testNegation1" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testNegation2" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testNegation3" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testComparison1" time="0.016"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testComparison2" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testComparison3" time="0.0"></testcase>
+
+      <testcase classname="test.nz.org.take.script.ParserTests" name="testComparison4" time="0.0"></testcase>
 
       <system-out><![CDATA[]]></system-out>
 
