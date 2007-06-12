@@ -6,35 +6,24 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.Collection;
 import java.util.List;
-import java.util.Properties;
-
-import javax.xml.namespace.QName;
 
 import org.apache.log4j.Logger;
 
-import test.nz.org.take.r2ml.scenario2.MyDatatypeMapper;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.KnowledgeSource;
-import nz.org.take.Predicate;
 import nz.org.take.Query;
 import nz.org.take.TakeException;
-import nz.org.take.script.ScriptKnowledgeSource;
-import nz.org.take.script.parser.Parser;
 
 public class R2MLKnowledgeSource implements KnowledgeSource {
 
 	public Logger LOGGER = Logger.getLogger(R2MLKnowledgeSource.class);
-
-//	private ClassLoader classloader = R2MLKnowledgeSource.class.getClassLoader();
 
 	private Reader reader = null;
 	
 	private R2MLDriver driver = null;
 
 	private KnowledgeBase kb = null;
-	private List<Query> querries = null;
 
 	private R2MLKnowledgeSource() {
 		super();
