@@ -23,7 +23,6 @@ import java.util.*;
 import nz.org.take.compiler.*;
 import nz.org.take.compiler.Compiler;
 import nz.org.take.compiler.util.*;
-import nz.org.take.rt.DerivationController;
 import nz.org.take.*;
 
 /**
