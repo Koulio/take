@@ -9,7 +9,7 @@ public class MyNameMapper extends DefaultNameMapper {
 	public MyNameMapper() {
 		super();
 		addSlotNames(new QName("isFather"), new String[] { "son", "father" });
-		addSlotNames(new QName("lastname"), new String[] { "lastname", "person" });
+		addSlotNames(new QName("lastname"), new String[] { "person", "lastname" });
 	}
 
 }

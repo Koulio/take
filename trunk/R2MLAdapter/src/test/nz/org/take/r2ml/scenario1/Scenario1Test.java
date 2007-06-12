@@ -40,7 +40,7 @@ public class Scenario1Test extends TestCase {
 		Person max = new Person("Dietrich");
 		max.setFirstname("Max");
 		
-		ResultSet<_isFather> result = kb.isFather_01(max);
+		ResultSet<_isFather> result = kb.isFather_10(max);
 		
 		assertTrue(result.hasNext());
 		_isFather isFather = result.next();

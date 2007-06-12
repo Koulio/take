@@ -19,7 +19,7 @@ public class KBUtil {
 		KnowledgeBase kb = src.getKnowledgeBase();
 
 		query.setPredicate(kb.getSupportedPredicates().iterator().next());
-		query.setInputParams(new boolean[] { false, true });
+		query.setInputParams(new boolean[] { true, false });
 
 		kb.add(query);
 
