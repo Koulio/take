@@ -1,0 +1,8 @@
+fact1: isFather["Frank","Lutz"]
+fact2: isFather["Guenther", "Otto"]
+fact3: isFather["Jens", "Klaus"]
+fact4: isFather["Lutz", "Otto"]
+fact5: isFather["Klaus", "Otto"]
+fact6: isFather["Max","Jens"]
+fact7: isFather["Ralf", "Lutz"]
+fact8: isFather["Werner", "Otto"]

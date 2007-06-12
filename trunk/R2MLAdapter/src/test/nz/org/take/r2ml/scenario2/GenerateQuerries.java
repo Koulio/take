@@ -23,7 +23,7 @@ public class GenerateQuerries {
 		query1.setInputParams(new boolean[] { true, true });
 		query2.setInputParams(new boolean[] { false, true });
 
-//		kb.add(query1);
+		kb.add(query1);
 		kb.add(query2);
 
 	}
