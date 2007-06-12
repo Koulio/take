@@ -22,7 +22,6 @@ import javax.xml.bind.JAXBElement;
 
 import de.tu_cottbus.r2ml.Atom;
 import de.tu_cottbus.r2ml.Condition;
-import de.tu_cottbus.r2ml.NegationAsFailure;
 import de.tu_cottbus.r2ml.QfAndOrNafNegFormula;
 import de.tu_cottbus.r2ml.QfConjunction;
 import de.tu_cottbus.r2ml.QfDisjunction;

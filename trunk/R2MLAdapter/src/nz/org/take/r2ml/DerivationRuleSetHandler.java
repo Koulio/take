@@ -66,7 +66,6 @@ class DerivationRuleSetHandler implements XmlTypeHandler {
 		XmlTypeHandler dRuleHandler = driver.getHandlerByXmlType(de.tu_cottbus.r2ml.DerivationRule.class);
 		// mapping the ruleSetId to annotations of each rule
 		String id = dRuleSet.getRuleSetID();
-		context.enter(this);
 		for (de.tu_cottbus.r2ml.DerivationRule derivationRule : dRuleSet.getDerivationRule()) {
 			try {
 				for (DerivationRule rule : (List<DerivationRule>) dRuleHandler.importObject(derivationRule, context, driver)) {
@@ -80,8 +79,7 @@ class DerivationRuleSetHandler implements XmlTypeHandler {
 						+ id + ".", e);
 			} // try-catch
 		}
-		context.leave(this);
-
+		
 		return ret;
 	}
 
