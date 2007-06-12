@@ -23,6 +23,7 @@ import java.util.*;
 import nz.org.take.compiler.*;
 import nz.org.take.compiler.Compiler;
 import nz.org.take.compiler.util.*;
+import nz.org.take.rt.DerivationController;
 import nz.org.take.*;
 
 /**
@@ -607,7 +608,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			this.endorseMethod(methodName);
 			this.removeFromAgenda();
 		}		
-		else throw new CompilerException("This kind of predicate is not supported in queries: " + p.getClass());
+		else throw new CompilerException("This combination of predicate type and parameter signature is not supported in queries: " + p.getClass() + q.getIOSignatureAsString());
 	}
 	/**
 	 * Create a private method for the given query.

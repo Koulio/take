@@ -118,6 +118,14 @@ public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 
 	@Override
 	public boolean supports(Query q) {
+		// check parameters
+		try {
+			this.checkPrerequisites(q);
+		}
+		catch (CompilerException x) {
+			return false;
+		}
+		// check predicate
 		return q.getPredicate() instanceof PropertyPredicate;
 	}
 	
