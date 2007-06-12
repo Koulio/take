@@ -114,6 +114,14 @@ public class CompilerPlugin4JPredicates extends CompilerPlugin {
 
 	@Override
 	public boolean supports(Query q) {
+		// check parameters
+		try {
+			this.checkPrerequisites(q);
+		}
+		catch (CompilerException x) {
+			return false;
+		} 
+		// check predicate
 		return q.getPredicate() instanceof JPredicate;
 	}
 	
