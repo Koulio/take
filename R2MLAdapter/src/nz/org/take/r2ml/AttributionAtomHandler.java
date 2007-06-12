@@ -18,11 +18,14 @@
  */
 package nz.org.take.r2ml;
 
-import java.beans.IntrospectionException;
+import java.beans.BeanInfo;
+import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 
 import nz.org.take.Fact;
+import nz.org.take.Predicate;
 import nz.org.take.PropertyPredicate;
+import nz.org.take.SimplePredicate;
 import nz.org.take.Term;
 import de.tu_cottbus.r2ml.AttributionAtom;
 
@@ -51,7 +54,6 @@ class AttributionAtomHandler implements XmlTypeHandler {
 
 		Fact fact = new Fact();
 		String attributeName = atom.getAttributeID().getLocalPart();
-		fact.setId(attributeName);
 		// domain
 		XmlTypeHandler subjectHandler = driver.getHandlerByXmlType(atom
 				.getSubject().getClass());
@@ -64,36 +66,54 @@ class AttributionAtomHandler implements XmlTypeHandler {
 				.getDataTerm().getValue(), context, driver);
 
 		fact.setTerms(new Term[] { domain, range });
-
-		// build Predicate
-		PropertyPredicate prop = new PropertyPredicate();
-		// set negation
-		prop.setNegated((atom.isIsNegated() == null) ? false : atom
-				.isIsNegated());
-		// Attribution is everytime one2one
-		// TODO check typeCategory-attribute of the datavalue-dataterm
-		prop.setOne2One(true);
-		// look up slotnames
-		prop.setSlotNames(driver.getNameMapper().getSlotNames(
-				atom.getAttributeID()));
-		prop.setOwnerType(domain.getType());
-
-		// create PropertyDescriptor with datavalue as range
-		PropertyDescriptor pd = null;
-		try {
-			pd = new PropertyDescriptor(attributeName, domain.getType());
-			prop.setProperty(pd);
-		} catch (IntrospectionException e) {
-			throw new R2MLException(
-					"Unable to instanciate PropertyDescriptor for AttributeAtom \""
-							+ attributeName + "\" on \""
-							+ domain.getType().getSimpleName() + "\"",
-					R2MLException.GENERIC_ERROR);
-		} finally {
-			context.leave(this);
-		}
-		fact.setPredicate(prop);
+		
+		fact.setPredicate(buildPredicate(attributeName, domain, range, atom.isIsNegated(), driver.getNameMapper().getSlotNames(atom.getAttributeID())));
+		
+		fact.setId(attributeName);
+		
+		context.leave(this);
 		return fact;
 	}
 
-}
+	private Predicate buildPredicate(String attributeName, Term domain, Term range, Boolean negated, String[] slotNames) throws R2MLException {
+		
+		PropertyDescriptor property = buildProperty(attributeName, domain.getType());
+		// if attribute is beanproperty use it
+		if (property != null) {
+			PropertyPredicate propPredicate = new PropertyPredicate();
+			propPredicate.setNegated(negated);
+			propPredicate.setOne2One(true);
+			propPredicate.setOwnerType(domain.getType());
+			propPredicate.setProperty(property);
+			propPredicate.setSlotNames(slotNames);
+			return propPredicate;
+			
+		} else {
+			
+			SimplePredicate simplePredicate = new SimplePredicate();
+			simplePredicate.setName(attributeName);
+			simplePredicate.setNegated(negated);
+			simplePredicate.setSlotTypes(new Class[] {domain.getType(), range.getType()});
+			simplePredicate.setSlotNames(slotNames);
+			return simplePredicate;
+			
+		}
+		
+	}
+
+	private PropertyDescriptor buildProperty(String name, Class clazz) {
+			try {
+				BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
+				PropertyDescriptor[] properties = beanInfo.getPropertyDescriptors();
+				for (PropertyDescriptor property : properties) {
+					if (name.equals(property.getName())
+							&& property.getReadMethod() != null) {
+						return property;
+					}
+				}
+			} catch (Exception e) {
+			}
+			// no property found or exception occured
+			return null;
+
+	}}
