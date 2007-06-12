@@ -115,5 +115,22 @@ public class Query extends AbstractAnnotatable implements Visitable {
 		visitor.visit(this);
 		visitor.endVisit(this);
 	}
+	// get the io signature (input/output params) as string
+	public String getIOSignatureAsString () {
+		StringBuffer b = new StringBuffer();
+		b.append('[');
+		boolean f = true;
+		for (boolean v:this.inputParams) {
+			if (f)
+				f=false;
+			else 
+				b.append(',');
+			b.append(v?"in":"out");
+			
+		}
+		b.append(']');
+		return b.toString();
+		
+	}
 
 }
