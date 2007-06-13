@@ -8,7 +8,7 @@
         final $sourcetype source, 
         final DerivationController _derivation) {
         
-        _derivation.log($property,DerivationController.BEAN_PROPERTY);
+        _derivation.log($property,DerivationController.BEAN_PROPERTY,source,DerivationController.NIL);
 		$resulttype result = new $resulttype();
 		result.$slot1 = source;
 		result.$slot2 = source .$accessor ();

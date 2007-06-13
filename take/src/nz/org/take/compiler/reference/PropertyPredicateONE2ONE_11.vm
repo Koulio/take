@@ -10,7 +10,7 @@
         final $targettype target, 
         final DerivationController _derivation) {
         
-        _derivation.log($property,DerivationController.BEAN_PROPERTY);
+        _derivation.log($property,DerivationController.BEAN_PROPERTY,source,target);
         if (target .equals(source .$accessor ())) {
            	$resulttype result = new $resulttype();
         	result.$slot1 = source;

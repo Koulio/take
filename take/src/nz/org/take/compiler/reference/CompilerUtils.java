@@ -638,12 +638,14 @@ public abstract class CompilerUtils {
 		}
 		out.print(")");
 	}
-	protected void printLogStatement(PrintWriter out, KnowledgeElement cs) {
+	protected void printLogStatement(PrintWriter out, KnowledgeElement cs,boolean[] io,Slot[] islots) {
 		String kind = null;
 		if (cs instanceof DerivationRule)
 			kind = "DerivationController.RULE";
 		else if (cs instanceof Fact)
 			kind = "DerivationController.FACT";
+		else if (cs instanceof ExternalFactStore)
+			kind = "DerivationController.EXTERNAL_FACT_SET";
 		else 
 			kind = "DerivationController.ANY";
 		
@@ -652,6 +654,16 @@ public abstract class CompilerUtils {
 		out.print(this.getRuleRef(cs));
 		out.print("\",");
 		out.print(kind);
+		// args
+		String[] args = new String[io.length];
+		for (int i=0;i<args.length;i++) 
+			args[i]="DerivationController.NIL"; // unknown param
+		for (int i=0;i<islots.length;i++) 
+			args[islots[i].position]=islots[i].var; // known param
+		for (String arg:args){
+			out.print(',');
+			out.print(arg);
+		}
 		out.println(");");
 	}
 	/**

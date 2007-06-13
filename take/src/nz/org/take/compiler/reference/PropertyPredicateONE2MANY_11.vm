@@ -7,7 +7,7 @@
     private ResourceIterator< $resulttype > $methodname (
         final $sourcetype source, 
         final $targettype target, 
-        final DerivationController _derivation) {
+        final DerivationController _derivation,source,target) {
         
         _derivation.log($property,DerivationController.BEAN_PROPERTY);
         

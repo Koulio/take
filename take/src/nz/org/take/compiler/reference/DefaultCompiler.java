@@ -763,7 +763,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			Slot[] oslots, Fact f) throws CompilerException {
 		
 		// log 
-		printLogStatement(out,f);
+		printLogStatement(out,f,q.getInputParams(),islots);
 		
 		// start creating return var
 		Predicate p = q.getPredicate();
@@ -835,12 +835,11 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			Slot[] oslots, ExternalFactStore fs) throws CompilerException {
 		
 		String regClass = this.getNameGenerator().getFactStoreRegistryClassName();
+		
 		String factStoreRef = regClass +'.'+fs.getId();
-		// iterator
-		out.print(varName4DerivationController);
-		out.print(".log(\"");
-		out.print(fs.getId());
-		out.println("\",DerivationController.EXTERNAL_FACT_SET);");
+		// print log statement
+		printLogStatement(out,fs,q.getInputParams(),islots);
+		
 		
 		// invoke external fact set
 		out.print("return ");
@@ -884,7 +883,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	private void createBody(PrintWriter out, Query q, Slot[] islots,Slot[] oslots, DerivationRule r) throws CompilerException {
 		
 		// print log statement
-		printLogStatement(out,r);
+		printLogStatement(out,r,q.getInputParams(),islots);
 		
 		// the concrete bindings for this rule
 		List<Term> allTerms = this.getAllTerms(r);
