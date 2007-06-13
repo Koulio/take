@@ -90,6 +90,11 @@
 		
 		<r2ml:DerivationRule r2ml:ruleID="DR047c">
 			<r2ml:conditions>
+				<r2ml:EqualityAtom>
+					<r2ml:ObjectVariable r2ml:name="A" r2ml:classID="string" />
+					<r2ml:ObjectVariable r2ml:name="B" r2ml:classID="string" />
+					<r2ml:ObjectVariable r2ml:name="C" r2ml:classID="string" />
+				</r2ml:EqualityAtom>
 				<r2ml:qf.Disjunction>
 					<r2ml:GenericAtom r2ml:predicateID='dummy'>
 						<r2ml:arguments>
@@ -115,5 +120,4 @@
 			</r2ml:conclusion>
 		</r2ml:DerivationRule>
 	</r2ml:DerivationRuleSet>
-	
 </r2ml:RuleBase>
