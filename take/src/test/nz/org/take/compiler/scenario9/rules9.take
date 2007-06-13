@@ -1,0 +1,12 @@
+// script for test scenario 9
+@@dc:creator=jens dietrich
+@@dc:date=13/07/2007
+var test.nz.org.take.compiler.scenario9.Person person1,person2
+// queries - annotations are optional and are used to generate 
+// custom classes and methods
+@take.compilerhint.class=IsFatherOf
+@take.compilerhint.slots=son,father
+@take.compilerhint.method=getFather
+query is_father_of[in,in]
+// rules
+rule1: if equals[person1.name,person2.name] then is_father_of[person1,person2]
