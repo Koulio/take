@@ -18,11 +18,10 @@
 
 package test.nz.org.take.compiler.scenario8;
 
-import java.util.Iterator;
-
 import javax.script.Bindings;
 import javax.script.SimpleBindings;
 
+import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.scenario8.generated.IsFatherOf;
 import test.nz.org.take.compiler.scenario8.generated.IsGrandfatherOf;
 import test.nz.org.take.compiler.scenario8.generated.KB;
@@ -39,7 +38,7 @@ import junit.framework.TestCase;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Tests extends TestCase
+public class Tests extends TakeTestCase
 {
 
 	private KB kb= null;

@@ -20,6 +20,7 @@ package test.nz.org.take.compiler.scenario7;
 
 import java.util.Iterator;
 
+import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.scenario7.generated.KB;
 import test.nz.org.take.compiler.scenario7.generated._highincome;
 import nz.org.take.deployment.KnowledgeBaseManager;
@@ -34,7 +35,7 @@ import junit.framework.TestCase;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Tests extends TestCase
+public class Tests extends TakeTestCase
 {
 
 	private KB kb= null;

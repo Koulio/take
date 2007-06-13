@@ -27,6 +27,7 @@ import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.DerivationController;
 import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
+import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.scenario2.generated.*;
 import junit.framework.TestCase;
 
@@ -37,7 +38,7 @@ import junit.framework.TestCase;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Tests extends TestCase
+public class Tests extends TakeTestCase
 {
 	private KB kb = null;
 	private KnowledgeBase memoryKB = null;

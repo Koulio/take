@@ -23,6 +23,7 @@ import javax.script.SimpleBindings;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.ResultSet;
 import nz.org.take.script.ScriptKnowledgeSource;
+import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.scenario5.generated.*;
 import junit.framework.TestCase;
 
@@ -33,7 +34,7 @@ import junit.framework.TestCase;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Tests extends TestCase
+public class Tests extends TakeTestCase
 {
 	private KB kb= null;
 	/**
