@@ -22,6 +22,8 @@ import java.util.Iterator;
 
 import javax.script.Bindings;
 import javax.script.SimpleBindings;
+
+import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.scenario6.generated.*;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.DerivationController;
@@ -37,7 +39,7 @@ import junit.framework.TestCase;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Tests extends TestCase
+public class Tests extends TakeTestCase
 {
 
 	static String SCRIPT_URL = "/test/nz/org/take/compiler/scenario6/rules6.take";

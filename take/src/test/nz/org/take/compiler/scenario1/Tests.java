@@ -20,12 +20,7 @@ package test.nz.org.take.compiler.scenario1;
 
 import java.util.Iterator;
 
-import javax.script.Bindings;
-import javax.script.SimpleBindings;
-
-import example.nz.org.take.compiler.example1.CustomerCategory;
-import example.nz.org.take.compiler.example1.Discount;
-import example.nz.org.take.compiler.example1.spec.DiscountPolicy;
+import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.scenario1.generated.*;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.DerivationController;
@@ -41,7 +36,7 @@ import junit.framework.TestCase;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Tests extends TestCase
+public class Tests extends TakeTestCase
 {
 	private KB kb= null;
 	/**
@@ -63,7 +58,7 @@ public class Tests extends TestCase
 	 */
 	protected void setUp() throws Exception
 	{
-		super.setUp();
+		super.setUp();		
 		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
 		kb = kbm.getKnowledgeBase(
 				KB.class, 

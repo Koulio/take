@@ -354,7 +354,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		out.println("{");
 
 		while (!this.isAgendaEmpty()) {
-			createMethod(out, this.getNextQuery());
+			createMethod(out, pck+'.'+clazz,this.getNextQuery());
 		}
 
 		out.println("}");
@@ -504,14 +504,15 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	/**
 	 * Create a private method for the given query.
 	 * @param out
+	 * @param className the class owning the method
 	 * @param q
 	 * @throws CompilerException
 	 */
 	@SuppressWarnings("unchecked")
-	private void createMethod(PrintWriter out, Query q)	throws CompilerException {
+	private void createMethod(PrintWriter out, String className, Query q)	throws CompilerException {
 		if (mustCreatePublicMethod(q))
 			createPublicMethod(out,q,true);
-		createPrivateMethod(out,q);
+		createPrivateMethod(out,className,q);
 	}
 	/**
 	 * Define for which predicates (queries) not to define a public method. 
@@ -582,15 +583,17 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	/**
 	 * Create a private method for the given query.
 	 * @param out
+	 * @param className the class name
 	 * @param q
 	 * @throws CompilerException
 	 */
 	@SuppressWarnings("unchecked")
-	private void createPrivateMethod(PrintWriter out, Query q) 	throws CompilerException {
+	private void createPrivateMethod(PrintWriter out, String className, Query q) 	throws CompilerException {
 		Predicate p = q.getPredicate();
 		String methodName = null; 
-		if (p instanceof SimplePredicate) 
+		if (p instanceof SimplePredicate) {
 			methodName = createPrivateMethod1(out,q);
+		}
 		else {
 			// try to use plugin
 			for (CompilerPlugin plugin:this.plugins) {
@@ -599,13 +602,12 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 					// an alternative strategy would be "try next plugin"
 					
 					//plugin.checkPrerequisites(q);
-					
 					methodName = plugin.createMethod(out, q);
 				}
 			}
 		}
 		if (methodName!=null) {
-			this.endorseMethod(methodName);
+			this.endorseMethod(className,methodName);
 			this.removeFromAgenda();
 		}		
 		else throw new CompilerException("This combination of predicate type and parameter signature is not supported in queries: " + p.getClass() + q.getIOSignatureAsString());
@@ -1082,8 +1084,12 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	 *            a query
 	 */
 	private void addToAgenda(Query q) {
-		if (!done.contains(q) && !publicAgenda.contains(q))
+		if (!done.contains(q) && !publicAgenda.contains(q)) {
 			publicAgenda.add(q);
+			if (getLogger().isDebugEnabled()) {
+				getLogger().debug("Adding query to agenda: " + q);
+			}
+		}
 	}
 
 	/**

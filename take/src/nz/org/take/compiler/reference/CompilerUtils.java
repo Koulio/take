@@ -688,8 +688,8 @@ public abstract class CompilerUtils {
 	 * @param qName the full class name
 	 */
 	protected void endorseClazz(Location loc, String fullClassName) throws CompilerException {
-		if (getLogger().isDebugEnabled()) {
-			getLogger().debug("Class created: " + fullClassName);
+		if (getLogger().isInfoEnabled()) {
+			getLogger().info("Class created: " + fullClassName);
 		}
 		for (SourceTransformation t : this.getSourceTransformers()) {
 			t.transform(loc, fullClassName);
@@ -697,15 +697,15 @@ public abstract class CompilerUtils {
 	}
 	/**
 	 * Log the creation of a method.
-	 * 
-	 * @param methodName
-	 *            the method name
+	 * @param className the class name
+	 * @param methodName the method name
 	 */
-	protected void endorseMethod(String methodName) throws CompilerException {
-		if (getLogger().isDebugEnabled()) {
-			getLogger().debug("Method created: " + methodName);
+	protected void endorseMethod(String className, String methodName) throws CompilerException {
+		if (getLogger().isInfoEnabled()) {
+			getLogger().info("Method created: " + className + '#'+methodName);
 		}
 	}
+
 	/**
 	 * Get all terms (recursive) occuring in a rule.
 	 * @param r a rule
