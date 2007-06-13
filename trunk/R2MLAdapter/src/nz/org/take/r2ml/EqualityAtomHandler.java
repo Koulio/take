@@ -87,11 +87,11 @@ class EqualityAtomHandler implements XmlTypeHandler {
 		Term term2 = (Term) handler2.importObject(pair.obj2, context, driver);
 		Fact fact = new Fact();
 		fact.setTerms(new Term[] { term1, term2 });
-		fact.setPredicate(buildPredicate(term1, term2));
+		fact.setPredicate(buildEqualsPredicate(term1, term2));
 		return fact;
 	}
 
-	private Predicate buildPredicate(Term term1, Term term2) {
+	private Predicate buildEqualsPredicate(Term term1, Term term2) {
 		
 		return null;
 	}
