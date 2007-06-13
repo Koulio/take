@@ -71,7 +71,7 @@ class AttributionAtomHandler implements XmlTypeHandler {
 		
 		//Predicate predicate = ;
 		fact.setPredicate(buildPredicate(attributeName, domain, range,
-				atom.isIsNegated() == null ? false : atom.isIsNegated(), slotNames));
+				atom.isIsNegated() == null ? false : atom.isIsNegated(), slotNames, context));
 
 		fact.setId(attributeName);
 
@@ -79,8 +79,11 @@ class AttributionAtomHandler implements XmlTypeHandler {
 	}
 
 	private Predicate buildPredicate(String attributeName, Term domain,
-			Term range, boolean negated, String[] slotNames)
+			Term range, boolean negated, String[] slotNames, MappingContext context)
 			throws R2MLException {
+		if (context.getPredicate(attributeName) != null) {
+			return context.getPredicate(attributeName);
+		}
 		PropertyDescriptor property = buildProperty(attributeName, domain
 				.getType());
 		// if attribute is beanproperty use it
