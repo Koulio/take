@@ -40,6 +40,12 @@ import java.util.List;
  */
 
 public interface DerivationController  {
+	// constant signaling that no parameter has been provided
+	public static final Object NIL = new Object() {
+		public String toString() {
+			return "?";
+		}
+	};
 	// constants to be used as parameters in log
 	public static final int ANY = 0;
 	public static final int RULE = 1;
@@ -51,10 +57,11 @@ public interface DerivationController  {
 	
 	/**
 	 * Log the use of a clause set
-	 * @param ruleRef a string referencing the clause set (id or similar)
+	 * @param ruleRef a string referencing the knowledge element (id or similar)
 	 * @param in kind what kind of knowledge this is (one of the constants RULE, FACT etc)
+	 * @param the parameter bindings used
 	 */
-	public void log(String ruleRef,int kind) ;
+	public void log(String ruleRef,int kind,Object... param) ;
 	/**
 	 * Get (a copy of) the derivation log. 
 	 * May throw a runtime exception (e.g., if the derivation has been cancelled). 

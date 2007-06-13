@@ -41,8 +41,9 @@ public class DefaultDerivationController  implements DerivationController {
 	private DerivationListener derivationListener = null;
 	/**
 	 * Log the use of a clause set
+	 * this implementation does not record the parameters
 	 */
-	public void log(String ruleRef,int kind) {
+	public void log(String ruleRef,int kind,Object... param) {
 		if (cancelled) 
 			throw new DerivationCancelledException();
 		
