@@ -81,6 +81,7 @@ class AttributionAtomHandler implements XmlTypeHandler {
 	private Predicate buildPredicate(String attributeName, Term domain,
 			Term range, boolean negated, String[] slotNames, MappingContext context)
 			throws R2MLException {
+		// if predicate already exists
 		if (context.getPredicate(attributeName) != null) {
 			return context.getPredicate(attributeName);
 		}
@@ -94,6 +95,7 @@ class AttributionAtomHandler implements XmlTypeHandler {
 			propPredicate.setOwnerType(domain.getType());
 			propPredicate.setProperty(property);
 			propPredicate.setSlotNames(slotNames);
+			context.addPredicate(propPredicate);
 			return propPredicate;
 		} else {
 			SimplePredicate simplePredicate = new SimplePredicate();
@@ -102,6 +104,7 @@ class AttributionAtomHandler implements XmlTypeHandler {
 			simplePredicate.setSlotTypes(new Class[] { domain.getType(),
 					range.getType() });
 			simplePredicate.setSlotNames(slotNames);
+			context.addPredicate(simplePredicate);
 			return simplePredicate;
 		}
 	}
