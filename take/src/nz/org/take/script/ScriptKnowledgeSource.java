@@ -586,4 +586,12 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		return print((ScriptElement)t);
 	}
 
+	public ClassLoader getClassloader() {
+		return classloader;
+	}
+
+	public void setClassloader(ClassLoader classloader) {
+		this.classloader = classloader;
+	}
+
 }
