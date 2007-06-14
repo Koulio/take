@@ -7,7 +7,7 @@ import nz.org.take.SimplePredicate;
 import nz.org.take.TakeException;
 import nz.org.take.r2ml.R2MLKnowledgeSource;
 
-public class GenerateQuerries {
+public class KBUtil {
 
 	static void addQuerries(R2MLKnowledgeSource src) throws TakeException {
 

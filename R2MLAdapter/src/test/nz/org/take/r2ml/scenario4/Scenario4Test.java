@@ -28,12 +28,12 @@ import test.nz.org.take.r2ml.scenario4.generated._isEnrolled;
 import junit.framework.TestCase;
 
 /**
- * Scenario0Test for this scenario. For now, the classes have to generated and
- * compiled manually. For generation, use the script ___OLDGenerateClasses.
+ * Test for this scenario. For now, the classes have to generated and
+ * compiled manually. 
  * 
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
+ * @author Bastian Schenke (bastian.schenke(at)googlemail.com)
  */
-
 public class Scenario4Test extends TestCase {
 
 	private EnrollmentKB kb = null;
@@ -64,7 +64,7 @@ public class Scenario4Test extends TestCase {
 			R2MLKnowledgeSource kSrc = new R2MLKnowledgeSource(Scenario4Test.class.getResourceAsStream("/test/nz/org/take/r2ml/scenario4/rules.xml"));
 			kSrc.setDatatypeMapper(new MyDatatypeMapper());
 			kSrc.setSlotNameGenerator(new MyNameMapper());
-			GenerateQuerries.addQuerries(kSrc);
+			KBUtil.addQuerries(kSrc);
 			kb = kbm.getKnowledgeBase(EnrollmentKB.class, kSrc);
 		} catch (TakeException e) {
 			e.printStackTrace();
@@ -81,16 +81,11 @@ public class Scenario4Test extends TestCase {
 		super.tearDown();
 	}
 
-	public void test1() {
-
-		System.out.println("starting test case 1");
+	public void testQuerry1() {
 
 		Student s1 = new Student("John");
-		//Student s2 = new Student("Tom");
-		//Student s3 = new Student("Tim");
 		Course c1 = new Course("comp101");
 		Course c2 = new Course("se201");
-		//Course c3 = new Course("fin101");
 		College coll1 = new College("engineering");
 		College coll2 = new College("business");
 
@@ -109,6 +104,30 @@ public class Scenario4Test extends TestCase {
 		assertTrue(result.hasNext());
 		r = result.next();
 		assertTrue(r.college.equals(coll2));
+		assertTrue(r.student.equals(s1));
+		assertFalse(result.hasNext());
+		
+	}
+	
+	public void testQuerry2 () {
+		
+		Student s1 = new Student("John");
+		Course c1 = new Course("comp101");
+		Course c2 = new Course("se201");
+		College coll1 = new College("engineering");
+		College coll2 = new College("business");
+		
+		s1.getCourses().add(c1);
+		s1.getCourses().add(c2);
+		c1.setCollege(coll1);
+		c2.setCollege(coll2);
+
+		ResultSet<_isEnrolled> result = kb.isEnrolled_11(coll1, s1);
+		
+		_isEnrolled r;
+		assertTrue(result.hasNext());
+		r = result.next();
+		assertTrue(r.college.equals(coll1));
 		assertTrue(r.student.equals(s1));
 		assertFalse(result.hasNext());
 

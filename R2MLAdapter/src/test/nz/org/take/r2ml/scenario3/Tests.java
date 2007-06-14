@@ -20,6 +20,7 @@ package test.nz.org.take.r2ml.scenario3;
 
 import java.util.Iterator;
 
+import test.nz.org.take.r2ml.Log4jConfigurator;
 import test.nz.org.take.r2ml.scenario3.generated.FamilyKB;
 import test.nz.org.take.r2ml.scenario3.generated._isFather;
 import test.nz.org.take.r2ml.scenario3.generated._isGrandfather;
@@ -60,6 +61,7 @@ public class Tests extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
+		Log4jConfigurator.configure();
 		KnowledgeBaseManager<FamilyKB> kbm = new KnowledgeBaseManager<FamilyKB>();
 		R2MLKnowledgeSource ksrc = new R2MLKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/r2ml/scenario3/rules3.xml"));
 		ksrc.setSlotNameGenerator(new MyNameMapper());
@@ -80,6 +82,7 @@ public class Tests extends TestCase {
 	 */
 	protected void tearDown() throws Exception {
 		super.tearDown();
+		Log4jConfigurator.shutdown();
 		// Add additional tear down code here
 	}
 
