@@ -17,14 +17,10 @@
  */
 
 
-package test.nz.org.take.r2ml.scenario2;
-
-import java.util.Collection;
+package test.nz.org.take.r2ml.scenario4;
 
 import org.apache.log4j.BasicConfigurator;
 import nz.org.take.KnowledgeBase;
-import nz.org.take.Predicate;
-import nz.org.take.Query;
 import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultNameGenerator;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
@@ -51,7 +47,7 @@ public class GenerateInterfaces {
 		// generate kb
 		KnowledgeBase kb = null;
 		try {
-			R2MLKnowledgeSource kSrc = new R2MLKnowledgeSource(Scenario2Test.class.getResourceAsStream("/test/nz/org/take/r2ml/scenario2/rules.xml"));
+			R2MLKnowledgeSource kSrc = new R2MLKnowledgeSource(Scenario4Test.class.getResourceAsStream("/test/nz/org/take/r2ml/scenario4/rules.xml"));
 			kSrc.setDatatypeMapper(new MyDatatypeMapper());
 			kSrc.setSlotNameGenerator(new MyNameMapper());
 			GenerateQuerries.addQuerries(kSrc);
@@ -61,7 +57,7 @@ public class GenerateInterfaces {
 		}
 		compiler.add(new JalopyCodeFormatter());
 		compiler.setNameGenerator(new DefaultNameGenerator());
-		compiler.setPackageName("test.nz.org.take.r2ml.scenario2.generated");
+		compiler.setPackageName("test.nz.org.take.r2ml.scenario4.generated");
 		compiler.setClassName("EnrollmentKB");
 		compiler.compileInterface(kb);
 

@@ -1,4 +1,4 @@
-package test.nz.org.take.r2ml.scenario2;
+package test.nz.org.take.r2ml.scenario4;
 
 import javax.xml.namespace.QName;
 

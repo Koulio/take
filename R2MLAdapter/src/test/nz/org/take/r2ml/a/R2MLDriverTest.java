@@ -25,6 +25,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Unmarshaller;
 
+import test.nz.org.take.r2ml.Log4jConfigurator;
+
 import de.tu_cottbus.r2ml.DerivationRule;
 import de.tu_cottbus.r2ml.DerivationRuleSet;
 import de.tu_cottbus.r2ml.GenericAtom;
@@ -52,6 +54,7 @@ public class R2MLDriverTest extends TestCase {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
+		Log4jConfigurator.configure();
 		driver = new R2MLDriver();
 		driver.setNameMapper(new DefaultNameMapper());
 		driver.setDatatypeMapper(new DefaultDatatypeMapper());
@@ -62,6 +65,7 @@ public class R2MLDriverTest extends TestCase {
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
+		Log4jConfigurator.shutdown();
 		driver = null; 
 	}
 

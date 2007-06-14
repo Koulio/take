@@ -16,28 +16,20 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package test.nz.org.take.r2ml.scenario2;
+package test.nz.org.take.r2ml.scenario4;
+
 /**
  * Bean class referenced in tests. 
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
+public class College extends Bean {
 
-public class Student extends Bean {
-	private Course course = new Course();
-
-	public Student(String name) {
+	public College(String name) {
 		super(name);
 	}
-	public Student() {
+	public College() {
 		super();
 	}
 
-	public Course getCourse() {
-		return course;
-	}
-
-	public void setCourse(Course course) {
-		this.course = course;
-	}
 }

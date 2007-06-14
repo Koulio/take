@@ -28,6 +28,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Unmarshaller;
 
+import test.nz.org.take.r2ml.Log4jConfigurator;
+
 import de.tu_cottbus.r2ml.Condition;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.KnowledgeElement;
@@ -49,6 +51,7 @@ public class DisjunctiveConditionsTest extends TestCase {
 
 	protected void setUp() throws Exception {
 		super.setUp();
+		Log4jConfigurator.configure();
 		driver = new R2MLDriver();
 		driver.setNameMapper(new DefaultNameMapper());
 		driver.setDatatypeMapper(new DefaultDatatypeMapper());
@@ -58,6 +61,7 @@ public class DisjunctiveConditionsTest extends TestCase {
 
 	protected void tearDown() throws Exception {
 		super.tearDown();
+		Log4jConfigurator.shutdown();
 		driver = null;
 	}
 	

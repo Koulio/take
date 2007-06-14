@@ -20,7 +20,7 @@ package test.nz.org.take.r2ml;
 
 import test.nz.org.take.r2ml.a.R2MLDriverTest;
 import test.nz.org.take.r2ml.b.AttributionAtomHandlerTest;
-import test.nz.org.take.r2ml.scenario2.Scenario2Test;
+import test.nz.org.take.r2ml.scenario4.Scenario4Test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -31,7 +31,7 @@ public class AllTests {
 		ts = new TestSuite();
 		ts.addTestSuite(R2MLDriverTest.class);
 		ts.addTestSuite(AttributionAtomHandlerTest.class);
-		ts.addTestSuite(Scenario2Test.class);
+		ts.addTestSuite(Scenario4Test.class);
 		return ts;
 	}
 

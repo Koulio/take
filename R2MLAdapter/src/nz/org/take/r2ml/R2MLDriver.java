@@ -62,10 +62,6 @@ public class R2MLDriver {
 	private NameMapper nameMapper = null;
 	private DatatypeMapper datty = null;
 
-	{
-		BasicConfigurator.resetConfiguration();
-		BasicConfigurator.configure();
-	}
 	public Logger logger = Logger.getLogger("nz.org.take.r2ml");
 	
 	/**

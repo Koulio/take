@@ -16,32 +16,28 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package test.nz.org.take.r2ml.scenario2;
-
-
+package test.nz.org.take.r2ml.scenario4;
 /**
  * Bean class referenced in tests. 
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Course extends Bean {
-	
-	
-	public Course() {
+
+public class Student extends Bean {
+	private java.util.List<Course> courses = new java.util.ArrayList<Course>();
+
+	public Student(String name) {
+		super(name);
+	}
+	public Student() {
 		super();
 	}
 
-	public Course(String name) {
-		super(name);
+	public java.util.List<Course> getCourses() {
+		return courses;
 	}
 
-	private College college = null;
-
-	public College getCollege() {
-		return college;
-	}
-
-	public void setCollege(College college) {
-		this.college = college;
+	public void setCourse(java.util.List<Course> courses) {
+		this.courses = courses;
 	}
 }
