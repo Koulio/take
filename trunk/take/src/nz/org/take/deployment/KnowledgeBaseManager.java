@@ -44,6 +44,7 @@ import nz.org.take.compiler.NameGenerator;
 import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.DefaultNameGenerator;
+import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
 
 
 /**
@@ -117,6 +118,7 @@ public class KnowledgeBaseManager<I> {
 		String packageName = spec.getPackage().getName() +  '.'+version;
 		nz.org.take.compiler.Compiler kbCompiler = new DefaultCompiler();
 		kbCompiler.setLocation(location);
+		kbCompiler.add(new JalopyCodeFormatter());
 		kbCompiler.setGenerateDataClassesForQueryPredicates(false); // part of interface !
 		kbCompiler.setPackageName(packageName);
 		kbCompiler.setClassName(className);
