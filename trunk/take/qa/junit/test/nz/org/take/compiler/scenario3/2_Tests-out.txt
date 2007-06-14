@@ -1,6 +1,119 @@
+0 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol sameAs[in line 14] as Java method public boolean test.nz.org.take.compiler.scenario3.Person.sameAs(test.nz.org.take.compiler.scenario3.Person)
+15 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isBrother[in line 14] as simple predicate
+15 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol equals[in line 15] as Java method public boolean test.nz.org.take.compiler.scenario3.Person.equals(java.lang.Object)
+15 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isBrother2[in line 15] as simple predicate
+94 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - SimpleLog4JLogSystem using category 'nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates'
+94 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - *******************************************************************
+94 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+94 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - RuntimeInstance initializing.
+94 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+94 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Trying to use logger class org.apache.velocity.runtime.log.SimpleLog4JLogSystem
+94 [main] INFO nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - LogSystem has been deprecated. Please use a LogChute implementation.
+94 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+94 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+109 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ClasspathResourceLoader : initialization complete.
+125 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+125 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default ResourceManager initialization complete.
+125 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+125 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+125 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+125 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+125 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+187 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Created '20' parsers.
+187 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : initialization starting.
+187 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+187 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : Default library not found.
+187 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInline = true : VMs can be defined inline in templates
+187 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+187 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+187 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : autoload off : VM system will not automatically reload global library macros
+187 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : Velocimacro : initialization complete.
+187 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - RuntimeInstance successfully initialized.
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - SimpleLog4JLogSystem using category 'nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates'
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - *******************************************************************
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - RuntimeInstance initializing.
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Trying to use logger class org.apache.velocity.runtime.log.SimpleLog4JLogSystem
+203 [main] INFO nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - LogSystem has been deprecated. Please use a LogChute implementation.
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ClasspathResourceLoader : initialization complete.
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default ResourceManager initialization complete.
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Created '20' parsers.
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : initialization starting.
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : Default library not found.
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInline = true : VMs can be defined inline in templates
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : autoload off : VM system will not automatically reload global library macros
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : Velocimacro : initialization complete.
+203 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - RuntimeInstance successfully initialized.
+219 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - SimpleLog4JLogSystem using category 'nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates'
+219 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - *******************************************************************
+219 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+219 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - RuntimeInstance initializing.
+219 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+219 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Trying to use logger class org.apache.velocity.runtime.log.SimpleLog4JLogSystem
+219 [main] INFO nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - LogSystem has been deprecated. Please use a LogChute implementation.
+219 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+219 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+219 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ClasspathResourceLoader : initialization complete.
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default ResourceManager initialization complete.
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Created '20' parsers.
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : initialization starting.
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : Default library not found.
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInline = true : VMs can be defined inline in templates
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : autoload off : VM system will not automatically reload global library macros
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : Velocimacro : initialization complete.
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - RuntimeInstance successfully initialized.
+250 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /isBrother[in,in]
+250 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /isBrother2[in,in]
+281 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: sameAs[in,in]
+281 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario3.generated.impl_v070614_112254.KBImpl#isBrother
+281 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: equals[in,in]
+297 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario3.generated.impl_v070614_112254.KBImpl#isBrother2
+312 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ResourceManager : found nz/org/take/compiler/reference/JPredicate_11.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+344 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario3.generated.impl_v070614_112254.KBImpl#sameAs_11
+344 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario3.generated.impl_v070614_112254.KBImpl#equals_11
+344 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Class created: test.nz.org.take.compiler.scenario3.generated.impl_v070614_112254.KBImpl
+359 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Class created: test.nz.org.take.compiler.scenario3.generated.impl_v070614_112254._sameAs
+359 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Class created: test.nz.org.take.compiler.scenario3.generated.impl_v070614_112254._equals
 starting test case 1
 1. rule1
 2. public boolean test.nz.org.take.compiler.scenario3.Person.sameAs(test.nz.org.take.compiler.scenario3.Person)
+1594 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol sameAs[in line 14] as Java method public boolean test.nz.org.take.compiler.scenario3.Person.sameAs(test.nz.org.take.compiler.scenario3.Person)
+1594 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isBrother[in line 14] as simple predicate
+1594 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol equals[in line 15] as Java method public boolean test.nz.org.take.compiler.scenario3.Person.equals(java.lang.Object)
+1594 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol isBrother2[in line 15] as simple predicate
+1594 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /isBrother[in,in]
+1594 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /isBrother2[in,in]
+1609 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: sameAs[in,in]
+1609 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario3.generated.impl_v070614_112256.KBImpl#isBrother
+1609 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: equals[in,in]
+1609 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario3.generated.impl_v070614_112256.KBImpl#isBrother2
+1609 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ResourceManager : found nz/org/take/compiler/reference/JPredicate_11.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+1609 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario3.generated.impl_v070614_112256.KBImpl#sameAs_11
+1609 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario3.generated.impl_v070614_112256.KBImpl#equals_11
+1625 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Class created: test.nz.org.take.compiler.scenario3.generated.impl_v070614_112256.KBImpl
+1625 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Class created: test.nz.org.take.compiler.scenario3.generated.impl_v070614_112256._sameAs
+1625 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Class created: test.nz.org.take.compiler.scenario3.generated.impl_v070614_112256._equals
 starting test case 2
 1. rule2
 2. public boolean test.nz.org.take.compiler.scenario3.Person.equals(java.lang.Object)

@@ -16,12 +16,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package test.nz.org.take.compiler.scenario9;
+package test.nz.org.take.compiler.misc1;
 
 import javax.script.Bindings;
 import javax.script.SimpleBindings;
 import test.nz.org.take.TakeTestCase;
-import test.nz.org.take.compiler.scenario9.generated.*;
+import test.nz.org.take.compiler.misc1.generated.*;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.ResultSet;
 import nz.org.take.script.ScriptKnowledgeSource;
@@ -64,7 +64,7 @@ public class Tests extends TakeTestCase
 		Bindings factStores = new SimpleBindings();
 		kb = kbm.getKnowledgeBase(
 				KB.class, 
-				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/scenario9/rules9.take")),
+				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/misc1/rules.take")),
 				new SimpleBindings(),
 				factStores
 		); 
