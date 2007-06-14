@@ -18,6 +18,7 @@
  */
 package nz.org.take.r2ml;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 
 import nz.org.take.Fact;
+import nz.org.take.JPredicate;
 import nz.org.take.Predicate;
 import nz.org.take.Term;
 
@@ -44,15 +46,13 @@ class EqualityAtomHandler implements XmlTypeHandler {
 		}
 
 		ObjectTerm obj1 = null;
-
 		ObjectTerm obj2 = null;
 	}
 
 	/**
 	 * Map a
 	 * 
-	 * TODO implement protected List<JAXBElement<? extends ObjectTerm>>
-	 * objectTerm; TODO implement protected Boolean isNegated;
+	 * TODO implement protected Boolean isNegated;
 	 * 
 	 * @param obj
 	 *            an EqualityAtom
@@ -66,15 +66,15 @@ class EqualityAtomHandler implements XmlTypeHandler {
 	public Object importObject(Object obj, MappingContext context,
 			R2MLDriver driver) throws R2MLException {
 		EqualityAtom atom = (EqualityAtom) obj;
+		List<Fact> facts = new ArrayList<Fact>();
 		try {
-			List<Fact> facts = new ArrayList<Fact>();
 			for (EqualityPair pair : getArgsAsPairs(atom.getObjectTerm())) {
 				facts.add(buildFact(pair, context, driver));
 			}
 		} catch (Exception e) {
 			throw new R2MLException("Error while handling EqualityAtom!", e);
 		}
-		return null;
+		return facts;
 	}
 
 	private Fact buildFact(EqualityPair pair, MappingContext context,
@@ -87,13 +87,15 @@ class EqualityAtomHandler implements XmlTypeHandler {
 		Term term2 = (Term) handler2.importObject(pair.obj2, context, driver);
 		Fact fact = new Fact();
 		fact.setTerms(new Term[] { term1, term2 });
-		fact.setPredicate(buildEqualsPredicate(term1, term2));
+		fact.setPredicate(buildEqualsPredicate(term1, term2, driver));
 		return fact;
 	}
 
-	private Predicate buildEqualsPredicate(Term term1, Term term2) {
-		
-		return null;
+	private Predicate buildEqualsPredicate(Term term1, Term term2, R2MLDriver driver) throws R2MLException {
+		JPredicate jp = new JPredicate();
+		Method method = R2MLUtil.getMethod("equals", new Term[]{term1, term2});
+		jp.setMethod(method);
+		return jp;
 	}
 
 	private List<EqualityPair> getArgsAsPairs(
@@ -108,4 +110,5 @@ class EqualityAtomHandler implements XmlTypeHandler {
 		}
 		return pairs;
 	}
+	
 }

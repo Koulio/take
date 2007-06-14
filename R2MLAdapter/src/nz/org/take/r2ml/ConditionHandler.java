@@ -63,16 +63,20 @@ class ConditionHandler implements XmlTypeHandler {
 			// disjunctions occur only on toplevel
 			if (item.getValue() instanceof QfDisjunction) {
 				return handler.importObject(item.getValue(), context, driver);
-			}
+			} // if
 			if (body == null) {
 				body = new ArrayList<Prerequisite>();
 				bodies.add(body);
-			}
-			if (item.getValue() instanceof QfConjunction) {
+			} // if
+			if (R2MLUtil.returnsListOfPrerequisites(item.getValue())) {
 				body.addAll((Collection<? extends Prerequisite>) handler.importObject(item.getValue(), context, driver));
-			} else {
+			} else if (R2MLUtil.returnsListOfFacts(item.getValue())) {
+				for (Fact fact : (List<Fact>)handler.importObject(item.getValue(), context, driver)) {
+					body.add(R2MLUtil.factAsPrerequisite(fact));
+				} // for
+			} else if (R2MLUtil.returnsFact(item.getValue())) {
 				body.add(R2MLUtil.factAsPrerequisite((Fact)handler.importObject(item.getValue(), context, driver)));
-			}
+			} // if else
 		} // for
 		return bodies;
 	} // importObject()
