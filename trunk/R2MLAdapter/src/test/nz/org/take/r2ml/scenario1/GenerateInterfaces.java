@@ -50,7 +50,7 @@ public class GenerateInterfaces {
 			R2MLKnowledgeSource kSrc = new R2MLKnowledgeSource(Scenario1Test.class.getResourceAsStream("/test/nz/org/take/r2ml/scenario1/rules.xml"));
 			kSrc.setDatatypeMapper(new MyDatatypeMapper());
 			kSrc.setSlotNameGenerator(new MyNameMapper());
-			KBUtil.addKnowledge(kSrc);
+			KBUtil.addQuerries(kSrc);
 			kb = kSrc.getKnowledgeBase();
 		} catch (R2MLException e) {
 			e.printStackTrace();

@@ -26,7 +26,7 @@ public class Scenario1Test extends TestCase {
 			R2MLKnowledgeSource kSrc = new R2MLKnowledgeSource(Scenario1Test.class.getResourceAsStream("/test/nz/org/take/r2ml/scenario1/rules.xml"));
 			kSrc.setDatatypeMapper(new MyDatatypeMapper());
 			kSrc.setSlotNameGenerator(new MyNameMapper());
-			KBUtil.addKnowledge(kSrc);
+			KBUtil.addQuerries(kSrc);
 			kb = kbm.getKnowledgeBase(FamilyKB.class, kSrc);
 		} catch (TakeException e) {
 			e.printStackTrace();

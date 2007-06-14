@@ -7,7 +7,7 @@ import nz.org.take.r2ml.R2MLKnowledgeSource;
 
 public class KBUtil {
 
-	static void addKnowledge(R2MLKnowledgeSource src) throws TakeException {
+	static void addQuerries(R2MLKnowledgeSource src) throws TakeException {
 
 		Query query = new Query();
 
