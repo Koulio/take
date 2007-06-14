@@ -17,7 +17,7 @@
  */
 
 
-package test.nz.org.take.compiler.scenario9;
+package test.nz.org.take.compiler.misc1;
 
 import org.apache.log4j.BasicConfigurator;
 import nz.org.take.KnowledgeBase;
@@ -47,12 +47,12 @@ public class GenerateInterfaces {
 		// generate kb
 		KnowledgeBase kb = null;
 		try {
-			ScriptKnowledgeSource KSrc = new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/scenario9/rules9.take"));
+			ScriptKnowledgeSource KSrc = new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/misc1/rules.take"));
 			kb = KSrc.getKnowledgeBase();
 		} catch (ScriptException e) {
 			e.printStackTrace();
 		}
-		compiler.setPackageName("test.nz.org.take.compiler.scenario9.generated");
+		compiler.setPackageName("test.nz.org.take.compiler.misc1.generated");
 		compiler.setClassName("KB");
 		compiler.compileInterface(kb);
 

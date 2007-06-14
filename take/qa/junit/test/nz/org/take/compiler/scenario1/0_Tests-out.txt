@@ -1,6 +1,207 @@
+0 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 21] as simple predicate
+0 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 21] as simple predicate
+0 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_grandfather_of[in line 21] as simple predicate
+0 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 22] as simple predicate
+0 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 23] as simple predicate
+0 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 24] as simple predicate
+0 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 25] as simple predicate
+0 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 26] as simple predicate
+0 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 27] as simple predicate
+0 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 28] as simple predicate
+0 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 29] as simple predicate
+125 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - SimpleLog4JLogSystem using category 'nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates'
+125 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - *******************************************************************
+125 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+125 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - RuntimeInstance initializing.
+125 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+125 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Trying to use logger class org.apache.velocity.runtime.log.SimpleLog4JLogSystem
+125 [main] INFO nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - LogSystem has been deprecated. Please use a LogChute implementation.
+140 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+140 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+140 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ClasspathResourceLoader : initialization complete.
+172 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+172 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default ResourceManager initialization complete.
+172 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+172 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+172 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+172 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+172 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+234 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Created '20' parsers.
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : initialization starting.
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : Default library not found.
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInline = true : VMs can be defined inline in templates
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : autoload off : VM system will not automatically reload global library macros
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : Velocimacro : initialization complete.
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - RuntimeInstance successfully initialized.
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - SimpleLog4JLogSystem using category 'nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates'
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - *******************************************************************
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - RuntimeInstance initializing.
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Trying to use logger class org.apache.velocity.runtime.log.SimpleLog4JLogSystem
+250 [main] INFO nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - LogSystem has been deprecated. Please use a LogChute implementation.
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ClasspathResourceLoader : initialization complete.
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default ResourceManager initialization complete.
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+250 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+281 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Created '20' parsers.
+281 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : initialization starting.
+281 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+281 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : Default library not found.
+281 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInline = true : VMs can be defined inline in templates
+281 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : autoload off : VM system will not automatically reload global library macros
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : Velocimacro : initialization complete.
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - RuntimeInstance successfully initialized.
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - SimpleLog4JLogSystem using category 'nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates'
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - *******************************************************************
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - RuntimeInstance initializing.
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Trying to use logger class org.apache.velocity.runtime.log.SimpleLog4JLogSystem
+297 [main] INFO nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - LogSystem has been deprecated. Please use a LogChute implementation.
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ClasspathResourceLoader : initialization complete.
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Default ResourceManager initialization complete.
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Created '20' parsers.
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : initialization starting.
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : Default library not found.
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInline = true : VMs can be defined inline in templates
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : autoload off : VM system will not automatically reload global library macros
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - Velocimacro : Velocimacro : initialization complete.
+297 [main] DEBUG nz.org.take.compiler.reference.CompilerPlugin4PropertyPredicates  - RuntimeInstance successfully initialized.
+312 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[in,out]
+312 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[out,in]
+312 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_grandfather_of[in,out]
+312 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_grandfather_of[out,in]
+359 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112246.KBImpl#getFather
+375 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112246.KBImpl#getSons
+390 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112246.KBImpl#getGrandfather
+390 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[out,out]
+390 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[in,in]
+390 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112246.KBImpl#getGrandchildren
+390 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112246.KBImpl#is_father_of_00
+390 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112246.KBImpl#is_father_of_11
+390 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Class created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112246.KBImpl
+1812 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 21] as simple predicate
+1812 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 21] as simple predicate
+1812 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_grandfather_of[in line 21] as simple predicate
+1812 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 22] as simple predicate
+1812 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 23] as simple predicate
+1812 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 24] as simple predicate
+1828 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 25] as simple predicate
+1828 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 26] as simple predicate
+1828 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 27] as simple predicate
+1828 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 28] as simple predicate
+1828 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 29] as simple predicate
+1828 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[in,out]
+1828 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[out,in]
+1828 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_grandfather_of[in,out]
+1828 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_grandfather_of[out,in]
+1828 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112248.KBImpl#getFather
+1843 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112248.KBImpl#getSons
+1843 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112248.KBImpl#getGrandfather
+1843 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[out,out]
+1843 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[in,in]
+1843 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112248.KBImpl#getGrandchildren
+1843 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112248.KBImpl#is_father_of_00
+1843 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112248.KBImpl#is_father_of_11
+1843 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Class created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112248.KBImpl
 1. rule2
 2. fact6
 3. fact3
+2328 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 21] as simple predicate
+2328 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 21] as simple predicate
+2328 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_grandfather_of[in line 21] as simple predicate
+2328 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 22] as simple predicate
+2328 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 23] as simple predicate
+2328 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 24] as simple predicate
+2328 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 25] as simple predicate
+2328 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 26] as simple predicate
+2328 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 27] as simple predicate
+2328 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 28] as simple predicate
+2328 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 29] as simple predicate
+2328 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[in,out]
+2328 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[out,in]
+2328 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_grandfather_of[in,out]
+2328 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_grandfather_of[out,in]
+2328 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112248.KBImpl#getFather
+2343 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112248.KBImpl#getSons
+2343 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112248.KBImpl#getGrandfather
+2343 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[out,out]
+2343 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[in,in]
+2343 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112248.KBImpl#getGrandchildren
+2343 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112248.KBImpl#is_father_of_00
+2343 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112248.KBImpl#is_father_of_11
+2343 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Class created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112248.KBImpl
+2687 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 21] as simple predicate
+2687 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 21] as simple predicate
+2687 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_grandfather_of[in line 21] as simple predicate
+2687 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 22] as simple predicate
+2687 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 23] as simple predicate
+2687 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 24] as simple predicate
+2687 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 25] as simple predicate
+2687 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 26] as simple predicate
+2687 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 27] as simple predicate
+2687 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 28] as simple predicate
+2687 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 29] as simple predicate
+2687 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[in,out]
+2687 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[out,in]
+2687 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_grandfather_of[in,out]
+2687 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_grandfather_of[out,in]
+2703 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112249.KBImpl#getFather
+2703 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112249.KBImpl#getSons
+2703 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112249.KBImpl#getGrandfather
+2703 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[out,out]
+2703 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[in,in]
+2703 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112249.KBImpl#getGrandchildren
+2703 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112249.KBImpl#is_father_of_00
+2703 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112249.KBImpl#is_father_of_11
+2703 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Class created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112249.KBImpl
+3109 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 21] as simple predicate
+3109 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 21] as simple predicate
+3109 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_grandfather_of[in line 21] as simple predicate
+3109 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 22] as simple predicate
+3109 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 23] as simple predicate
+3109 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 24] as simple predicate
+3109 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 25] as simple predicate
+3109 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 26] as simple predicate
+3109 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 27] as simple predicate
+3109 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 28] as simple predicate
+3109 [main] DEBUG nz.org.take.script.ScriptKnowledgeSource  - Interpreting predicate symbol is_father_of[in line 29] as simple predicate
+3109 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[in,out]
+3109 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[out,in]
+3109 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_grandfather_of[in,out]
+3109 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_grandfather_of[out,in]
+3125 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112249.KBImpl#getFather
+3125 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112249.KBImpl#getSons
+3125 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112249.KBImpl#getGrandfather
+3125 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[out,out]
+3125 [main] DEBUG nz.org.take.compiler.reference.DefaultCompiler  - Adding query to agenda: /is_father_of[in,in]
+3125 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112249.KBImpl#getGrandchildren
+3125 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112249.KBImpl#is_father_of_00
+3125 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Method created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112249.KBImpl#is_father_of_11
+3125 [main] INFO nz.org.take.compiler.reference.DefaultCompiler  - Class created: test.nz.org.take.compiler.scenario1.generated.impl_v070614_112249.KBImpl
 Frank
 Jens
 Ralf

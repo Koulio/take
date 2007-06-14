@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package test.nz.org.take.compiler.scenario9;
+package test.nz.org.take.compiler.misc1;
 /**
  * Bean class referenced in tests. 
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
