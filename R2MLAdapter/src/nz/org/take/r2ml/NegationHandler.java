@@ -18,10 +18,13 @@
  */
 package nz.org.take.r2ml;
 
+import de.tu_cottbus.r2ml.Negation;
+
 class NegationHandler implements XmlTypeHandler {
 
 	public Object importObject(Object obj, MappingContext context, R2MLDriver driver)
 			throws R2MLException {
+		Object x = (Negation) obj;
 		throw new R2MLException("Feature not yet implemented", R2MLException.FEATURE_NOT_YET_IMPLEMENTED);
 	}
 

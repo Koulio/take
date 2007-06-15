@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import de.tu_cottbus.r2ml.EqualityAtom;
+import de.tu_cottbus.r2ml.InequalityAtom;
 import de.tu_cottbus.r2ml.QfAndOrNafNegFormula;
 import de.tu_cottbus.r2ml.QfConjunction;
 
@@ -98,7 +99,8 @@ class R2MLUtil {
 
 	public static boolean returnsListOfFacts(Object formula) {
 		return true
-			&& (formula instanceof EqualityAtom);
+			&& (formula instanceof EqualityAtom)
+			&& (formula instanceof InequalityAtom);
 	}
 	
 	public static boolean returnsFact(Object formula) {
