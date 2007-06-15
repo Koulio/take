@@ -84,6 +84,7 @@
 		</classpath>
 		<formatter type="xml"/>
 		<test todir="${report.junit}" name="test.nz.org.take.script.ParserTests"/>
+		<test todir="${report.junit}" name="test.nz.org.take.compiler.verification.VerificationTests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario1.Tests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario2.Tests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario3.Tests"/>
@@ -92,6 +93,7 @@
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario6.Tests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario7.Tests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario8.Tests"/>
+		
 	</junit>
 	<!-- report -->
 	<junitreport todir="${report.junit}">

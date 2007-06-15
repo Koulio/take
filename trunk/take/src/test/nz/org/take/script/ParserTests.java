@@ -20,17 +20,19 @@ package test.nz.org.take.script;
 
 import java.io.StringReader;
 import java.util.List;
-
+import test.nz.org.take.TakeTestCase;
 import nz.org.take.script.*;
 import nz.org.take.script.parser.Parser;
-import junit.framework.TestCase;
 
 /**
  * Parser tests.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class ParserTests extends TestCase {
+public class ParserTests extends TakeTestCase {
+	public ParserTests(String name) {
+		super(name);
+	}
 	static Parser p =null;
 	private Script parse(String input) throws Exception {
 		if (p==null)
