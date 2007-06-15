@@ -15,41 +15,43 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+package nz.org.take.verification;
 
-package test.nz.org.take;
+import nz.org.take.*;
 
-import org.apache.log4j.BasicConfigurator;
-import junit.framework.TestCase;
+import java.util.*;
 
 /**
- * Abstract superclass for all take tests.
- * Mainly used to initialise log4j.
+ * Check whether for predicates in queries there is at least one knowledge element supporting
+ * this predicate.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
+public class CheckPredicatesInQueries extends VerificationTool{
 
-public class TakeTestCase extends TestCase
-{
-
-	/**
-	 * Construct new test instance
-	 * @param name the test name
-	 */
-	public TakeTestCase(String name)
-	{
-		super(name);
-	}
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		BasicConfigurator.configure();
-	}
-	@Override
-	protected void tearDown() throws Exception {
-		org.apache.log4j.LogManager.shutdown();
-		super.tearDown();
+	public String getName() {
+		return "check predicates in queries";
 	}
 
-	
+	public boolean verify(KnowledgeBase kb) {
+
+		boolean result = true;
+		for (Query query:kb.getQueries()) {
+			boolean result4this = false;
+			for  (KnowledgeElement e:kb.getElements()) {
+				if (query.getPredicate().equals(e.getPredicate())) {
+					result4this = true;
+				}
+			}	
+			if (result4this)
+				reportOK(query);
+			else {
+				reportViolation("query ",query," contains predicate not supported by any fact, rule or fact store");
+				result=false;
+			}
+		}
+		
+		return result;
+	}
+
 }
-	

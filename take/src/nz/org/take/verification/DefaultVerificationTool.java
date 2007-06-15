@@ -15,41 +15,34 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+package nz.org.take.verification;
 
-package test.nz.org.take;
+import nz.org.take.*;
 
-import org.apache.log4j.BasicConfigurator;
-import junit.framework.TestCase;
 
 /**
- * Abstract superclass for all take tests.
- * Mainly used to initialise log4j.
+ * Check whether for predicates in queries there is at least one knowledge element supporting
+ * this predicate. This tool will run all checks available in this package.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
+public class DefaultVerificationTool extends VerificationTool{
 
-public class TakeTestCase extends TestCase
-{
-
-	/**
-	 * Construct new test instance
-	 * @param name the test name
-	 */
-	public TakeTestCase(String name)
-	{
-		super(name);
-	}
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		BasicConfigurator.configure();
-	}
-	@Override
-	protected void tearDown() throws Exception {
-		org.apache.log4j.LogManager.shutdown();
-		super.tearDown();
-	}
-
+	private VerificationTool[] parts = {
+		new CheckPredicatesInQueries(),
+		new CheckVariablesInQueries()
+	};
 	
+	public String getName() {
+		return "default verification tool";
+	}
+
+	public boolean verify(KnowledgeBase kb) {
+		boolean result = true;
+		for (VerificationTool part:parts) {
+			result = result && part.verify(kb);
+		}
+		return result;
+	}
+
 }
-	
