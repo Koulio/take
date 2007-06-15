@@ -24,6 +24,7 @@
 	<property name="report.junit" value="${qareports.dir}/junit"/>
 	<property name="report.jdepend" value="${qareports.dir}/jdepend"/>
 	<property name="build.test.jar" value="${build.lib}/${name}-tests-${version}"/>
+	<property name="build.example.jar" value="${build.lib}/${name}-examples-${version}"/>
 
 	<path id="build.classpath">
         <fileset dir="lib">
@@ -52,9 +53,7 @@
 	/>
 </target>	
 <!-- Compiles the classes -->	
-<!-- we do not compile the generated test and example code-->
-<!-- this will should be compiled (code generated) using the output of this task -->	
-<target name="compile" depends="prepare,generateparser" description="Compile the whole project except the generated test code tests">
+<target name="compile" depends="prepare,generateparser" description="Compile the whole project">
 	<javac destdir="${build.classes}" 
         debug="${debug}" 
         deprecation="on"
@@ -118,7 +117,8 @@
 	<jar jarfile="${build.main.jar}.build${today}.jar" 
 		manifest="${build.tmp}/manifest.mf" 
 		basedir="${build.classes}"
-		excludes="test/**/*.*,/**/*.*,nz/org/take/rt/*.*,nz/org/take/script/**/*.*"
+		includes="nz/**/*.*"
+		excludes="example/**/*.*,/**/*.*,test/**/*.*,/**/*.*,nz/org/take/rt/*.*,nz/org/take/script/**/*.*"
 	/>
 	
 	<!-- runtime classes -->
@@ -132,11 +132,6 @@
 	/>
 	
 	<!-- scripting -->
-	<!-- copy service definition(s) -->
-	<mkdir dir="${build.tmp}/services"/>
-	<copy todir="${build.classes}/services">
-		<fileset dir="${config.dir}/services"/>
-	</copy>
 	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
 	<filter token="TITLE" value="${name} scripting language"/>
 	<delete file="${build.tmp}/manifest.mf"/>
@@ -155,9 +150,78 @@
 	<jar jarfile="${build.test.jar}.build${today}.jar" 
 		manifest="${build.tmp}/manifest.mf" 
 		basedir="${build.classes}"
-		includes="test/**/*.*,/**/*.*"
+		includes="test/**/*.*"
+	/>
+	
+	<!-- examples -->
+	<filter token="TITLE" value="${name} examples"/>
+	<delete file="${build.tmp}/manifest.mf"/>
+	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
+	<jar jarfile="${build.example.jar}.build${today}.jar" 
+		manifest="${build.tmp}/manifest.mf" 
+		basedir="${build.classes}"
+		includes="example/**/*.*"
 	/>
 </target>
+	
+<!-- build the jars without timestamp -->
+<target name="jar2" depends="tests" description="Creates the jar file">
+	
+	<!-- api and compiler -->
+	<filter token="TITLE" value="${name} API and reference compiler"/>
+	<filter token="VERSION" value="${version}"/>
+	<filter token="VENDOR" value="Jens Dietrich, Massey University"/>
+	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
+	<jar jarfile="${build.main.jar}.jar" 
+		manifest="${build.tmp}/manifest.mf" 
+		basedir="${build.classes}"
+		includes="nz/**/*.*"
+		excludes="example/**/*.*,/**/*.*,test/**/*.*,/**/*.*,nz/org/take/rt/*.*,nz/org/take/script/**/*.*"
+	/>
+	
+	<!-- runtime classes -->
+	<filter token="TITLE" value="${name} runtime classes"/>
+	<delete file="${build.tmp}/manifest.mf"/>
+	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
+	<jar jarfile="${build.rt.jar}.jar" 
+		manifest="${build.tmp}/manifest.mf" 
+		basedir="${build.classes}"
+		includes="nz/org/take/rt/*.*"
+	/>
+	
+	<!-- scripting -->
+	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
+	<filter token="TITLE" value="${name} scripting language"/>
+	<delete file="${build.tmp}/manifest.mf"/>
+	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
+	<jar jarfile="${build.script.jar}.jar" 
+		manifest="${build.tmp}/manifest.mf" 
+		basedir="${build.classes}"
+		includes="nz/org/take/script/**/*.*,services/**/*.*"
+	/>
+	<mkdir dir="${build.tmp}/services"/>
+	
+	<!-- tests -->
+	<filter token="TITLE" value="${name} JUnit test cases"/>
+	<delete file="${build.tmp}/manifest.mf"/>
+	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
+	<jar jarfile="${build.test.jar}.jar" 
+		manifest="${build.tmp}/manifest.mf" 
+		basedir="${build.classes}"
+		includes="test/**/*.*"
+	/>
+	
+	<!-- examples -->
+	<filter token="TITLE" value="${name} examples"/>
+	<delete file="${build.tmp}/manifest.mf"/>
+	<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
+	<jar jarfile="${build.example.jar}.jar" 
+		manifest="${build.tmp}/manifest.mf" 
+		basedir="${build.classes}"
+		includes="example/**/*.*"
+	/>
+</target>
+	
 <!-- dependency analysis -->	
 <target name="jdepend" depends="compile" description="Dependency analysis">
 	  <jdepend format="xml" outputfile="${report.jdepend}/jdepend-report.xml">
@@ -176,13 +240,13 @@
 </target>
 	
 <!-- build release -->	
-<target name="release" depends="clean,jar,jdepend" description="Build release">
+<target name="release" depends="clean,jar2,jdepend" description="Build release">
 	  <zip destfile="${build.dir}/take-${version}.zip">
 	    <zipfileset dir="${build.lib}" prefix="lib"/>
 	  	<zipfileset dir="${lib.dir}" prefix="lib-required"/>
 	  	<zipfileset dir="grammar" prefix="grammar"/>
 	  	<zipfileset dir="testdata" prefix="testdata"/>
-	    <zipfileset dir="${src.dir}" prefix="src/examples"/>
+	    <zipfileset dir="${src.dir}" prefix="src"/>
 	    <zipfileset dir="${qareports.dir}" prefix="qa"/>
 	  </zip>
 </target>
