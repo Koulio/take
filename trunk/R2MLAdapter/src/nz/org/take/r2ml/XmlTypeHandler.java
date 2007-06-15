@@ -31,6 +31,11 @@ import de.tu_cottbus.r2ml.RuleText;
 public interface XmlTypeHandler {
 	
 	/**
+	 * Name of the equals method of the targetlanguage. for instance <code>equals()</code> for Java 
+	 */
+	public static String EQUALITY_CHECK_METHOD= "equals";
+
+	/**
 	 *	Annotation key for the namespace of a QName identifying a variable.
 	 */
 	public static final String VARIABLE_QUALIFIED_NAME_NS = Variable.class.getCanonicalName() + ".qname.ns";

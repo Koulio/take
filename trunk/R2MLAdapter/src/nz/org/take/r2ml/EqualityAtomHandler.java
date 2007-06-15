@@ -66,6 +66,8 @@ class EqualityAtomHandler implements XmlTypeHandler {
 	public Object importObject(Object obj, MappingContext context,
 			R2MLDriver driver) throws R2MLException {
 		EqualityAtom atom = (EqualityAtom) obj;
+		if (atom.isIsNegated() != null && atom.isIsNegated())
+			throw new R2MLException("Negation is not yet supported in EqualityAtoms", R2MLException.FEATURE_NOT_YET_IMPLEMENTED);
 		List<Fact> facts = new ArrayList<Fact>();
 		try {
 			for (EqualityPair pair : getArgsAsPairs(atom.getObjectTerm())) {
@@ -93,7 +95,7 @@ class EqualityAtomHandler implements XmlTypeHandler {
 
 	private Predicate buildEqualsPredicate(Term term1, Term term2, R2MLDriver driver) throws R2MLException {
 		JPredicate jp = new JPredicate();
-		Method method = R2MLUtil.getMethod("equals", new Term[]{term1, term2});
+		Method method = R2MLUtil.getMethod(EQUALITY_CHECK_METHOD, new Term[]{term1, term2});
 		jp.setMethod(method);
 		return jp;
 	}
