@@ -36,11 +36,19 @@ public interface NameGenerator {
 	public String getClassName(Predicate p);
 
 	/**
-	 * Generate a method name fo a query
+	 * Generate a method name for a query
 	 * @param q a query
 	 * @return a method name
 	 */
 	public String getMethodName(Query q);
+	
+	/**
+	 * Generate the name of the class that has the methods
+	 * generated for a query
+	 * @param q a query
+	 * @return a class name
+	 */
+	public String getKBFragementName(Query q);
 
 	/**
 	 * Generate an accessor name for a slot.
