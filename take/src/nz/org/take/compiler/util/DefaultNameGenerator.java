@@ -19,8 +19,6 @@
 
 package nz.org.take.compiler.util;
 
-import java.util.HashMap;
-import java.util.Map;
 import nz.org.take.AnnotationKeys;
 import nz.org.take.Predicate;
 import nz.org.take.Query;
@@ -33,7 +31,8 @@ import nz.org.take.compiler.NameGenerator;
 
 public class DefaultNameGenerator implements NameGenerator {
 
-
+	private int counter = 0;
+	
 	/* (non-Javadoc)
 	 * @see org.mandarax.compiler.NameGenerator#getClassName(org.mandarax.kernel.Predicate)
 	 */
@@ -122,4 +121,16 @@ public class DefaultNameGenerator implements NameGenerator {
 	public String getFactStoreRegistryClassName() {
 		return "FactStores";
 	}
+	
+	/**
+	 * Generate the name of the class that has the methods
+	 * generated for a query
+	 * @param q a query
+	 * @return a class name
+	 */
+	public synchronized String getKBFragementName(Query q) {
+		counter = counter+1;
+		return "KBFragement_"+getMethodName(q);
+	}
+	
 }

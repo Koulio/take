@@ -147,7 +147,7 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Create an array consisting of slots that are the input params for calling
-	 * a method asociated by a fact.
+	 * a method associated by a fact.
 	 * @param f  a fact
 	 * @param bindings  bindings
 	 * @return an array of slots
@@ -163,6 +163,7 @@ public abstract class CompilerUtils {
 				params.add(ref);
 		}
 		QueryRef q = new QueryRef((Predicate) f.getPredicate(), io, params);
+		q.setPublic(false);
 		configNewQuery(q);		
 		return q;
 	}
@@ -540,7 +541,6 @@ public abstract class CompilerUtils {
 	 * @return a method name
 	 */
 	protected String getMethodName(Query q) {
-	
 		return this.getNameGenerator().getMethodName(q);
 	}
 
@@ -615,6 +615,10 @@ public abstract class CompilerUtils {
 	 *            the query + the parameters used
 	 */
 	protected void printInvocation(PrintWriter out, QueryRef queryRef, boolean includeExplanation, boolean  increaseLevel) {
+		// references to static methods (in main kb class or in fragments)
+		out.print(this.getNameGenerator().getKBFragementName(queryRef));
+		out.print('.');
+		
 		out.print(this.getMethodName(queryRef));
 		out.print("(");
 		boolean f = true;

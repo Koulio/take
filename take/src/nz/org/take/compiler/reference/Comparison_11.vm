@@ -5,7 +5,7 @@
      * @return an iterator
      * code generated using velocity template $templatename
     */
-    private ResourceIterator< $resulttype > $methodname (
+    static ResourceIterator< $resulttype > $methodname (
 		final $slot1.type $slot1.getVar(),
    		final $slot2.type $slot2.getVar(),
         final DerivationController _derivation) {
