@@ -1,0 +1,16 @@
+// script for test scenario 4 - tests the use of bean properties as predicates
+@@dc:creator=jens dietrich
+@@dc:date=30/04/2007
+var test.nz.org.take.compiler.scenario4.Student student
+var test.nz.org.take.compiler.scenario4.Course course
+var test.nz.org.take.compiler.scenario4.College college
+@take.compilerhint.class=IsEnrolled
+@take.compilerhint.slots=student,college
+@take.compilerhint.method=isEnrolled
+query isEnrolled[in,out]
+@take.compilerhint.class=IsEnrolled
+@take.compilerhint.slots=student,college
+@take.compilerhint.method=isEnrolled
+query isEnrolled[in,in]
+// rules
+rule1: if courses[student,course] and college[course,college] then isEnrolled[student,college]
