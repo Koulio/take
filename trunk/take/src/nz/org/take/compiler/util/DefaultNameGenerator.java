@@ -97,12 +97,18 @@ public class DefaultNameGenerator implements NameGenerator {
 	
 	public String getMethodName(Query q) {
 		String nameFromAnnnotation = q.getAnnotation(AnnotationKeys.TAKE_GENERATE_METHOD);
+		StringBuffer b = new StringBuffer();
+		
 		if (nameFromAnnnotation!=null)
 			return nameFromAnnnotation;
 		
 		Predicate p = q.getPredicate();
+		if (p.isNegated()) {
+			b.append("neg_");
+		}
+			
 		boolean[] inputParam = q.getInputParams();
-		StringBuffer b = new StringBuffer();
+		
 		char[] name = p.getName().toCharArray();
 		for (char ch : name)
 			if (!Character.isWhitespace(ch))
