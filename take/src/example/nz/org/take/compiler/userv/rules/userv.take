@@ -1,0 +1,16 @@
+// example based on the UServ product derby
+@@dc:creator=jens dietrich
+@@dc:date=15/08/2007
+var example.nz.org.take.compiler.userv.domainmodel.Car car
+ref java.util.Collection HighTheftProbabilityAutoList
+// queries
+@take.compilerhint.class=PotentialTheftRating
+@take.compilerhint.slots=car,rating
+@take.compilerhint.method=getPotenialTheftRating
+query potentialTheftRating[in,out]
+// rules
+AE_PTC01: if isConvertible[car] then potentialTheftRating[car,"high"]
+AE_PTC02: if car.price>45000 then potentialTheftRating[car,"high"]
+AE_PTC03: if contains[HighTheftProbabilityAutoList,car.type] then potentialTheftRating[car,"high"]
+AE_PTC04: if car.price>20000 and car.price<45000 and not contains[HighTheftProbabilityAutoList,car.type] then potentialTheftRating[car,"moderate"]
+AE_PTC05: if car.price<20000 and not contains[HighTheftProbabilityAutoList,car.type] then potentialTheftRating[car,"low"]
