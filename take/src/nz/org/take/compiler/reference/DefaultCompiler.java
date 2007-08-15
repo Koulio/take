@@ -960,7 +960,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			bindings.put(terms[islots[i].position], islots[i].var);
 		}
 		// bind all constant terms
-		for (Term t:terms) {
+		for (Term t:getAllTerms(r)) { // changed 14/08/07 - all constants must be picked up
 			if (t instanceof Constant) {
 				bindings.put(t,getRef(this.getNameGenerator().getConstantRegistryClassName(),(Constant)t));
 			}
