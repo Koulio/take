@@ -9,26 +9,29 @@ public class Car {
 	private boolean  hasRollBar = true;
 	private String  type = "unknown";
 	
-	public boolean isHasDriversAirbag() {
+	public boolean hasDriversAirbag() {
 		return hasDriversAirbag;
 	}
 	public void setHasDriversAirbag(boolean hasDriversAirbag) {
 		this.hasDriversAirbag = hasDriversAirbag;
 	}
-	public boolean isHasFrontPassengerAirbag() {
+	public boolean hasFrontPassengerAirbag() {
 		return hasFrontPassengerAirbag;
 	}
 	public void setHasFrontPassengerAirbag(boolean hasFrontPassengerAirbag) {
 		this.hasFrontPassengerAirbag = hasFrontPassengerAirbag;
 	}
-	public boolean isHasRollBar() {
+	public boolean hasRollBar() {
 		return hasRollBar;
 	}
 	public void setHasRollBar(boolean hasRollBar) {
 		this.hasRollBar = hasRollBar;
 	}
-	public boolean isHasSidePanelAirbags() {
+	public boolean hasSidePanelAirbags() {
 		return hasSidePanelAirbags;
+	}
+	public boolean hasAirbags() {
+		return this.hasDriversAirbag || this.hasFrontPassengerAirbag || this.hasSidePanelAirbags;
 	}
 	public void setHasSidePanelAirbags(boolean hasSidePanelAirbags) {
 		this.hasSidePanelAirbags = hasSidePanelAirbags;
