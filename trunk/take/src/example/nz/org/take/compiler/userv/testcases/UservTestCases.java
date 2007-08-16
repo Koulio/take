@@ -58,4 +58,75 @@ public class UservTestCases extends TestCase {
 		assertTrue(result.hasNext());
 		assertEquals("low",result.next().rating);
 	}
+	public void testAE_POIC01() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(false);
+		car.setHasFrontPassengerAirbag(false);
+		car.setHasSidePanelAirbags(false);
+		ResultSet<PotentialOccupantInjuryRating> result = kb.getPotentialOccupantInjuryRating(car);
+		assertTrue(result.hasNext());
+		assertEquals("extremely high",result.next().rating);
+	}
+	public void testAE_POIC02() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(false);
+		car.setHasSidePanelAirbags(false);
+		ResultSet<PotentialOccupantInjuryRating> result = kb.getPotentialOccupantInjuryRating(car);
+		assertTrue(result.hasNext());
+		assertEquals("high",result.next().rating);
+	}
+	public void testAE_POIC03() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(false);
+		ResultSet<PotentialOccupantInjuryRating> result = kb.getPotentialOccupantInjuryRating(car);
+		assertTrue(result.hasNext());
+		assertEquals("moderate",result.next().rating);
+	}
+	public void testAE_POIC04() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(true);
+		ResultSet<PotentialOccupantInjuryRating> result = kb.getPotentialOccupantInjuryRating(car);
+		assertTrue(result.hasNext());
+		assertEquals("low",result.next().rating);
+	}
+	public void testAE_POIC05() throws Exception {
+		Car car = new Car();
+		car.setConvertible(true);
+		car.setHasRollBar(false);
+		ResultSet<PotentialOccupantInjuryRating> result = kb.getPotentialOccupantInjuryRating(car);
+		assertTrue(result.hasNext());
+		assertEquals("extremely high",result.next().rating);
+	}
+	public void testAE01() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(false);
+		car.setHasFrontPassengerAirbag(false);
+		car.setHasSidePanelAirbags(false);
+		ResultSet<AutoEligibility> result = kb.getAutoEligibility(car);
+		assertTrue(result.hasNext());
+		assertEquals("not eligible",result.next().value);
+	}
+	public void testAE02() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(false);
+		car.setHasSidePanelAirbags(false);
+		ResultSet<AutoEligibility> result = kb.getAutoEligibility(car);
+		assertTrue(result.hasNext());
+		assertEquals("provisional",result.next().value);
+	}
+	public void testAE03() throws Exception {
+		Car car = new Car();
+		car.setConvertible(false);
+		car.setPrice(20000);
+		car.setType("Mini");
+		ResultSet<AutoEligibility> result = kb.getAutoEligibility(car);
+		assertTrue(result.hasNext());
+		assertEquals("provisional",result.next().value);
+	}
 }

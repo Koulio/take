@@ -8,56 +8,59 @@ import nz.org.take.rt.*;
  * @version Thu Aug 16 11:26:52 NZST 2007
  */
 @SuppressWarnings("unchecked")
-class KBFragement_getPotenialTheftRating {
+class KBFragement_potentialTheftRating_11 {
     /**
-     * Method generated for query /potentialTheftRating[in,out]
+     * Method generated for query /potentialTheftRating[in,in]
      * @param car input parameter generated from slot 0
+     * @param rating input parameter generated from slot 1
      * @return an iterator for instances of PotentialTheftRating
     */
-    public static ResultSet<PotentialTheftRating> getPotenialTheftRating(
-        final example.nz.org.take.compiler.userv.domainmodel.Car car) {
+    public static ResultSet<PotentialTheftRating> potentialTheftRating_11(
+        final example.nz.org.take.compiler.userv.domainmodel.Car car,
+        final java.lang.String rating) {
         DerivationController _derivation = new DefaultDerivationController();
-        ResultSet<PotentialTheftRating> _result = new ResultSet(KBFragement_getPotenialTheftRating.getPotenialTheftRating(
-                    car, _derivation), _derivation);
+        ResultSet<PotentialTheftRating> _result = new ResultSet(KBFragement_potentialTheftRating_11.potentialTheftRating_11(
+                    car, rating, _derivation), _derivation);
 
         return _result;
     }
 
     /**
-     * Method generated for query /potentialTheftRating[in,out]
+     * Method generated for query /potentialTheftRating[in,in]
      * @param car input parameter generated from slot 0
+     * @param rating input parameter generated from slot 1
      * @return an iterator for instances of PotentialTheftRating
     */
-    static ResourceIterator<PotentialTheftRating> getPotenialTheftRating(
+    static ResourceIterator<PotentialTheftRating> potentialTheftRating_11(
         final example.nz.org.take.compiler.userv.domainmodel.Car car,
-        final DerivationController _derivation) {
+        final java.lang.String rating, final DerivationController _derivation) {
         final int _derivationlevel = _derivation.getDepth();
         ResourceIterator<PotentialTheftRating> result = new IteratorChain<PotentialTheftRating>(5) {
                 public Object getIteratorOrObject(int pos) {
                     switch (pos) {
                     //  IF isConvertible(<car>) THEN /potentialTheftRating(<car>,high)
                     case 0:
-                        return getPotenialTheftRating_0(car,
+                        return potentialTheftRating_11_0(car, rating,
                             _derivation.reset(_derivationlevel));
 
                     //  IF greater_than_ii(getPrice(<car>),45000) THEN /potentialTheftRating(<car>,high)
                     case 1:
-                        return getPotenialTheftRating_1(car,
+                        return potentialTheftRating_11_1(car, rating,
                             _derivation.reset(_derivationlevel));
 
                     //  IF contains([HighTheftProbabilityAutoList],getType(<car>)) THEN /potentialTheftRating(<car>,high)
                     case 2:
-                        return getPotenialTheftRating_2(car,
+                        return potentialTheftRating_11_2(car, rating,
                             _derivation.reset(_derivationlevel));
 
                     //  IF greater_than_ii(getPrice(<car>),20000) AND less_than_ii(getPrice(<car>),45000) AND contains([HighTheftProbabilityAutoList],getType(<car>)) THEN /potentialTheftRating(<car>,moderate)
                     case 3:
-                        return getPotenialTheftRating_3(car,
+                        return potentialTheftRating_11_3(car, rating,
                             _derivation.reset(_derivationlevel));
 
                     //  IF less_than_ii(getPrice(<car>),20000) AND contains([HighTheftProbabilityAutoList],getType(<car>)) THEN /potentialTheftRating(<car>,low)
                     case 4:
-                        return getPotenialTheftRating_4(car,
+                        return potentialTheftRating_11_4(car, rating,
                             _derivation.reset(_derivationlevel));
 
                     default:
@@ -97,15 +100,15 @@ class KBFragement_getPotenialTheftRating {
     }
 
     /**
-     * Method generated for query /potentialTheftRating[in,out]
+     * Method generated for query /potentialTheftRating[in,in]
      * @param car input parameter generated from slot 0
+     * @param rating input parameter generated from slot 1
      * @return an iterator for instances of PotentialTheftRating
     */
-    private static ResourceIterator<PotentialTheftRating> getPotenialTheftRating_0(
+    private static ResourceIterator<PotentialTheftRating> potentialTheftRating_11_0(
         final example.nz.org.take.compiler.userv.domainmodel.Car car,
-        final DerivationController _derivation) {
-        _derivation.log("AE_PTC01", DerivationController.RULE, car,
-            DerivationController.NIL);
+        final java.lang.String rating, final DerivationController _derivation) {
+        _derivation.log("AE_PTC01", DerivationController.RULE, car, rating);
 
         // Variable bindings in rule:  IF isConvertible(<car>) THEN /potentialTheftRating(<car>,high)
         class bindingsInRule1 {
@@ -140,15 +143,15 @@ class KBFragement_getPotenialTheftRating {
     }
 
     /**
-     * Method generated for query /potentialTheftRating[in,out]
+     * Method generated for query /potentialTheftRating[in,in]
      * @param car input parameter generated from slot 0
+     * @param rating input parameter generated from slot 1
      * @return an iterator for instances of PotentialTheftRating
     */
-    private static ResourceIterator<PotentialTheftRating> getPotenialTheftRating_1(
+    private static ResourceIterator<PotentialTheftRating> potentialTheftRating_11_1(
         final example.nz.org.take.compiler.userv.domainmodel.Car car,
-        final DerivationController _derivation) {
-        _derivation.log("AE_PTC02", DerivationController.RULE, car,
-            DerivationController.NIL);
+        final java.lang.String rating, final DerivationController _derivation) {
+        _derivation.log("AE_PTC02", DerivationController.RULE, car, rating);
 
         // Variable bindings in rule:  IF greater_than_ii(getPrice(<car>),45000) THEN /potentialTheftRating(<car>,high)
         class bindingsInRule2 {
@@ -192,15 +195,15 @@ class KBFragement_getPotenialTheftRating {
     }
 
     /**
-     * Method generated for query /potentialTheftRating[in,out]
+     * Method generated for query /potentialTheftRating[in,in]
      * @param car input parameter generated from slot 0
+     * @param rating input parameter generated from slot 1
      * @return an iterator for instances of PotentialTheftRating
     */
-    private static ResourceIterator<PotentialTheftRating> getPotenialTheftRating_2(
+    private static ResourceIterator<PotentialTheftRating> potentialTheftRating_11_2(
         final example.nz.org.take.compiler.userv.domainmodel.Car car,
-        final DerivationController _derivation) {
-        _derivation.log("AE_PTC03", DerivationController.RULE, car,
-            DerivationController.NIL);
+        final java.lang.String rating, final DerivationController _derivation) {
+        _derivation.log("AE_PTC03", DerivationController.RULE, car, rating);
 
         // Variable bindings in rule:  IF contains([HighTheftProbabilityAutoList],getType(<car>)) THEN /potentialTheftRating(<car>,high)
         class bindingsInRule3 {
@@ -244,15 +247,15 @@ class KBFragement_getPotenialTheftRating {
     }
 
     /**
-     * Method generated for query /potentialTheftRating[in,out]
+     * Method generated for query /potentialTheftRating[in,in]
      * @param car input parameter generated from slot 0
+     * @param rating input parameter generated from slot 1
      * @return an iterator for instances of PotentialTheftRating
     */
-    private static ResourceIterator<PotentialTheftRating> getPotenialTheftRating_3(
+    private static ResourceIterator<PotentialTheftRating> potentialTheftRating_11_3(
         final example.nz.org.take.compiler.userv.domainmodel.Car car,
-        final DerivationController _derivation) {
-        _derivation.log("AE_PTC04", DerivationController.RULE, car,
-            DerivationController.NIL);
+        final java.lang.String rating, final DerivationController _derivation) {
+        _derivation.log("AE_PTC04", DerivationController.RULE, car, rating);
 
         // Variable bindings in rule:  IF greater_than_ii(getPrice(<car>),20000) AND less_than_ii(getPrice(<car>),45000) AND contains([HighTheftProbabilityAutoList],getType(<car>)) THEN /potentialTheftRating(<car>,moderate)
         class bindingsInRule4 {
@@ -336,15 +339,15 @@ class KBFragement_getPotenialTheftRating {
     }
 
     /**
-     * Method generated for query /potentialTheftRating[in,out]
+     * Method generated for query /potentialTheftRating[in,in]
      * @param car input parameter generated from slot 0
+     * @param rating input parameter generated from slot 1
      * @return an iterator for instances of PotentialTheftRating
     */
-    private static ResourceIterator<PotentialTheftRating> getPotenialTheftRating_4(
+    private static ResourceIterator<PotentialTheftRating> potentialTheftRating_11_4(
         final example.nz.org.take.compiler.userv.domainmodel.Car car,
-        final DerivationController _derivation) {
-        _derivation.log("AE_PTC05", DerivationController.RULE, car,
-            DerivationController.NIL);
+        final java.lang.String rating, final DerivationController _derivation) {
+        _derivation.log("AE_PTC05", DerivationController.RULE, car, rating);
 
         // Variable bindings in rule:  IF less_than_ii(getPrice(<car>),20000) AND contains([HighTheftProbabilityAutoList],getType(<car>)) THEN /potentialTheftRating(<car>,low)
         class bindingsInRule5 {
