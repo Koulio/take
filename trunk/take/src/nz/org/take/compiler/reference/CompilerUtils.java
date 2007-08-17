@@ -257,6 +257,27 @@ public abstract class CompilerUtils {
 			out.print(t);
 		out.println();
 	}
+	
+	/**
+	 * Print a comparison between objects.
+	 * Note: for primitives we can use equals as well, autoboxing will be used
+	 * TODO compare using == for primitives it to make code more efficient 
+	 * @param out  a print writer
+	 * @param v1 value1
+	 * @param v2 value2
+	 * @param negated whether to check for equal or non equal 
+	 * @param type the object type
+	 */
+	protected void printComparison(PrintWriter out, String v1,String v2,boolean negated,Class type) {
+		if (negated)
+			out.print('!');
+		out.print(v1);
+		out.print(".equals(");
+		out.print(v2);
+		out.print(")");
+
+	}
+	
 
 	/**
 	 * Print a parameter list generated from an array of input slots.

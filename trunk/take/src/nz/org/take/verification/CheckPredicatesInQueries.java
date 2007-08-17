@@ -19,7 +19,6 @@ package nz.org.take.verification;
 
 import nz.org.take.*;
 
-import java.util.*;
 
 /**
  * Check whether for predicates in queries there is at least one knowledge element supporting
