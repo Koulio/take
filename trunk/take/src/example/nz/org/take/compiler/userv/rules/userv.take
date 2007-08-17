@@ -30,3 +30,4 @@ AE_POIC05: if isConvertible[car] and not hasHasRollBar[car] then potentialOccupa
 AE_01: if potentialOccupantInjuryRating[car,"extremely high"] then autoEligibility[car,"not eligible"]
 AE_02: if potentialOccupantInjuryRating[car,"high"] then autoEligibility[car,"provisional"]
 AE_03: if potentialTheftRating[car,"high"] then autoEligibility[car,"provisional"]
+AE_04: autoEligibility[car,"eligible"]

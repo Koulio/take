@@ -169,7 +169,7 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 				Rule rule = (Rule)part;
 				
 				if (rule.getConditions().size()==1) {
-					Fact f = buildFact(variables,constants,predicatesByName,rule.getConditions().get(0));
+					Clause f = buildClause(variables,constants,predicatesByName,rule.getConditions().get(0));
 					f.setId(rule.getId());
 					checkId(f,ids);
 					annotate(f,annotations); 
@@ -338,6 +338,22 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		nz.org.take.Predicate predicate = buildPredicate(variables,predicatesByName,c,terms);
 		p.setPredicate(predicate);
 		p.setTerms(terms);
+		return p;
+	}
+	private Clause buildClause(Map<String,Variable> variables, Map<String,Constant> constants,Map<String,Predicate> predicatesByName, Condition c) throws ScriptException {
+		Fact p = new Fact();
+		nz.org.take.Term[] terms = buildTerms(variables,constants,c);
+		nz.org.take.Predicate predicate = buildPredicate(variables,predicatesByName,c,terms);
+		p.setPredicate(predicate);
+		p.setTerms(terms);
+		for (int i=0;i<terms.length;i++){
+			if (!(terms[i] instanceof Constant)) {
+				// fact constains variables - in this case build a rule
+				DerivationRule rule = new DerivationRule();
+				rule.setHead(p);
+				return rule;
+			}
+		}
 		return p;
 	}
 	// try to find a method for the term (types) and the name

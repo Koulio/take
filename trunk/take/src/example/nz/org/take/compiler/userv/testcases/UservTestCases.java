@@ -1,5 +1,6 @@
 package example.nz.org.take.compiler.userv.testcases;
 
+import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
 import example.nz.org.take.compiler.userv.domainmodel.*;
 import example.nz.org.take.compiler.userv.generated.*;
@@ -14,6 +15,12 @@ public class UservTestCases extends TestCase {
 		kb = new UservRules();
 		// bind constants referenced in the kb
 		Constants.HighTheftProbabilityAutoList = HighTheftProbabilityAutoList.getList();
+	}
+	
+	private void printLog(ResultSet result) {
+		for (Object s:result.getDerivationLog()) {
+			System.out.println(((DerivationLogEntry)s).getName());
+		}
 	}
 	public void testAE_PTC01() throws Exception {
 		Car car = new Car();
@@ -119,14 +126,28 @@ public class UservTestCases extends TestCase {
 		ResultSet<AutoEligibility> result = kb.getAutoEligibility(car);
 		assertTrue(result.hasNext());
 		assertEquals("provisional",result.next().value);
+		printLog(result);
 	}
 	public void testAE03() throws Exception {
 		Car car = new Car();
-		car.setConvertible(false);
+		car.setConvertible(true);
 		car.setPrice(20000);
 		car.setType("Mini");
+		car.setHasDriversAirbag(true);
 		ResultSet<AutoEligibility> result = kb.getAutoEligibility(car);
 		assertTrue(result.hasNext());
 		assertEquals("provisional",result.next().value);
+	}
+	public void testAE04() throws Exception {
+		Car car = new Car();
+		car.setConvertible(true);
+		car.setPrice(18000);
+		car.setType("Skoda Fabia");
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(true);
+		ResultSet<AutoEligibility> result = kb.getAutoEligibility(car);
+		assertTrue(result.hasNext());
+		assertEquals("eligible",result.next().value);
 	}
 }

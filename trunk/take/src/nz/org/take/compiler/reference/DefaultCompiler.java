@@ -797,7 +797,11 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			createBody(out, q, islots, oslots, (ExternalFactStore) cs);
 		}
 		else if (cs instanceof DerivationRule) {
-			createBody(out, q, islots, oslots, (DerivationRule) cs);
+			DerivationRule r = (DerivationRule)cs;
+			if (r.getBody().size()==0)
+				createBodyForRuleWithEmptyBody(out, q, islots, oslots, (DerivationRule) cs);
+			else
+				createBody(out, q, islots, oslots, (DerivationRule) cs);
 		} else {
 			out.print("// this clause set type is not yet supported: ");
 			out.println(cs.getClass());
@@ -807,18 +811,12 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		out.println("}");
 	}
 	/**
-	 * Create a proof for a query.
-	 * 
-	 * @param out -
-	 *            a print writer
-	 * @param q -
-	 *            the query
-	 * @param islots -
-	 *            the input slots (known)
-	 * @param oslots -
-	 *            the output slots (to be bound)
-	 * @param f -
-	 *            the fact
+	 * Create a proof for a query. 
+	 * @param out - a print writer
+	 * @param q - the query
+	 * @param islots - the input slots (known)
+	 * @param oslots - the output slots (to be bound)
+	 * @param f - the fact
 	 * @throws CompilerException
 	 */
 	private void createBody(PrintWriter out, Query q, Slot[] islots,
@@ -1399,6 +1397,97 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			createKBFragmentClass(out,cn,this.getPackageName());
 		}
 		return out;
+	}
+
+	/**
+	 * Create a proof for a query.
+	 * @param out a print writer
+	 * @param q the query
+	 * @param islots the input slots (known)
+	 * @param oslots the output slots (to be bound)
+	 * @param r the rule
+	 * @throws CompilerException
+	 */
+	private void createBodyForRuleWithEmptyBody(PrintWriter out, Query q, Slot[] islots,Slot[] oslots, DerivationRule r) throws CompilerException {
+		
+		// print log statement
+		printLogStatement(out,r,q.getInputParams(),islots);
+		
+		out.println("// rule with empty body");
+		
+		// the concrete bindings for this rule
+		List<Term> allTerms = this.getAllTerms(r);
+		Bindings bindings = new Bindings(allTerms);
+		
+		// compute initial bindings
+		Fact head = r.getHead();
+		Term[] terms = head.getTerms();
+		
+		// compare constants in rule head with constants provided in parameters
+		// if they don't match, return empty iterator
+		int compCount = 0;
+		for (int i=0;i<terms.length;i++) {
+			if (terms[i] instanceof Constant) {
+				for (int j=0;j<islots.length;j++) {
+					if (islots[j].position==i) {
+						if (compCount==0) {
+							out.println("// comparing constants in rule head with parameters");
+							out.print("if (");
+						}
+						if (compCount>0)
+							out.print(" || ");						
+						printComparison(out,getRef(this.getNameGenerator().getConstantRegistryClassName(),(Constant)terms[i]),islots[j].name,true,terms[i].getType());
+						compCount = compCount+1;
+					}
+				}
+			}
+		}
+		if (compCount>0) {
+			out.println("){");
+			out.println("return EmptyIterator.DEFAULT;");
+			out.println("}");
+		}
+			
+		
+		// bind all input slots to variables of the current rule
+		for (int i = 0; i < islots.length; i++) {
+			bindings.put(terms[islots[i].position], islots[i].var);
+		}
+		// bind all constant terms
+		for (Term t:getAllTerms(r)) { 
+			if (t instanceof Constant) {
+				bindings.put(t,getRef(this.getNameGenerator().getConstantRegistryClassName(),(Constant)t));
+			}
+		}
+		
+		// return a single object 
+		Predicate p = q.getPredicate();
+		out.print(getClassName(p));
+		out.print(" ");
+		out.print(RESULT);
+		out.print("=");
+		printContructorInvocation(out, getClassName(p), null);
+		out.println(";");
+		
+		// assign values
+		for (int i=0;i<terms.length;i++) {
+			out.print(RESULT);
+			out.print('.');
+			out.print(this.getNameGenerator().getVariableNameForSlot(p,i));
+			out.print(" = ");
+			out.print(bindings.getRef(terms[i]));
+			out.println(';');
+		}
+		
+		out.print("return ");
+		out.print("new SingletonIterator<");
+		out.print(this.getNameGenerator().getClassName(q.getPredicate()));
+		out.print(">(");
+		out.print(RESULT);
+		out.print(");");
+		
+		
+		
 	}
 
 }

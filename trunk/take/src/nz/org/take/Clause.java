@@ -23,6 +23,7 @@ package nz.org.take;
  */
 
 public interface Clause extends KnowledgeElement {
-	
+	public String getId();
+	public void setId(String id);
 
 }
