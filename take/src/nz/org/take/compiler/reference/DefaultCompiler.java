@@ -947,6 +947,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		// print log statement
 		printLogStatement(out,r,q.getInputParams(),islots);
 		
+		
 		// the concrete bindings for this rule
 		List<Term> allTerms = this.getAllTerms(r);
 		Bindings bindings = new Bindings(allTerms);
@@ -954,6 +955,32 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		// compute initial bindings
 		Fact head = r.getHead();
 		Term[] terms = head.getTerms();
+		
+		// compare constants in rule head with constants provided in parameters
+		// if they don't match, return empty iterator
+		int compCount = 0;
+		for (int i=0;i<terms.length;i++) {
+			if (terms[i] instanceof Constant) {
+				for (int j=0;j<islots.length;j++) {
+					if (islots[j].position==i) {
+						if (compCount==0) {
+							out.println("// comparing constants in rule head with parameters");
+							out.print("if (");
+						}
+						if (compCount>0)
+							out.print(" || ");						
+						printComparison(out,getRef(this.getNameGenerator().getConstantRegistryClassName(),(Constant)terms[i]),islots[j].name,true,terms[i].getType());
+						compCount = compCount+1;
+					}
+				}
+			}
+		}
+		if (compCount>0) {
+			out.println("){");
+			out.println("return EmptyIterator.DEFAULT;");
+			out.println("}");
+		}
+			
 		
 		// bind all input slots to variables of the current rule
 		for (int i = 0; i < islots.length; i++) {
@@ -989,6 +1016,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		Fact previousFact = null;
 		literals.addAll(r.getBody());
 		literals.add(r.getHead());
+	
 		TmpVarGenerator varGen = new TmpVarGenerator();
 		String iteratorName = null, className = null, previousIteratorName = null, previousClassName = null;
 		boolean first = true;
