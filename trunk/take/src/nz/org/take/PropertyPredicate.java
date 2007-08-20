@@ -80,9 +80,16 @@ public class PropertyPredicate extends AbstractPredicate {
 
 	public Class[] getSlotTypes() {
 		if (types==null && property!=null) {
-			types = new Class[2];
-			types[0] = ownerType;
 			Class clazz = property.getPropertyType();
+			// boolean properties are special !
+			if (clazz==Boolean.class || clazz==Boolean.TYPE) {
+				types = new Class[1];
+				types[0] = ownerType;
+				return types;
+			}
+			types = new Class[2];
+			types[0] = ownerType;			
+			
 			if (java.util.Collection.class.isAssignableFrom(clazz)) {
 				isOne2One = false;
 				// check for generics

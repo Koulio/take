@@ -28,33 +28,33 @@ public class Driver {
 	public void setAge(int age) {
 		this.age = age;
 	}
-	public boolean isHasTrainingCertification() {
+	public boolean hasTrainingCertification() {
 		return hasTrainingCertification;
 	}
 	public void setHasTrainingCertification(boolean hasTrainingCertification) {
 		this.hasTrainingCertification = hasTrainingCertification;
 	}
-	public boolean isHasDriversTrainingFromSchool() {
+	public boolean hasDriversTrainingFromSchool() {
 		return hasDriversTrainingFromSchool;
 	}
 	public void setHasDriversTrainingFromSchool(boolean hasDriversTrainingFromSchool) {
 		this.hasDriversTrainingFromSchool = hasDriversTrainingFromSchool;
 	}
-	public boolean isHasDriversTrainingFromLicensedDriverTrainingCompany() {
+	public boolean hasDriversTrainingFromLicensedDriverTrainingCompany() {
 		return hasDriversTrainingFromLicensedDriverTrainingCompany;
 	}
 	public void setHasDriversTrainingFromLicensedDriverTrainingCompany(
 			boolean hasDriversTrainingFromLicensedDriverTrainingCompany) {
 		this.hasDriversTrainingFromLicensedDriverTrainingCompany = hasDriversTrainingFromLicensedDriverTrainingCompany;
 	}
-	public boolean isHasTakenASeniorCitizenDriversRefresherCourse() {
+	public boolean hasTakenASeniorCitizenDriversRefresherCourse() {
 		return hasTakenASeniorCitizenDriversRefresherCourse;
 	}
 	public void setHasTakenASeniorCitizenDriversRefresherCourse(
 			boolean hasTakenASeniorCitizenDriversRefresherCourse) {
 		this.hasTakenASeniorCitizenDriversRefresherCourse = hasTakenASeniorCitizenDriversRefresherCourse;
 	}
-	public boolean isHasBeenConvictedOfaDUI() {
+	public boolean hasBeenConvictedOfaDUI() {
 		return hasBeenConvictedOfaDUI;
 	}
 	public void setHasBeenConvictedOfaDUI(boolean hasBeenConvictedOfaDUI) {

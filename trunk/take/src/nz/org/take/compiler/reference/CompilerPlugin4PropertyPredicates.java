@@ -120,9 +120,10 @@ public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 	public boolean supports(Query q) {
 		// check parameters
 		try {
-			this.checkPrerequisites(q);
+			this.checkPrerequisites(q);			
 		}
 		catch (CompilerException x) {
+			this.logger.error(x.getMessage(), x);
 			return false;
 		}
 		// check predicate
