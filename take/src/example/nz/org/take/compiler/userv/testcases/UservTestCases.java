@@ -188,20 +188,52 @@ public class UservTestCases extends TestCase {
 		assertTrue(result.hasNext());
 		assertEquals("eligible",result.next().value);
 	}
-	public void DE_DAC01() throws Exception {
+	public void testDE_DAC01() throws Exception {
 		Driver driver = new Driver();
 		driver.setAge(23);
 		driver.setMale(true);
-		ResultSet<YoungDriver> result = kb.getDriverCategory(driver);
+		ResultSet<DriverCategory> result = kb.getDriverCategory(driver);
 		assertTrue(result.hasNext());
 		assertEquals("young driver",result.next().category);
 	}
-	public void DE_DAC02() throws Exception {
+	public void testDE_DAC02() throws Exception {
 		Driver driver = new Driver();
 		driver.setAge(19);
 		driver.setMale(false);
-		ResultSet<YoungDriver> result = kb.getDriverCategory(driver);
+		driver.setHasTrainingCertification(false);
+		ResultSet<DriverCategory> result = kb.getDriverCategory(driver);
 		assertTrue(result.hasNext());
 		assertEquals("young driver",result.next().category);
+	}
+	public void testDE_DAC03() throws Exception {
+		Driver driver = new Driver();
+		driver.setAge(19);
+		driver.setMale(false);
+		driver.setHasTrainingCertification(true);
+		ResultSet<DriverEligibility> result = kb.getDriverEligibility(driver);
+		assertTrue(result.hasNext());
+		// nothing to compare - unary predicate
+	}
+	public void testDE_DAC04() throws Exception {
+		Driver driver = new Driver();
+		driver.setAge(77);
+		ResultSet<DriverCategory> result = kb.getDriverCategory(driver);
+		assertTrue(result.hasNext());
+		assertEquals("senior driver",result.next().category);
+	}
+	public void testDE_DAC05() throws Exception {
+		Driver driver = new Driver();
+		driver.setAge(77);
+		driver.setHasTrainingCertification(true);
+		ResultSet<DriverEligibility> result = kb.getDriverEligibility(driver);
+		assertTrue(result.hasNext());
+		// nothing to compare - unary predicate
+	}
+	public void testDE_DAC06() throws Exception {
+		Driver driver = new Driver();
+		driver.setAge(44);
+		ResultSet<DriverEligibility> result = kb.getDriverEligibility(driver);
+		assertTrue(result.hasNext());
+		// nothing to compare - unary predicate
 	}
 }

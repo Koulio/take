@@ -66,9 +66,10 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	 */
 	public DefaultCompiler()  {
 		super();
-		this.install(new CompilerPlugin4JPredicates(this));
+		this.install(new CompilerPlugin4JPredicates(this));		
 		this.install(new CompilerPlugin4PropertyPredicates(this));
 		this.install(new CompilerPlugin4Comparisons(this));
+		
 	}
 
 	/**
@@ -658,14 +659,13 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		}
 		else {
 			// try to use plugin
-			for (CompilerPlugin plugin:this.plugins) {
+			int i=0;
+			while (i<plugins.size() && methodName==null) {				
+				CompilerPlugin plugin = plugins.get(i);
+				i=i+1;
 				if (plugin.supports(q)) {
-					// the next line may throw an exception
-					// an alternative strategy would be "try next plugin"
-					
-					//plugin.checkPrerequisites(q);
-					methodName = plugin.createMethod(out, q);
-				}
+					methodName = plugin.createMethod(out, q);					
+				}				
 			}
 		}
 		if (methodName!=null) {
