@@ -200,7 +200,6 @@ public class UservTestCases extends TestCase {
 		Driver driver = new Driver();
 		driver.setAge(19);
 		driver.setMale(false);
-		driver.setHasTrainingCertification(false);
 		ResultSet<DriverCategory> result = kb.getDriverCategory(driver);
 		assertTrue(result.hasNext());
 		assertEquals("young driver",result.next().category);
@@ -209,7 +208,7 @@ public class UservTestCases extends TestCase {
 		Driver driver = new Driver();
 		driver.setAge(19);
 		driver.setMale(false);
-		driver.setHasTrainingCertification(true);
+		driver.setHasDriversTrainingFromSchool(true);
 		ResultSet<DriverEligibility> result = kb.getDriverEligibility(driver);
 		assertTrue(result.hasNext());
 		// nothing to compare - unary predicate
@@ -224,7 +223,7 @@ public class UservTestCases extends TestCase {
 	public void testDE_DAC05() throws Exception {
 		Driver driver = new Driver();
 		driver.setAge(77);
-		driver.setHasTrainingCertification(true);
+		driver.setHasDriversTrainingFromSchool(true);
 		ResultSet<DriverEligibility> result = kb.getDriverEligibility(driver);
 		assertTrue(result.hasNext());
 		// nothing to compare - unary predicate
@@ -234,6 +233,62 @@ public class UservTestCases extends TestCase {
 		driver.setAge(44);
 		ResultSet<DriverEligibility> result = kb.getDriverEligibility(driver);
 		assertTrue(result.hasNext());
+		// nothing to compare - unary predicate
+	}
+	public void testDE_DAC07() throws Exception {
+		Driver driver = new Driver();
+		driver.setHasDriversTrainingFromSchool(true);
+		ResultSet<TrainedDriver> result = kb.hasTrainingCertification(driver);
+		assertTrue(result.hasNext());
+		// nothing to compare - unary predicate
+	}
+	public void testDE_DAC08() throws Exception {
+		Driver driver = new Driver();
+		driver.setHasDriversTrainingFromLicensedDriverTrainingCompany(true);
+		ResultSet<TrainedDriver> result = kb.hasTrainingCertification(driver);
+		assertTrue(result.hasNext());
+		// nothing to compare - unary predicate
+	}
+	public void testDE_DAC09() throws Exception {
+		Driver driver = new Driver();
+		driver.setHasTakenASeniorCitizenDriversRefresherCourse(true);
+		ResultSet<TrainedDriver> result = kb.hasTrainingCertification(driver);
+		assertTrue(result.hasNext());
+		// nothing to compare - unary predicate
+	}
+	public void testDE_DRC01() throws Exception {
+		Driver driver = new Driver();
+		driver.setHasBeenConvictedOfaDUI(true);
+		ResultSet<HighRiskDriver> result = kb.isHighRiskDriver(driver);
+		assertTrue(result.hasNext());
+		// nothing to compare - unary predicate
+	}
+	public void testDE_DRC02() throws Exception {
+		Driver driver = new Driver();
+		driver.setNumberOfAccidentsInvolvedIn(5);
+		ResultSet<HighRiskDriver> result = kb.isHighRiskDriver(driver);
+		assertTrue(result.hasNext());
+		// nothing to compare - unary predicate
+	}
+	public void testDE_DRC02a() throws Exception {
+		Driver driver = new Driver();
+		driver.setNumberOfAccidentsInvolvedIn(1);
+		ResultSet<HighRiskDriver> result = kb.isHighRiskDriver(driver);
+		assertFalse(result.hasNext());
+		// nothing to compare - unary predicate
+	}
+	public void testDE_DRC03() throws Exception {
+		Driver driver = new Driver();
+		driver.setNumberOfMovingViolationsInLastTwoYears(5);
+		ResultSet<HighRiskDriver> result = kb.isHighRiskDriver(driver);
+		assertTrue(result.hasNext());
+		// nothing to compare - unary predicate
+	}
+	public void testDE_DRC03a() throws Exception {
+		Driver driver = new Driver();
+		driver.setNumberOfMovingViolationsInLastTwoYears(1);
+		ResultSet<HighRiskDriver> result = kb.isHighRiskDriver(driver);
+		assertFalse(result.hasNext());
 		// nothing to compare - unary predicate
 	}
 }
