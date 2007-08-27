@@ -1,0 +1,64 @@
+// example based on the UServ product derby
+@@dc:creator=jens dietrich
+@@dc:date=15/08/2007
+var example.nz.org.take.compiler.userv.domainmodel.Car car
+var example.nz.org.take.compiler.userv.domainmodel.Driver driver
+var java.lang.String category 
+ref java.util.Collection HighTheftProbabilityAutoList
+// queries
+@take.compilerhint.class=PotentialTheftRating
+@take.compilerhint.slots=car,rating
+@take.compilerhint.method=getPotenialTheftRating
+query potentialTheftRating[in,out]
+@take.compilerhint.class=PotentialOccupantInjuryRating
+@take.compilerhint.slots=car,rating
+@take.compilerhint.method=getPotentialOccupantInjuryRating
+query potentialOccupantInjuryRating[in,out]
+@take.compilerhint.class=AutoEligibility
+@take.compilerhint.slots=car,value
+@take.compilerhint.method=getAutoEligibility
+query autoEligibility[in,out] 
+@take.compilerhint.class=DriverCategory
+@take.compilerhint.slots=driver,category
+@take.compilerhint.method=getDriverCategory
+query driverCategory[in,out] 
+@take.compilerhint.class=DriverEligibility
+@take.compilerhint.slots=driver
+@take.compilerhint.method=getDriverEligibility
+query isEligible[in] 
+@take.compilerhint.class=HighRiskDriver
+@take.compilerhint.slots=driver
+@take.compilerhint.method=isHighRiskDriver
+query isHighRiskDriver[in] 
+@take.compilerhint.class=TrainedDriver
+@take.compilerhint.slots=driver
+@take.compilerhint.method=hasTrainingCertification
+query hasTrainingCertification[in] 
+// rules
+AE_PTC01: if isConvertible[car] then potentialTheftRating[car,"high"]
+AE_PTC02: if car.price>45000 then potentialTheftRating[car,"high"]
+AE_PTC03: if contains[HighTheftProbabilityAutoList,car.type] then potentialTheftRating[car,"high"]
+AE_PTC04: if car.price>20000 and car.price<45000 and not contains[HighTheftProbabilityAutoList,car.type] then potentialTheftRating[car,"moderate"]
+AE_PTC05: if car.price<20000 and not contains[HighTheftProbabilityAutoList,car.type] then potentialTheftRating[car,"low"]
+AE_POIC01: if not hasAirbags[car] then potentialOccupantInjuryRating[car,"extremely high"]
+AE_POIC02: if hasDriversAirbag[car] and not hasFrontPassengerAirbag[car] and not hasSidePanelAirbags[car] then potentialOccupantInjuryRating[car,"high"]
+AE_POIC03: if hasDriversAirbag[car] and hasFrontPassengerAirbag[car] and not hasSidePanelAirbags[car] then potentialOccupantInjuryRating[car,"moderate"]
+AE_POIC04: if hasDriversAirbag[car] and hasFrontPassengerAirbag[car] and hasSidePanelAirbags[car] then potentialOccupantInjuryRating[car,"low"]
+AE_POIC05: if isConvertible[car] and not hasHasRollBar[car] then potentialOccupantInjuryRating[car,"extremely high"]
+AE_01: if potentialOccupantInjuryRating[car,"extremely high"] then autoEligibility[car,"not eligible"]
+AE_02: if potentialOccupantInjuryRating[car,"high"] then autoEligibility[car,"provisional"]
+AE_03: if potentialTheftRating[car,"high"] then autoEligibility[car,"provisional"]
+AE_04: autoEligibility[car,"eligible"]
+DE_DAC01: if isMale[driver] and driver.age<25 then driverCategory[driver,"young driver"]
+DE_DAC02: if not isMale[driver] and driver.age<20 then driverCategory[driver,"young driver"]
+DE_DAC03: if driverCategory[driver,"young driver"] and hasTrainingCertification[driver] then isEligible[driver]
+DE_DAC04: if driver.age>70 then driverCategory[driver,"senior driver"]
+DE_DAC05: if driverCategory[driver,"senior driver"] and hasTrainingCertification[driver] then isEligible[driver]
+X1_DE_DAC: driverCategory[driver,"standard driver"]
+DE_DAC06: if driverCategory[driver,category] and not equals[category,"young driver"] and not equals[category,"senior driver"] then isEligible[driver]
+DE_DAC07: if hasDriversTrainingFromSchool[driver] then hasTrainingCertification[driver]
+DE_DAC08: if hasDriversTrainingFromLicensedDriverTrainingCompany[driver] then hasTrainingCertification[driver]
+DE_DAC09: if hasTakenASeniorCitizenDriversRefresherCourse[driver] then hasTrainingCertification[driver]
+DE_DRC01: if hasBeenConvictedOfaDUI[driver] then isHighRiskDriver[driver]
+DE_DRC02: if driver.getNumberOfAccidentsInvolvedIn>2 then isHighRiskDriver[driver]
+DE_DRC03: if driver.getNumberOfMovingViolationsInLastTwoYears>3 then isHighRiskDriver[driver]
