@@ -9,7 +9,6 @@ package example.nz.org.take.compiler.userv.domainmodel;
 public class Driver {
 	private boolean isMale = true;
 	private int age = 18;
-	private boolean hasTrainingCertification = false;
 	private boolean hasDriversTrainingFromSchool = false;
 	private boolean  hasDriversTrainingFromLicensedDriverTrainingCompany = false;
 	private boolean hasTakenASeniorCitizenDriversRefresherCourse = false;
@@ -28,12 +27,7 @@ public class Driver {
 	public void setAge(int age) {
 		this.age = age;
 	}
-	public boolean hasTrainingCertification() {
-		return hasTrainingCertification;
-	}
-	public void setHasTrainingCertification(boolean hasTrainingCertification) {
-		this.hasTrainingCertification = hasTrainingCertification;
-	}
+
 	public boolean hasDriversTrainingFromSchool() {
 		return hasDriversTrainingFromSchool;
 	}

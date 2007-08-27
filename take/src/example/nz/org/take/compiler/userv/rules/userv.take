@@ -30,6 +30,10 @@ query isEligible[in]
 @take.compilerhint.slots=driver
 @take.compilerhint.method=isHighRiskDriver
 query isHighRiskDriver[in] 
+@take.compilerhint.class=TrainedDriver
+@take.compilerhint.slots=driver
+@take.compilerhint.method=hasTrainingCertification
+query hasTrainingCertification[in] 
 // rules
 AE_PTC01: if isConvertible[car] then potentialTheftRating[car,"high"]
 AE_PTC02: if car.price>45000 then potentialTheftRating[car,"high"]
