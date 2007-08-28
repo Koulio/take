@@ -29,13 +29,19 @@ TOKEN:{<QUERY:"query">}
 TOKEN:{<EXTERNAL:"external">}
 TOKEN:{<IN:"in">}
 TOKEN:{<OUT:"out">}
-TOKEN:{<GLOBALANNOTATION: "@@"(["a"-"z","A"-"Z","_","-","?",":","=","#","*","%","_","/",",","\\",";","!","0"-"9"," ","."] )*>}
-TOKEN:{<LOCALANNOTATION: "@"(["a"-"z","A"-"Z","_","-","?",":","=","#","*","%","_","/",",","\\",";","!","0"-"9"," ","."] )*>}
+TOKEN:{<AGGREGATION:"aggregation">}
+TOKEN:{<SUM:"sum">}
+TOKEN:{<MAX:"max">}
+TOKEN:{<MIN:"min">}
+TOKEN:{<AVG:"avg">}
+TOKEN:{<COUNT:"count">}
+TOKEN:{<COMMENT: "//"(~["\n","\r"] )* >}
+TOKEN:{<GLOBALANNOTATION: "@@"(~["\n","\r"] )* >}
+TOKEN:{<LOCALANNOTATION: "@"(~["\n","\r"] )* >}
 TOKEN:{<INTEGER_NUMBER:(["0"-"9"])+>}
 TOKEN:{<DECIMAL_NUMBER:(["0"-"9"])+("."(["0"-"9"])+)?>}
 TOKEN:{<LABEL: ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9"] )*":" >}
 TOKEN:{<NAME: ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9"] )* >}
-TOKEN:{<COMMENT: "//"(["a"-"z","A"-"Z","_","-","?","#","*","%","_","/",",","\\",";","!","@","0"-"9"," "] )* >}
 TOKEN:{<STRING_LITERAL:"\"" (["a"-"z","A"-"Z","_","-","?","#","*","%","_","/",",","\\",";","!","@","0"-"9"," "] )* "\"">}
 TOKEN:{<WHITESPACE: (" ")+>}
 TOKEN:{<SEMICOLON:";">}
@@ -47,7 +53,7 @@ TOKEN:{<COMPARISON:"<="|">="|"<"|">"|"=="|"!=">}
 void parse(Script script):
 {}
 {
-	(var(script)|ref(script)|comment(script)|globalannotation(script)|localannotation(script)|query(script)|factStore(script)|rule(script))*
+	(var(script)|ref(script)|comment(script)|globalannotation(script)|localannotation(script)|aggregation(script)|query(script)|factStore(script)|rule(script))*
 }
 void localannotation(Script script):
 {
@@ -93,6 +99,79 @@ void query(Script script):
 	t=<QUERY> [negated(q)] predicateQ(q)"["io(q)(","io(q))*"]"
 	{q.setPosition(t.beginLine,t.beginColumn);}
 	{script.add(q);}
+}
+void aggregation(Script script):
+{
+	Token t;
+}
+{
+	{Aggregation a = new Aggregation();}
+	<AGGREGATION>name(a)<EQ>aggfunction(a)aggvar(a)aggcondition(a)
+	{script.add(a);}
+}
+void aggvar(Aggregation a):
+{
+	Token t;
+}
+{
+	t = <NAME>
+	{a.setVariable(t.image);}
+}
+void aggfunction(Aggregation a):
+{
+	Token t;
+}
+{
+	avg(a)|min(a)|max(a)|count(a)|sum(a)
+}
+void avg(Aggregation a):
+{
+	Token t;
+}
+{
+	t = <AVG>
+	{a.setFunction(t.image);}
+}
+void min(Aggregation a):
+{
+	Token t;
+}
+{
+	t = <MIN>
+	{a.setFunction(t.image);}
+}
+void max(Aggregation a):
+{
+	Token t;
+}
+{
+	t = <MAX>
+	{a.setFunction(t.image);}
+}
+void count(Aggregation a):
+{
+	Token t;
+}
+{
+	t = <COUNT>
+	{a.setFunction(t.image);}
+}
+void sum(Aggregation a):
+{
+	Token t;
+}
+{
+	t = <SUM>
+	{a.setFunction(t.image);}
+}
+
+void name(Aggregation a):
+{
+	Token t;
+}
+{
+	t = <NAME>
+	{a.setName(t.image);}
 }
 void negated(QuerySpec q):
 {
@@ -222,6 +301,13 @@ void condition(Rule r):
 	buildCondition(c)
 	{r.add(c);}
 }
+void aggcondition(Aggregation a):
+{}
+{	
+	{Condition c = new Condition();}	
+	buildCondition3(c)
+	{a.setCondition(c);}
+}
 void buildCondition(Condition c):
 {}
 {
@@ -239,6 +325,11 @@ void buildCondition2(Condition c):
 {}
 {
 	[negation(c)]predicate(c)"["terms(c)"]"
+}
+void buildCondition3(Condition c):
+{}
+{
+	predicate(c)"["terms(c)"]"
 }
 void negation(Condition c):
 {
