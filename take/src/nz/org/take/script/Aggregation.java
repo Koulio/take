@@ -18,43 +18,43 @@
 
 package nz.org.take.script;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 /**
- * The script itself.
+ * Definition of an aggregation function.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class Script {
-	private List elements = new ArrayList();
+public class Aggregation extends ScriptElement {
 
-	public void add(Comment c) {
-		this.elements.add(c);
+	private Condition condition = null;
+	private String function = null;
+	private String name = null;
+	private String variable = null;
+	
+	public Condition getCondition() {
+		return condition;
 	}
-	public void add(VariableDeclaration v) {
-		this.elements.add(v);
+	public void setCondition(Condition condition) {
+		this.condition = condition;
 	}
-	public void add(RefDeclaration v) {
-		this.elements.add(v);
+	public String getFunction() {
+		return function;
 	}
-	public void add(Rule r) {
-		this.elements.add(r);
+	public void setFunction(String function) {
+		this.function = function;
 	}
-	public void add(QuerySpec q) {
-		this.elements.add(q);
+	public String getName() {
+		return name;
 	}
-	public void add(Annotation a) {
-		this.elements.add(a);
+	public void setName(String name) {
+		this.name = name;
 	}
-	public void add(FactStore fs) {
-		this.elements.add(fs);
+	public String getVariable() {
+		return variable;
 	}
-	public void add(Aggregation a) {
-		this.elements.add(a);
+	public void setVariable(String variable) {
+		this.variable = variable;
 	}
-	public List getElements() {
-		return elements;
-	}
-
+	
 }

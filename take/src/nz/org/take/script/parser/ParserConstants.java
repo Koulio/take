@@ -17,18 +17,24 @@ public interface ParserConstants {
   int EXTERNAL = 15;
   int IN = 16;
   int OUT = 17;
-  int GLOBALANNOTATION = 18;
-  int LOCALANNOTATION = 19;
-  int INTEGER_NUMBER = 20;
-  int DECIMAL_NUMBER = 21;
-  int LABEL = 22;
-  int NAME = 23;
+  int AGGREGATION = 18;
+  int SUM = 19;
+  int MAX = 20;
+  int MIN = 21;
+  int AVG = 22;
+  int COUNT = 23;
   int COMMENT = 24;
-  int STRING_LITERAL = 25;
-  int WHITESPACE = 26;
-  int SEMICOLON = 27;
-  int COMMA = 28;
-  int COMPARISON = 29;
+  int GLOBALANNOTATION = 25;
+  int LOCALANNOTATION = 26;
+  int INTEGER_NUMBER = 27;
+  int DECIMAL_NUMBER = 28;
+  int LABEL = 29;
+  int NAME = 30;
+  int STRING_LITERAL = 31;
+  int WHITESPACE = 32;
+  int SEMICOLON = 33;
+  int COMMA = 34;
+  int COMPARISON = 35;
 
   int DEFAULT = 0;
 
@@ -51,13 +57,19 @@ public interface ParserConstants {
     "\"external\"",
     "\"in\"",
     "\"out\"",
+    "\"aggregation\"",
+    "\"sum\"",
+    "\"max\"",
+    "\"min\"",
+    "\"avg\"",
+    "\"count\"",
+    "<COMMENT>",
     "<GLOBALANNOTATION>",
     "<LOCALANNOTATION>",
     "<INTEGER_NUMBER>",
     "<DECIMAL_NUMBER>",
     "<LABEL>",
     "<NAME>",
-    "<COMMENT>",
     "<STRING_LITERAL>",
     "<WHITESPACE>",
     "\";\"",

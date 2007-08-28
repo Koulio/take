@@ -112,6 +112,90 @@ public class ParserTests extends TakeTestCase {
 		assertEquals("java.lang.String",this.getVarDecAt(script,1).getType());
 		
 	}
+	public void testAggregation1() throws Exception {
+		String input = 
+			"aggregation agg1 = avg x score[client,x]\n";
+		Script script = parse(input);
+		assertEquals(1,script.getElements().size());
+		assertTrue(script.getElements().get(0) instanceof Aggregation);
+		Aggregation agg = (Aggregation)script.getElements().get(0);
+		assertEquals("agg1",agg.getName());
+		assertEquals("avg",agg.getFunction());
+		assertEquals("x",agg.getVariable());
+		Condition c = agg.getCondition();
+		assertEquals("score",c.getPredicate());
+		assertEquals(2,c.getTerms().size());
+		assertEquals("client",c.getTerms().get(0).toString());
+		assertEquals("x",c.getTerms().get(1).toString());
+	}
+	public void testAggregation2() throws Exception {
+		String input = 
+			"aggregation agg1 = sum x score[client,x]\n";
+		Script script = parse(input);
+		assertEquals(1,script.getElements().size());
+		assertTrue(script.getElements().get(0) instanceof Aggregation);
+		Aggregation agg = (Aggregation)script.getElements().get(0);
+		assertEquals("agg1",agg.getName());
+		assertEquals("sum",agg.getFunction());
+		assertEquals("x",agg.getVariable());
+		Condition c = agg.getCondition();
+		assertEquals("score",c.getPredicate());
+		assertEquals(2,c.getTerms().size());
+		assertEquals("client",c.getTerms().get(0).toString());
+		assertEquals("x",c.getTerms().get(1).toString());
+	}
+	public void testAggregation3() throws Exception {
+		String input = 
+			"aggregation agg1 = count x score[client,x]\n";
+		Script script = parse(input);
+		assertEquals(1,script.getElements().size());
+		assertTrue(script.getElements().get(0) instanceof Aggregation);
+		Aggregation agg = (Aggregation)script.getElements().get(0);
+		assertEquals("agg1",agg.getName());
+		assertEquals("count",agg.getFunction());
+		assertEquals("x",agg.getVariable());
+		Condition c = agg.getCondition();
+		assertEquals("score",c.getPredicate());
+		assertEquals(2,c.getTerms().size());
+		assertEquals("client",c.getTerms().get(0).toString());
+		assertEquals("x",c.getTerms().get(1).toString());
+	}
+	
+	public void testAggregation4() throws Exception {
+		String input = 
+			"aggregation agg1 = min x score[client,x]\n";
+		Script script = parse(input);
+		assertEquals(1,script.getElements().size());
+		assertTrue(script.getElements().get(0) instanceof Aggregation);
+		Aggregation agg = (Aggregation)script.getElements().get(0);
+		assertEquals("agg1",agg.getName());
+		assertEquals("min",agg.getFunction());
+		assertEquals("x",agg.getVariable());
+		Condition c = agg.getCondition();
+		assertEquals("score",c.getPredicate());
+		assertEquals(2,c.getTerms().size());
+		assertEquals("client",c.getTerms().get(0).toString());
+		assertEquals("x",c.getTerms().get(1).toString());
+	}
+	public void testAggregation5() throws Exception {
+		String input = 
+			"aggregation agg1 = max x score[client,x]\n";
+		Script script = parse(input);
+		assertEquals(1,script.getElements().size());
+		assertTrue(script.getElements().get(0) instanceof Aggregation);
+		Aggregation agg = (Aggregation)script.getElements().get(0);
+		assertEquals("agg1",agg.getName());
+		assertEquals("max",agg.getFunction());
+		assertEquals("x",agg.getVariable());
+		Condition c = agg.getCondition();
+		assertEquals("score",c.getPredicate());
+		assertEquals(2,c.getTerms().size());
+		assertEquals("client",c.getTerms().get(0).toString());
+		assertEquals("x",c.getTerms().get(1).toString());
+	}
+	
+	
+	
 	public void testFactStore1() throws Exception {
 		String input = 
 			"external fs1: father[com.example.Person]\n";
@@ -446,5 +530,12 @@ public class ParserTests extends TakeTestCase {
 		Rule rule = this.getRuleAt(script,0);
 		Condition fact = rule.getConditions().get(0);
 		assertTrue(fact.isPrimitiveComparison());
+	}
+	public void testComment1() throws Exception {
+		String input = "// see also http://www.google.com";
+		Script script = parse(input);
+		assertEquals(1,script.getElements().size());
+		Comment c = getCommentAt(script,0);
+		assertEquals("see also http://www.google.com",c.getText().trim());
 	}
 }
