@@ -46,6 +46,17 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 	private InputStream in = null;
 	private KnowledgeBase kb = null;
 	
+	// to store the predicates - the keys are names+number of slots
+	// this supports reusing the names to some extent, but not true 
+	// polymorphism - see also getId
+	private Map<String,Predicate> predicatesByName = new HashMap<String,Predicate>();
+	
+	private Map<String,Variable> variables = new HashMap<String,Variable>();
+	private Map<String,Constant> constants = new HashMap<String,Constant>();
+	private Map<String,AggregationFunction> aggregationFunctions = new HashMap<String,AggregationFunction>();
+
+	
+	
 	public ScriptKnowledgeSource (Reader reader) {
 		super();
 		this.reader = reader;
@@ -109,6 +120,13 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 	 * @return the knowledge base 
 	 */
 	private KnowledgeBase read(Reader input) throws ScriptException {
+		
+		// first reset state
+		predicatesByName.clear();
+		variables.clear();
+		constants.clear();
+		aggregationFunctions.clear();
+		
 		Script script = null;
 		try {
 			script = parse(input);
@@ -126,15 +144,9 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 			throw new ScriptSyntaxException("Cannot parse script",e);
 		}
 		List<QuerySpec> querySpecs = new ArrayList<QuerySpec>();
-		// to store the predicates - the keys are names+number of slots
-		// this supports reusing the names to some extent, but not true 
-		// polymorphism - see also getId
-		Map<String,Predicate> predicatesByName = new HashMap<String,Predicate>();
-		
+
 		KnowledgeBase kb = new DefaultKnowledgeBase(); 
 		Set<String> ids = new HashSet<String>(); 
-		Map<String,Variable> variables = new HashMap<String,Variable>();
-		Map<String,Constant> constants = new HashMap<String,Constant>();
 		List<Annotation> annotations = new ArrayList<Annotation>();
 		for (Object part:script.getElements()) {
 			if (part instanceof VariableDeclaration) {
@@ -142,6 +154,10 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 				for (Variable v:vars)
 					variables.put(v.getName(),v);
 				annotations.clear(); // var declarations do not support annotations
+			}
+			if (part instanceof Aggregation) {
+				AggregationFunction aggregation = buildAggregationFunction((Aggregation)part);
+				aggregationFunctions.put(aggregation.getName(),aggregation);
 			}
 			if (part instanceof RefDeclaration) {
 				List<Constant> cons = buildConstants((RefDeclaration)part);
@@ -161,7 +177,7 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 				annotate((QuerySpec)part,annotations); 
 			}
 			else if (part instanceof FactStore) {
-				ExternalFactStore fs = buildFactStore((FactStore)part,predicatesByName); 
+				ExternalFactStore fs = buildFactStore((FactStore)part); 
 				annotate(fs,annotations); 
 				kb.add(fs);
 			}
@@ -169,14 +185,14 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 				Rule rule = (Rule)part;
 				
 				if (rule.getConditions().size()==1) {
-					Clause f = buildClause(variables,constants,predicatesByName,rule.getConditions().get(0));
+					Clause f = buildClause(rule.getConditions().get(0));
 					f.setId(rule.getId());
 					checkId(f,ids);
 					annotate(f,annotations); 
 					kb.add(f);					
 				}
 				else {					
-					DerivationRule r = buildRule(variables,constants,predicatesByName,(Rule)part);
+					DerivationRule r = buildRule((Rule)part);
 					checkId(r,ids);
 					annotate(r,annotations); 
 					kb.add(r);
@@ -186,7 +202,7 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		}
 		// now do the queries
 		for (QuerySpec q:querySpecs) {
-			Query query = buildQuery(predicatesByName,q);
+			Query query = buildQuery(q);
 			for (Entry<String,String> e:q.getAnnotations().entrySet())  
 				query.addAnnotation(e.getKey(),e.getValue());
 			// take over annotations for predicate
@@ -195,7 +211,43 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		}
 		return kb;
 	}
-	private ExternalFactStore buildFactStore(FactStore store,Map<String,Predicate> predicatesByName) throws ScriptSemanticsException {
+	private AggregationFunction buildAggregationFunction(Aggregation aggregation) throws ScriptException {
+		AggregationFunction f = new AggregationFunction();
+		f.setName(aggregation.getName());
+		// build variable
+		Variable var = variables.get(aggregation.getVariable());
+		if (var==null) {
+			throw new ScriptSemanticsException("Aggregation " + aggregation.getName() + " references undeclared variable " + aggregation.getVariable());
+		}
+		f.setVariable(var);
+		// build function
+		String aggFunction = aggregation.getFunction().toLowerCase();
+		if (aggFunction.equals("avg")) {
+			f.setAggregation(nz.org.take.Aggregation.AVG);
+		}
+		else if (aggFunction.equals("sum")) {
+			f.setAggregation(nz.org.take.Aggregation.SUM);
+		}
+		else if (aggFunction.equals("count")) {
+			f.setAggregation(nz.org.take.Aggregation.COUNT);
+		}
+		else if (aggFunction.equals("min")) {
+			f.setAggregation(nz.org.take.Aggregation.MIN);
+		}
+		else if (aggFunction.equals("max")) {
+			f.setAggregation(nz.org.take.Aggregation.MAX);
+		}
+		else {
+			throw new ScriptSemanticsException("Unknown aggregation function " + aggFunction + " used in aggregation " + " ggregation.getName()");
+		}
+		// build query
+		Fact query = this.buildFact(aggregation.getCondition());
+		f.setQuery(query);
+		
+		return f;
+	}
+
+	private ExternalFactStore buildFactStore(FactStore store) throws ScriptSemanticsException {
 		ExternalFactStore fs = new ExternalFactStore();
 		fs.setId(store.getId());
 		SimplePredicate p = new SimplePredicate();
@@ -266,7 +318,25 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 	private List<Variable> buildVariables(VariableDeclaration vd) throws ScriptException {
 		Class clazz = null;
 		try {
-			clazz = this.classloader.loadClass(vd.getType());
+			String type = vd.getType();
+			if ("char".equals(type))
+				clazz =Character.TYPE;
+			else if ("byte".equals(type))
+				clazz =Byte.TYPE;
+			else if ("int".equals(type))
+				clazz =Integer.TYPE;
+			else if ("short".equals(type))
+				clazz =Short.TYPE;
+			else if ("long".equals(type))
+				clazz =Long.TYPE;
+			else if ("double".equals(type))
+				clazz =Double.TYPE;
+			else if ("float".equals(type))
+				clazz =Float.TYPE;
+			else if ("boolean".equals(type))
+				clazz =Boolean.TYPE;
+			else
+				clazz = this.classloader.loadClass(type);
 		}
 		catch (ClassNotFoundException x) {
 			throw new ScriptSemanticsException("Can not load the following type referenced in script: " + vd.getType() + this.printPosInfo(vd),x);
@@ -297,7 +367,7 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		}
 		return constants;
 	}
-	private Query buildQuery(Map<String,Predicate> predicatesByName,QuerySpec q) throws ScriptException {
+	private Query buildQuery(QuerySpec q) throws ScriptException {
 		Query query = new Query();
 		String predicateName = q.getPredicate()+'_'+q.getIoSpec().size()+(q.isNegated()?"-":"+");
 		Predicate p = predicatesByName.get(predicateName);
@@ -311,44 +381,44 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		query.setInputParams(io);
 		return query;
 	}
-	private DerivationRule buildRule(Map<String,Variable> variables,Map<String,Constant> constants, Map<String,Predicate> predicatesByName,Rule r) throws ScriptException {
+	private DerivationRule buildRule(Rule r) throws ScriptException {
 		DerivationRule rule = new DerivationRule();
 		rule.setId(r.getId());
 		List<Prerequisite> body = new ArrayList<Prerequisite>();
 		for (int i=0;i<r.getConditions().size()-1;i++) {
-			Prerequisite prereq = buildPrerequisite(variables,constants,predicatesByName,r.getConditions().get(i));
+			Prerequisite prereq = buildPrerequisite(r.getConditions().get(i));
 			body.add(prereq);
 		}
 		rule.setBody(body);
-		Fact head = buildFact(variables,constants,predicatesByName,r.getConditions().get(r.getConditions().size()-1));
+		Fact head = buildFact(r.getConditions().get(r.getConditions().size()-1));
 		rule.setHead(head);
 		return rule;
 	}
-	private Prerequisite buildPrerequisite(Map<String,Variable> variables,Map<String,Constant> constants,Map<String,Predicate> predicatesByName, Condition c) throws ScriptException {
+	private Prerequisite buildPrerequisite(Condition c) throws ScriptException {
 		Prerequisite p = new Prerequisite();
-		nz.org.take.Term[] terms = buildTerms(variables,constants,c);
-		nz.org.take.Predicate predicate = buildPredicate(variables,predicatesByName,c,terms);
+		nz.org.take.Term[] terms = buildTerms(c);
+		nz.org.take.Predicate predicate = buildPredicate(c,terms);
 		p.setPredicate(predicate);
 		p.setTerms(terms);
 		return p;
 	}
-	private Fact buildFact(Map<String,Variable> variables, Map<String,Constant> constants,Map<String,Predicate> predicatesByName, Condition c) throws ScriptException {
+	private Fact buildFact(Condition c) throws ScriptException {
 		Fact p = new Fact();
-		nz.org.take.Term[] terms = buildTerms(variables,constants,c);
-		nz.org.take.Predicate predicate = buildPredicate(variables,predicatesByName,c,terms);
+		nz.org.take.Term[] terms = buildTerms(c);
+		nz.org.take.Predicate predicate = buildPredicate(c,terms);
 		p.setPredicate(predicate);
 		p.setTerms(terms);
 		return p;
 	}
-	private Clause buildClause(Map<String,Variable> variables, Map<String,Constant> constants,Map<String,Predicate> predicatesByName, Condition c) throws ScriptException {
+	private Clause buildClause(Condition c) throws ScriptException {
 		Fact p = new Fact();
-		nz.org.take.Term[] terms = buildTerms(variables,constants,c);
-		nz.org.take.Predicate predicate = buildPredicate(variables,predicatesByName,c,terms);
+		nz.org.take.Term[] terms = buildTerms(c);
+		nz.org.take.Predicate predicate = buildPredicate(c,terms);
 		p.setPredicate(predicate);
 		p.setTerms(terms);
 		for (int i=0;i<terms.length;i++){
 			if (!(terms[i] instanceof Constant)) {
-				// fact constains variables - in this case build a rule
+				// fact contains variables - in this case build a rule
 				DerivationRule rule = new DerivationRule();
 				rule.setHead(p);
 				return rule;
@@ -406,7 +476,7 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		return null;
 		
 	}
-	private nz.org.take.Predicate buildPredicate(Map<String,Variable> variables,Map<String,Predicate> predicatesByName,Condition c,nz.org.take.Term[] terms) throws ScriptException {
+	private nz.org.take.Predicate buildPredicate(Condition c,nz.org.take.Term[] terms) throws ScriptException {
 		Predicate predicate = null;
 		boolean negated = c.isNegated();
 		String name = c.getPredicate();
@@ -469,10 +539,10 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		else
 			return existingPredicate;
 	}
-	private nz.org.take.Term[] buildTerms(Map<String,Variable> variables,Map<String,Constant> constants,TermContainer c) throws ScriptException {
+	private nz.org.take.Term[] buildTerms(TermContainer c) throws ScriptException {
 		nz.org.take.Term[] terms = new nz.org.take.Term[c.getTerms().size()];
 		for (int i=0;i<terms.length;i++)
-			terms[i] = buildTerm(variables,constants,c.getTerms().get(i));
+			terms[i] = buildTerm(c.getTerms().get(i));
 		return terms;
 	}
 	private Method findMethod(String name,nz.org.take.Term[] terms) throws ScriptException {
@@ -500,7 +570,7 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		}
 	}
 
-	private nz.org.take.Term buildTerm(Map<String,Variable> variables,Map<String,Constant> constants,Term t) throws ScriptException {
+	private nz.org.take.Term buildTerm(Term t) throws ScriptException {
 		if (t instanceof VariableTerm && ((VariableTerm)t).isSimple()) {
 			String name = ((VariableTerm)t).getName();
 			Variable var = variables.get(name);
@@ -515,19 +585,23 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 			List<String> names = ((VariableTerm)t).getNames();
 			// base term
 			VariableTerm v = new VariableTerm(names.get(0));
-			nz.org.take.Term part = buildTerm(variables,constants,v);
+			nz.org.take.Term part = buildTerm(v);
 			
 			for (int i=1;i<names.size();i++) {
-				String f = names.get(i);
+				String f = names.get(i);	
 				nz.org.take.Term[] args = new nz.org.take.Term[1];
 				args[0] = part;
-				Method m = this.findMethod(f, args);
-				if (m==null) // check whether there is such a property
-					m = findPropertyAccessor(f, args);
-				if (m==null)
-					throw new ScriptSemanticsException("No method or property found for symbol: " + f);
-				JFunction function = new JFunction();
-				function.setMethod(m);
+				Function function = this.aggregationFunctions.get(f);
+				if (function==null) {
+					Method m = this.findMethod(f, args);
+					if (m==null) // check whether there is such a property
+						m = findPropertyAccessor(f, args);
+					if (m==null)
+						throw new ScriptSemanticsException("No method or property found for symbol: " + f);
+					JFunction jfunction = new JFunction();
+					jfunction.setMethod(m);
+					function=jfunction;
+				}
 				nz.org.take.ComplexTerm  cplxTerm = new nz.org.take.ComplexTerm ();
 				cplxTerm.setFunction(function);
 				cplxTerm.setTerms(args);
@@ -559,15 +633,18 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		else if (t instanceof ComplexTerm) {
 			ComplexTerm ct = (ComplexTerm)t;
 			String f = ct.getFunction();
-			nz.org.take.Term[] terms = buildTerms(variables,constants,ct);
-			Method m = this.findMethod(f, terms);
-			if (m==null) // check whether there is such a property
-				m = findPropertyAccessor(f, terms);
-			if (m==null)
-				throw new ScriptSemanticsException("No method or property found for symbol: " + f);
-			JFunction function = new JFunction();
-			function.setMethod(m);
-			nz.org.take.ComplexTerm  cplxTerm = new nz.org.take.ComplexTerm ();
+			nz.org.take.Term[] terms = buildTerms(ct);
+			Function function = this.aggregationFunctions.get(f);
+			if (function==null) {
+				Method m = this.findMethod(f, terms);
+				if (m==null) // check whether there is such a property
+					m = findPropertyAccessor(f, terms);
+				if (m==null)
+					throw new ScriptSemanticsException("No method or property found for symbol: " + f);
+				JFunction jfunction = new JFunction();
+				jfunction.setMethod(m);
+			}
+			nz.org.take.ComplexTerm cplxTerm = new nz.org.take.ComplexTerm ();
 			cplxTerm.setFunction(function);
 			cplxTerm.setTerms(terms);
 			return cplxTerm;

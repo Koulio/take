@@ -19,6 +19,8 @@
 
 package nz.org.take;
 
+import java.util.Arrays;
+
 /**
  * Query interface. A query consists of a predicate and flags classifying 
  * the terms as input or output slots. 
@@ -70,31 +72,37 @@ public class Query extends AbstractAnnotatable implements Visitable {
 		this.inputParams = inputParams;
 	}
 	
-	/**
-	 * Equals.
-	 * @param obj an object
-	 * @return a boolean
-	 */
-	public boolean equals(Object obj) {
-		if (!(obj instanceof Query))
-			return false;
-		Query q = (Query)obj;
-		if (!predicate.equals(q.predicate))
-			return false;
-		for (int i=0;i<inputParams.length;i++)
-			if (inputParams[i]!=q.inputParams[i])
-				return false;
-		return true;
-	}
-	/**
-	 * Return the hashcode.
-	 * @return an int
-	 */
+
+
+
+	@Override
 	public int hashCode() {
-		// REFACTOR finetune
-		return this.predicate.hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(inputParams);
+		result = prime * result
+				+ ((predicate == null) ? 0 : predicate.hashCode());
+		return result;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final Query other = (Query) obj;
+		if (!Arrays.equals(inputParams, other.inputParams))
+			return false;
+		if (predicate == null) {
+			if (other.predicate != null)
+				return false;
+		} else if (!predicate.equals(other.predicate))
+			return false;
+		return true;
+	}
 
 	public void setPredicate(Predicate predicate) {
 		this.predicate = predicate;

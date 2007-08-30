@@ -74,6 +74,11 @@ public interface NameGenerator {
 	 */
 	public String getVariableNameForSlot(Predicate p, int slot);
 	/**
+	 * Get the (local, without package name) name of the registry class for the aggregation functions.
+	 * @return
+	 */
+	public String getAggregationFunctionsRegistryClassName();
+	/**
 	 * Get the (local, without package name) name of the registry class for the constants.
 	 * @return
 	 */

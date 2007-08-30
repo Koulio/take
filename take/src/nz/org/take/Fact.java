@@ -18,6 +18,8 @@
 
 package nz.org.take;
 
+import java.util.Arrays;
+
 /**
  * Represents standalone facts and conditions that are part of a derivation rule.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
@@ -30,6 +32,41 @@ public class Fact extends AbstractAnnotatable implements Clause {
 	private Term[] terms = null;
 	public Predicate getPredicate() {
 		return predicate;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((predicate == null) ? 0 : predicate.hashCode());
+		result = prime * result + Arrays.hashCode(terms);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final Fact other = (Fact) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (predicate == null) {
+			if (other.predicate != null)
+				return false;
+		} else if (!predicate.equals(other.predicate))
+			return false;
+		if (!Arrays.equals(terms, other.terms))
+			return false;
+		return true;
 	}
 
 	public void setPredicate(Predicate predicate) {
