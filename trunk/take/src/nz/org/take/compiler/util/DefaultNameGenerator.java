@@ -123,6 +123,10 @@ public class DefaultNameGenerator implements NameGenerator {
 	public String getConstantRegistryClassName() {
 		return "Constants";
 	}
+	
+	public String getAggregationFunctionsRegistryClassName() {
+		return "Aggregations";
+	}
 
 	public String getFactStoreRegistryClassName() {
 		return "FactStores";
