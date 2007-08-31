@@ -42,7 +42,7 @@ TOKEN:{<INTEGER_NUMBER:(["0"-"9"])+>}
 TOKEN:{<DECIMAL_NUMBER:(["0"-"9"])+("."(["0"-"9"])+)?>}
 TOKEN:{<LABEL: ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9"] )*":" >}
 TOKEN:{<NAME: ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9"] )* >}
-TOKEN:{<STRING_LITERAL:"\"" (["a"-"z","A"-"Z","_","-","?","#","*","%","_","/",",","\\",";","!","@","0"-"9"," "] )* "\"">}
+TOKEN:{<STRING_LITERAL:"\"" (~["\n","\r"] )* "\"">}
 TOKEN:{<WHITESPACE: (" ")+>}
 TOKEN:{<SEMICOLON:";">}
 TOKEN:{<COMMA:",">}
