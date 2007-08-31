@@ -5,13 +5,13 @@ var test.nz.org.take.compiler.scenario9.Loan loan
 var int x
 // queries - annotations are optional and are used to generate 
 @take.compilerhint.class=LoanAssessment
-@take.compilerhint.slots=loan,status
-@take.compilerhint.method=assess
-query assess[in,out]
+@take.compilerhint.slots=loan,result
+@take.compilerhint.method=assess1
+query assess1[in,out]
 // aggregations
 aggregation totalriskpremium = sum x riskpremium[loan,x]
 // rules
 rule1: if loan.clientRisk>7 then riskpremium[loan,100]
 rule2: if loan.countryRisk>6 then riskpremium[loan,50]
-rule3: if loan.currencyRisk>8 then riskpremium[loan,60]
-rule4: if loan.totalriskpremium>170 then assess[loan,"reject"]
+rule3: if loan.currencyRisk>8 then riskpremium[loan,75]
+rule4: if loan.totalriskpremium>200 then assess1[loan,"reject"]

@@ -16,13 +16,22 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package nz.org.take;
+package nz.org.take.compiler.reference;
+
+import nz.org.take.Aggregations;
 
 /**
- * Aggregations.
+ * Function generator for the SUM aggregation function.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public enum Aggregation {
-	AVG,MIN,MAX,COUNT,SUM
+public class AggregationFunctionGeneratorSUM extends AbstractTemplatedBasedAggregationFunctionGenerator {
+
+	public String getTemplateName() {
+		return "AggregationFunctionSUM.vm";
+	}
+	public Aggregations getSupportedAggregation() {
+		return Aggregations.SUM;
+	}
+
 }

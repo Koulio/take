@@ -60,6 +60,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	private boolean generateDataClassesForQueryPredicates = true;
 	private Set<Predicate> publicPredicates = null; // predicates referenced in queries
 	private Map<String,PrintWriter> classWriters = new HashMap<String,PrintWriter>();  
+	private Map<Aggregations,AggregationFunctionGenerator> aggregationFunctionGenerators = new HashMap<Aggregations,AggregationFunctionGenerator>();
 	
 	/**
 	 * Constructor.
@@ -69,7 +70,8 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		this.install(new CompilerPlugin4JPredicates(this));		
 		this.install(new CompilerPlugin4PropertyPredicates(this));
 		this.install(new CompilerPlugin4Comparisons(this));
-		
+		this.install(new AggregationFunctionGeneratorSUM());
+		this.install(new AggregationFunctionGeneratorMIN());
 	}
 
 	/**
@@ -223,6 +225,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 
 
 		} catch (Exception x) {
+			this.logger.error("a compiler exception has occurred",x);
 			throw new CompilerException(x);
 		}
 	}
@@ -312,9 +315,19 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		out.println("{");
 
 		for (AggregationFunction f:functions) {
-			out.print("public static ");
-			f.getReturnType();
-			// TODO
+			// build the query and the variable list
+			//Query q = new Query();
+			//q.setPredicate(f.getQuery().getPredicate());
+			//boolean[] io = new boolean[q.getPredicate().getSlotTypes().length];
+			//for (int i=0;i<io.length;i++) {
+			//	io[i] = i!=f.getVariableSlot();
+			//}
+			//q.setInputParams(io);
+			//this.addToAgenda(q);
+			AggregationFunctionGenerator gen = this.aggregationFunctionGenerators.get(f.getAggregation());
+			if (gen==null) throw new CompilerException("Code generation for aggregation function " + f.getAggregation() + " is not yet supported - no generator installed");
+			Query q = gen.createAggregationFunction(out, f, this);
+			this.addToAgenda(q);
 		}
 		
 		out.println("}");
@@ -965,7 +978,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 				f = false;
 			else 
 				out.print(',');
-			// see whether we can use a parameter, iotherwise use null
+			// see whether we can use a parameter, otherwise use null
 			String param = "null";
 			for (int j=0;j<islots.length;j++) {
 				if (i==j) {
@@ -999,7 +1012,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		
 		// the concrete bindings for this rule
 		List<Term> allTerms = this.getAllTerms(r);
-		Bindings bindings = new Bindings(allTerms);
+		Bindings bindings = new Bindings(allTerms,this.getNameGenerator());
 		
 		// compute initial bindings
 		Fact head = r.getHead();
@@ -1160,7 +1173,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 					}
 				}
 				// TODO
-				QueryRef nextQuery = new QueryRef(prereq.getPredicate(), sig,	params);
+				QueryRef nextQuery = new QueryRef(prereq.getPredicate(), sig,params);
 				this.configNewQuery(nextQuery);
 				
 				out.print("return ");
@@ -1345,6 +1358,13 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	public void install(CompilerPlugin plugin) {
 		this.plugins.add(plugin);
 	}
+	/**
+	 * Install an aggregation function generator.
+	 * @param gen a new generator for aggregation functions
+	 */
+	public void install(AggregationFunctionGenerator gen) {
+		this.aggregationFunctionGenerators.put(gen.getSupportedAggregation(),gen);
+	}
 
 	public String getClassName() {
 		return className;
@@ -1435,9 +1455,6 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		return pClassName;
 	}
 
-	private String getKBFragementClassName(Query query) {
-		return this.getNameGenerator().getKBFragementName(query);
-	}
 	private PrintWriter getPrintWriter(String cn) throws CompilerException {
 		PrintWriter out = this.classWriters.get(cn);
 		if (out==null) {
@@ -1468,7 +1485,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		
 		// the concrete bindings for this rule
 		List<Term> allTerms = this.getAllTerms(r);
-		Bindings bindings = new Bindings(allTerms);
+		Bindings bindings = new Bindings(allTerms,this.getNameGenerator());
 		
 		// compute initial bindings
 		Fact head = r.getHead();

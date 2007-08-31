@@ -94,10 +94,10 @@ public class Tests extends TakeTestCase
 		loan.setCountryRisk(10);
 		loan.setCurrencyRisk(10);
 		
-		ResultSet<LoanAssessment> results = kb.assess(loan);
+		ResultSet<LoanAssessment> results = kb.assess1(loan);
 		assertTrue(results.hasNext());
 		LoanAssessment r = results.next();
-		assertEquals("reject",r.status);
+		assertEquals("reject",r.result);
 		assertFalse(results.hasNext());
 		results.close();
 		

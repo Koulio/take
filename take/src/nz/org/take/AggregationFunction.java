@@ -34,10 +34,11 @@ public class AggregationFunction implements Function {
 	};
 	private String name = null;
 	private Fact query = null;
-	private Aggregation aggregation = null;
+	private Aggregations aggregation = null;
 	private Variable variable = null;
 	// derived
 	private Class[] paramTypes = null;
+	private int variableSlot = -1;
 
 	/**
 	 * Check the integrity of the parameters and set return and parameter types.
@@ -49,8 +50,16 @@ public class AggregationFunction implements Function {
 		
 		// check whether variable occurs in query fact
 		boolean checkVar = false;
+		int slotNo = -1;
 		for (Term t:query.getTerms()) {
-			checkVar = checkVar||(this.variable.equals(t));
+			slotNo=slotNo+1;
+			if (this.variable.equals(t)) {
+				checkVar = true;
+				variableSlot=slotNo;
+			}
+			if (t instanceof ComplexTerm) {
+				throw new IllegalArgumentException("Complex terms in the definition of aggregations are not (yet) supported: " + this.getName());
+			} 
 		}
 		if (!checkVar) 
 			throw new IllegalArgumentException("The aggregation variable in " + this.getName() + " does not occur in the query");
@@ -62,7 +71,7 @@ public class AggregationFunction implements Function {
 			if (oType==numType) 
 				isPrimitive = true;
 		}
-		if (!isPrimitive&&this.getAggregation()!=Aggregation.COUNT) 
+		if (!isPrimitive&&this.getAggregation()!=Aggregations.COUNT) 
 			throw new IllegalArgumentException("The return type in aggregation functions must be numeric but is " + oType.getName());
 		
 
@@ -90,7 +99,7 @@ public class AggregationFunction implements Function {
 	}
 
 	public Class getReturnType() {
-		if (this.getAggregation()==Aggregation.COUNT)
+		if (this.getAggregation()==Aggregations.COUNT)
 			return Integer.TYPE;
 		else
 			return this.variable.getType();		
@@ -108,11 +117,11 @@ public class AggregationFunction implements Function {
 		this.name = name;
 	}
 
-	public Aggregation getAggregation() {
+	public Aggregations getAggregation() {
 		return aggregation;
 	}
 
-	public void setAggregation(Aggregation aggregation) {
+	public void setAggregation(Aggregations aggregation) {
 		this.aggregation = aggregation;
 		init(false);
 	}
@@ -176,6 +185,9 @@ public class AggregationFunction implements Function {
 		} else if (!variable.equals(other.variable))
 			return false;
 		return true;
+	}
+	public int getVariableSlot() {
+		return variableSlot;
 	}
 
 }

@@ -1,28 +1,48 @@
+/*
+ * Copyright (C) 2007 <A href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 package nz.org.take.compiler.reference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import nz.org.take.AggregationFunction;
 import nz.org.take.ComplexTerm;
 import nz.org.take.JFunction;
 import nz.org.take.Term;
 import nz.org.take.compiler.CompilerException;
+import nz.org.take.compiler.NameGenerator;
 
 /**
  * Utility class to keep track of term to expression mappings when generating code for rules.
- * @author jens
- * @param <Term>
- * @param <String>
+ * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 public class Bindings  {
 	private List <Term> terms = null;
 	private List<Term> agenda = new ArrayList<Term>();
 	private HashMap<Term,String> delegate = new HashMap<Term,String>();
-
-	public Bindings(List<Term> terms) {
+	private NameGenerator naming = null; // needed to look up class name for generated functions
+	
+	public Bindings(List<Term> terms,NameGenerator naming) {
 		super();
 		this.terms = terms;
+		this.naming = naming; 
 	}
 	
 	public void put(Term t,String ref) throws CompilerException {
@@ -60,8 +80,21 @@ public class Bindings  {
 			}			
 			buf.append(')');
 		}
+		else if (t.getFunction() instanceof AggregationFunction) {
+			AggregationFunction f = (AggregationFunction)t.getFunction();
+			buf.append(this.naming.getAggregationFunctionsRegistryClassName());
+			buf.append('.');
+			buf.append(naming.getMethodName(f));
+			buf.append('(');
+			for (int i=0;i<terms.length;i++) {
+				if (i>1)
+					buf.append(',');
+				buf.append(this.getRef(terms[i]));
+			}			
+			buf.append(')');
+		}
 		else 
-			throw new CompilerException("ComplexTerms are only supported if the function is a JFunction");
+			throw new CompilerException("ComplexTerms are only supported if the function is a JFunction or an AggregationFunction");
 		return buf.toString();
 	}
 

@@ -19,6 +19,7 @@
 
 package nz.org.take.compiler.util;
 
+import nz.org.take.AggregationFunction;
 import nz.org.take.AnnotationKeys;
 import nz.org.take.Predicate;
 import nz.org.take.Query;
@@ -118,6 +119,18 @@ public class DefaultNameGenerator implements NameGenerator {
 		b.append("_");
 		for (boolean f : inputParam)
 			b.append( f ? "1" : "0" );
+		return b.toString();
+	}
+
+	public String getMethodName(AggregationFunction f) {
+		StringBuffer b = new StringBuffer();		
+		char[] name = f.getName().toCharArray();
+		for (char ch : name)
+			if (!Character.isWhitespace(ch))
+				b.append(ch);
+			else
+				b.append("_");
+		b.append("_");
 		return b.toString();
 	}
 	public String getConstantRegistryClassName() {
