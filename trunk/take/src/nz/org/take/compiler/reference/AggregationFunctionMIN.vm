@@ -1,0 +1,22 @@
+    /**
+     * Method generated for aggregation function $function
+     * code generated using velocity template $templatename
+    */
+    public static $resulttype $methodname ($methodparameters) {
+        
+        $resulttype _value = 0;
+        boolean _initialised = false;
+        nz.org.take.rt.ResultSet<$resultsettype> _result = $invocation;
+        while (_result.hasNext()) {
+        	$resulttype _next = _result.next().$varslot;
+        	if (!_initialised) {
+        		_initialised = true;
+        		_value = _next;
+        	}
+        	else if (_next < _value) {
+        		_value = _next;
+        	}
+        } 
+        _result.close();
+        return _value;
+    }

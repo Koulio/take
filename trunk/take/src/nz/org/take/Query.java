@@ -91,7 +91,11 @@ public class Query extends AbstractAnnotatable implements Visitable {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		// careful: do not compare classes with ==
+		// one might be an instance of a subclass
+		// this is used when the compiler maintains the agenda and
+		// instances of (the subclass) QueryRef are used
+		if (!(obj instanceof Query))
 			return false;
 		final Query other = (Query) obj;
 		if (!Arrays.equals(inputParams, other.inputParams))

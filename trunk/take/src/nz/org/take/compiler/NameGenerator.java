@@ -18,6 +18,7 @@
 
 package nz.org.take.compiler;
 
+import nz.org.take.AggregationFunction;
 import nz.org.take.Predicate;
 import nz.org.take.Query;
 
@@ -41,6 +42,14 @@ public interface NameGenerator {
 	 * @return a method name
 	 */
 	public String getMethodName(Query q);
+	
+	/**
+	 * Generate a method name for an aggregation function
+	 * @param f an aggregation function
+	 * @return a method name
+	 */
+	public String getMethodName(AggregationFunction f);
+	
 	
 	/**
 	 * Generate the name of the class that has the methods

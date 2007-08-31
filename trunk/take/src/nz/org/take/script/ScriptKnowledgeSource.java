@@ -223,19 +223,19 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		// build function
 		String aggFunction = aggregation.getFunction().toLowerCase();
 		if (aggFunction.equals("avg")) {
-			f.setAggregation(nz.org.take.Aggregation.AVG);
+			f.setAggregation(nz.org.take.Aggregations.AVG);
 		}
 		else if (aggFunction.equals("sum")) {
-			f.setAggregation(nz.org.take.Aggregation.SUM);
+			f.setAggregation(nz.org.take.Aggregations.SUM);
 		}
 		else if (aggFunction.equals("count")) {
-			f.setAggregation(nz.org.take.Aggregation.COUNT);
+			f.setAggregation(nz.org.take.Aggregations.COUNT);
 		}
 		else if (aggFunction.equals("min")) {
-			f.setAggregation(nz.org.take.Aggregation.MIN);
+			f.setAggregation(nz.org.take.Aggregations.MIN);
 		}
 		else if (aggFunction.equals("max")) {
-			f.setAggregation(nz.org.take.Aggregation.MAX);
+			f.setAggregation(nz.org.take.Aggregations.MAX);
 		}
 		else {
 			throw new ScriptSemanticsException("Unknown aggregation function " + aggFunction + " used in aggregation " + " ggregation.getName()");
@@ -643,6 +643,7 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 					throw new ScriptSemanticsException("No method or property found for symbol: " + f);
 				JFunction jfunction = new JFunction();
 				jfunction.setMethod(m);
+				function=jfunction;
 			}
 			nz.org.take.ComplexTerm cplxTerm = new nz.org.take.ComplexTerm ();
 			cplxTerm.setFunction(function);

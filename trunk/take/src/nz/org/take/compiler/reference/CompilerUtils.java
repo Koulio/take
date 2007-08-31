@@ -566,6 +566,15 @@ public abstract class CompilerUtils {
 	}
 
 	/**
+	 * Get the method name associated with a aggregation function.
+	 * @param f an aggregation function
+	 * @return a method name
+	 */
+	protected String getMethodName(AggregationFunction f) {
+		return this.getNameGenerator().getMethodName(f);
+	}
+	
+	/**
 	 * Get the method name associated with a query.
 	 * @param q  a query
 	 * @param i  an index
@@ -629,11 +638,8 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Print the code used to invoke the method representing a query.
-	 * 
-	 * @param out
-	 *            a print writer
-	 * @param queryRef
-	 *            the query + the parameters used
+	 * @param out a print writer
+	 * @param queryRef the query + the parameters used
 	 */
 	protected void printInvocation(PrintWriter out, QueryRef queryRef, boolean includeExplanation, boolean  increaseLevel) {
 		// references to static methods (in main kb class or in fragments)
@@ -801,6 +807,9 @@ public abstract class CompilerUtils {
 		catch (Throwable t) {
 			return null;
 		}
+	}
+	protected String getKBFragementClassName(Query query) {
+		return this.getNameGenerator().getKBFragementName(query);
 	}
 
 }
