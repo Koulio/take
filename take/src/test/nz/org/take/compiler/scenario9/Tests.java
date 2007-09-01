@@ -31,8 +31,6 @@ import junit.framework.TestCase;
 
 /**
  * Tests for this scenario. 
- * For now, the classes have to generated and compiled manually.
- * For generation, use the script GenerateClasses.
  * Code pretty printing is used.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
@@ -97,11 +95,77 @@ public class Tests extends TakeTestCase
 		ResultSet<LoanAssessment> results = kb.assess1(loan);
 		assertTrue(results.hasNext());
 		LoanAssessment r = results.next();
-		assertEquals("reject",r.result);
+		assertEquals("reject: total risk score to high",r.result);
 		assertFalse(results.hasNext());
 		results.close();
 		
 	}
+	/**
+	 * Test 2.
+	 */
+	public void test2(){
+		Loan loan = new Loan();
+		loan.setClientRisk(10);
+		loan.setCountryRisk(10);
+		loan.setCurrencyRisk(10);
+		
+		ResultSet<LoanAssessment> results = kb.assess2(loan);
+		assertTrue(results.hasNext());
+		LoanAssessment r = results.next();
+		assertEquals("reject: lowest risk score to high",r.result);
+		assertFalse(results.hasNext());
+		results.close();
+	}
 	
+	/**
+	 * Test 3.
+	 */
+	public void test3(){
+		Loan loan = new Loan();
+		loan.setClientRisk(10);
+		loan.setCountryRisk(10);
+		loan.setCurrencyRisk(10);
+		
+		ResultSet<LoanAssessment> results = kb.assess3(loan);
+		assertTrue(results.hasNext());
+		LoanAssessment r = results.next();
+		assertEquals("reject: max risk score to high",r.result);
+		assertFalse(results.hasNext());
+		results.close();
+	}
+	
+	/**
+	 * Test 4.
+	 */
+	public void test4(){
+		Loan loan = new Loan();
+		loan.setClientRisk(10);
+		loan.setCountryRisk(10);
+		loan.setCurrencyRisk(10);
+		
+		ResultSet<LoanAssessment> results = kb.assess4(loan);
+		assertTrue(results.hasNext());
+		LoanAssessment r = results.next();
+		assertEquals("reject: risk count to high",r.result);
+		assertFalse(results.hasNext());
+		results.close();
+	}
+	
+	/**
+	 * Test 5.
+	 */
+	public void test5(){
+		Loan loan = new Loan();
+		loan.setClientRisk(10);
+		loan.setCountryRisk(10);
+		loan.setCurrencyRisk(10);
+		
+		ResultSet<LoanAssessment> results = kb.assess5(loan);
+		assertTrue(results.hasNext());
+		LoanAssessment r = results.next();
+		assertEquals("reject: average risk score to high",r.result);
+		assertFalse(results.hasNext());
+		results.close();
+	}
 }
 	

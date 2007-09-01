@@ -72,6 +72,9 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		this.install(new CompilerPlugin4Comparisons(this));
 		this.install(new AggregationFunctionGeneratorSUM());
 		this.install(new AggregationFunctionGeneratorMIN());
+		this.install(new AggregationFunctionGeneratorMAX());
+		this.install(new AggregationFunctionGeneratorCOUNT());
+		this.install(new AggregationFunctionGeneratorAVG());
 	}
 
 	/**

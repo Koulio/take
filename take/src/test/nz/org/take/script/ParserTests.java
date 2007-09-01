@@ -538,4 +538,12 @@ public class ParserTests extends TakeTestCase {
 		Comment c = getCommentAt(script,0);
 		assertEquals("see also http://www.google.com",c.getText().trim());
 	}
+	public void testComment2() throws Exception {
+		// test key words and escaped double quotes
+		String input = "// \"if\" and \"max\" should also work";
+		Script script = parse(input);
+		assertEquals(1,script.getElements().size());
+		Comment c = getCommentAt(script,0);
+		assertEquals("\"if\" and \"max\" should also work",c.getText().trim());
+	}
 }

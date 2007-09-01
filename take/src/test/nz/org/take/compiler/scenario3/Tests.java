@@ -30,8 +30,6 @@ import junit.framework.TestCase;
 
 /**
  * Tests for this scenario. 
- * For now, the classes have to generated and compiled manually.
- * For generation, use the script GenerateClasses.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
