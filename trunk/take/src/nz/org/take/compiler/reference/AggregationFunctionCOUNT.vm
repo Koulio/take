@@ -1,0 +1,16 @@
+    /**
+     * Method generated for aggregation function $function
+     * code generated using velocity template $templatename
+    */
+    public static $resulttype $methodname ($methodparameters) {
+        
+        $resulttype _value = 0;
+        boolean _initialised = false;
+        nz.org.take.rt.ResultSet<$resultsettype> _result = $invocation;
+        while (_result.hasNext()) {
+        	_result.next();
+        	_value = _value+1;
+        } 
+        _result.close();
+        return _value;
+    }
