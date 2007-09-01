@@ -36,34 +36,13 @@ import nz.org.take.compiler.CompilerException;
 
 public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 	
-	public static final String TEMPLATEPATH = "nz/org/take/compiler/reference/";
-	public static final String TEMPLATE_O11 = TEMPLATEPATH+"PropertyPredicateONE2ONE_11.vm";
-	public static final String TEMPLATE_O10 = TEMPLATEPATH+"PropertyPredicateONE2ONE_10.vm";
-	public static final String TEMPLATE_M10 = TEMPLATEPATH+"PropertyPredicateONE2MANY_10.vm";
-	public static final String TEMPLATE_M11 = TEMPLATEPATH+"PropertyPredicateONE2MANY_10.vm";
-	public static final String TEMPLATE_O11N = TEMPLATEPATH+"PropertyPredicateONE2ONE_11_neg.vm";
-	public static final String TEMPLATE_M11N = TEMPLATEPATH+"PropertyPredicateONE2MANY_10_neg.vm";
-
-	public static VelocityEngine VE = new VelocityEngine();
+	public static final String TEMPLATE_O11 = "PropertyPredicateONE2ONE_11.vm";
+	public static final String TEMPLATE_O10 = "PropertyPredicateONE2ONE_10.vm";
+	public static final String TEMPLATE_M10 = "PropertyPredicateONE2MANY_10.vm";
+	public static final String TEMPLATE_M11 = "PropertyPredicateONE2MANY_10.vm";
+	public static final String TEMPLATE_O11N = "PropertyPredicateONE2ONE_11_neg.vm";
+	public static final String TEMPLATE_M11N = "PropertyPredicateONE2MANY_10_neg.vm";
 	
-	static {
-		// template loading
-		VE.setProperty("resource.loader","class");
-		VE.setProperty("class.resource.loader.description","Velocity Classpath Resource Loader");
-		VE.setProperty("class.resource.loader.class","org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
-		// logging		
-		VE.setProperty("runtime.log.logsystem.class","org.apache.velocity.runtime.log.SimpleLog4JLogSystem");
-		VE.setProperty("runtime.log.logsystem.log4j.category",CompilerPlugin4PropertyPredicates.class.getName());
-
-		try {
-			VE.init();
-		} catch (Exception e) {
-			Logger.getLogger(CompilerPlugin4PropertyPredicates.class).error("Error initialising velocity");
-		}
-			
-	}
-	
-	private Map<String,Template> templates = new HashMap<String,Template>(4);
 	public CompilerPlugin4PropertyPredicates(DefaultCompiler owner) {
 		super(owner);
 		
@@ -90,7 +69,7 @@ public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 		if (!param2known && p.isNegated()) 
 			throw new CompilerException("Cannot generate code for negated property predicates with variable in target slot");
 		String templateName = this.getTemplateName(param2known, p.isOne2One(),p.isNegated());
-		Template template = this.getTemplate(templateName);
+		Template template = VelocitySupport.getTemplate(templateName);
 		
 		// bind template variables
 		String methodName = getMethodName(q);
@@ -146,20 +125,5 @@ public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 		
 		
 		return null;
-	}
-		
-
-	private Template getTemplate(String templateName) throws CompilerException {
-		Template template = this.templates.get(templateName);
-		if (template==null) {
-			try {
-				template = VE.getTemplate(templateName);
-				templates.put(templateName,template);				
-			}
-			catch (Exception x) {
-				throw new CompilerException("Cannot load compilation template " + templateName);
-			}	
-		}
-		return template;
 	}
 }

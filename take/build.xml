@@ -101,7 +101,7 @@
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario6.Tests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario7.Tests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario8.Tests"/>
-		
+		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario9.Tests"/>
 	</junit>
 	<!-- report -->
 	<junitreport todir="${report.junit}">
