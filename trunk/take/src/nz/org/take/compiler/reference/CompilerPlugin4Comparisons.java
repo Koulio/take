@@ -34,29 +34,7 @@ import nz.org.take.compiler.CompilerException;
 
 public class CompilerPlugin4Comparisons extends CompilerPlugin {
 	
-	public static final String TEMPLATEPATH = "nz/org/take/compiler/reference/";
-	// unnegated
-	public static final String TEMPLATE = TEMPLATEPATH+"Comparison_11.vm";
 	
-	private Template template = null;
-	public static VelocityEngine VE = new VelocityEngine();
-	
-	static {
-		// template loading
-		VE.setProperty("resource.loader","class");
-		VE.setProperty("class.resource.loader.description","Velocity Classpath Resource Loader");
-		VE.setProperty("class.resource.loader.class","org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
-		// logging		
-		VE.setProperty("runtime.log.logsystem.class","org.apache.velocity.runtime.log.SimpleLog4JLogSystem");
-		VE.setProperty("runtime.log.logsystem.log4j.category",CompilerPlugin4PropertyPredicates.class.getName());
-
-		try {
-			VE.init();
-		} catch (Exception e) {
-			Logger.getLogger(CompilerPlugin4Comparisons.class).error("Error initialising velocity");
-		}
-			
-	}
 	public CompilerPlugin4Comparisons(DefaultCompiler owner) {
 		super(owner);
 		
@@ -76,9 +54,9 @@ public class CompilerPlugin4Comparisons extends CompilerPlugin {
 
 		Comparison p = (Comparison)q.getPredicate();
 			
-		// load and (lazy) init template
-		Template template = getTemplate();
-		String templateName = TEMPLATE;
+		// load and (lazy) init template		
+		String templateName = "Comparison_11.vm";
+		Template template = VelocitySupport.getTemplate(templateName);
 		
 		// bind template variables
 		Slot[] slots = this.buildSlots(q.getPredicate());
@@ -111,18 +89,6 @@ public class CompilerPlugin4Comparisons extends CompilerPlugin {
 		} 
 		// check predicate
 		return q.getPredicate() instanceof Comparison;
-	}
-	
-	private Template getTemplate() throws CompilerException {
-		if (template==null) {
-			try {
-				template = VE.getTemplate(TEMPLATE);			
-			}
-			catch (Exception x) {
-				throw new CompilerException("Cannot load compilation template " + TEMPLATE);
-			}	
-		}
-		return template;
 	}
 
 }

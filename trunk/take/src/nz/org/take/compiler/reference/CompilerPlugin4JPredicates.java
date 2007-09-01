@@ -34,33 +34,14 @@ import nz.org.take.compiler.CompilerException;
 
 public class CompilerPlugin4JPredicates extends CompilerPlugin {
 	
-	public static final String TEMPLATEPATH = "nz/org/take/compiler/reference/";
 	// unnegated
-	public static final String TEMPLATE1 = TEMPLATEPATH+"JPredicate_11.vm";
+	public static final String TEMPLATE1 = "JPredicate_11.vm";
 	// negated
-	public static final String TEMPLATE2 = TEMPLATEPATH+"JPredicate_11_neg.vm";
+	public static final String TEMPLATE2 = "JPredicate_11_neg.vm";
 	
 	
-	private Template template1 = null,template2 = null;
-	public static VelocityEngine VE = new VelocityEngine();
-	
-	static {
-		// template loading
-		VE.setProperty("resource.loader","class");
-		VE.setProperty("class.resource.loader.description","Velocity Classpath Resource Loader");
-		VE.setProperty("class.resource.loader.class","org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
-		// logging		
-		VE.setProperty("runtime.log.logsystem.class","org.apache.velocity.runtime.log.SimpleLog4JLogSystem");
-		VE.setProperty("runtime.log.logsystem.log4j.category",CompilerPlugin4PropertyPredicates.class.getName());
 
-		try {
-			VE.init();
-		} catch (Exception e) {
-			Logger.getLogger(CompilerPlugin4PropertyPredicates.class).error("Error initialising velocity");
-		}
-			
-	}
-		public CompilerPlugin4JPredicates(DefaultCompiler owner) {
+	public CompilerPlugin4JPredicates(DefaultCompiler owner) {
 		super(owner);
 		
 	}
@@ -80,8 +61,8 @@ public class CompilerPlugin4JPredicates extends CompilerPlugin {
 		JPredicate p = (JPredicate)q.getPredicate();
 			
 		// load and (lazy) init templates
-		Template template = p.isNegated()?getTemplate2():getTemplate1();
 		String templateName = p.isNegated()?TEMPLATE2:TEMPLATE1;
+		Template template = VelocitySupport.getTemplate(templateName);
 		
 		// bind template variables
 		String methodName = getMethodName(q);
@@ -123,28 +104,5 @@ public class CompilerPlugin4JPredicates extends CompilerPlugin {
 		} 
 		// check predicate
 		return q.getPredicate() instanceof JPredicate;
-	}
-	
-	private Template getTemplate1() throws CompilerException {
-		if (template1==null) {
-			try {
-				template1 = VE.getTemplate(TEMPLATE1);			
-			}
-			catch (Exception x) {
-				throw new CompilerException("Cannot load compilation template " + TEMPLATE1);
-			}	
-		}
-		return template1;
-	}
-	private Template getTemplate2() throws CompilerException {
-		if (template2==null) {
-			try {
-				template2 = VE.getTemplate(TEMPLATE2);			
-			}
-			catch (Exception x) {
-				throw new CompilerException("Cannot load compilation template " + TEMPLATE2);
-			}	
-		}
-		return template2;
 	}
 }
