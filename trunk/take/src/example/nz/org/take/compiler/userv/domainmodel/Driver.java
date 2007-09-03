@@ -15,6 +15,7 @@ public class Driver {
 	private boolean hasBeenConvictedOfaDUI = false;
 	private int numberOfAccidentsInvolvedIn = 0;
 	private int numberOfMovingViolationsInLastTwoYears = 0;
+	private int numberOfYearsWithUServ = 0;
 	public boolean isMale() {
 		return isMale;
 	}
@@ -66,6 +67,12 @@ public class Driver {
 	public void setNumberOfMovingViolationsInLastTwoYears(
 			int numberOfMovingViolationsInLastTwoYears) {
 		this.numberOfMovingViolationsInLastTwoYears = numberOfMovingViolationsInLastTwoYears;
+	}
+	public int getNumberOfYearsWithUServ() {
+		return numberOfYearsWithUServ;
+	}
+	public void setNumberOfYearsWithUServ(int numberOfYearsWithUServ) {
+		this.numberOfYearsWithUServ = numberOfYearsWithUServ;
 	}
 	
 	

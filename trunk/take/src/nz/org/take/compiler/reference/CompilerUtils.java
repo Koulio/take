@@ -624,17 +624,6 @@ public abstract class CompilerUtils {
 		return this.getNameGenerator().getClassName(f.getPredicate());
 	}
 
-	/**
-	 * Copy an annotation.
-	 * @param key
-	 * @param from
-	 * @param to
-	 */
-	private void copyAnnotation(String key, Annotatable from, Annotatable to) {
-		String value = from.getAnnotation(key);
-		if (value!=null)
-			to.addAnnotation(key, value);
-	}
 
 	/**
 	 * Print the code used to invoke the method representing a query.

@@ -19,10 +19,8 @@
 package nz.org.take.compiler.reference;
 
 import java.io.PrintWriter;
-import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
 import nz.org.take.Comparison;
 import nz.org.take.Query;
 import nz.org.take.compiler.CompilerException;

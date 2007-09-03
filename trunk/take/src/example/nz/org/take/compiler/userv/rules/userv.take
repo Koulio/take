@@ -2,7 +2,7 @@
 @@dc:creator=jens dietrich
 @@dc:date=15/08/2007
 var example.nz.org.take.compiler.userv.domainmodel.Car car
-var example.nz.org.take.compiler.userv.domainmodel.Driver driver
+var example.nz.org.take.compiler.userv.domainmodel.Driver driver,client
 var java.lang.String category 
 ref java.util.Collection HighTheftProbabilityAutoList
 // queries
@@ -26,6 +26,10 @@ query driverCategory[in,out]
 @take.compilerhint.slots=driver
 @take.compilerhint.method=getDriverEligibility
 query isEligible[in] 
+@take.compilerhint.class=InsuranceEligibility
+@take.compilerhint.slots=driver,status
+@take.compilerhint.method=getDriverEligibilityForInsurance
+query insuranceEligibility[in,out] 
 @take.compilerhint.class=HighRiskDriver
 @take.compilerhint.slots=driver
 @take.compilerhint.method=isHighRiskDriver
@@ -34,6 +38,8 @@ query isHighRiskDriver[in]
 @take.compilerhint.slots=driver
 @take.compilerhint.method=hasTrainingCertification
 query hasTrainingCertification[in] 
+// aggregations
+aggregation eligibilityScore = sum x policyEligibilityScore[car,driver,x]
 // rules
 AE_PTC01: if isConvertible[car] then potentialTheftRating[car,"high"]
 AE_PTC02: if car.price>45000 then potentialTheftRating[car,"high"]
@@ -62,3 +68,17 @@ DE_DAC09: if hasTakenASeniorCitizenDriversRefresherCourse[driver] then hasTraini
 DE_DRC01: if hasBeenConvictedOfaDUI[driver] then isHighRiskDriver[driver]
 DE_DRC02: if driver.getNumberOfAccidentsInvolvedIn>2 then isHighRiskDriver[driver]
 DE_DRC03: if driver.getNumberOfMovingViolationsInLastTwoYears>3 then isHighRiskDriver[driver]
+ES_01a: if autoEligibility[car,"not eligible"] then policyEligibilityScore[car,driver,100]
+ES_01b: if autoEligibility[car,"provisional"] then policyEligibilityScore[car,driver,50]
+ES_02a: if driverCategory[driver,"young driver"] and not isEligible[driver] then policyEligibilityScore[car,driver,30]
+ES_02a: if driverCategory[driver,"senior driver"] and not isEligible[driver] then policyEligibilityScore[car,driver,20]
+ES_02c: if isHighRiskDriver[driver] then policyEligibilityScore[car,driver,100]
+ES_03a: if client.isPreferred then policyEligibilityScore[car,driver,-50]
+ES_03b: if client.isElite then policyEligibilityScore[car,driver,-100]
+ES_04: if client.eligibilityScore<100 then insuranceEligibility[driver,"eligible"]
+ES_05: client.eligibilityScore>=100 and client.eligibilityScore<=250 inclusive then insuranceEligibility[driver,"must be reviewed by underwriting manager"]
+ES_06: if client.eligibilityScore>250 then insuranceEligibility[driver,"not eligible"]
+ES_07: 	if isLongTermClient[client] then insuranceEligibility[driver,"eligible"]
+ES_08: 	id client.numberOfYearsWithUServ>=15 then isLongTermClient[client]
+
+

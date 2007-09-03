@@ -1,0 +1,13 @@
+// script for test scenario 10
+@@dc:creator=jens dietrich
+@@dc:date=03/09/2007
+var test.nz.org.take.compiler.scenario10.Bird bird
+// queries - annotations are optional and are used to generate code
+@take.compilerhint.class=CanFly
+@take.compilerhint.slots=bird
+@take.compilerhint.method=canFly
+query canFly[in]
+// rules
+rule1: if not isFlightless[bird] then canFly[bird]
+rule2: if equals[bird.kind,"kiwi"] then isFlightless[bird]
+rule3: if equals[bird.kind,"ostrich"] then isFlightless[bird]

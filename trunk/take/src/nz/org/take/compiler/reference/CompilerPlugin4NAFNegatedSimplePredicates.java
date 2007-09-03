@@ -21,67 +21,48 @@ package nz.org.take.compiler.reference;
 import java.io.PrintWriter;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import nz.org.take.JPredicate;
+import nz.org.take.PropertyPredicate;
 import nz.org.take.Query;
+import nz.org.take.SimplePredicate;
 import nz.org.take.compiler.CompilerException;
 
 /**
- * Plugin used to generate code for JPredicates.
+ * Abstract plugin used to generate code for PropertyPredicates.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class CompilerPlugin4JPredicates extends CompilerPlugin {
-	
-	// unnegated
-	public static final String TEMPLATE1 = "JPredicate_11.vm";
-	// negated
-	public static final String TEMPLATE2 = "JPredicate_11_neg.vm";
-	
+public class CompilerPlugin4NAFNegatedSimplePredicates extends CompilerPlugin {
 	
 
-	public CompilerPlugin4JPredicates(DefaultCompiler owner) {
+	public CompilerPlugin4NAFNegatedSimplePredicates(DefaultCompiler owner) {
 		super(owner);
 		
 	}
 
 	@Override
 	public void checkPrerequisites(Query q) throws CompilerException {
-		boolean[] in = q.getInputParams();
-		for (boolean f:in) {
-			if (!f)
-				throw new CompilerException("For queries with JPredicates, all parameters have to be input parameters. Query is: " + q);
+		boolean ok = q.getPredicate() instanceof SimplePredicate;
+		ok = ok && q.getPredicate().isNegated();
+		for (boolean b:q.getInputParams()) {
+			ok = ok && b; 	// only input parameters expected
 		}
 	}
 
 	@Override
 	public String createMethod(PrintWriter out, Query q) throws CompilerException {
 
-		JPredicate p = (JPredicate)q.getPredicate();
-			
-		// load and (lazy) init templates
-		String templateName = p.isNegated()?TEMPLATE2:TEMPLATE1;
+		String templateName = "NAFNegatedSimplePredicate.vm";
 		Template template = VelocitySupport.getTemplate(templateName);
+		SimplePredicate p = (SimplePredicate)q.getPredicate();
 		
 		// bind template variables
 		String methodName = getMethodName(q);
-		Slot[] slots = this.buildSlots(q.getPredicate());
-		
-		StringBuffer args = new StringBuffer();
-		for (int i=1;i<slots.length;i++) {
-			if (i>1)
-				args.append(',');
-			args.append(slots[i].getVar());
-		}
 		
 		VelocityContext context = new VelocityContext();
 		context.put("query", q);
 		context.put("methodname",methodName);
-		context.put("method",p.getMethod());
-		context.put("slots",slots);
 		context.put("resulttype", getClassName(p));
 		context.put("templatename",templateName);
-		context.put("target",slots[0].getVar());
-		context.put("args",args.toString());
 		
 		try {
 			template.merge(context, out);
@@ -95,12 +76,14 @@ public class CompilerPlugin4JPredicates extends CompilerPlugin {
 	public boolean supports(Query q) {
 		// check parameters
 		try {
-			this.checkPrerequisites(q);
+			this.checkPrerequisites(q);			
 		}
 		catch (CompilerException x) {
+			this.logger.error(x.getMessage(), x);
 			return false;
-		} 
+		}
 		// check predicate
-		return q.getPredicate() instanceof JPredicate;
+		return q.getPredicate() instanceof PropertyPredicate;
 	}
+
 }
