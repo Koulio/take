@@ -1,0 +1,20 @@
+    /**
+     * Method generated for negated simple predicates.
+     * Negation is interpreted as negation as failure (NAF). 
+     * Code generated using velocity template $templatename
+    */
+    static ResourceIterator<$resulttype > $methodname ($methodparameters) {
+    
+        nz.org.take.rt.ResultSet<$resultsettype> _result = $invocation;
+        _derivation.log( $property ,DerivationController.NAF,source,DerivationController.NIL);
+        
+        boolean _exist = false;
+        nz.org.take.rt.ResultSet<$resultsettype> _result = $invocation;
+        
+        while (!_exist && _result.hasNext()) {
+        	_result.next();
+        } 
+        _result.close();
+        
+        return _test;
+    }

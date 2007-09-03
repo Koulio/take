@@ -70,6 +70,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		this.install(new CompilerPlugin4JPredicates(this));		
 		this.install(new CompilerPlugin4PropertyPredicates(this));
 		this.install(new CompilerPlugin4Comparisons(this));
+		this.install(new CompilerPlugin4NAFNegatedSimplePredicates(this));
 		this.install(new AggregationFunctionGeneratorSUM());
 		this.install(new AggregationFunctionGeneratorMIN());
 		this.install(new AggregationFunctionGeneratorMAX());
@@ -721,20 +722,20 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	private void createPrivateMethod(PrintWriter out, String className, Query q) 	throws CompilerException {
 		Predicate p = q.getPredicate();
 		String methodName = null; 
-		if (p instanceof SimplePredicate) {
+		
+		// try to use plugin
+		int i=0;
+		while (i<plugins.size() && methodName==null) {				
+			CompilerPlugin plugin = plugins.get(i);
+			i=i+1;
+			if (plugin.supports(q)) {
+				methodName = plugin.createMethod(out, q);					
+			}				
+		}
+		// use default algorithm TODO: put this in plugin as well
+		if (methodName==null)
 			methodName = createPrivateMethod1(out,q);
-		}
-		else {
-			// try to use plugin
-			int i=0;
-			while (i<plugins.size() && methodName==null) {				
-				CompilerPlugin plugin = plugins.get(i);
-				i=i+1;
-				if (plugin.supports(q)) {
-					methodName = plugin.createMethod(out, q);					
-				}				
-			}
-		}
+			
 		if (methodName!=null) {
 			this.endorseMethod(className,methodName);
 			this.removeFromAgenda();
