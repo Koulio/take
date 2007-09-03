@@ -43,7 +43,6 @@ public abstract class AbstractTemplatedBasedAggregationFunctionGenerator impleme
 
 	public abstract String getTemplateName() ;
 	
-	@Override
 	public Query createAggregationFunction(PrintWriter out,AggregationFunction f, CompilerUtils owner)throws CompilerException {
 		String templateName = getTemplateName();
 		Template template = VelocitySupport.getTemplate(templateName);
@@ -89,7 +88,6 @@ public abstract class AbstractTemplatedBasedAggregationFunctionGenerator impleme
 		
 		// bind template variables
 		VelocityContext context = new VelocityContext();
-		Slot[] slots = owner.buildSlots(query.getPredicate());
 		String methodName = owner.getMethodName(f);
 		context.put("query", query);
 		context.put("methodname",methodName);
@@ -110,7 +108,6 @@ public abstract class AbstractTemplatedBasedAggregationFunctionGenerator impleme
 		return query;
 	}
 
-	@Override
 	public abstract Aggregations getSupportedAggregation() ;
 	
 }
