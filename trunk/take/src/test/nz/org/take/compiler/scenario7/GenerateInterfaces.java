@@ -52,9 +52,9 @@ public class GenerateInterfaces {
 		} catch (ScriptException e) {
 			e.printStackTrace();
 		}
-		compiler.setPackageName("test.nz.org.take.compiler.scenario7.generated2");
+		compiler.setPackageName("test.nz.org.take.compiler.scenario7.generated");
 		compiler.setClassName("KB");
-		compiler.compile(kb);
+		compiler.compileInterface(kb);
 
 	}
 }

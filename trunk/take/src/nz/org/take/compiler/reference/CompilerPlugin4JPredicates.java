@@ -98,6 +98,7 @@ public class CompilerPlugin4JPredicates extends CompilerPlugin {
 			this.checkPrerequisites(q);
 		}
 		catch (CompilerException x) {
+			//this.logger.debug(x.getMessage());
 			return false;
 		} 
 		// check predicate

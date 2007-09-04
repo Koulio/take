@@ -83,6 +83,7 @@ public class CompilerPlugin4Comparisons extends CompilerPlugin {
 			this.checkPrerequisites(q);
 		}
 		catch (CompilerException x) {
+			//this.logger.debug(x.getMessage());
 			return false;
 		} 
 		// check predicate

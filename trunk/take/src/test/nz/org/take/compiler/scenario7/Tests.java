@@ -22,7 +22,7 @@ import java.util.Iterator;
 
 import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.scenario7.generated.KB;
-import test.nz.org.take.compiler.scenario7.generated._highincome;
+import test.nz.org.take.compiler.scenario7.generated.highincome;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.script.ScriptKnowledgeSource;
 import junit.framework.TestCase;
@@ -84,7 +84,7 @@ public class Tests extends TakeTestCase
 	public void test1(){
 		Person notMe = new Person("Not Me");
 		notMe.setSalary(200000);
-		Iterator<_highincome> results = kb.highincome_1(notMe);
+		Iterator<highincome> results = kb.highincome_1(notMe);
 		assertTrue(results.hasNext());
 	
 	}
