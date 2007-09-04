@@ -139,7 +139,7 @@ public class CompilerPlugin4NAFNegatedSimplePredicates extends CompilerPlugin {
 			this.checkPrerequisites(q);			
 		}
 		catch (CompilerException x) {
-			this.logger.error(x.getMessage(), x);
+			//this.logger.debug(x.getMessage());
 			return false;
 		}
 		return true;

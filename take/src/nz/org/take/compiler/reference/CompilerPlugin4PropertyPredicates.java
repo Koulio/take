@@ -98,7 +98,7 @@ public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 			this.checkPrerequisites(q);			
 		}
 		catch (CompilerException x) {
-			this.logger.error(x.getMessage(), x);
+			//this.logger.debug(x.getMessage());
 			return false;
 		}
 		// check predicate
