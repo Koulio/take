@@ -88,8 +88,10 @@ public abstract class NestedIterator<O,I> extends AbstractIterator<I>{
 	 */
 	public void close() {
 		this.outerIterator.close();
-		for (ResourceIterator iter:this.usedIterators) {
-			iter.close();
+		if (usedIterators!=null) {
+			for (ResourceIterator iter:this.usedIterators) {
+				iter.close();
+			}
 		}
 		this.usedIterators = null;
 		this.innerIterator = null;
