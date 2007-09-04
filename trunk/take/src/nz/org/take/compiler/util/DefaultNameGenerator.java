@@ -38,12 +38,17 @@ public class DefaultNameGenerator implements NameGenerator {
 	 * @see org.mandarax.compiler.NameGenerator#getClassName(org.mandarax.kernel.Predicate)
 	 */
 	public String getClassName(Predicate p){
-		String nameFromAnnnotation = p.getAnnotation(AnnotationKeys.TAKE_GENERATE_CLASS);
-		if (nameFromAnnnotation!=null)
-			return nameFromAnnnotation;
-		
-		String s = p.getName();
-		return "_"+this.createJavaName(s,null);
+		String s = p.getAnnotation(AnnotationKeys.TAKE_GENERATE_CLASS);		
+		if (s==null) {
+			s = p.getName();
+			s = this.createJavaName(s,null);
+		}
+		if (p.isNegated()) {
+			return "not_"+s;
+		}
+		else {
+			return s;
+		}
 	}
 
 	/* (non-Javadoc)

@@ -76,5 +76,18 @@ public class SimplePredicate extends AbstractPredicate {
 		// use UML syntax for derivated properties
 		return "/"+name;
 	}
+	/**
+	 * Get a copy of this predicate.
+	 * @return
+	 */
+	public SimplePredicate copy() {
+		SimplePredicate copy = new SimplePredicate();
+		copy.slotTypes = this.getSlotTypes();
+		copy.slotNames = this.getSlotNames();
+		copy.name = this.getName();
+		// copy.annotations = this.getAnnotations();
+		copy.negated = this.isNegated();
+		return copy;
+	}
 	
 }

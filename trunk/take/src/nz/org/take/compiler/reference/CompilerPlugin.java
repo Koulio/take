@@ -36,7 +36,7 @@ import nz.org.take.compiler.SourceTransformation;
  */
 
 public abstract class CompilerPlugin extends CompilerUtils {
-	private DefaultCompiler owner = null;
+	protected DefaultCompiler owner = null;
 	// constant to be used for the tmp variable to store the return value of methods to be generated 
 	protected static String RESULT = "result";
 	
