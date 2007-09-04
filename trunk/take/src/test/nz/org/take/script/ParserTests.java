@@ -326,6 +326,19 @@ public class ParserTests extends TakeTestCase {
 		assertEquals(Integer.class.getName(),((ConstantTerm)t1).getType());
 		assertTrue(t2 instanceof VariableTerm);
 	}
+	public void testIntLiterals2() throws Exception {
+		String input = 
+			"fact1: p[-42,y]\n";
+		Script script = parse(input);
+		Rule r = this.getRuleAt(script,0);
+		Condition f = r.getConditions().get(0);
+		Term t1 = f.getTerms().get(0);
+		Term t2 = f.getTerms().get(1);
+		assertTrue(t1 instanceof ConstantTerm);
+		assertEquals("-42",((ConstantTerm)t1).getValue());
+		assertEquals(Integer.class.getName(),((ConstantTerm)t1).getType());
+		assertTrue(t2 instanceof VariableTerm);
+	}
 	// decimal literals
 	public void testDoubleLiterals1() throws Exception {
 		String input = 
@@ -337,6 +350,19 @@ public class ParserTests extends TakeTestCase {
 		Term t2 = f.getTerms().get(1);
 		assertTrue(t1 instanceof ConstantTerm);
 		assertEquals("42.42",((ConstantTerm)t1).getValue());
+		assertEquals(Double.class.getName(),((ConstantTerm)t1).getType());
+		assertTrue(t2 instanceof VariableTerm);
+	}
+	public void testDoubleLiterals2() throws Exception {
+		String input = 
+			"fact1: p[-42.42,y]\n";
+		Script script = parse(input);
+		Rule r = this.getRuleAt(script,0);
+		Condition f = r.getConditions().get(0);
+		Term t1 = f.getTerms().get(0);
+		Term t2 = f.getTerms().get(1);
+		assertTrue(t1 instanceof ConstantTerm);
+		assertEquals("-42.42",((ConstantTerm)t1).getValue());
 		assertEquals(Double.class.getName(),((ConstantTerm)t1).getType());
 		assertTrue(t2 instanceof VariableTerm);
 	}
