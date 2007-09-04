@@ -166,20 +166,30 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		String factStoreRegistryClassName = packageName + "." + nameGenerator.getFactStoreRegistryClassName();
 		String aggregationFunctionsRegistryClassName = packageName + "." + nameGenerator.getAggregationFunctionsRegistryClassName();
 		this.kb = kb;
+		PrintWriter out = null;
 		try {
 			// build registries
-			PrintWriter out = new PrintWriter(location.getSrcOut(constantRegistryClassName));
-			createConstantsRegistryClass(out,nameGenerator.getConstantRegistryClassName(), packageName);
-			out.close();
 			
-			out = new PrintWriter(location.getSrcOut(aggregationFunctionsRegistryClassName));
-			this.createAggregationFunctionsRegistryClass(out, nameGenerator.getAggregationFunctionsRegistryClassName(), packageName);			
-			out.close();
+			Collection<Constant> constants = this.findConstants();
+			if (!constants.isEmpty()) {
+				out = new PrintWriter(location.getSrcOut(constantRegistryClassName));
+				createConstantsRegistryClass(out,constants,nameGenerator.getConstantRegistryClassName(), packageName);
+				out.close();
+			}
 			
-			// build fact store registry
-			out = new PrintWriter(location.getSrcOut(factStoreRegistryClassName));
-			createExternalFactStoresRegistryClass(out,nameGenerator.getFactStoreRegistryClassName(), packageName);
-			out.close();
+			Collection<AggregationFunction> aggregationFunctions = this.findAggregationFunctions();
+			if (!aggregationFunctions.isEmpty()) {
+				out = new PrintWriter(location.getSrcOut(aggregationFunctionsRegistryClassName));
+				this.createAggregationFunctionsRegistryClass(out,aggregationFunctions,nameGenerator.getAggregationFunctionsRegistryClassName(), packageName);			
+				out.close();
+			}
+
+			Collection<ExternalFactStore> externalFactStores = this.findExternalFactStores();
+			if (!externalFactStores.isEmpty()){
+				out = new PrintWriter(location.getSrcOut(factStoreRegistryClassName));
+				createExternalFactStoresRegistryClass(out,externalFactStores,nameGenerator.getFactStoreRegistryClassName(), packageName);
+				out.close();
+			}
 			
 			// build return types
 			for (Predicate p:findPredicates(kb)) {
@@ -238,25 +248,11 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	/**
 	 * Create the class that holds the constants referenced in the kb.
 	 * @param out the writer
+	 * @param constants the constants
 	 * @param clazz the class name
 	 * @param pck the package name
 	 */
-	private void createConstantsRegistryClass(PrintWriter out, String clazz, String pck) throws CompilerException {
-		// pick up constant terms
-		final Collection<Constant> constants = new HashSet<Constant>();
-		AbstractKnowledgeBaseVisitor lookup = new AbstractKnowledgeBaseVisitor() {
-			public boolean visit(Constant t) {
-				super.visit(t);
-				if (!t.isLiteral())
-					constants.add(t);
-				return true;
-			}			
-		};
-		kb.accept(lookup);
-		
-		if (constants.isEmpty())
-			return; // nothing to do
-		
+	private void createConstantsRegistryClass(PrintWriter out, Collection<Constant> constants, String clazz, String pck) throws CompilerException {
 		out.print("package ");
 		out.print(pck);
 		out.println(";");
@@ -285,25 +281,11 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	/**
 	 * Create the class that holds the aggregations referenced in the kb.
 	 * @param out the writer
+	 * @param functions the functions
 	 * @param clazz the class name
 	 * @param pck the package name
 	 */
-	private void createAggregationFunctionsRegistryClass(PrintWriter out, String clazz, String pck) throws CompilerException {
-		// pick up constant terms
-		final Collection<AggregationFunction> functions = new HashSet<AggregationFunction>();
-		AbstractKnowledgeBaseVisitor lookup = new AbstractKnowledgeBaseVisitor() {
-			public boolean visit(ComplexTerm t) {
-				super.visit(t);
-				if (t.getFunction() instanceof AggregationFunction)
-					functions.add((AggregationFunction)t.getFunction());
-				return true;
-			}			
-		};
-		kb.accept(lookup);
-		
-		if (functions.isEmpty())
-			return; // nothing to do
-		
+	private void createAggregationFunctionsRegistryClass(PrintWriter out, Collection<AggregationFunction> functions, String clazz, String pck) throws CompilerException {
 		out.print("package ");
 		out.print(pck);
 		out.println(";");
@@ -340,33 +322,11 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	/**
 	 * Create the class that holds the fact stores referenced in the kb.
 	 * @param out the writer
+	 * @param factStores the fact stores
 	 * @param clazz the class name
 	 * @param pck the package name
 	 */
-	private void createExternalFactStoresRegistryClass(PrintWriter out, String clazz, String pck) throws CompilerException {
-		// pick up external fact stores
-		final Collection<ExternalFactStore> stores = new HashSet<ExternalFactStore>();
-		KnowledgeBaseVisitor lookup = new AbstractKnowledgeBaseVisitor() {
-			public boolean visit(ExternalFactStore fs) {
-				super.visit(fs);
-				stores.add(fs);
-				return true;
-			}
-			public boolean visit(DerivationRule r) {
-				return false;
-			}	
-			public boolean visit(Fact f) {
-				return false;
-			}	
-			public boolean visit(Query q) {
-				return false;
-			}	
-		};
-		kb.accept(lookup);
-		
-		
-		if (stores.isEmpty())
-			return; // nothing to do
+	private void createExternalFactStoresRegistryClass(PrintWriter out,Collection<ExternalFactStore> factStores, String clazz, String pck) throws CompilerException {
 		
 		out.print("package ");
 		out.print(pck);
@@ -385,7 +345,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		// the package name of the type referenced is the package
 		// name of the interface
 	
-		for (ExternalFactStore fs:stores) {
+		for (ExternalFactStore fs:factStores) {
 			String pClassName = getExternalDataStoreName(fs);
 			
 			// look for package where interfaces are located
@@ -1556,10 +1516,55 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		out.print(this.getNameGenerator().getClassName(q.getPredicate()));
 		out.print(">(");
 		out.print(RESULT);
-		out.print(");");
-		
-		
-		
+		out.print(");");		
 	}
-
+	
+	private Collection<Constant> findConstants() {
+		final Collection<Constant> constants = new HashSet<Constant>();
+		AbstractKnowledgeBaseVisitor lookup = new AbstractKnowledgeBaseVisitor() {
+			public boolean visit(Constant t) {
+				super.visit(t);
+				if (!t.isLiteral())
+					constants.add(t);
+				return true;
+			}			
+		};
+		kb.accept(lookup);
+		return constants;
+	}
+	
+	private Collection<AggregationFunction> findAggregationFunctions() {
+		final Collection<AggregationFunction> functions = new HashSet<AggregationFunction>();
+		AbstractKnowledgeBaseVisitor lookup = new AbstractKnowledgeBaseVisitor() {
+			public boolean visit(ComplexTerm t) {
+				super.visit(t);
+				if (t.getFunction() instanceof AggregationFunction)
+					functions.add((AggregationFunction)t.getFunction());
+				return true;
+			}			
+		};
+		kb.accept(lookup);
+		return functions;
+	}
+	private Collection<ExternalFactStore> findExternalFactStores() {
+		final Collection<ExternalFactStore> stores = new HashSet<ExternalFactStore>();
+		KnowledgeBaseVisitor lookup = new AbstractKnowledgeBaseVisitor() {
+			public boolean visit(ExternalFactStore fs) {
+				super.visit(fs);
+				stores.add(fs);
+				return true;
+			}
+			public boolean visit(DerivationRule r) {
+				return false;
+			}	
+			public boolean visit(Fact f) {
+				return false;
+			}	
+			public boolean visit(Query q) {
+				return false;
+			}	
+		};
+		kb.accept(lookup);
+		return stores;
+	}
 }
