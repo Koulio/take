@@ -82,6 +82,26 @@ public class Tests extends TakeTestCase
 		Bird bird = new Bird();
 		bird.setKind("kiwi");
 		ResultSet<CanFly> results = kb.canFly(bird);
+		assertFalse(results.hasNext());
+		results.close();
+	}
+	/**
+	 * Test 2.
+	 */
+	public void test2(){
+		Bird bird = new Bird();
+		bird.setKind("ostrich");
+		ResultSet<CanFly> results = kb.canFly(bird);
+		assertFalse(results.hasNext());
+		results.close();
+	}
+	/**
+	 * Test 3.
+	 */
+	public void test3(){
+		Bird bird = new Bird();
+		bird.setKind("tui");
+		ResultSet<CanFly> results = kb.canFly(bird);
 		assertTrue(results.hasNext());
 		results.close();
 		

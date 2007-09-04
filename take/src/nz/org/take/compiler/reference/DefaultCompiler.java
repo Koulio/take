@@ -1238,7 +1238,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	 * @param q
 	 *            a query
 	 */
-	private void addToAgenda(Query q) {
+	void addToAgenda(Query q) {
 		if (!done.contains(q) && !publicAgenda.contains(q)) {
 			publicAgenda.add(q);
 			if (getLogger().isDebugEnabled()) {

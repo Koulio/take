@@ -3,18 +3,27 @@
      * Negation is interpreted as negation as failure (NAF). 
      * Code generated using velocity template $templatename
     */
-    static ResourceIterator<$resulttype > $methodname ($methodparameters) {
+    static ResourceIterator<$resulttype > $methodname ($methodParameterDeclarations) {
     
-        nz.org.take.rt.ResultSet<$resultsettype> _result = $invocation;
-        _derivation.log( $property ,DerivationController.NAF,source,DerivationController.NIL);
+        _derivation.log($prereq,DerivationController.NAF,$methodParameterRefs);
         
         boolean _exist = false;
-        nz.org.take.rt.ResultSet<$resultsettype> _result = $invocation;
+        boolean _hasNoResult = true;
+        nz.org.take.rt.ResultSet<$resulttype_unneg> _result = $invocation;
         
-        while (!_exist && _result.hasNext()) {
-        	_result.next();
+        if (_result.hasNext()) {
+        	_hasNoResult = false;
         } 
         _result.close();
         
-        return _test;
+        if (_hasNoResult) {
+        	$resulttype _record = new $resulttype ();
+        	#foreach ($property in $properties)
+    			_record.$property = $property ;
+			#end
+        	return new nz.org.take.rt.SingletonIterator<$resulttype>(_record); 
+        }
+        else {
+        	return nz.org.take.rt.EmptyIterator.DEFAULT; 
+        }
     }
