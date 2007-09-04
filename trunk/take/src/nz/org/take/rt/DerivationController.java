@@ -54,6 +54,7 @@ public interface DerivationController  {
 	public static final int JAVA_METHOD = 4;
 	public static final int COMPARISON = 5;
 	public static final int EXTERNAL_FACT_SET = 6;
+	public static final int NAF = 7;
 	
 	/**
 	 * Log the use of a clause set
