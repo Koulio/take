@@ -19,6 +19,9 @@
 
 package nz.org.take.compiler.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import nz.org.take.AggregationFunction;
 import nz.org.take.AnnotationKeys;
 import nz.org.take.Predicate;
@@ -32,23 +35,25 @@ import nz.org.take.compiler.NameGenerator;
 
 public class DefaultNameGenerator implements NameGenerator {
 
-	private int counter = 0;
+	private Map<String,String> methodNames = new HashMap<String,String>();
+	private Map<String,String> classNames = new HashMap<String,String>();
 	
 	/* (non-Javadoc)
 	 * @see org.mandarax.compiler.NameGenerator#getClassName(org.mandarax.kernel.Predicate)
 	 */
 	public String getClassName(Predicate p){
-		String s = p.getAnnotation(AnnotationKeys.TAKE_GENERATE_CLASS);		
-		if (s==null) {
-			s = p.getName();
-			s = this.createJavaName(s,null);
+		
+		String key = this.createHash(p);
+		String value = this.classNames.get(key);
+		if (value==null) {			
+			value = p.getAnnotation(AnnotationKeys.TAKE_GENERATE_CLASS);		
+			if (value==null) {
+				value = p.getName();
+				value = this.createJavaName(value,null);
+			}
+			this.classNames.put(key, value);
 		}
-		if (p.isNegated()) {
-			return "not_"+s;
-		}
-		else {
-			return s;
-		}
+		return p.isNegated()?("not_"+value):value;
 	}
 
 	/* (non-Javadoc)
@@ -102,29 +107,31 @@ public class DefaultNameGenerator implements NameGenerator {
 	}
 	
 	public String getMethodName(Query q) {
-		String nameFromAnnnotation = q.getAnnotation(AnnotationKeys.TAKE_GENERATE_METHOD);
-		StringBuffer b = new StringBuffer();
-		
-		if (nameFromAnnnotation!=null)
-			return nameFromAnnnotation;
-		
+		String key = this.createHash(q);
+		String value = this.methodNames.get(key);
 		Predicate p = q.getPredicate();
-		if (p.isNegated()) {
-			b.append("neg_");
-		}
-			
-		boolean[] inputParam = q.getInputParams();
-		
-		char[] name = p.getName().toCharArray();
-		for (char ch : name)
-			if (!Character.isWhitespace(ch))
-				b.append(ch);
-			else
+		if (value==null)  {			
+			String s = q.getAnnotation(AnnotationKeys.TAKE_GENERATE_METHOD);
+			StringBuffer b = new StringBuffer();
+			if (s==null) {		
+				boolean[] inputParam = q.getInputParams();
+				char[] name = p.getName().toCharArray();
+				for (char ch : name)
+					if (!Character.isWhitespace(ch))
+						b.append(ch);
+					else
+						b.append("_");
 				b.append("_");
-		b.append("_");
-		for (boolean f : inputParam)
-			b.append( f ? "1" : "0" );
-		return b.toString();
+				for (boolean f : inputParam)
+					b.append( f ? "1" : "0" );
+			}
+			else {
+				b.append(s);
+			}
+			value = b.toString();
+			this.methodNames.put(key, value);
+		}
+		return p.isNegated()?("not_"+value):value;
 	}
 
 	public String getMethodName(AggregationFunction f) {
@@ -157,8 +164,46 @@ public class DefaultNameGenerator implements NameGenerator {
 	 * @return a class name
 	 */
 	public synchronized String getKBFragementName(Query q) {
-		counter = counter+1;
 		return "KBFragement_"+getMethodName(q);
 	}
+	
+	/**
+	 * Create a string identifying a query.
+	 * @param q
+	 * @return
+	 */
+	private String createHash(Query q) {
+		StringBuffer b = new StringBuffer();
+		b.append(q.getPredicate().getName());
+		b.append('_');
+		for (boolean f:q.getInputParams()) {
+			b.append(f?'1':'0');
+		}
+		return b.toString();
+	} 
+	/**
+	 * Create a string identifying a predicate.
+	 * @param p
+	 * @return
+	 */
+	private String createHash(Predicate p) {
+		StringBuffer b = new StringBuffer();
+		b.append(p.getName());
+		b.append('_');
+		for (Class c:p.getSlotTypes()) {
+			b.append('_');
+			b.append(c.getName());
+		}
+		return b.toString();
+	} 
+	
+	/**
+	 * Reset cached information. Thsi method should be called before reusing name generators.
+	 */
+	public void reset(){
+		this.methodNames.clear();
+		this.classNames.clear();
+	}
+
 	
 }

@@ -51,11 +51,6 @@ public abstract class CompilerUtils {
 	  */
 	public abstract KnowledgeBase getKB() ;
 	/**
-	 * Get the method names gathered from in query annotations.
-	 * @return a map
-	 */
-	public abstract  Map<String, String> getMethodNames4QueriesFromAnnotations();
-	/**
 	 * Get the name generator.
 	 * @return Returns the nameGenerator.
 	 */
@@ -163,8 +158,7 @@ public abstract class CompilerUtils {
 				params.add(ref);
 		}
 		QueryRef q = new QueryRef((Predicate) f.getPredicate(), io, params);
-		q.setPublic(false);
-		configNewQuery(q);		
+		q.setPublic(false);	
 		return q;
 	}
 
@@ -222,30 +216,8 @@ public abstract class CompilerUtils {
 		return cs.getId();
 	}
 
-	/**
-	* Configure a query built by the compiler.
-	* This means to add compiler hint annotations.
-	* @param q
-	*/
-	protected void configNewQuery(QueryRef q) {
-		String methodNameAnnotation = this.getMethodNames4QueriesFromAnnotations().get(this.createQueryHash(q));
-		if (methodNameAnnotation!=null)
-			q.addAnnotation(AnnotationKeys.TAKE_GENERATE_METHOD,methodNameAnnotation);
-	}
-	/**
-	 * Create a string identifying a query.
-	 * @param q
-	 * @return
-	 */
-	protected String createQueryHash(Query q) {
-		StringBuffer b = new StringBuffer();
-		b.append(q.getPredicate().getName());
-		b.append('_');
-		for (boolean f:q.getInputParams()) {
-			b.append(f?'1':'0');
-		}
-		return b.toString();
-	} 
+
+
 	/**
 	 * Print a one line comment.
 	 * @param out a print writer

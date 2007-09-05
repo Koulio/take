@@ -97,6 +97,11 @@ public interface NameGenerator {
 	 * @return
 	 */
 	public String getFactStoreRegistryClassName();
+	/**
+	 * Reset cached information. Thsi method should be called before reusing name generators.
+	 */
+	public void reset();
+	
 	
 
 }

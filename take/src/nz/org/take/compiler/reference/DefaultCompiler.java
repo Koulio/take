@@ -49,7 +49,6 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	private List<SourceTransformation> transformations = new ArrayList<SourceTransformation>();
 	private Map<DerivationRule, String> bindingClassNames = new HashMap<DerivationRule, String>();
 	private int bindingClassCounter = 1;
-	private Map<String,String> methodNames4QueriesFromAnnotations = new HashMap<String,String>();
 	private Map<String,ExternalFactStore> externalFactStores = null;
 	private List<CompilerPlugin> plugins = new ArrayList<CompilerPlugin>();
 	private Location location = new DefaultLocation();
@@ -141,6 +140,8 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		out.close();
 		String fullClassName = packageName + "." + className;
 		endorseClazz(location, fullClassName);
+		
+		this.nameGenerator.reset();
 	}
 	/**
 	 * Compile the kb.
@@ -156,10 +157,6 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			// cache method names from annotation so that queries that are built later
 			// can use the same annotations
 			String methodName = q.getAnnotation(AnnotationKeys.TAKE_GENERATE_METHOD);
-			if (methodName!=null) {
-				String k = this.createQueryHash(q);
-				methodNames4QueriesFromAnnotations.put(k, methodName);
-			}
 		}
 		String fullClassName = null;
 		String constantRegistryClassName = packageName + "." + nameGenerator.getConstantRegistryClassName();
@@ -192,7 +189,10 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			}
 			
 			// build return types
-			for (Predicate p:findPredicates(kb)) {
+			Collection<Predicate> predicates = findPredicates(kb);	
+			checkCompilerHints(predicates);
+			
+			for (Predicate p:predicates) {
 				if (!isGenerateDataClassesForQueryPredicates() && this.getPublicPredicates().contains(p)) {
 					// already generated with interface
 				}
@@ -242,8 +242,46 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			this.logger.error("a compiler exception has occurred",x);
 			throw new CompilerException(x);
 		}
+		finally {
+			this.nameGenerator.reset();
+		}
 	}
 
+	// check the compiler hint annotations of the predicates
+	// make sure that all predicates (in particular negated predicates)
+	// with the same name / signature have the same compiler hint annotations 
+	// 
+	private void checkCompilerHints(Collection<Predicate> predicates) {
+		Collection<Predicate> nafNegatedPredicates = new ArrayList<Predicate>();
+		for (Predicate p:predicates) {
+			if (p instanceof SimplePredicate && p.isNegated()) {
+				for (Predicate p2:predicates) {
+					if (p!=p2 && p2.getName().equals(p.getName()) && Arrays.equals(p.getSlotTypes(),p2.getSlotTypes())) {
+						String ann = p2.getAnnotation(AnnotationKeys.TAKE_GENERATE_CLASS);
+						if (ann!=null) p.addAnnotation(AnnotationKeys.TAKE_GENERATE_CLASS, ann);
+						ann = p2.getAnnotation(AnnotationKeys.TAKE_GENERATE_METHOD);
+						if (ann!=null) p.addAnnotation(AnnotationKeys.TAKE_GENERATE_METHOD, ann);
+						ann = p2.getAnnotation(AnnotationKeys.TAKE_GENERATE_SLOTS);
+						if (ann!=null) {
+							p.addAnnotation(AnnotationKeys.TAKE_GENERATE_SLOTS, ann);
+							StringTokenizer tok = new StringTokenizer(ann,",");
+							int size = tok.countTokens();
+							String[] paramNames = new String[size];
+							int i=0;
+							while (tok.hasMoreTokens()) {
+								paramNames[i]=tok.nextToken();
+								i=i+1;
+							}
+							((SimplePredicate)p).setSlotNames(paramNames);
+						}
+					}
+				}
+			}
+		}
+		
+		
+		
+	}
 
 	/**
 	 * Create the class that holds the constants referenced in the kb.
@@ -1138,7 +1176,6 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 				}
 				// TODO
 				QueryRef nextQuery = new QueryRef(prereq.getPredicate(), sig,params);
-				this.configNewQuery(nextQuery);
 				
 				out.print("return ");
 				if (prereq == r.getHead()) {
@@ -1200,7 +1237,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	 */
 	void addToAgenda(Query q) {
 		if (!done.contains(q) && !publicAgenda.contains(q)) {
-			publicAgenda.add(q);
+			publicAgenda.add(q);			
 			if (getLogger().isDebugEnabled()) {
 				getLogger().debug("Adding query to agenda: " + q);
 			}
@@ -1303,12 +1340,6 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 
 	public void setVarName4DerivationController(String varName4DerivationController) {
 		this.varName4DerivationController = varName4DerivationController;
-	}
-
-
-	
-	public Map<String, String> getMethodNames4QueriesFromAnnotations() {
-		return methodNames4QueriesFromAnnotations;
 	}
 
 	@Override

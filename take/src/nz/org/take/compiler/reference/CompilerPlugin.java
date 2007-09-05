@@ -68,11 +68,6 @@ public abstract class CompilerPlugin extends CompilerUtils {
 	public abstract void checkPrerequisites(Query q) throws CompilerException;
 
 	@Override
-	public Map<String, String> getMethodNames4QueriesFromAnnotations() {
-		return owner.getMethodNames4QueriesFromAnnotations();
-	}
-
-	@Override
 	public NameGenerator getNameGenerator() {
 		return owner.getNameGenerator();
 	}
