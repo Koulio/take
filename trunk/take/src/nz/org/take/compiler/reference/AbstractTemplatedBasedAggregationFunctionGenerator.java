@@ -79,7 +79,6 @@ public abstract class AbstractTemplatedBasedAggregationFunctionGenerator impleme
 		}
 		
 		QueryRef query = new QueryRef(predicate,io,queryParams);
-		owner.configNewQuery(query);
 		
 		// query invocation
 		StringWriter sout = new StringWriter();

@@ -16,6 +16,9 @@ public class Driver {
 	private int numberOfAccidentsInvolvedIn = 0;
 	private int numberOfMovingViolationsInLastTwoYears = 0;
 	private int numberOfYearsWithUServ = 0;
+	private boolean isPreferred = false;
+	private boolean isElite = false;
+	
 	public boolean isMale() {
 		return isMale;
 	}
@@ -73,6 +76,18 @@ public class Driver {
 	}
 	public void setNumberOfYearsWithUServ(int numberOfYearsWithUServ) {
 		this.numberOfYearsWithUServ = numberOfYearsWithUServ;
+	}
+	public boolean isPreferred() {
+		return isPreferred;
+	}
+	public void setPreferred(boolean isPreferred) {
+		this.isPreferred = isPreferred;
+	}
+	public boolean isElite() {
+		return isElite;
+	}
+	public void setElite(boolean isElite) {
+		this.isElite = isElite;
 	}
 	
 	

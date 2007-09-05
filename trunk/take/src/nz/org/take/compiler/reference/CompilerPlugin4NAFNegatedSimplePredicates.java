@@ -22,18 +22,11 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-
-import nz.org.take.Constant;
-import nz.org.take.PropertyPredicate;
 import nz.org.take.Query;
 import nz.org.take.SimplePredicate;
-import nz.org.take.Term;
-import nz.org.take.Variable;
 import nz.org.take.compiler.CompilerException;
-import nz.org.take.rt.DerivationController;
 
 /**
  * Abstract plugin used to generate code for PropertyPredicates.
@@ -100,7 +93,6 @@ public class CompilerPlugin4NAFNegatedSimplePredicates extends CompilerPlugin {
 		SimplePredicate unnegatedPredicate = p.copy();
 		unnegatedPredicate.setNegated(false);		
 		QueryRef query = new QueryRef(unnegatedPredicate,q.getInputParams(),queryParams);
-		configNewQuery(query);
 		owner.addToAgenda(query);
 		
 		// build method invocation
