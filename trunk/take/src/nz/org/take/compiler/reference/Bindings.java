@@ -87,7 +87,7 @@ public class Bindings  {
 			buf.append(naming.getMethodName(f));
 			buf.append('(');
 			for (int i=0;i<terms.length;i++) {
-				if (i>1)
+				if (i>0)
 					buf.append(',');
 				buf.append(this.getRef(terms[i]));
 			}			
