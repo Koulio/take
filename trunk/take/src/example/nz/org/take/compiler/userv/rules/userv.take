@@ -43,6 +43,10 @@ query policyEligibilityScore[in,in,out]
 @take.compilerhint.slots=car,driver,status
 @take.compilerhint.method=getPolicyEligibility
 query insuranceEligibility[in,in,out] 
+@take.compilerhint.class=LongTermClient
+@take.compilerhint.slots=driver
+@take.compilerhint.method=isLongTermClient
+query isLongTermClient[in]
 // aggregations
 aggregation eligibilityScore = sum x policyEligibilityScore[car,driver,x]
 // rules
@@ -80,9 +84,9 @@ ES_02c: if isHighRiskDriver[driver] then policyEligibilityScore[car,driver,100]
 ES_03a: if isPreferred[client] then policyEligibilityScore[car,client,-50]
 ES_03b: if isElite[client] then policyEligibilityScore[car,client,-100]
 ES_04: if eligibilityScore(car,client)<100 then insuranceEligibility[car,client,"eligible"]
-//ES_05: client.eligibilityScore>=100 and client.eligibilityScore<=250 then insuranceEligibility[driver,"must be reviewed by underwriting manager"]
-//ES_06: if client.eligibilityScore>250 then insuranceEligibility[driver,"not eligible"]
-//ES_07: 	if isLongTermClient[client] then insuranceEligibility[driver,"eligible"]
-//ES_08: 	if client.numberOfYearsWithUServ>=15 then isLongTermClient[client]
+ES_05: if eligibilityScore(car,client)>=100 and eligibilityScore(car,client)<=250 then insuranceEligibility[car,client,"must be reviewed by underwriting manager"]
+ES_06: if eligibilityScore(car,client)>250 then insuranceEligibility[car,client,"not eligible"]
+ES_07: if isLongTermClient[client] then insuranceEligibility[car,client,"eligible"]
+ES_08: if client.numberOfYearsWithUServ>=15 then isLongTermClient[client]
 
 

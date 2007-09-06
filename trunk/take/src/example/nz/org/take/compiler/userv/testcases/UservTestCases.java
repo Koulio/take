@@ -468,6 +468,43 @@ public class UservTestCases extends TestCase {
 		assertTrue(result.hasNext());
 		assertEquals("eligible",result.next().status);
 	}
+	public void testES_05() throws Exception {
+		Car car = new Car();
+		car.setConvertible(false);
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(true);
+		// driver will be a high risk driver 
+		Driver driver = new Driver();
+		driver.setAge(42);
+		driver.setNumberOfAccidentsInvolvedIn(5);
+		
+		assertTrue(kb.isHighRiskDriver(driver).hasNext());
+		assertEquals(100,kb.getPolicyEligibilityScore(car,driver).next().score);
+		
+		ResultSet<InsuranceEligibility> result = kb.getPolicyEligibility(car,driver);
+		assertTrue(result.hasNext());
+		assertEquals("must be reviewed by underwriting manager",result.next().status);
+	}
 	
+	// no test case for ES_06 - cannot create a client with eligibilityScore > 250 !!
+	
+	public void testES_07_08() throws Exception {
+		Car car = new Car();
+		car.setConvertible(false);
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(true);
+		// driver will be a high risk driver 
+		Driver driver = new Driver();
+		driver.setAge(42);
+		driver.setNumberOfYearsWithUServ(20);
+		
+		assertTrue(kb.isLongTermClient(driver).hasNext());
+		
+		ResultSet<InsuranceEligibility> result = kb.getPolicyEligibility(car,driver);
+		assertTrue(result.hasNext());
+		assertEquals("eligible",result.next().status);
+	}
 	
 }

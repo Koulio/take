@@ -21,6 +21,7 @@ package test.nz.org.take.script;
 import java.io.StringReader;
 import java.util.List;
 import test.nz.org.take.TakeTestCase;
+import nz.org.take.Comparison;
 import nz.org.take.script.*;
 import nz.org.take.script.parser.Parser;
 
@@ -532,6 +533,7 @@ public class ParserTests extends TakeTestCase {
 		Rule rule = this.getRuleAt(script,0);
 		Condition fact = rule.getConditions().get(0);
 		assertTrue(fact.isPrimitiveComparison());
+		assertTrue(fact.getPredicate().equals("<"));
 	}
 	public void testComparison2() throws Exception {
 		String input = "rule1: 1<=2";
@@ -540,6 +542,7 @@ public class ParserTests extends TakeTestCase {
 		Rule rule = this.getRuleAt(script,0);
 		Condition fact = rule.getConditions().get(0);
 		assertTrue(fact.isPrimitiveComparison());
+		assertTrue(fact.getPredicate().equals("<="));
 	}
 	public void testComparison3() throws Exception {
 		String input = "rule1: 2<=funct(3)";
@@ -548,6 +551,7 @@ public class ParserTests extends TakeTestCase {
 		Rule rule = this.getRuleAt(script,0);
 		Condition fact = rule.getConditions().get(0);
 		assertTrue(fact.isPrimitiveComparison());
+		assertTrue(fact.getPredicate().equals("<="));
 	}
 	public void testComparison4() throws Exception {
 		String input = "rule1: funct(2)<42";
@@ -556,6 +560,7 @@ public class ParserTests extends TakeTestCase {
 		Rule rule = this.getRuleAt(script,0);
 		Condition fact = rule.getConditions().get(0);
 		assertTrue(fact.isPrimitiveComparison());
+		assertTrue(fact.getPredicate().equals("<"));
 	}
 	public void testComment1() throws Exception {
 		String input = "// see also http://www.google.com";
@@ -572,4 +577,5 @@ public class ParserTests extends TakeTestCase {
 		Comment c = getCommentAt(script,0);
 		assertEquals("\"if\" and \"max\" should also work",c.getText().trim());
 	}
+
 }
