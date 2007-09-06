@@ -112,6 +112,7 @@ public class DefaultNameGenerator implements NameGenerator {
 		Predicate p = q.getPredicate();
 		if (value==null)  {			
 			String s = q.getAnnotation(AnnotationKeys.TAKE_GENERATE_METHOD);
+			if (s==null) s = p.getAnnotation(AnnotationKeys.TAKE_GENERATE_METHOD);
 			StringBuffer b = new StringBuffer();
 			if (s==null) {		
 				boolean[] inputParam = q.getInputParams();
