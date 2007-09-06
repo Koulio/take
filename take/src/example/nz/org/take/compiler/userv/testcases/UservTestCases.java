@@ -46,6 +46,14 @@ public class UservTestCases extends TestCase {
 			System.out.println(((DerivationLogEntry)s).getName());
 		}
 	}
+	private int count(ResultSet result) {
+		int count =0;
+		while(result.hasNext()) {
+			result.next();
+			count = count+1;
+		}
+		return count;
+	}
 
 
 	public void testAE_POIC01() throws Exception {
@@ -350,5 +358,116 @@ public class UservTestCases extends TestCase {
 		assertTrue(result.hasNext());
 		assertEquals(30,result.next().score);
 	}
+	
+	public void testES_02b() throws Exception {
+		Car car = new Car();
+		car.setConvertible(false);
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(true);
+		// driver will be a senior driver that is not eligible
+		Driver driver = new Driver();
+		driver.setAge(88);
+		driver.setHasDriversTrainingFromSchool(false);
+		driver.setHasDriversTrainingFromLicensedDriverTrainingCompany(false);
+		driver.setHasTakenASeniorCitizenDriversRefresherCourse(false);
+		
+		// check other rules used
+		assertEquals("senior driver",kb.getDriverCategory(driver).next().category);
+		assertFalse(kb.hasTrainingCertification(driver).hasNext());
+		assertEquals("eligible",kb.getAutoEligibility(car).next().value);
+		
+		ResultSet<DriverEligibility> rs = kb.getDriverEligibility(driver);
+		rs.next();
+		for (Object o:rs.getDerivationLog()) {
+			System.out.println(((DerivationLogEntry)o).getName());
+		}
+		
+		assertFalse(kb.getDriverEligibility(driver).hasNext());
+		
+		// check components of policy scores
+		ResultSet<PolicyEligibilityScore> result = kb.getPolicyEligibilityScore(car, driver);
+		assertTrue(result.hasNext());
+		assertEquals(20,result.next().score);
+	}
+	
+	public void testES_02c() throws Exception {
+		Car car = new Car();
+		car.setConvertible(false);
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(true);
+		// driver will be a high risk driver 
+		Driver driver = new Driver();
+		driver.setAge(42);
+		driver.setNumberOfAccidentsInvolvedIn(5);
+		
+		assertTrue(kb.isHighRiskDriver(driver).hasNext());
+		
+		// check components of policy scores
+		ResultSet<PolicyEligibilityScore> result = kb.getPolicyEligibilityScore(car, driver);
+		assertTrue(result.hasNext());
+		assertEquals(100,result.next().score);
+	}
+	
+	public void testES_03a() throws Exception {
+		Car car = new Car();
+		car.setConvertible(false);
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(true);
+		
+		Driver driver = new Driver();
+		driver.setAge(42);
+		driver.setPreferred(true);
+		
+		assertFalse(kb.isHighRiskDriver(driver).hasNext());
+		assertTrue(kb.getDriverEligibility(driver).hasNext());
+		
+		// check components of policy scores
+		ResultSet<PolicyEligibilityScore> result = kb.getPolicyEligibilityScore(car, driver);
+		assertTrue(result.hasNext());
+		assertEquals(-50,result.next().score);
+	}
+	
+	public void testES_03b() throws Exception {
+		Car car = new Car();
+		car.setConvertible(false);
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(true);
+		
+		Driver driver = new Driver();
+		driver.setAge(42);
+		driver.setElite(true);
+		
+		assertFalse(kb.isHighRiskDriver(driver).hasNext());
+		assertTrue(kb.getDriverEligibility(driver).hasNext());
+		
+		// check components of policy scores
+		ResultSet<PolicyEligibilityScore> result = kb.getPolicyEligibilityScore(car, driver);
+		assertTrue(result.hasNext());
+		assertEquals(-100,result.next().score);
+	}
+	
+	public void testES_04() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(false);
+		car.setHasSidePanelAirbags(false);
+		// driver will be normal driver
+		Driver driver = new Driver();
+		driver.setAge(30);
+		
+		// check other rules used
+		assertEquals("provisional",kb.getAutoEligibility(car).next().value);
+		assertEquals(50,kb.getPolicyEligibilityScore(car,driver).next().score);
+		assertEquals(1,count(kb.getPolicyEligibilityScore(car, driver)));
+		
+		ResultSet<InsuranceEligibility> result = kb.getPolicyEligibility(car,driver);
+		assertTrue(result.hasNext());
+		assertEquals("eligible",result.next().status);
+	}
+	
 	
 }

@@ -143,7 +143,6 @@ public class DefaultNameGenerator implements NameGenerator {
 				b.append(ch);
 			else
 				b.append("_");
-		b.append("_");
 		return b.toString();
 	}
 	public String getConstantRegistryClassName() {
