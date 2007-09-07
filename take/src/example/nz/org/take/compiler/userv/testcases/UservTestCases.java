@@ -691,5 +691,50 @@ public class UservTestCases extends TestCase {
 		assertEquals(500,result.next().premium);
 	}
 	
+	public void testAD_01() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(false);
+		car.setHasSidePanelAirbags(false);
+		
+		ResultSet<PremiumDiscount> result = kb.getPremiumDiscount(car);
+		assertTrue(result.hasNext());
+		assertEquals(12,result.next().discount);
+	}
+	
+	public void testAD_02() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(false);
+		
+		ResultSet<PremiumDiscount> result = kb.getPremiumDiscount(car);
+		assertTrue(result.hasNext());
+		assertEquals(15,result.next().discount);
+	}
+	
+	public void testAD_03() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(true);
+		
+		ResultSet<PremiumDiscount> result = kb.getPremiumDiscount(car);
+		assertTrue(result.hasNext());
+		assertEquals(18,result.next().discount);
+	}
+	
+	public void testAD_04() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(false);
+		car.setHasFrontPassengerAirbag(false);
+		car.setHasSidePanelAirbags(false);
+		car.setPrice(80000);
+		car.setHasAlarm(true);
+		
+		ResultSet<PremiumDiscount> result = kb.getPremiumDiscount(car);
+		assertTrue(result.hasNext());
+		assertEquals(10,result.next().discount);
+	}
 	
 }

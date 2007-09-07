@@ -36,6 +36,7 @@ public class Car {
 	private boolean isLuxury = false;
 	private int age = 0;
 	private int modelYear = new java.util.Date().getYear()+1900;
+	private boolean hasAlarm = false;
 	
 	private String  type = "unknown";
 	
@@ -125,5 +126,11 @@ public class Car {
 	}
 	public void setModelYear(int modelYear) {
 		this.modelYear = modelYear;
+	}
+	public boolean hasAlarm() {
+		return hasAlarm;
+	}
+	public void setHasAlarm(boolean hasAlarm) {
+		this.hasAlarm = hasAlarm;
 	}
 }

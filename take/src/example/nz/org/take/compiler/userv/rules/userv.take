@@ -59,6 +59,10 @@ query basePremium[in,out]
 @take.compilerhint.slots=policy,car,premium
 @take.compilerhint.method=getAdditionalPremium
 query additionalPremium[in,in,out]
+@take.compilerhint.class=PremiumDiscount
+@take.compilerhint.slots=car,discount
+@take.compilerhint.method=getPremiumDiscount
+query premiumDiscount[in,out]
 // aggregations
 aggregation eligibilityScore = sum x policyEligibilityScore[car,driver,x]
 // Auto Eligibility Rule Set
@@ -116,5 +120,8 @@ AP_10: if includesMedicalCoverage[policy] then additionalPremium[policy,car,600]
 AP_11: if potentialOccupantInjuryRating[car,"extremely high"] then additionalPremium[policy,car,1000]
 AP_12: if potentialOccupantInjuryRating[car,"high"] then additionalPremium[policy,car,500]
 AP_13: if potentialTheftRating[car,"high"] then additionalPremium[policy,car,500]
-
-
+// Auto Discounts Rule Set
+AD_01: if hasAirbags[car] and not hasFrontPassengerAirbag[car] and not hasSidePanelAirbags[car] then premiumDiscount[car,12]
+AD_02: if hasAirbags[car] and hasFrontPassengerAirbag[car] and not hasSidePanelAirbags[car] then premiumDiscount[car,15]
+AD_03: if hasAirbags[car] and hasFrontPassengerAirbag[car] and hasSidePanelAirbags[car] then premiumDiscount[car,18]
+AD_04: if potentialTheftRating[car,"high"] and hasAlarm[car] then premiumDiscount[car,10]
