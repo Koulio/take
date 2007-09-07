@@ -1,11 +1,15 @@
 // example based on the UServ product derby
+// the original rule set is Copyright of the Business Rules Forum
+// see also http://www.businessrulesforum.com/2005_Product_Derby.pdf
 @@dc:creator=jens dietrich
 @@dc:date=15/08/2007
 var example.nz.org.take.compiler.userv.domainmodel.Car car
 var example.nz.org.take.compiler.userv.domainmodel.Driver driver,client
+var example.nz.org.take.compiler.userv.domainmodel.Policy policy
 var java.lang.String category 
 var int x
 ref java.util.Collection HighTheftProbabilityAutoList
+ref int CurrentYear,NextYear
 // queries
 @take.compilerhint.class=PotentialTheftRating
 @take.compilerhint.slots=car,rating
@@ -47,9 +51,17 @@ query insuranceEligibility[in,in,out]
 @take.compilerhint.slots=driver
 @take.compilerhint.method=isLongTermClient
 query isLongTermClient[in]
+@take.compilerhint.class=BasePremium
+@take.compilerhint.slots=car,premium
+@take.compilerhint.method=getBasePremium
+query basePremium[in,out]
+@take.compilerhint.class=AdditionalPremium
+@take.compilerhint.slots=policy,car,premium
+@take.compilerhint.method=getAdditionalPremium
+query additionalPremium[in,in,out]
 // aggregations
 aggregation eligibilityScore = sum x policyEligibilityScore[car,driver,x]
-// rules
+// Auto Eligibility Rule Set
 AE_PTC01: if isConvertible[car] then potentialTheftRating[car,"high"]
 AE_PTC02: if car.price>45000 then potentialTheftRating[car,"high"]
 AE_PTC03: if contains[HighTheftProbabilityAutoList,car.type] then potentialTheftRating[car,"high"]
@@ -64,6 +76,7 @@ AE_01: if potentialOccupantInjuryRating[car,"extremely high"] then autoEligibili
 AE_02: if potentialOccupantInjuryRating[car,"high"] then autoEligibility[car,"provisional"]
 AE_03: if potentialTheftRating[car,"high"] then autoEligibility[car,"provisional"]
 AE_04: autoEligibility[car,"eligible"]
+// Driver Eligibility Rule Set
 DE_DAC01: if isMale[driver] and driver.age<25 then driverCategory[driver,"young driver"]
 DE_DAC02: if not isMale[driver] and driver.age<20 then driverCategory[driver,"young driver"]
 DE_DAC03: if driverCategory[driver,"young driver"] and hasTrainingCertification[driver] then isEligible[driver]
@@ -76,6 +89,7 @@ DE_DAC09: if hasTakenASeniorCitizenDriversRefresherCourse[driver] then hasTraini
 DE_DRC01: if hasBeenConvictedOfaDUI[driver] then isHighRiskDriver[driver]
 DE_DRC02: if driver.getNumberOfAccidentsInvolvedIn>2 then isHighRiskDriver[driver]
 DE_DRC03: if driver.getNumberOfMovingViolationsInLastTwoYears>3 then isHighRiskDriver[driver]
+// Eligibility Scoring Rule Set
 ES_01a: if autoEligibility[car,"not eligible"] then policyEligibilityScore[car,driver,100]
 ES_01b: if autoEligibility[car,"provisional"] then policyEligibilityScore[car,driver,50]
 ES_02a: if driverCategory[driver,"young driver"] and not isEligible[driver] then policyEligibilityScore[car,driver,30]
@@ -88,5 +102,19 @@ ES_05: if eligibilityScore(car,client)>=100 and eligibilityScore(car,client)<=25
 ES_06: if eligibilityScore(car,client)>250 then insuranceEligibility[car,client,"not eligible"]
 ES_07: if isLongTermClient[client] then insuranceEligibility[car,client,"eligible"]
 ES_08: if client.numberOfYearsWithUServ>=15 then isLongTermClient[client]
+// Auto Premiums Rule Set
+AP_01: if isCompact[car] then basePremium[car,250]
+AP_02: if isSedan[car] then basePremium[car,400]
+AP_03: if isLuxury[car] then basePremium[car,500]
+AP_04: if isNew[car] then additionalPremium[policy,car,400]
+AP_05: if car.modelYear==CurrentYear then isNew[car]
+AP_06: if car.modelYear==NextYear then isNew[car]
+AP_07: if car.age<5 and not isNew[car] then additionalPremium[policy,car,300]
+AP_08: if car.age>=5 and car.age<=10 then additionalPremium[policy,car,250]
+AP_09: if includesUninsuredMotoristCoverage[policy] then additionalPremium[policy,car,300]
+AP_10: if includesMedicalCoverage[policy] then additionalPremium[policy,car,600]
+AP_11: if potentialOccupantInjuryRating[car,"extremely high"] then additionalPremium[policy,car,1000]
+AP_12: if potentialOccupantInjuryRating[car,"high"] then additionalPremium[policy,car,500]
+AP_13: if potentialTheftRating[car,"high"] then additionalPremium[policy,car,500]
 
 

@@ -316,31 +316,7 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 			ids.add(id);
 	}
 	private List<Variable> buildVariables(VariableDeclaration vd) throws ScriptException {
-		Class clazz = null;
-		try {
-			String type = vd.getType();
-			if ("char".equals(type))
-				clazz =Character.TYPE;
-			else if ("byte".equals(type))
-				clazz =Byte.TYPE;
-			else if ("int".equals(type))
-				clazz =Integer.TYPE;
-			else if ("short".equals(type))
-				clazz =Short.TYPE;
-			else if ("long".equals(type))
-				clazz =Long.TYPE;
-			else if ("double".equals(type))
-				clazz =Double.TYPE;
-			else if ("float".equals(type))
-				clazz =Float.TYPE;
-			else if ("boolean".equals(type))
-				clazz =Boolean.TYPE;
-			else
-				clazz = this.classloader.loadClass(type);
-		}
-		catch (ClassNotFoundException x) {
-			throw new ScriptSemanticsException("Can not load the following type referenced in script: " + vd.getType() + this.printPosInfo(vd),x);
-		}		
+		Class clazz = this.classForName(vd.getType(),vd);	
 		List<Variable> variables = new ArrayList<Variable>();
 		for (String name:vd.getNames()) {
 			Variable v = new Variable();
@@ -351,13 +327,7 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		return variables;
 	}
 	private List<Constant> buildConstants(RefDeclaration cd) throws ScriptException {
-		Class clazz = null;
-		try {
-			clazz = this.classloader.loadClass(cd.getType());
-		}
-		catch (ClassNotFoundException x) {
-			throw new ScriptSemanticsException("Can not load the following type referenced in script: " + cd.getType() + this.printPosInfo(cd),x);
-		}		
+		Class clazz = this.classForName(cd.getType(),cd);
 		List<Constant> constants = new ArrayList<Constant>();
 		for (String name:cd.getNames()) {
 			Constant c = new Constant();
@@ -687,5 +657,28 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 	public void setClassloader(ClassLoader classloader) {
 		this.classloader = classloader;
 	}
-
+	private Class classForName(String type,ScriptElement e) throws ScriptSemanticsException {
+		try {
+			if ("char".equals(type))
+				return Character.TYPE;
+			if ("byte".equals(type))
+				return Byte.TYPE;
+			if ("int".equals(type))
+				return Integer.TYPE;
+			if ("short".equals(type))
+				return Short.TYPE;
+			if ("long".equals(type))
+				return Long.TYPE;
+			if ("double".equals(type))
+				return Double.TYPE;
+			if ("float".equals(type))
+				return Float.TYPE;
+			if ("boolean".equals(type))
+				return Boolean.TYPE;
+			return  this.classloader.loadClass(type);
+		}
+		catch (ClassNotFoundException x) {
+			throw new ScriptSemanticsException("Can not load the following type referenced in script: " + type + this.printPosInfo(e),x);
+		}	
+	}
 }
