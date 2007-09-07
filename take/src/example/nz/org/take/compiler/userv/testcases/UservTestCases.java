@@ -33,12 +33,15 @@ import junit.framework.TestCase;
 public class UservTestCases extends TestCase {
 	
 	private UservRules kb = null;
+	private int CURRENTYEAR = new java.util.Date().getYear()+1900;
 	
 	protected void setUp() throws Exception {
 		super.setUp();
 		kb = new UservRules();
 		// bind constants referenced in the kb
 		Constants.HighTheftProbabilityAutoList = HighTheftProbabilityAutoList.getList();
+		Constants.CurrentYear = CURRENTYEAR;
+		Constants.NextYear = CURRENTYEAR+1;
 	}
 	
 	private void printLog(ResultSet result) {
@@ -171,7 +174,6 @@ public class UservTestCases extends TestCase {
 		ResultSet<AutoEligibility> result = kb.getAutoEligibility(car);
 		assertTrue(result.hasNext());
 		assertEquals("provisional",result.next().value);
-		printLog(result);
 	}
 
 	public void testAE03() throws Exception {
@@ -379,9 +381,6 @@ public class UservTestCases extends TestCase {
 		
 		ResultSet<DriverEligibility> rs = kb.getDriverEligibility(driver);
 		rs.next();
-		for (Object o:rs.getDerivationLog()) {
-			System.out.println(((DerivationLogEntry)o).getName());
-		}
 		
 		assertFalse(kb.getDriverEligibility(driver).hasNext());
 		
@@ -506,5 +505,191 @@ public class UservTestCases extends TestCase {
 		assertTrue(result.hasNext());
 		assertEquals("eligible",result.next().status);
 	}
+	
+	public void testAP_01() throws Exception {
+		Car car = new Car();
+		car.setCompact(true);
+		
+		ResultSet<BasePremium> result = kb.getBasePremium(car);
+		assertTrue(result.hasNext());
+		assertEquals(250,result.next().premium);
+	}
+	public void testAP_02() throws Exception {
+		Car car = new Car();
+		car.setSedan(true);
+		
+		ResultSet<BasePremium> result = kb.getBasePremium(car);
+		assertTrue(result.hasNext());
+		assertEquals(400,result.next().premium);
+	}
+	
+	public void testAP_03() throws Exception {
+		Car car = new Car();
+		car.setLuxury(true);
+		
+		ResultSet<BasePremium> result = kb.getBasePremium(car);
+		assertTrue(result.hasNext());
+		assertEquals(500,result.next().premium);
+	}
+	
+	
+	public void testAP_04_05() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(true);// make sure the insury rating is low so that other rules don't fire
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(true);
+		car.setModelYear(CURRENTYEAR);
+		Policy policy = new Policy();
+		
+		ResultSet<AdditionalPremium> result = kb.getAdditionalPremium(policy, car);
+		assertTrue(result.hasNext());
+		assertEquals(400,result.next().premium);
+		assertFalse(result.hasNext());
+	}
+	public void testAP_04_06() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(true); // make sure the insury rating is low so that other rules don't fire
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(true);
+		car.setModelYear(CURRENTYEAR+1); // next years model
+		Policy policy = new Policy();
+		
+		ResultSet<AdditionalPremium> result = kb.getAdditionalPremium(policy, car);
+		assertTrue(result.hasNext());
+		assertEquals(400,result.next().premium);
+		assertFalse(result.hasNext());
+	}
+	
+	public void testAP_07() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(true); // make sure the insury rating is low so that other rules don't fire
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(true);
+		car.setAge(3);
+		car.setModelYear(CURRENTYEAR-3);
+		Policy policy = new Policy();
+		
+		ResultSet<AdditionalPremium> result = kb.getAdditionalPremium(policy, car);
+		assertTrue(result.hasNext());
+		assertEquals(300,result.next().premium);
+		assertFalse(result.hasNext());
+	}
+	
+	public void testAP_08() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(true); // make sure the insury rating is low so that other rules don't fire
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(true);
+		car.setAge(7);
+		car.setModelYear(CURRENTYEAR-7);
+		Policy policy = new Policy();
+		
+		ResultSet<AdditionalPremium> result = kb.getAdditionalPremium(policy, car);
+		assertTrue(result.hasNext());
+		assertEquals(250,result.next().premium);
+		assertFalse(result.hasNext());
+	}
+	
+	public void testAP_09() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(true); // make sure the injury rating is low so that other rules don't fire
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(true);
+		car.setAge(7);
+		car.setModelYear(CURRENTYEAR-7);
+		Policy policy = new Policy();
+		policy.setIncludesUninsuredMotoristCoverage(true);
+		
+		ResultSet<AdditionalPremium> result = kb.getAdditionalPremium(policy, car);
+		// part 1 - from car
+		assertTrue(result.hasNext());
+		assertEquals(250,result.next().premium);
+
+		// part 2 - from policy
+		assertTrue(result.hasNext());
+		assertEquals(300,result.next().premium);
+		assertFalse(result.hasNext());
+	}
+	
+	public void testAP_10() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(true); // make sure the injury rating is low so that other rules don't fire
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(true);
+		car.setAge(7);
+		car.setModelYear(CURRENTYEAR-7);
+		Policy policy = new Policy();
+		policy.setIncludesMedicalCoverage(true);
+		
+		ResultSet<AdditionalPremium> result = kb.getAdditionalPremium(policy, car);
+		// part 1 - from car
+		assertTrue(result.hasNext());
+		assertEquals(250,result.next().premium);
+
+		// part 2 - from policy
+		assertTrue(result.hasNext());
+		assertEquals(600,result.next().premium);
+		assertFalse(result.hasNext());
+	}
+	
+	public void testAP_11() throws Exception {
+		Car car = new Car();
+		car.setHasRollBar(false);
+		car.setConvertible(true);
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(true);
+		car.setAge(7);
+		car.setModelYear(CURRENTYEAR-7);
+		Policy policy = new Policy();
+		
+		ResultSet<AdditionalPremium> result = kb.getAdditionalPremium(policy, car);
+		// part 1 - from age
+		assertTrue(result.hasNext());
+		assertEquals(250,result.next().premium);
+
+		// part 2 - from occupant injury rating
+		assertTrue(result.hasNext());
+		assertEquals(1000,result.next().premium);
+	}
+	
+	public void testAP_12() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(false);
+		car.setHasSidePanelAirbags(false);
+		car.setAge(7);
+		car.setModelYear(CURRENTYEAR-7);
+		Policy policy = new Policy();
+		
+		ResultSet<AdditionalPremium> result = kb.getAdditionalPremium(policy, car);
+		// part 1 - from age
+		assertTrue(result.hasNext());
+		assertEquals(250,result.next().premium);
+
+		// part 2 - from occupant injury rating
+		assertTrue(result.hasNext());
+		assertEquals(500,result.next().premium);
+	}
+	
+	public void testAP_13() throws Exception {
+		Car car = new Car();
+		car.setHasDriversAirbag(true);
+		car.setHasFrontPassengerAirbag(true);
+		car.setHasSidePanelAirbags(true);
+		car.setAge(7);
+		car.setModelYear(CURRENTYEAR-7);
+		car.setPrice(50000);
+		Policy policy = new Policy();
+		
+		ResultSet<AdditionalPremium> result = kb.getAdditionalPremium(policy, car);
+		// part 1 - from age
+		assertTrue(result.hasNext());
+		assertEquals(250,result.next().premium);
+
+		// part 2 - from theft rating
+		assertTrue(result.hasNext());
+		assertEquals(500,result.next().premium);
+	}
+	
 	
 }
