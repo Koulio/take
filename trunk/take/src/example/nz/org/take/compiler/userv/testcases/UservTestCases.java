@@ -298,6 +298,9 @@ public class UservTestCases extends TestCase {
 		Driver driver = new Driver();
 		driver.setNumberOfMovingViolationsInLastTwoYears(1);
 		ResultSet<HighRiskDriver> result = kb.isHighRiskDriver(driver);
+		result.next();
+		this.printLog(result);
+		
 		assertFalse(result.hasNext());
 		// nothing to compare - unary predicate
 	}
@@ -735,6 +738,111 @@ public class UservTestCases extends TestCase {
 		ResultSet<PremiumDiscount> result = kb.getPremiumDiscount(car);
 		assertTrue(result.hasNext());
 		assertEquals(10,result.next().discount);
+	}
+	
+	public void testDP_01() throws Exception {		
+		Driver driver = new Driver();
+		driver.setAge(17);
+		driver.setMarried(true);
+		driver.setLocation("CA");		
+		
+		ResultSet<AdditionalDriverPremium> result = kb.getAdditionalDriverPremium(driver);
+		assertTrue(result.hasNext());
+		assertEquals(700,result.next().premium);
+	}
+	
+	public void testDP_02() throws Exception {		
+		Driver driver = new Driver();
+		driver.setAge(17);
+		driver.setMarried(false);
+		driver.setLocation("NY");		
+		
+		ResultSet<AdditionalDriverPremium> result = kb.getAdditionalDriverPremium(driver);
+		assertTrue(result.hasNext());
+		assertEquals(720,result.next().premium);
+	}
+	
+	public void testDP_03() throws Exception {		
+		Driver driver = new Driver();
+		driver.setAge(17);
+		driver.setMarried(true);
+		driver.setLocation("FL");		
+		
+		ResultSet<AdditionalDriverPremium> result = kb.getAdditionalDriverPremium(driver);
+		assertTrue(result.hasNext());
+		assertEquals(300,result.next().premium);
+	}
+	
+	public void testDP_04() throws Exception {		
+		Driver driver = new Driver();
+		driver.setAge(17);
+		driver.setMarried(false);
+		driver.setLocation("FL");		
+		
+		ResultSet<AdditionalDriverPremium> result = kb.getAdditionalDriverPremium(driver);
+		assertTrue(result.hasNext());
+		assertEquals(720,result.next().premium);
+	}
+	
+	public void testDP_05() throws Exception {		
+		Driver driver = new Driver();
+		driver.setAge(75);
+		driver.setMarried(false);
+		driver.setLocation("NY");		
+		
+		ResultSet<AdditionalDriverPremium> result = kb.getAdditionalDriverPremium(driver);
+		assertTrue(result.hasNext());
+		assertEquals(500,result.next().premium);
+	}
+	
+	public void testDP_06() throws Exception {		
+		Driver driver = new Driver();
+		driver.setAge(75);
+		driver.setMarried(false);
+		driver.setLocation("FL");		
+		
+		ResultSet<AdditionalDriverPremium> result = kb.getAdditionalDriverPremium(driver);
+		assertTrue(result.hasNext());
+		assertEquals(200,result.next().premium);
+	}
+	
+	public void testDP_07() throws Exception {		
+		Driver driver = new Driver();
+		driver.setAge(42); // neither young nor senior	
+		
+		ResultSet<DriverCategory> result = kb.getDriverCategory(driver);
+		assertTrue(result.hasNext());
+		assertEquals("typical driver",result.next().category);
+	}
+	
+	public void testDP_08() throws Exception {		
+		Driver driver = new Driver();
+		driver.setAge(42);
+		driver.setNumberOfAccidentsInvolvedIn(5);		
+		
+		ResultSet<AdditionalDriverPremium> result = kb.getAdditionalDriverPremium(driver);
+		assertTrue(result.hasNext());
+		assertEquals(1000,result.next().premium);
+	}
+	
+	public void testMSD_01() throws Exception {		
+		Driver driver = new Driver();
+		driver.setAge(42);
+		driver.setPreferred(true);		
+		
+		ResultSet<AdditionalDriverPremium> result = kb.getAdditionalDriverPremium(driver);
+		assertTrue(result.hasNext());
+		assertEquals(-250,result.next().premium);
+	}
+	
+	public void testMSD_02() throws Exception {		
+		Driver driver = new Driver();
+		driver.setAge(42);
+		driver.setElite(true);		
+		
+		ResultSet<AdditionalDriverPremium> result = kb.getAdditionalDriverPremium(driver);
+		assertTrue(result.hasNext());
+		assertEquals(-500,result.next().premium);
 	}
 	
 }

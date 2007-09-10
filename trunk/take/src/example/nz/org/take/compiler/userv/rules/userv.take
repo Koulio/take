@@ -59,6 +59,10 @@ query basePremium[in,out]
 @take.compilerhint.slots=policy,car,premium
 @take.compilerhint.method=getAdditionalPremium
 query additionalPremium[in,in,out]
+@take.compilerhint.class=AdditionalDriverPremium
+@take.compilerhint.slots=driver,premium
+@take.compilerhint.method=getAdditionalDriverPremium
+query additionalDriverPremium[in,out]
 @take.compilerhint.class=PremiumDiscount
 @take.compilerhint.slots=car,discount
 @take.compilerhint.method=getPremiumDiscount
@@ -125,3 +129,20 @@ AD_01: if hasAirbags[car] and not hasFrontPassengerAirbag[car] and not hasSidePa
 AD_02: if hasAirbags[car] and hasFrontPassengerAirbag[car] and not hasSidePanelAirbags[car] then premiumDiscount[car,15]
 AD_03: if hasAirbags[car] and hasFrontPassengerAirbag[car] and hasSidePanelAirbags[car] then premiumDiscount[car,18]
 AD_04: if potentialTheftRating[car,"high"] and hasAlarm[car] then premiumDiscount[car,10]
+// Driver Premiums Rule Set
+DP_00a: if equals[driver.location,"CA"] then specialLocation[driver]
+DP_00b: if equals[driver.location,"NY"] then specialLocation[driver]
+DP_00c: if equals[driver.location,"VA"] then specialLocation[driver]
+DP_01: if driverCategory[driver,"young driver"] and isMarried[driver] and specialLocation[driver] then additionalDriverPremium[driver,700]
+DP_02: if driverCategory[driver,"young driver"] and not isMarried[driver] and specialLocation[driver] then additionalDriverPremium[driver,720]
+DP_03: if driverCategory[driver,"young driver"] and isMarried[driver] and not specialLocation[driver] then additionalDriverPremium[driver,300]
+DP_04: if driverCategory[driver,"young driver"] and not isMarried[driver] and not specialLocation[driver] then additionalDriverPremium[driver,720]
+DP_05: if driverCategory[driver,"senior driver"] and specialLocation[driver] then additionalDriverPremium[driver,500]
+DP_06: if driverCategory[driver,"senior driver"] and not specialLocation[driver] then additionalDriverPremium[driver,200]
+DP_07: if not driverCategory[driver,"young driver"] and not driverCategory[driver,"senior driver"] then driverCategory[driver,"typical driver"]
+DP_08: if isHighRiskDriver[driver] then additionalDriverPremium[driver,1000]
+// DP_09: 	Raise the premium by $ 150 per accident - cannot yet be expressed
+// additionalDriverPremium[driver,150*driver.getNumberOfAccidentsInvolvedIn]
+// Market Discounts Rule Set
+MSD_01: if isPreferred[client] then additionalDriverPremium[client,-250]
+MSD_02: if isElite[client] then additionalDriverPremium[client,-500]
