@@ -18,7 +18,15 @@ public class Driver {
 	private int numberOfYearsWithUServ = 0;
 	private boolean isPreferred = false;
 	private boolean isElite = false;
+	private String location = "unknown"; // the state, such as CA or NY
+	private boolean isMarried = false;
 	
+	public boolean isMarried() {
+		return isMarried;
+	}
+	public void setMarried(boolean isMarried) {
+		this.isMarried = isMarried;
+	}
 	public boolean isMale() {
 		return isMale;
 	}
@@ -88,6 +96,12 @@ public class Driver {
 	}
 	public void setElite(boolean isElite) {
 		this.isElite = isElite;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
 	}
 	
 	
