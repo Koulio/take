@@ -511,7 +511,7 @@ public class UservTestCases extends TestCase {
 	
 	public void testAP_01() throws Exception {
 		Car car = new Car();
-		car.setCompact(true);
+		car.setCategory("compact");
 		
 		ResultSet<BasePremium> result = kb.getBasePremium(car);
 		assertTrue(result.hasNext());
@@ -519,7 +519,7 @@ public class UservTestCases extends TestCase {
 	}
 	public void testAP_02() throws Exception {
 		Car car = new Car();
-		car.setSedan(true);
+		car.setCategory("sedan");
 		
 		ResultSet<BasePremium> result = kb.getBasePremium(car);
 		assertTrue(result.hasNext());
@@ -528,7 +528,7 @@ public class UservTestCases extends TestCase {
 	
 	public void testAP_03() throws Exception {
 		Car car = new Car();
-		car.setLuxury(true);
+		car.setCategory("luxury");
 		
 		ResultSet<BasePremium> result = kb.getBasePremium(car);
 		assertTrue(result.hasNext());

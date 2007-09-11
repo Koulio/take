@@ -31,10 +31,8 @@ public class Car {
 	private boolean  hasFrontPassengerAirbag = false;
 	private boolean  hasSidePanelAirbags = false;
 	private boolean  hasRollBar = true;
-	private boolean isCompact = true;
-	private boolean isSedan = false;
-	private boolean isLuxury = false;
 	private int age = 0;
+	private String category = "compact";
 	private int modelYear = new java.util.Date().getYear()+1900;
 	private boolean hasAlarm = false;
 	
@@ -86,35 +84,17 @@ public class Car {
 		this.type = type;
 	}
 	public boolean isCompact() {
-		return isCompact;
+		return "compact".equals(this.category);
 	}
-	public void setCompact(boolean isCompactCar) {
-		this.isCompact = isCompactCar;
-		if (isCompact) {
-			this.isLuxury = false;
-			this.isSedan = false;
-		}
-	}
+
 	public boolean isSedan() {
-		return isSedan;
+		return "sedan".equals(this.category);
 	}
-	public void setSedan(boolean isSedan) {
-		this.isSedan = isSedan;
-		if (isSedan) {
-			this.isCompact = false;
-			this.isLuxury = false;
-		}
-	}
+
 	public boolean isLuxury() {
-		return isLuxury;
+		return "luxury".equals(this.category);
 	}
-	public void setLuxury(boolean isLuxuryCar) {
-		this.isLuxury = isLuxuryCar;
-		if (isLuxury) {
-			this.isCompact = false;
-			this.isSedan = false;
-		}
-	}
+
 	public int getAge() {
 		return age;
 	}
@@ -132,5 +112,11 @@ public class Car {
 	}
 	public void setHasAlarm(boolean hasAlarm) {
 		this.hasAlarm = hasAlarm;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
 	}
 }
