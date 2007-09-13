@@ -56,6 +56,7 @@ public abstract class MultiValueResultView extends JPanel {
 		setLayout(new BorderLayout(5,5));
 		add(new JScrollPane(list),BorderLayout.CENTER);
 		JPanel bPane = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		logButton.setBorder(null);
 		bPane.add(logButton);
 		add(bPane,BorderLayout.SOUTH);
 		logButton.addActionListener(

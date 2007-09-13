@@ -31,6 +31,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
+import junit.framework.TestSuite;
+
+import example.nz.org.take.compiler.userv.testcases.UservTestCases;
+
 /**
  * Executable UServ application. Starts a user interface to interact with the rules.
  * Static compilation is used, i.e. the rules are compiled at design time.
@@ -92,5 +96,7 @@ public class Main extends JFrame {
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation((screen.width-W)/2,(screen.height-H)/2);
 	}
+	
+
 	
 }
