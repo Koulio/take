@@ -781,7 +781,7 @@ public class UservTestCases extends TestCase {
 		
 		ResultSet<AdditionalDriverPremium> result = kb.getAdditionalDriverPremium(driver);
 		assertTrue(result.hasNext());
-		assertEquals(720,result.next().premium);
+		assertEquals(300,result.next().premium);
 	}
 	
 	public void testDP_05() throws Exception {		
