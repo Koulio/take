@@ -19,6 +19,7 @@ package example.nz.org.take.compiler.userv.main;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -148,8 +149,8 @@ public class UServPanel extends JPanel {
 		this.add(tabbedPane);
 		
 		// driver editor
-		tabbedPane.add(new JScrollPane(this.driverPanel), "driver details");
-		this.setPanel(driverPanel);
+		activatePanel(tabbedPane,driverPanel, "driver details");
+		
 		add(createIntEditor(driver,"getAge","setAge",0,100),"age",0,40);
 		add(createSelectStringEditor(driver,"getLocation","setLocation",STATES),"location",0,100);
 		add(createBooleanEditor(driver,"isMarried","setMarried"),"is married",0);
@@ -165,19 +166,15 @@ public class UServPanel extends JPanel {
 		add(createIntEditor(driver,"getNumberOfAccidentsInvolvedIn","setNumberOfAccidentsInvolvedIn",0,30),"number of accidents involved in",2,40);
 		add(createIntEditor(driver,"getNumberOfMovingViolationsInLastTwoYears","setNumberOfMovingViolationsInLastTwoYears",0,100),"<html><body align=\"right\">number of moving violations<br>in last two years</body></html>",2,40);
 		add(createIntEditor(driver,"getNumberOfYearsWithUServ","setNumberOfYearsWithUServ",0,50),"number of years with UServ",2,40);
-
 		
 		// car editor
-		tabbedPane.add(new JScrollPane(this.carPanel), "car details");
-		this.setPanel(carPanel);
-		this.addSep("car type",0);
+		activatePanel(tabbedPane,carPanel, "car details");
 		add(createBooleanEditor(car,"isConvertible","setConvertible"),"is convertible",0);
 		add(createSelectStringEditor(car,"getCategory","setCategory",CAR_CATEGORIES),"category",0);
 		add(createIntEditor(car,"getAge","setAge",0,50),"age",0,40);
 		add(createIntEditor(car,"getModelYear","setModelYear",1950,new java.util.Date().getYear()+1901),"model year",0,80);
 		add(createIntEditor(car,"getPrice","setPrice",1000,100000,100),"price",0,80);
 		
-		this.addSep("safety and security",1);
 		add(createBooleanEditor(car,"hasRollBar","setHasRollBar"),"has rollbar",1);
 		add(createBooleanEditor(car,"hasDriversAirbag","setHasDriversAirbag"),"has drivers airbag",1);
 		add(createBooleanEditor(car,"hasFrontPassengerAirbag","setHasFrontPassengerAirbag"),"has front passenger airbag",1);
@@ -185,13 +182,11 @@ public class UServPanel extends JPanel {
 		add(createBooleanEditor(car,"hasAlarm","setHasAlarm"),"has alarm",1);
 
 		// policy editor
-		tabbedPane.add(new JScrollPane(this.policyPanel), "policy details");
-		this.setPanel(policyPanel);
+		activatePanel(tabbedPane,policyPanel, "policy details");	
 		add(createBooleanEditor(policy,"includesMedicalCoverage","setIncludesMedicalCoverage"),"includes medical coverage",0);
-		add(createBooleanEditor(policy,"includesUninsuredMotoristCoverage","setIncludesUninsuredMotoristCoverage"),"includes uninsured motorist coverage",0);
+		add(createBooleanEditor(policy,"includesUninsuredMotoristCoverage","setIncludesUninsuredMotoristCoverage"),"includes uninsured motorist coverage",1);
 		
-		// output
-		
+		// output		
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setBorder(
 				BorderFactory.createCompoundBorder(
@@ -201,8 +196,7 @@ public class UServPanel extends JPanel {
 		this.add(tabbedPane);
 		
 		// driver eligibility
-		tabbedPane.add(new JScrollPane(this.driverEligibilityPanel), "driver eligibility");
-		this.setPanel(driverEligibilityPanel);
+		activatePanel(tabbedPane,driverEligibilityPanel, "driver eligibility");	
 		
 		resultPanel.setBorder(
 				BorderFactory.createCompoundBorder(
@@ -213,29 +207,34 @@ public class UServPanel extends JPanel {
 		addOut(this.txtDriverEligibility,"is eligible",0,40);
 		addOut(this.txtHasTrainingCertification,"has training certification",0,40);
 		addOut(this.txtHighRiskDriver,"is high risk driver",0,40);
-		addOut(this.txtLongTermClient,"is long term client",0,40); // TODO
-		
+		addOut(this.txtLongTermClient,"is long term client",0,40);
 		addOut(this.multiOutPolicyEligibilityScore,"policy eligibility score",1,80);
 		addOut(this.txtInsuranceEligibility,"insurance eligibility",1,200);
 		
 		// premium
-		tabbedPane.add(new JScrollPane(this.policyPremiumPanel), "policy premium");
-		this.setPanel(policyPremiumPanel);
-		
-		
-		addOut(this.multiAdditionalPremium,"additional premium",0,80);
+		activatePanel(tabbedPane,policyPremiumPanel, "policy premium");		
+		addOut(this.multiAdditionalPremium,"<html><body align=\"right\">additional<br/>premium</body></html>",0,80);
 		addOut(this.txtBasePremium,"base premium",0,100); 
-		addOut(this.multiAdditionalDriverPremium,"additional driver premium",1,80);
+		addOut(this.multiAdditionalDriverPremium,"<html><body align=\"right\">additional<br/>driver<br/>premium</body></html>",1,80);
+		addOut(this.multiPremiumDiscount,"<html><body align=\"right\">premium<br/>discounts</body></html>",2,80);
 		
+		//<html><body align=\"right\">additional<br>premium</body></html>
 		// discounts
-		tabbedPane.add(new JScrollPane(this.discountPanel), "discounts");
-		this.setPanel(discountPanel);
+		activatePanel(tabbedPane,discountPanel, "discounts");		
 		
-		addOut(this.multiPremiumDiscount,"premiumDiscounts",1,80);
 		
 		// apply rules to initial settings
 		this.applyRules();
 	}
+	
+	private void activatePanel(JTabbedPane tabbedPane,JPanel panel,String name) {
+		
+		JPanel container = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		tabbedPane.add(new JScrollPane(container), name);
+		container.add(panel);
+		this.setPanel(panel);
+	} 
+	
 	// load the rules and store them in a registry 
 	// only used to display meta information 
 	private void loadRules() {
@@ -382,7 +381,7 @@ public class UServPanel extends JPanel {
 		c.gridy = ++rowCounts[col];
 		c.gridwidth = 1;
 		c.gridheight = 5;
-		c.anchor = c.EAST;
+		c.anchor = c.NORTHEAST;
 		c.fill = c.NONE;
 		JLabel jlabel = new JLabel();
 		jlabel.setText(label);
@@ -392,7 +391,7 @@ public class UServPanel extends JPanel {
 		c.gridx = 3*col+1;
 		c.gridwidth = 2;
 		c.weightx = 2;
-		c.fill = c.HORIZONTAL;
+		c.fill = c.VERTICAL;
 		Dimension size = component.getPreferredSize();
 		if (width!=-1) {
 			size.width=width;
