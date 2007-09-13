@@ -1,0 +1,41 @@
+// script for test scenario 9
+@@dc:creator=jens dietrich
+@@dc:date=05/06/2007
+var test.nz.org.take.compiler.scenario9.Loan loan
+var int x
+// queries - annotations are optional and are used to generate 
+@take.compilerhint.class=LoanAssessment
+@take.compilerhint.slots=loan,result
+@take.compilerhint.method=assess1
+query assess1[in,out]
+@take.compilerhint.class=LoanAssessment
+@take.compilerhint.slots=loan,result
+@take.compilerhint.method=assess2
+query assess2[in,out]
+@take.compilerhint.class=LoanAssessment
+@take.compilerhint.slots=loan,result
+@take.compilerhint.method=assess3
+query assess3[in,out]
+@take.compilerhint.class=LoanAssessment
+@take.compilerhint.slots=loan,result
+@take.compilerhint.method=assess4
+query assess4[in,out]
+@take.compilerhint.class=LoanAssessment
+@take.compilerhint.slots=loan,result
+@take.compilerhint.method=assess5
+query assess5[in,out]
+// aggregations
+aggregation totalriskpremium = sum x riskpremium[loan,x]
+aggregation minriskpremium = min x riskpremium[loan,x]
+aggregation maxriskpremium = max x riskpremium[loan,x]
+aggregation countriskpremium = count x riskpremium[loan,x]
+aggregation avgriskpremium = avg x riskpremium[loan,x]
+// rules
+rule1: if loan.clientRisk>7 then riskpremium[loan,100]
+rule2: if loan.countryRisk>6 then riskpremium[loan,50]
+rule3: if loan.currencyRisk>8 then riskpremium[loan,75]
+rule4: if loan.totalriskpremium>200 then assess1[loan,"reject: total risk score to high"]
+rule5: if loan.minriskpremium==50 then assess2[loan,"reject: lowest risk score to high"]
+rule6: if loan.maxriskpremium==100 then assess3[loan,"reject: max risk score to high"]
+rule7: if loan.countriskpremium==3 then assess4[loan,"reject: risk count to high"]
+rule8: if loan.avgriskpremium==75 then assess5[loan,"reject: average risk score to high"]
