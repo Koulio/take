@@ -84,10 +84,12 @@ public class Main extends JFrame {
 				Main.this.dispose();
 			}});
 		toolbar.addSeparator();
+		/**
 		toolbar.add(new AbstractAction("validate rules"){
 			public void actionPerformed(ActionEvent e) {
 				validateRules();
 			}});
+		**/
 		toolbar.add(new AbstractAction("show rules"){
 			public void actionPerformed(ActionEvent e) {
 				ScriptViewer.showScript();
@@ -113,19 +115,24 @@ public class Main extends JFrame {
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation((screen.width-W)/2,(screen.height-H)/2);
 	}
-	
+	/** removed - requires signed lib to run with webstart
 	private void validateRules() {
-		TestSuite suite = new TestSuite();
-		suite.addTest(new UservTestCases());
-		
-		junit.swingui.TestRunner r = new junit.swingui.TestRunner() {
-			public void terminate() {
-				this.fFrame.setDefaultCloseOperation(fFrame.DISPOSE_ON_CLOSE);
-				this.fFrame.dispose();
-			}
-		};
-		r.start(new String[]{UservTestCases.class.getName()});
+		try {
+			TestSuite suite = new TestSuite();
+			suite.addTest(new UservTestCases());
+			junit.swingui.TestRunner r = new junit.swingui.TestRunner() {
+				public void terminate() {
+					this.fFrame.setDefaultCloseOperation(fFrame.DISPOSE_ON_CLOSE);
+					this.fFrame.dispose();
+				}
+			};
+			r.start(new String[]{UservTestCases.class.getName()});
+		}
+		catch (SecurityException x) {
+			JOptionPane.showMessageDialog(this,"Validation uses the JUnit library that interacts with the local file system.\nFor security reasons, this function is only available in offline mode");
+		}
 	}
+	*/
 	
 	private void about() {
 		String about = 	"<html>"+
