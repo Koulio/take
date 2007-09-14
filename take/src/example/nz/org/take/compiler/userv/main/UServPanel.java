@@ -218,11 +218,6 @@ public class UServPanel extends JPanel {
 		addOut(this.multiAdditionalDriverPremium,"<html><body align=\"right\">additional<br/>driver<br/>premium</body></html>",1,80);
 		addOut(this.multiPremiumDiscount,"<html><body align=\"right\">premium<br/>discounts</body></html>",2,80);
 		
-		//<html><body align=\"right\">additional<br>premium</body></html>
-		// discounts
-		activatePanel(tabbedPane,discountPanel, "discounts");		
-		
-		
 		// apply rules to initial settings
 		this.applyRules();
 	}
