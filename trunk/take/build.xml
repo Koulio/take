@@ -198,8 +198,8 @@
 	<jar jarfile="${build.main.jar}.jar" 
 		manifest="${build.tmp}/manifest.mf" 
 		basedir="${build.classes}"
+		excludes="example/**/*.*,test/**/*.*,nz/org/take/rt/*.*,nz/org/take/script/**/*.*"
 		includes="nz/**/*.*"
-		excludes="example/**/*.*,/**/*.*,test/**/*.*,/**/*.*,nz/org/take/rt/*.*,nz/org/take/script/**/*.*"
 	/>
 	
 	<!-- runtime classes -->
