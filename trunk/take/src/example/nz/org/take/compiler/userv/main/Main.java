@@ -28,6 +28,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
@@ -73,6 +74,7 @@ public class Main extends JFrame {
 	
 	private void init() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("UServ");
 		JPanel pane = new JPanel(new BorderLayout(5,5));
 		JToolBar toolbar = new JToolBar();
 		pane.add(toolbar,BorderLayout.NORTH);
@@ -81,6 +83,21 @@ public class Main extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Main.this.dispose();
 			}});
+		toolbar.addSeparator();
+		toolbar.add(new AbstractAction("validate rules"){
+			public void actionPerformed(ActionEvent e) {
+				validateRules();
+			}});
+		toolbar.add(new AbstractAction("show rules"){
+			public void actionPerformed(ActionEvent e) {
+				ScriptViewer.showScript();
+			}});
+		toolbar.addSeparator();
+		toolbar.add(new AbstractAction("about"){
+			public void actionPerformed(ActionEvent e) {
+				about();
+			}});
+		
 		
 		JPanel butPane = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JLabel lab = new JLabel("UServ Product Derby Case Study is Copyright Business Rules Forum (http://www.businessrulesforum.com/)");
@@ -97,6 +114,27 @@ public class Main extends JFrame {
 		setLocation((screen.width-W)/2,(screen.height-H)/2);
 	}
 	
-
+	private void validateRules() {
+		TestSuite suite = new TestSuite();
+		suite.addTest(new UservTestCases());
+		
+		junit.swingui.TestRunner r = new junit.swingui.TestRunner() {
+			public void terminate() {
+				this.fFrame.setDefaultCloseOperation(fFrame.DISPOSE_ON_CLOSE);
+				this.fFrame.dispose();
+			}
+		};
+		r.start(new String[]{UservTestCases.class.getName()});
+	}
+	
+	private void about() {
+		String about = 	"<html>"+
+						"UServ Implementation based on take. See <tt>http://code.google.com/p/take</tt> for details.<br>" + 
+						"&copy; Jens Dietrich, Massey University (<tt>http://www-ist.massey.ac.nz/jbdietrich</tt>) 2007. (software)<br>" + 
+						"&copy; Business Rules Forum (<tt>http://www.businessrulesforum.com</tt>) 2005. (UServ Product Derby Case Study)<br>" + 
+						"The software is licensed under the GNU Lesser General Public License (LGPL) version 2" + 
+						"</html>";
+		JOptionPane.showMessageDialog(this,about,"About UServ",JOptionPane.INFORMATION_MESSAGE);
+	}
 	
 }
