@@ -62,7 +62,7 @@ public class UServPanel extends JPanel {
 	private Map<String,List<DerivationLogEntry>> derivationLogs = new HashMap<String,List<DerivationLogEntry>> ();
 	
 	private UservRules kb = new UservRules();
-	private Map<String,Annotatable> rulesById = new HashMap<String,Annotatable>();
+	private Map<String,Annotatable> rulesById = loadRules();
 	
 	// constants
 	private final static String[] STATES = {
@@ -132,6 +132,7 @@ public class UServPanel extends JPanel {
 	private void init() {
 		
 		loadRules();
+		
 		// prepare kb - set constants
 		Constants.HighTheftProbabilityAutoList = HighTheftProbabilityAutoList.getList();
 		Constants.CurrentYear = new java.util.Date().getYear()+1900;
@@ -232,17 +233,19 @@ public class UServPanel extends JPanel {
 	
 	// load the rules and store them in a registry 
 	// only used to display meta information 
-	private void loadRules() {
+	private Map<String,Annotatable> loadRules() {
+
+		final Map<String,Annotatable> rules = new HashMap<String,Annotatable>();
 		InputStream script = ScriptKnowledgeSource.class.getResourceAsStream("/example/nz/org/take/compiler/userv/rules/userv.take");
 		try {
 			KnowledgeBase kb = new ScriptKnowledgeSource(script).getKnowledgeBase();
 			KnowledgeBaseVisitor visitor = new AbstractKnowledgeBaseVisitor() {
 				public boolean visit(DerivationRule r) {
-					rulesById.put(r.getId(),r);
+					rules.put(r.getId(),r);
 					return false;
 				}
 				public boolean visit(Fact f) {
-					rulesById.put(f.getId(),f);
+					rules.put(f.getId(),f);
 					return false;
 				}
 			};
@@ -250,7 +253,8 @@ public class UServPanel extends JPanel {
 		} catch (TakeException e) {
 			e.printStackTrace();
 		}
-		
+		return rules;
+	
 	}
 
 

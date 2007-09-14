@@ -35,7 +35,7 @@ import nz.org.take.rt.DerivationLogEntry;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class DerivationModel extends UServPanel implements TreeModel {
+public class DerivationModel  implements TreeModel {
 	private List<DerivationLogEntry> derivationLog = new ArrayList<DerivationLogEntry>();
 	private Map<String,List<Annotation>> annotations = new HashMap<String,List<Annotation>>();
 	
@@ -59,16 +59,18 @@ public class DerivationModel extends UServPanel implements TreeModel {
 				derivationLog.add(e);
 			}
 		}
-		for (Entry<String,Annotatable> e:ann.entrySet()) {
-			String id = e.getKey();
-			Annotatable a = e.getValue();
-			List<Annotation> list = new ArrayList<Annotation>();
-			for (Entry<String,String> e2:a.getAnnotations().entrySet()) {
-				Annotation n = new Annotation(id,e2.getKey(),e2.getValue());
-				list.add(n);
-			}
-			annotations.put(id,list);
-		} 
+		if (ann!=null) {
+			for (Entry<String,Annotatable> e:ann.entrySet()) {
+				String id = e.getKey();
+				Annotatable a = e.getValue();
+				List<Annotation> list = new ArrayList<Annotation>();
+				for (Entry<String,String> e2:a.getAnnotations().entrySet()) {
+					Annotation n = new Annotation(id,e2.getKey(),e2.getValue());
+					list.add(n);
+				}
+				annotations.put(id,list);
+			} 
+		}
 	}
 
 
