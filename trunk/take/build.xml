@@ -4,7 +4,7 @@
 	
 <project name="take" default="jar">
 	<property name="name" value="take"/>
-	<property name="version" value="1.1.2"/>
+	<property name="version" value="1.1.3"/>
 	<property name="debug" value="on"/>
 	<property name="src.dir" value="src"/>
 	<property name="classes.dir" value="classes"/>
@@ -25,7 +25,8 @@
 	<property name="report.jdepend" value="${qareports.dir}/jdepend"/>
 	<property name="build.test.jar" value="${build.lib}/${name}-tests-${version}"/>
 	<property name="build.example.jar" value="${build.lib}/${name}-examples-${version}"/>
-
+	<property name="build.userv.jar" value="${build.lib}/${name}-userv-${version}"/>
+	
 	<path id="build.classpath">
         <fileset dir="lib">
             <include name="**/*.jar" />
@@ -103,6 +104,7 @@
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario8.Tests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario9.Tests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario10.Tests"/>
+		<test todir="${report.junit}" name="example.nz.org.take.compiler.userv.testcases.UservTestCases"/>
 	</junit>
 	<!-- report -->
 	<junitreport todir="${report.junit}">
@@ -163,6 +165,17 @@
 		includes="test/**/*.*"
 	/>
 	
+	<!-- userv example -->
+	<filter token="TITLE" value="$UServ example"/>
+	<filter token="MAIN" value="example.nz.org.take.compiler.userv.main.Main"/>
+	<delete file="${build.tmp}/manifest.mf"/>
+	<copy file="${config.dir}/userv.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
+	<jar jarfile="${build.userv.jar}.build${today}.jar" 
+		manifest="${build.tmp}/manifest.mf" 
+		basedir="${build.classes}"
+		includes="example/nz/org/take/compiler/userv/**/*.*"
+	/>
+	
 	<!-- examples -->
 	<filter token="TITLE" value="${name} examples"/>
 	<delete file="${build.tmp}/manifest.mf"/>
@@ -170,7 +183,7 @@
 	<jar jarfile="${build.example.jar}.build${today}.jar" 
 		manifest="${build.tmp}/manifest.mf" 
 		basedir="${build.classes}"
-		includes="example/**/*.*"
+		includes="example/nz/org/take/compiler/example*/**/*.*"
 	/>
 </target>
 	
@@ -221,6 +234,17 @@
 		includes="test/**/*.*"
 	/>
 	
+	<!-- userv example -->
+	<filter token="TITLE" value="$UServ example"/>
+	<filter token="MAIN" value="example.nz.org.take.compiler.userv.main.Main"/>
+	<delete file="${build.tmp}/manifest.mf"/>
+	<copy file="${config.dir}/userv.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
+	<jar jarfile="${build.userv.jar}.jar" 
+		manifest="${build.tmp}/manifest.mf" 
+		basedir="${build.classes}"
+		includes="example/nz/org/take/compiler/userv/**/*.*"
+	/>
+	
 	<!-- examples -->
 	<filter token="TITLE" value="${name} examples"/>
 	<delete file="${build.tmp}/manifest.mf"/>
@@ -228,7 +252,7 @@
 	<jar jarfile="${build.example.jar}.jar" 
 		manifest="${build.tmp}/manifest.mf" 
 		basedir="${build.classes}"
-		includes="example/**/*.*"
+		includes="example/nz/org/take/compiler/example*/**/*.*"
 	/>
 </target>
 	
