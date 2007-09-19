@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
-import nz.org.take.Annotatable;
+import example.nz.org.take.compiler.userv.generated.UservRules;
 import nz.org.take.rt.DerivationController;
 import nz.org.take.rt.DerivationLogEntry;
 
@@ -38,7 +38,7 @@ import nz.org.take.rt.DerivationLogEntry;
 public class DerivationModel  implements TreeModel {
 	private List<DerivationLogEntry> derivationLog = new ArrayList<DerivationLogEntry>();
 	private Map<String,List<Annotation>> annotations = new HashMap<String,List<Annotation>>();
-	
+	private UservRules kb = new UservRules();
 	class Annotation {
 		String owner,key,value;
 		public Annotation(String owner, String key, String value) {
@@ -52,28 +52,31 @@ public class DerivationModel  implements TreeModel {
 		}
 	}
 	
-	public DerivationModel(List<DerivationLogEntry> log,Map<String,Annotatable> ann) {
+	public DerivationModel(List<DerivationLogEntry> log) {
 		
 		for (DerivationLogEntry e:log) {
 			if (e.getKind()==DerivationController.RULE || e.getKind()==DerivationController.FACT || e.getKind()==DerivationController.EXTERNAL_FACT_SET) {
 				derivationLog.add(e);
 			}
 		}
-		if (ann!=null) {
-			for (Entry<String,Annotatable> e:ann.entrySet()) {
-				String id = e.getKey();
-				Annotatable a = e.getValue();
-				List<Annotation> list = new ArrayList<Annotation>();
-				for (Entry<String,String> e2:a.getAnnotations().entrySet()) {
-					Annotation n = new Annotation(id,e2.getKey(),e2.getValue());
-					list.add(n);
-				}
-				annotations.put(id,list);
-			} 
-		}
 	}
 
 
+	private List<Annotation> getAnnotations(String id) {
+		List<Annotation>  l = this.annotations.get(id);
+		if (l==null) {
+			l = new ArrayList<Annotation>();
+			Map<String,String> map = kb.getAnnotations(id);
+			if (map!=null) {
+				for (Entry<String,String> e:map.entrySet()) {
+					Annotation n = new Annotation(id,e.getKey(),e.getValue());
+					l.add(n);
+				}
+			}
+			annotations.put(id,l);
+		}
+		return l;
+	}
 	public void addTreeModelListener(TreeModelListener l) {
 	}
 
@@ -81,8 +84,8 @@ public class DerivationModel  implements TreeModel {
 		if (parent==derivationLog) {
 			return derivationLog.get(index).getName();
 		}
-		else if (parent instanceof String) { // id
-			return annotations.get(parent).get(index);
+		else if (parent instanceof String) {
+			return getAnnotations((String)parent).get(index);
 		}
 		return null;
 	}
@@ -92,7 +95,7 @@ public class DerivationModel  implements TreeModel {
 			return derivationLog.size();
 		}
 		else if (parent instanceof String) { 
-			List<Annotation> l = annotations.get(parent);
+			List<Annotation> l = getAnnotations((String)parent);
 			return l==null?0:l.size();
 		}
 		return 0;
@@ -103,7 +106,7 @@ public class DerivationModel  implements TreeModel {
 		if (parent==derivationLog)
 			return derivationLog.indexOf(child);
 		else if (parent instanceof String) {
-			return annotations.get(parent).indexOf(child);
+			return getAnnotations((String)parent).indexOf(child);
 		}
 		return 0;
 	}

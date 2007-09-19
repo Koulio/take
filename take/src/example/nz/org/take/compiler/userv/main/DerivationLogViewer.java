@@ -23,7 +23,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -31,7 +30,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import nz.org.take.Annotatable;
 import nz.org.take.rt.DerivationLogEntry;
 
 /**
@@ -41,12 +39,12 @@ import nz.org.take.rt.DerivationLogEntry;
 
 public class DerivationLogViewer {
 
-	public static void displayUsedRules(List<DerivationLogEntry> log,Map<String,Annotatable> rulesById,JComponent parentComponent) {
+	public static void displayUsedRules(List<DerivationLogEntry> log,JComponent parentComponent) {
 		
 		if (log.size()==0) 
 			JOptionPane.showMessageDialog(parentComponent, "There are no applicable rules", "", JOptionPane.WARNING_MESSAGE);
 		else {
-			DerivationModel treeModel = new DerivationModel(log,rulesById);
+			DerivationModel treeModel = new DerivationModel(log);
 			JTree tree = new JTree(treeModel);
 			tree.setRootVisible(false);
 			tree.setPreferredSize(new Dimension(700,400));
