@@ -19,14 +19,11 @@
 package nz.org.take.compiler.reference;
 
 import java.beans.XMLEncoder;
-import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.util.*;
 import java.util.Map.Entry;
-
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-
 import nz.org.take.compiler.*;
 import nz.org.take.compiler.Compiler;
 import nz.org.take.compiler.util.*;
@@ -40,7 +37,10 @@ import nz.org.take.*;
 public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	
 	private static final String RESULT = "result";
+	// file name for the resource where the annotations are stored
 	private static final String ANNOTATION_STORE = "annotations.xml";
+	// under this pseudo id global annotations will be stored
+	private static final String GLOBAL_ANNOTATION_KEY = "___global_annotations";
 	
 	// instance variable names
 	private String varName4DerivationController = "_derivation";
@@ -657,9 +657,13 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	 */
 	private void createAnnotationStore() throws CompilerException {
 		Map<String,Map<String,String>> annotations = new HashMap<String,Map<String,String>>();
+		// local annotations
 		for (KnowledgeElement e:this.kb.getElements()) {
 			annotations.put(e.getId(),e.getAnnotations());
 		}
+		// global annotations
+		annotations.put(GLOBAL_ANNOTATION_KEY,kb.getAnnotations());
+		
 	    XMLEncoder e = new XMLEncoder(location.getResourceOut(packageName,ANNOTATION_STORE));
 	    e.writeObject(annotations);
 	    e.close();
@@ -672,21 +676,35 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	 * @param PrintWriter out
 	 */
 	private void createAnnotationMethod(PrintWriter out,boolean isInterface) throws CompilerException {
-		String templateName = "AnnotationMethod.vm";
-		Template template = VelocitySupport.getTemplate(templateName);
+
 		VelocityContext context = new VelocityContext();
+		
+		// create method for local annotations
+		String templateName = "LocalAnnotationMethod.vm";
 		String annotationStore = "/"+packageName.replace('.','/')+'/'+ANNOTATION_STORE;
 		context.put("isInterface", isInterface);
 		context.put("methodName", "getAnnotations");
 		context.put("templatename", templateName);
 		context.put("annotationStore", annotationStore);
 		context.put("class", className);
-		
+		Template template = VelocitySupport.getTemplate(templateName);
 		try {
 			template.merge(context, out);
 		} catch (Exception x) {
 			throw new CompilerException("Problem merging compilation template used to generate annotation method",x);
 		} 
+		
+		// create method for global annotations
+		templateName = "GlobalAnnotationMethod.vm";
+		template = VelocitySupport.getTemplate(templateName);
+		context.put("templatename", templateName); // override
+		context.put("globalAnnotationKey",GLOBAL_ANNOTATION_KEY);
+		try {
+			template.merge(context, out);
+		} catch (Exception x) {
+			throw new CompilerException("Problem merging compilation template used to generate global annotation method",x);
+		} 
+		
 		// AnnotationMethod.vm
 	    if (!isInterface) {
 	    	this.createAnnotationStore();
