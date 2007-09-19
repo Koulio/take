@@ -18,9 +18,14 @@
 
 package nz.org.take.compiler.reference;
 
+import java.beans.XMLEncoder;
+import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.util.*;
 import java.util.Map.Entry;
+
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
 
 import nz.org.take.compiler.*;
 import nz.org.take.compiler.Compiler;
@@ -35,6 +40,7 @@ import nz.org.take.*;
 public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	
 	private static final String RESULT = "result";
+	private static final String ANNOTATION_STORE = "annotations.xml";
 	
 	// instance variable names
 	private String varName4DerivationController = "_derivation";
@@ -136,6 +142,9 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			createPublicMethod(out,q,false,false);
 		}
 
+		// add meta data registry
+		createAnnotationMethod(out,true);
+		
 		out.println("}");
 		out.close();
 		String fullClassName = packageName + "." + className;
@@ -143,6 +152,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		
 		this.nameGenerator.reset();
 	}
+
 	/**
 	 * Compile the kb.
 	 * @param kb a knowledge base
@@ -211,6 +221,9 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			out = new PrintWriter(location.getSrcOut(fullClassName));
 			this.classWriters.put(className, out);
 			createMainKBClass(out, className, packageName);
+			// add meta data registry
+			createAnnotationMethod(out,false);
+			
 			// public methods for queries
 			for (Query q:kb.getQueries()) {
 				this.createPublicMethod(out, q, true, false);
@@ -631,12 +644,55 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	 * @param q
 	 * @throws CompilerException
 	 */
-	@SuppressWarnings("unchecked")
 	private void createMethod(PrintWriter out, String className, Query q)	throws CompilerException {
 		if (mustCreatePublicMethod(q))
 			createPublicMethod(out,q,true,true);
 		createPrivateMethod(out,className,q);
 	}
+	
+	/**
+	 * Create the annotations store, i.e. a simple file that holds the annotation
+	 * data and makes them available at runtime. 
+	 * This is a file storing the persistent annotations.
+	 */
+	private void createAnnotationStore() throws CompilerException {
+		Map<String,Map<String,String>> annotations = new HashMap<String,Map<String,String>>();
+		for (KnowledgeElement e:this.kb.getElements()) {
+			annotations.put(e.getId(),e.getAnnotations());
+		}
+	    XMLEncoder e = new XMLEncoder(location.getResourceOut(packageName,ANNOTATION_STORE));
+	    e.writeObject(annotations);
+	    e.close();
+	}
+
+	
+	/**
+	 * Create the method returning the annotations. 
+	 * This is a file storing the persistent annotations.
+	 * @param PrintWriter out
+	 */
+	private void createAnnotationMethod(PrintWriter out,boolean isInterface) throws CompilerException {
+		String templateName = "AnnotationMethod.vm";
+		Template template = VelocitySupport.getTemplate(templateName);
+		VelocityContext context = new VelocityContext();
+		String annotationStore = "/"+packageName.replace('.','/')+'/'+ANNOTATION_STORE;
+		context.put("isInterface", isInterface);
+		context.put("methodName", "getAnnotations");
+		context.put("templatename", templateName);
+		context.put("annotationStore", annotationStore);
+		context.put("class", className);
+		
+		try {
+			template.merge(context, out);
+		} catch (Exception x) {
+			throw new CompilerException("Problem merging compilation template used to generate annotation method",x);
+		} 
+		// AnnotationMethod.vm
+	    if (!isInterface) {
+	    	this.createAnnotationStore();
+	    }
+	}
+	
 	/**
 	 * Define for which predicates (queries) not to define a public method. 
 	 * E.g., not public methods are generated for numerical comparisons. 

@@ -19,6 +19,10 @@
 package nz.org.take.deployment;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -112,7 +116,7 @@ public class KnowledgeBaseManager<I> {
 		checkFolder(srcFolder);
 		checkFolder(binFolder);
 		
-		Location location = new DefaultLocation(srcFolder,binFolder);
+		Location location = new DefaultLocation(srcFolder);
 		String version = "impl_v"+dateFormat.format(new Date());
 		
 		String packageName = spec.getPackage().getName() +  '.'+version;
@@ -144,8 +148,8 @@ public class KnowledgeBaseManager<I> {
         String[] options = new String[]{"-d",binFolder};
 	    compiler.getTask(null, fileManager, null, Arrays.asList(options), null, compilationUnits1).call();
 	    
-
-	    
+	    // copy resource from src to bin folder
+	    copyResources(new File(srcFolder),binFolder);
 	    
 		// load class
 	    String fullClassName = packageName+'.'+className;
@@ -165,6 +169,36 @@ public class KnowledgeBaseManager<I> {
 	    	throw new DeploymentException ("Cannot load generated class "+fullClassName,x);
 	    }
 		
+	}
+
+	private void copyResources(File from,String context) {
+		File[] files = from.listFiles();		
+		if (files!=null) {
+			FileInputStream in;
+			for (File f:files) {
+			    if (!f.getName().endsWith(".java")) {
+			    	if (f.isDirectory()) {
+			    		copyResources(f,context+'/'+f.getName());
+			    	}
+			    	else {
+						try {
+							String to = context+'/'+f.getName();
+							in = new FileInputStream(f);
+						    FileOutputStream out = new FileOutputStream(to);
+						    byte[] buffer = new byte[4096];
+						    int bytesRead;
+						    while ((bytesRead = in.read(buffer)) != -1)
+						    	out.write(buffer, 0, bytesRead);
+						    out.close();
+						    in.close();
+						} 
+						catch (IOException e) {
+							e.printStackTrace();
+						}
+			    	}
+			    }
+			}
+		}
 	}
 
 	private void setupBindings(Bindings bindings, String constantClassName,ClassLoader classloader) throws TakeException{

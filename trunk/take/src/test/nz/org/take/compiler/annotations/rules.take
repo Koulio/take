@@ -1,0 +1,9 @@
+// script for test misc1
+@@dc:creator=jens dietrich
+@@dc:date=13/07/2007
+var test.nz.org.take.compiler.misc1.Person person1,person2
+query is_father_of[in,in]
+// rules
+@description=a description
+@date=2007-09-19
+rule1: if equals[person1.name,person2.name] then is_father_of[person1,person2]
