@@ -17,14 +17,14 @@
  */
 
 
-package test.nz.org.take.compiler.scenario2;
+package test.nz.org.take.compiler.annotations;
 
 import org.apache.log4j.BasicConfigurator;
 import nz.org.take.KnowledgeBase;
-import nz.org.take.KnowledgeSource;
-import nz.org.take.TakeException;
 import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
+import nz.org.take.script.ScriptException;
+import nz.org.take.script.ScriptKnowledgeSource;
 
 
 /**
@@ -47,16 +47,14 @@ public class GenerateInterfaces {
 		// generate kb
 		KnowledgeBase kb = null;
 		try {
-			KnowledgeSource KSrc = new GenerateKB();
+			ScriptKnowledgeSource KSrc = new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/annotations/rules.take"));
 			kb = KSrc.getKnowledgeBase();
-		} catch (TakeException e) {
+		} catch (ScriptException e) {
 			e.printStackTrace();
 		}
-		compiler.setPackageName("test.nz.org.take.compiler.scenario2.generated");
+		compiler.setPackageName("test.nz.org.take.compiler.annotations.generated");
 		compiler.setClassName("KB");
 		compiler.compileInterface(kb);
 
 	}
-
 }
-

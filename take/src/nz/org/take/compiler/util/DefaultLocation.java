@@ -24,26 +24,17 @@ import nz.org.take.compiler.CompilerException;
 import nz.org.take.compiler.Location;
 
 /**
- * Default location, assuming that src are in ./src and compiled classes
- * are in ./bin.
+ * Default location, assuming that src are in ./src.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
   */
 
 public class DefaultLocation implements Location {
 	
 	private String srcFolder = "src";
-	private String binFolder = "bin";
 	
-	public DefaultLocation(String srcFolder, String binFolder) {
+	public DefaultLocation(String srcFolder) {
 		super();
 		this.srcFolder = srcFolder;
-		this.binFolder = binFolder;
-		checkFolders();
-	}
-	public DefaultLocation(String outputFolder) {
-		super();
-		this.srcFolder = outputFolder;
-		this.binFolder = outputFolder;
 		checkFolders();
 	}
 	public DefaultLocation() {
@@ -55,29 +46,24 @@ public class DefaultLocation implements Location {
 	/**
 	 * Get the file location.
 	 * @param c a fully qualified class name
-	 * @param isSrc whether this is for a source or a compiled class file
+	 * @param isClass whether this is for a class or a resource
 	 * @return a path
 	 */
-	private String getLocation(String c,boolean isSrc) {
+	private String getLocation4Class(String c) {
 		String p = c.replace('.','/');
-		if (isSrc) { // Java compiler will create folders
-			int idx = p.lastIndexOf('/');
-			if (idx!=-1) {
-				String folder = p.substring(0,idx);
-				folder = srcFolder+"/" + folder;
-				this.checkFolder(folder);
-			}
+		// Java compiler will create folders
+		int idx = p.lastIndexOf('/');
+		if (idx!=-1) {
+			String folder = p.substring(0,idx);
+			folder = srcFolder+"/" + folder;
+			this.checkFolder(folder);
 		}
-		if (isSrc) 
-			return srcFolder+"/"+p+".java";
-		else 
-			return binFolder+"/"+p+".class";
+		return srcFolder+"/"+p+".java";
 	}
 	/**
 	 * Check whether folders exist. Try to create them if not.
 	 */
 	private void checkFolders() {
-		checkFolder(this.binFolder);
 		checkFolder(this.srcFolder);
 	}
 	/**
@@ -97,68 +83,22 @@ public class DefaultLocation implements Location {
 	 */
 	public Writer getSrcOut(String c) throws CompilerException {
 		try{
-			return new FileWriter(getLocation(c,true));
+			return new FileWriter(getLocation4Class(c));
 		}
 		catch (IOException x) {
 			throw new CompilerException(x);
 		}	
 	}
-	/**
-	 * Get a stream to read source code.
-	 * @param c a class name
-	 * @return a reader
-	 */
-	public Reader getSrcIn(String c) throws CompilerException {
-		try {
-			return new FileReader(getLocation(c,true));
-		}
-		catch (IOException x) {
-			throw new CompilerException(x);
-		}	
-	}
-	/**
-	 * Get a stream to write compiled code.
-	 * @param c a class name
-	 * @return an output stream 
-	 */
-	public OutputStream getBinOut(String c) throws CompilerException {
-		try {
-			return new FileOutputStream(getLocation(c,false));
-		}
-		catch (IOException x) {
-			throw new CompilerException(x);
-		}	
-	}
-	/**
-	 * Get a stream to read compiled code.
-	 * @param c a class name
-	 * @return an input stream
-	 */
-	public InputStream getBinIn(String c) throws CompilerException {
-		try{
-			return new FileInputStream(getLocation(c,true));
-		}
-		catch (IOException x) {
-			throw new CompilerException(x);
-		}	
-	}
+
 	/**
 	 * Get the source code file. Some tools (Jalopy) require direct access to the file. 
 	 * @param c a class name
 	 * @return a file
 	 */
 	public File getSrcFile(String c) throws CompilerException {
-		return new File(getLocation(c,true));		
+		return new File(getLocation4Class(c));		
 	}
 
-	public String getBinFolder() {
-		return binFolder;
-	}
-
-	public void setBinFolder(String binFolder) {
-		this.binFolder = binFolder;
-		this.checkFolder(binFolder);
-	}
 
 	public String getSrcFolder() {
 		return srcFolder;
@@ -169,5 +109,15 @@ public class DefaultLocation implements Location {
 		this.checkFolder(srcFolder);
 	}
 
+	public OutputStream getResourceOut(String p,String r) throws CompilerException {
+		
+		String f = this.srcFolder+'/'+p.replace('.','/')+'/'+r;
+		try{
+			return new FileOutputStream(f);
+		}
+		catch (IOException x) {
+			throw new CompilerException(x);
+		}
+	}
 
 }

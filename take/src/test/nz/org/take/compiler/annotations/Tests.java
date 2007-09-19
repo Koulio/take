@@ -16,24 +16,22 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package test.nz.org.take.compiler.scenario8;
+package test.nz.org.take.compiler.annotations;
 
-import java.io.File;
+import java.util.Map;
 
 import javax.script.Bindings;
 import javax.script.SimpleBindings;
 import test.nz.org.take.TakeTestCase;
-import test.nz.org.take.compiler.scenario8.generated.IsFatherOf;
-import test.nz.org.take.compiler.scenario8.generated.IsGrandfatherOf;
-import test.nz.org.take.compiler.scenario8.generated.KB;
+import test.nz.org.take.compiler.annotations.generated.KB;
 import nz.org.take.deployment.KnowledgeBaseManager;
-import nz.org.take.rt.ResourceIterator;
-import nz.org.take.rt.ResultSet;
 import nz.org.take.script.ScriptKnowledgeSource;
 import junit.framework.TestCase;
 
 /**
  * Tests for this scenario. 
+ * For now, the classes have to generated and compiled manually.
+ * For generation, use the script GenerateClasses.
  * Code pretty printing is used.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
@@ -65,22 +63,12 @@ public class Tests extends TakeTestCase
 		super.setUp();
 		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
 		Bindings factStores = new SimpleBindings();
-		factStores.put("facts1", new FactStore());
 		kb = kbm.getKnowledgeBase(
 				KB.class, 
-				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/scenario8/rules8.take")),
+				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/annotations/rules.take")),
 				new SimpleBindings(),
 				factStores
 		); 
-		
-		// clear database and recreate a new db
-		File dbFolder = new File("testdata/example8");
-		for (File f:dbFolder.listFiles()) {
-			if (f.getName().startsWith("example8db")) {
-				f.delete();
-				System.out.println("deleting old test db file " + f.getAbsolutePath());
-			}
-		}
 
 	}
 
@@ -97,32 +85,16 @@ public class Tests extends TakeTestCase
 		// Add additional tear down code here
 	}
 
-	
 	/**
 	 * Test 1.
 	 */
 	public void test1(){
-		ResultSet<IsFatherOf> results = kb.getFather(new Person("Max"));	
-		assertTrue(results.hasNext());
-		IsFatherOf r = results.next();
-		Person father = r.father;
-		assertEquals(new Person("Jens"),father);
-		assertFalse(results.hasNext());
-		results.close();
-		
+		Map<String,String> annotations = kb.getAnnotations("rule1");
+		assertEquals(2,annotations.size());
+		assertEquals("a description",annotations.get("description"));
+		assertEquals("2007-09-19",annotations.get("date"));
 	}
-	/**
-	 * Test 2.
-	 */
-	public void test2(){
-		ResultSet<IsGrandfatherOf> results = kb.getGrandfather(new Person("Max"));	
-		assertTrue(results.hasNext());
-		IsGrandfatherOf r = results.next();
-		Person father = r.grandfather;
-		assertEquals(new Person("Klaus"),father);
-		assertFalse(results.hasNext());
-		results.close();
-	}
+
 	
 }
 	

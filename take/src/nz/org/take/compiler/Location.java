@@ -28,31 +28,25 @@ public interface Location {
 	 * Get a stream to write source code.
 	 * @param c a class name
 	 * @return a Writer using the specified class as destination
-	 * @throws CompilerException if the Writer couldn't be created because <code>c</code> references a directory or 
+	 * @throws CompilerException if the Writer couldn't be created 
 	 */
 	public Writer getSrcOut(String c) throws CompilerException;
+	
 	/**
-	 * Get a stream to read source code.
-	 * @param c a class name
-	 * @return a reader
+	 * Get a stream to write a resource into the source folder.
+	 * @param r a resource name (without folder, just the local part)
+	 * @param p the package
+	 * @return an output steam 
+	 * @throws CompilerException if the stream cannot be created 
 	 */
-	public Reader getSrcIn(String c) throws CompilerException;
-	/**
-	 * Get a stream to write compiled code.
-	 * @param c a class name
-	 * @return an output stream 
-	 */
-	public OutputStream getBinOut(String c) throws CompilerException;
-	/**
-	 * Get a stream to read compiled code.
-	 * @param c a class name
-	 * @return an input stream
-	 */
-	public InputStream getBinIn(String c) throws CompilerException;
+	public OutputStream getResourceOut(String p,String r) throws CompilerException;
+
 	/**
 	 * Get the source code file. Some tools (Jalopy) require direct access to the file. 
 	 * @param c a class name
 	 * @return a file
 	 */
 	public File getSrcFile(String c) throws CompilerException;
+	
+	
 }
