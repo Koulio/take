@@ -18,6 +18,8 @@
 
 package nz.org.take;
 
+import java.util.Arrays;
+
 /**
  * Complex terms are composed of functions and other terms.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
@@ -63,6 +65,33 @@ public class ComplexTerm extends AbstractAnnotatable implements Term {
 				t.accept(visitor);
 		}		
 		visitor.endVisit(this);
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((function == null) ? 0 : function.hashCode());
+		result = prime * result + Arrays.hashCode(terms);
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final ComplexTerm other = (ComplexTerm) obj;
+		if (function == null) {
+			if (other.function != null)
+				return false;
+		} else if (!function.equals(other.function))
+			return false;
+		if (!Arrays.equals(terms, other.terms))
+			return false;
+		return true;
 	}
 
 }

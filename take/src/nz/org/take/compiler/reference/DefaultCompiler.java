@@ -510,7 +510,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		out.print(name);
 		out.println('{');
 		int counter = 1;
-		List<Term> termsInRule = this.getAllTerms(r);		
+		Collection<Term> termsInRule = this.getAllTerms(r);		
 		for (Term t : termsInRule) {
 			if (!map.containsKey(t)) {
 					String property = "p" + counter;
@@ -1087,7 +1087,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		
 		
 		// the concrete bindings for this rule
-		List<Term> allTerms = this.getAllTerms(r);
+		Collection<Term> allTerms = this.getAllTerms(r);
 		Bindings bindings = new Bindings(allTerms,this.getNameGenerator());
 		
 		// compute initial bindings
@@ -1147,6 +1147,11 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			String var = bindings.getRef(refEntry.getKey());
 			if (var != null) {				
 				printVariableAssignment(out, "bindings",refEntry.getValue(),var);
+				//  replace bindings by references to fields in bindings - changed 19/09/07
+				if (refEntry.getKey() instanceof ComplexTerm) {
+					bindings.put(refEntry.getKey(), "bindings"+'.'+refEntry.getValue());
+				}
+				
 			}
 		}
 
@@ -1222,15 +1227,13 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 					} else if (t instanceof ComplexTerm) {
 						ComplexTerm vt = (ComplexTerm) t;						
 						printVariableAssignment(out, "bindings",ref,"object", slot.var,cast);
-						bindings.put(vt, refs.get(vt));						
+						// bindings.put(vt, refs.get(vt));	// changed 19/09/07 - this avoids expensive method class
+						bindings.put(vt, "bindings"+'.'+ref);	
+
 					} else if (t instanceof Constant) {
 						Constant vt = (Constant) t;						
 						printVariableAssignment(out, "bindings",ref,getRef(this.getNameGenerator().getConstantRegistryClassName(),vt),null,cast);
 						bindings.put(vt, refs.get(vt));						
-					}
-					else {
-						// REFACTOR generalise - cover constant terms
-						throw new CompilerException("Only variables are supported here");
 					}
 				}
 				// build method call
@@ -1553,7 +1556,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		out.println("// rule with empty body");
 		
 		// the concrete bindings for this rule
-		List<Term> allTerms = this.getAllTerms(r);
+		Collection<Term> allTerms = this.getAllTerms(r);
 		Bindings bindings = new Bindings(allTerms,this.getNameGenerator());
 		
 		// compute initial bindings

@@ -663,7 +663,7 @@ public abstract class CompilerUtils {
 	 * @param list the list used to collect the terms
 	 * @param c the term container
 	 */
-	private void collectTerms(List<Term> terms, ComplexTerm c) {
+	private void collectTerms(Collection<Term> terms, ComplexTerm c) {
 		for (Term t:c.getTerms()) {
 			// avoid duplication!
 			if (!terms.contains(t))
@@ -677,7 +677,7 @@ public abstract class CompilerUtils {
 	 * @param list the list used to collect the terms
 	 * @param c the term container
 	 */
-	protected void collectTerms(List<Term> terms, Fact c) {
+	protected void collectTerms(Collection<Term> terms, Fact c) {
 		for (Term t:c.getTerms()) {
 			// avoid duplication!
 			if (!terms.contains(t))
@@ -711,12 +711,13 @@ public abstract class CompilerUtils {
 	}
 
 	/**
-	 * Get all terms (recursive) occuring in a rule.
+	 * Get all terms (recursive) occurring in a rule.
 	 * @param r a rule
-	 * @return a list of terms
+	 * @return a set of terms 
 	 */
-	protected List<Term> getAllTerms(DerivationRule r) {
-		List<Term> terms = new ArrayList<Term>();
+	protected Collection<Term> getAllTerms(DerivationRule r) {
+		// use a set - duplicates should be removed
+		Collection<Term> terms = new HashSet<Term>();
 		List<Prerequisite>body = r.getBody();
 		for (Prerequisite p:body) {
 			collectTerms(terms,p);

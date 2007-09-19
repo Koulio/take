@@ -19,6 +19,7 @@
 package nz.org.take.compiler.reference;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,12 +35,12 @@ import nz.org.take.compiler.NameGenerator;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 public class Bindings  {
-	private List <Term> terms = null;
+	private Collection<Term> terms = null;
 	private List<Term> agenda = new ArrayList<Term>();
 	private HashMap<Term,String> delegate = new HashMap<Term,String>();
 	private NameGenerator naming = null; // needed to look up class name for generated functions
 	
-	public Bindings(List<Term> terms,NameGenerator naming) {
+	public Bindings(Collection<Term> terms,NameGenerator naming) {
 		super();
 		this.terms = terms;
 		this.naming = naming; 
@@ -52,6 +53,7 @@ public class Bindings  {
 		resolveOwners(t);
 
 	}
+
 	private void resolveOwners(Term t) throws CompilerException {
 		ComplexTerm p = null;
 		for (Term v:terms) {
