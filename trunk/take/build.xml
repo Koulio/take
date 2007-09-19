@@ -104,6 +104,7 @@
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario8.Tests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario9.Tests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario10.Tests"/>
+		<test todir="${report.junit}" name="test.nz.org.take.compiler.annotations.Tests"/>
 		<test todir="${report.junit}" name="example.nz.org.take.compiler.userv.testcases.UservTestCases"/>
 	</junit>
 	<!-- report -->
