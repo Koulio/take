@@ -88,11 +88,20 @@ public class Tests extends TakeTestCase
 	/**
 	 * Test 1.
 	 */
-	public void test1(){
+	public void testLocalAnnotations(){
 		Map<String,String> annotations = kb.getAnnotations("rule1");
 		assertEquals(2,annotations.size());
 		assertEquals("a description",annotations.get("description"));
 		assertEquals("2007-09-19",annotations.get("date"));
+	}
+	/**
+	 * Test 2.
+	 */
+	public void testGlobalAnnotations(){
+		Map<String,String> annotations = kb.getAnnotations();
+		assertEquals(2,annotations.size());
+		assertEquals("test knowledge base",annotations.get("description"));
+		assertEquals("jens dietrich",annotations.get("author"));
 	}
 
 	

@@ -737,6 +737,19 @@
    </object> 
   </void> 
   <void method="put"> 
+   <string>___global_annotations</string> 
+   <object class="java.util.HashMap"> 
+    <void method="put"> 
+     <string>dc:creator</string> 
+     <string>Jens Dietrich</string> 
+    </void> 
+    <void method="put"> 
+     <string>dc:date</string> 
+     <string>2007-09-12</string> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="put"> 
    <string>DP_00c</string> 
    <object class="java.util.HashMap"> 
     <void method="put"> 

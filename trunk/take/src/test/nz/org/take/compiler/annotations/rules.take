@@ -1,6 +1,6 @@
 // script for test misc1
-@@dc:creator=jens dietrich
-@@dc:date=13/07/2007
+@@description=test knowledge base
+@@author=jens dietrich
 var test.nz.org.take.compiler.misc1.Person person1,person2
 query is_father_of[in,in]
 // rules
