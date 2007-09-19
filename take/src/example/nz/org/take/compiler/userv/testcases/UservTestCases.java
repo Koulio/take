@@ -18,6 +18,9 @@
 
 package example.nz.org.take.compiler.userv.testcases;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
 import example.nz.org.take.compiler.userv.domainmodel.*;
@@ -33,7 +36,7 @@ import junit.framework.TestCase;
 public class UservTestCases extends TestCase {
 	
 	private UservRules kb = null;
-	private int CURRENTYEAR = new java.util.Date().getYear()+1900;
+	private int CURRENTYEAR = new GregorianCalendar().get(Calendar.YEAR);
 	
 	protected void setUp() throws Exception {
 		super.setUp();

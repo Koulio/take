@@ -30,6 +30,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,7 +124,7 @@ public class UServPanel extends JPanel {
 		
 		// prepare kb - set constants
 		Constants.HighTheftProbabilityAutoList = HighTheftProbabilityAutoList.getList();
-		Constants.CurrentYear = new java.util.Date().getYear()+1900;
+		Constants.CurrentYear = new GregorianCalendar().get(Calendar.YEAR);
 		Constants.NextYear = Constants.CurrentYear+1;
 		
 		this.setLayout(new GridLayout(2,1));
@@ -160,7 +162,7 @@ public class UServPanel extends JPanel {
 		add(createBooleanEditor(car,"isConvertible","setConvertible"),"is convertible",0);
 		add(createSelectStringEditor(car,"getCategory","setCategory",CAR_CATEGORIES),"category",0);
 		add(createIntEditor(car,"getAge","setAge",0,50),"age",0,40);
-		add(createIntEditor(car,"getModelYear","setModelYear",1950,new java.util.Date().getYear()+1901),"model year",0,80);
+		add(createIntEditor(car,"getModelYear","setModelYear",1950,new GregorianCalendar().get(Calendar.YEAR)+1),"model year",0,80);
 		add(createIntEditor(car,"getPrice","setPrice",1000,100000,100),"price",0,80);
 		
 		add(createBooleanEditor(car,"hasRollBar","setHasRollBar"),"has rollbar",1);

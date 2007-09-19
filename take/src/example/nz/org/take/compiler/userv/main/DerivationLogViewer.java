@@ -46,6 +46,7 @@ public class DerivationLogViewer {
 		else {
 			DerivationModel treeModel = new DerivationModel(log);
 			JTree tree = new JTree(treeModel);
+			tree.setShowsRootHandles(true);
 			tree.setRootVisible(false);
 			tree.setPreferredSize(new Dimension(700,400));
 			final JDialog win = new JDialog();
