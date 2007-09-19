@@ -28,7 +28,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,15 +36,7 @@ import java.util.Map;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import nz.org.take.AbstractKnowledgeBaseVisitor;
-import nz.org.take.Annotatable;
-import nz.org.take.DerivationRule;
-import nz.org.take.Fact;
-import nz.org.take.KnowledgeBase;
-import nz.org.take.KnowledgeBaseVisitor;
-import nz.org.take.TakeException;
 import nz.org.take.rt.*;
-import nz.org.take.script.ScriptKnowledgeSource;
 import example.nz.org.take.compiler.userv.domainmodel.*;
 import example.nz.org.take.compiler.userv.generated.*;
 
@@ -60,9 +51,7 @@ public class UServPanel extends JPanel {
 	private Car car = new Car();
 	private Policy policy = new Policy();
 	private Map<String,List<DerivationLogEntry>> derivationLogs = new HashMap<String,List<DerivationLogEntry>> ();
-	
 	private UservRules kb = new UservRules();
-	private Map<String,Annotatable> rulesById = loadRules();
 	
 	// constants
 	private final static String[] STATES = {
@@ -89,7 +78,7 @@ public class UServPanel extends JPanel {
 	JTextField txtDriverEligibility = createOutputTextField();
 	JTextField txtHasTrainingCertification = createOutputTextField();
 	JTextField txtHighRiskDriver = createOutputTextField();
-	MultiValueResultView multiOutPolicyEligibilityScore = new MultiValueResultView(this.rulesById) {
+	MultiValueResultView multiOutPolicyEligibilityScore = new MultiValueResultView() {
 		public int extractValue(Object object) {
 			PolicyEligibilityScore pes = (PolicyEligibilityScore)object;
 			return pes.score;
@@ -98,19 +87,19 @@ public class UServPanel extends JPanel {
 	JTextField txtInsuranceEligibility = createOutputTextField();
 	JTextField txtLongTermClient = createOutputTextField();
 	JTextField txtBasePremium = createOutputTextField();
-	MultiValueResultView multiAdditionalPremium = new MultiValueResultView(this.rulesById) {
+	MultiValueResultView multiAdditionalPremium = new MultiValueResultView() {
 		public int extractValue(Object object) {
 			AdditionalPremium pes = (AdditionalPremium)object;
 			return pes.premium;
 		}
 	};
-	MultiValueResultView multiAdditionalDriverPremium = new MultiValueResultView(this.rulesById) {
+	MultiValueResultView multiAdditionalDriverPremium = new MultiValueResultView() {
 		public int extractValue(Object object) {
 			AdditionalDriverPremium pes = (AdditionalDriverPremium)object;
 			return pes.premium;
 		}
 	};
-	MultiValueResultView multiPremiumDiscount = new MultiValueResultView(this.rulesById) {
+	MultiValueResultView multiPremiumDiscount = new MultiValueResultView() {
 		public int extractValue(Object object) {
 			PremiumDiscount pes = (PremiumDiscount)object;
 			return pes.discount;
@@ -130,8 +119,6 @@ public class UServPanel extends JPanel {
 
 
 	private void init() {
-		
-		loadRules();
 		
 		// prepare kb - set constants
 		Constants.HighTheftProbabilityAutoList = HighTheftProbabilityAutoList.getList();
@@ -231,33 +218,6 @@ public class UServPanel extends JPanel {
 		this.setPanel(panel);
 	} 
 	
-	// load the rules and store them in a registry 
-	// only used to display meta information 
-	private Map<String,Annotatable> loadRules() {
-
-		final Map<String,Annotatable> rules = new HashMap<String,Annotatable>();
-		InputStream script = ScriptKnowledgeSource.class.getResourceAsStream("/example/nz/org/take/compiler/userv/rules/userv.take");
-		try {
-			KnowledgeBase kb = new ScriptKnowledgeSource(script).getKnowledgeBase();
-			KnowledgeBaseVisitor visitor = new AbstractKnowledgeBaseVisitor() {
-				public boolean visit(DerivationRule r) {
-					rules.put(r.getId(),r);
-					return false;
-				}
-				public boolean visit(Fact f) {
-					rules.put(f.getId(),f);
-					return false;
-				}
-			};
-			kb.accept(visitor);
-		} catch (TakeException e) {
-			e.printStackTrace();
-		}
-		return rules;
-	
-	}
-
-
 	private void makeEqual() {
 		int max = 0;
 		for (int i:rowCounts) 
@@ -266,7 +226,6 @@ public class UServPanel extends JPanel {
 			rowCounts[i]=max;
 		
 	}
-
 
 	private void addSep(String label, int... cols) {
 		GridBagConstraints c = new GridBagConstraints();
@@ -406,7 +365,7 @@ public class UServPanel extends JPanel {
 	}
 	
 	private void displayUsedRules(List<DerivationLogEntry> logs) {
-		DerivationLogViewer.displayUsedRules(logs, rulesById, this);	
+		DerivationLogViewer.displayUsedRules(logs,this);	
 	}
 
 	private JCheckBox createBooleanEditor(final Object bean, final String getter, final String setter) {

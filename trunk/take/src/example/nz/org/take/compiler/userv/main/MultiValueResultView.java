@@ -25,7 +25,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -33,7 +32,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import nz.org.take.Annotatable;
 import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
 
@@ -44,15 +42,12 @@ import nz.org.take.rt.ResultSet;
 
 public abstract class MultiValueResultView extends JPanel {
 	private JList list = new JList();
-	private int totalValue = 0;
 	private JButton logButton = new JButton(" ? ");
 	private List<Integer> values = new ArrayList<Integer>();
 	private List<List<DerivationLogEntry>> logs = new ArrayList<List<DerivationLogEntry>>();
-	private Map<String,Annotatable> rulesById = null;
 	
-	public MultiValueResultView(Map<String,Annotatable> rulesById) {
+	public MultiValueResultView() {
 		super();
-		this.rulesById=rulesById;
 		setLayout(new BorderLayout(5,5));
 		add(new JScrollPane(list),BorderLayout.CENTER);
 		JPanel bPane = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -64,7 +59,7 @@ public abstract class MultiValueResultView extends JPanel {
 					public void actionPerformed(ActionEvent e) {
 						int pos = list.getSelectedIndex();
 						if (pos<logs.size()) {
-							DerivationLogViewer.displayUsedRules(logs.get(pos), MultiValueResultView.this.rulesById,MultiValueResultView.this);
+							DerivationLogViewer.displayUsedRules(logs.get(pos),MultiValueResultView.this);
 						}
 					}
 				}
@@ -84,7 +79,7 @@ public abstract class MultiValueResultView extends JPanel {
 					public void mouseClicked(MouseEvent e) {
 						int pos = list.getSelectedIndex();
 						if (e.getClickCount()>1 && pos<logs.size()) {
-							DerivationLogViewer.displayUsedRules(logs.get(pos), MultiValueResultView.this.rulesById,MultiValueResultView.this);
+							DerivationLogViewer.displayUsedRules(logs.get(pos),MultiValueResultView.this);
 						}
 					}
 				}
