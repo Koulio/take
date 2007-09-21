@@ -804,7 +804,6 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 				methodName = plugin.createMethod(out, q);					
 			}				
 		}
-		// use default algorithm TODO: put this in plugin as well
 		if (methodName==null)
 			methodName = createPrivateMethod1(out,q);
 			
@@ -859,8 +858,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		out.print("public Object getIteratorOrObject(int pos){");
 		out.println("switch(pos){");
 		for (int i = 0; i < css.size(); i++) {
-			out.print("// ");
-			out.println(css.get(i));
+			printComment(out, css.get(i));
 			out.print("case ");
 			out.print(i);
 			out.print(":");
@@ -878,8 +876,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		out.print("public String getRuleRef(int pos){");
 		out.println("switch(pos){");
 		for (int i = 0; i < css.size(); i++) {
-			out.print("// ");
-			out.println(css.get(i));
+			printComment(out, css.get(i));
 			out.print("case ");
 			out.print(i);
 			out.print(":");

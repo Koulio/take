@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import nz.org.take.AggregationFunction;
+import nz.org.take.BinaryArithmeticFunction;
 import nz.org.take.ComplexTerm;
 import nz.org.take.JFunction;
 import nz.org.take.Term;
@@ -94,6 +95,12 @@ public class Bindings  {
 				buf.append(this.getRef(terms[i]));
 			}			
 			buf.append(')');
+		}
+		else if (t.getFunction() instanceof BinaryArithmeticFunction) {
+			BinaryArithmeticFunction f = (BinaryArithmeticFunction)t.getFunction();
+			buf.append(this.getRef(terms[0]));
+			buf.append(f.getName());
+			buf.append(this.getRef(terms[1]));
 		}
 		else 
 			throw new CompilerException("ComplexTerms are only supported if the function is a JFunction or an AggregationFunction");

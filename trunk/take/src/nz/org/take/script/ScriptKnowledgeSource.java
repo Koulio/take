@@ -604,7 +604,13 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 			ComplexTerm ct = (ComplexTerm)t;
 			String f = ct.getFunction();
 			nz.org.take.Term[] terms = buildTerms(ct);
+			// try to build aggregation function
 			Function function = this.aggregationFunctions.get(f);
+			// try to build arithmetic operation
+			if (function==null) {
+				function=buildArithmeticFunction(f,terms);
+			}
+			// try to build jfunction
 			if (function==null) {
 				Method m = this.findMethod(f, terms);
 				if (m==null) // check whether there is such a property
@@ -615,6 +621,7 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 				jfunction.setMethod(m);
 				function=jfunction;
 			}
+
 			nz.org.take.ComplexTerm cplxTerm = new nz.org.take.ComplexTerm ();
 			cplxTerm.setFunction(function);
 			cplxTerm.setTerms(terms);
@@ -622,6 +629,17 @@ public class ScriptKnowledgeSource implements KnowledgeSource  {
 		}
 		else
 			throw new ScriptSemanticsException("This term type  is not yet supported " + print(t));
+	}
+	private Function buildArithmeticFunction(String f, nz.org.take.Term[] terms) {
+		if (terms.length!=2)
+			return null; // only binary functions supported
+		if (!isNumericType(terms[0].getType()) || !isNumericType(terms[1].getType()))
+			return null;
+		return nz.org.take.BinaryArithmeticFunction.getInstance(f, terms[0].getType(), terms[1].getType());
+	}
+
+	private boolean isNumericType(Class clazz) {
+		return clazz==Integer.class || clazz==Integer.TYPE || clazz==Double.class || clazz==Double.TYPE;
 	}
 	private Class[] getParamTypes(nz.org.take.Term[] terms) {
 		Class[] paramTypes = new Class[terms.length-1];

@@ -828,6 +828,16 @@ public class UservTestCases extends TestCase {
 		assertEquals(1000,result.next().premium);
 	}
 	
+	public void testDP_09() throws Exception {		
+		Driver driver = new Driver();
+		driver.setAge(42);
+		driver.setNumberOfAccidentsInvolvedIn(2);
+		
+		ResultSet<AdditionalDriverPremium> result = kb.getAdditionalDriverPremium(driver);
+		assertTrue(result.hasNext());
+		assertEquals(300,result.next().premium);
+	}
+	
 	public void testMSD_01() throws Exception {		
 		Driver driver = new Driver();
 		driver.setAge(42);
@@ -837,6 +847,8 @@ public class UservTestCases extends TestCase {
 		assertTrue(result.hasNext());
 		assertEquals(-250,result.next().premium);
 	}
+	
+
 	
 	public void testMSD_02() throws Exception {		
 		Driver driver = new Driver();

@@ -741,6 +741,16 @@ public abstract class CompilerUtils {
 		}
 	}
 	/**
+	 * Print a knowledge element in a comment. 
+	 */
+	protected void printComment(PrintWriter out,KnowledgeElement e) {
+		out.print("// ");
+		out.print(e.getId());
+		out.print(" ");
+		out.println(e);
+	}
+	
+	/**
 	 * Print a comma separated list.
 	 * @param out
 	 * @param list an array

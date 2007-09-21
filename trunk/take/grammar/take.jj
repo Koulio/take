@@ -47,6 +47,7 @@ TOKEN:{<WHITESPACE: (" ")+>}
 TOKEN:{<SEMICOLON:";">}
 TOKEN:{<COMMA:",">}
 TOKEN:{<COMPARISON:"<="|">="|"<"|">"|"=="|"!=">}
+TOKEN:{<ARITHMETICOPERATION:"+"|"*"|"-"|"/">}
 
 
 
@@ -418,7 +419,7 @@ void complexTerm(TermContainer c) :
 }
 {
 	{ComplexTerm ct = new ComplexTerm();}	
-	function(ct)"("terms(ct)")"
+	(function(ct)|arithmeticoperation(ct))"("terms(ct)")"
 	{c.add(ct);}
 }
 void function(ComplexTerm ct) :
@@ -427,6 +428,15 @@ void function(ComplexTerm ct) :
 }
 {	
 	t = <NAME>
+	{ct.setPosition(t.beginLine,t.beginColumn);}
+	{ct.setFunction(t.image);}	
+}
+void arithmeticoperation(ComplexTerm ct) :
+{
+	Token t;
+}
+{	
+	t = <ARITHMETICOPERATION>
 	{ct.setPosition(t.beginLine,t.beginColumn);}
 	{ct.setFunction(t.image);}	
 }
