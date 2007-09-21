@@ -1,0 +1,21 @@
+    /**
+     * Method generated for query $query
+     * @param source 
+     * @param target  
+     * @return an iterator
+     * code generated using velocity template $templatename
+    */
+    static ResourceIterator< $resulttype > $methodname (
+        final $sourcetype source, 
+        final $targettype target, 
+        final DerivationController _derivation) {
+        
+        _derivation.log($property,DerivationController.BEAN_PROPERTY,source,target);
+        if (!target .equals(source .$accessor ())) {
+           	$resulttype result = new $resulttype();
+        	result.$slot1 = source;
+        	result.$slot2 = target;
+        	return new SingletonIterator<$resulttype>(result);
+        }
+        return EmptyIterator.DEFAULT;
+    }

@@ -1,0 +1,22 @@
+// script for test scenario 8
+@@dc:creator=jens dietrich
+@@dc:date=05/06/2007
+var test.nz.org.take.compiler.scenario8.Person person1,person2,person3
+var test.nz.org.take.compiler.scenario8.Person grandchild,father,grandfather
+// queries - annotations are optional and are used to generate 
+// custom classes and methods
+@take.compilerhint.class=IsFatherOf
+@take.compilerhint.slots=son,father
+@take.compilerhint.method=getFather
+query is_father_of[in,out]
+@take.compilerhint.method=getSons
+query is_father_of[out,in]
+@take.compilerhint.class=IsGrandfatherOf
+@take.compilerhint.slots=grandson,grandfather
+@take.compilerhint.method=getGrandfather
+query is_grandfather_of[in,out]
+@take.compilerhint.method=getGrandchildren
+query is_grandfather_of[out,in]
+// rules
+rule1: if is_father_of[grandchild,father] and is_father_of[father,grandfather] then is_grandfather_of[grandchild,grandfather]
+external facts1: is_father_of[test.nz.org.take.compiler.scenario8.Person, test.nz.org.take.compiler.scenario8.Person]
