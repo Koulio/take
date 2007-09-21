@@ -35,6 +35,7 @@ public interface ParserConstants {
   int SEMICOLON = 33;
   int COMMA = 34;
   int COMPARISON = 35;
+  int ARITHMETICOPERATION = 36;
 
   int DEFAULT = 0;
 
@@ -75,6 +76,7 @@ public interface ParserConstants {
     "\";\"",
     "\",\"",
     "<COMPARISON>",
+    "<ARITHMETICOPERATION>",
     "\"[\"",
     "\"]\"",
     "\"(\"",

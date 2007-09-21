@@ -275,6 +275,27 @@
    </object> 
   </void> 
   <void method="put"> 
+   <string>DP_09</string> 
+   <object class="java.util.HashMap"> 
+    <void method="put"> 
+     <string>author</string> 
+     <string>Jens Dietrich</string> 
+    </void> 
+    <void method="put"> 
+     <string>category</string> 
+     <string>Driver Premiums Rule Set</string> 
+    </void> 
+    <void method="put"> 
+     <string>description</string> 
+     <string>Raise the premium by $ 150 per accident.</string> 
+    </void> 
+    <void method="put"> 
+     <string>date</string> 
+     <string>2007-09-20</string> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="put"> 
    <string>AE_POIC01</string> 
    <object class="java.util.HashMap"> 
     <void method="put"> 

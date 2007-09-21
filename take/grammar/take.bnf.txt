@@ -55,8 +55,9 @@ NON-TERMINALS
 	stringLiteral	:=	<STRING_LITERAL>
 	intLiteral	:=	<INTEGER_NUMBER>
 	doubleLiteral	:=	<DECIMAL_NUMBER>
-	complexTerm	:=	function "(" terms ")"
+	complexTerm	:=	( function | arithmeticoperation ) "(" terms ")"
 	function	:=	<NAME>
+	arithmeticoperation	:=	<ARITHMETICOPERATION>
 	predicate	:=	<NAME>
 	comparison	:=	<COMPARISON>
 

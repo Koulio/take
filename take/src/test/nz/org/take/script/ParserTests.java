@@ -391,6 +391,33 @@ public class ParserTests extends TakeTestCase {
 		assertTrue(c2.getTerms().get(1) instanceof VariableTerm);
 		assertEquals("z",((VariableTerm)c2.getTerms().get(1)).getName());
 	}
+	public void testComplexTerms2() throws Exception {
+		String input = "fact: p[*(4,x),+(y,3)]\n";
+		Script script = parse(input);
+		Condition f = this.getRuleAt(script,0).getConditions().get(0);
+		assertEquals("p",f.getPredicate());
+		assertEquals("p",f.getPredicate());
+		Term t1 = f.getTerms().get(0);
+		Term t2 = f.getTerms().get(1);
+		assertTrue(t1 instanceof ComplexTerm);
+		assertTrue(t2 instanceof ComplexTerm);	
+		ComplexTerm c1 = (ComplexTerm)t1;
+		ComplexTerm c2 = (ComplexTerm)t2;
+		assertEquals("*",c1.getFunction());
+		assertEquals(2,c1.getTerms().size());
+		assertTrue(c1.getTerms().get(0) instanceof ConstantTerm);
+		assertEquals("4",((ConstantTerm)c1.getTerms().get(0)).getValue());
+		assertTrue(c1.getTerms().get(1) instanceof VariableTerm);
+		assertEquals("x",((VariableTerm)c1.getTerms().get(1)).getName());
+		
+		assertEquals("+",c2.getFunction());
+		assertEquals(2,c2.getTerms().size());
+		assertTrue(c2.getTerms().get(0) instanceof VariableTerm);
+		assertEquals("y",((VariableTerm)c2.getTerms().get(0)).getName());
+		assertTrue(c2.getTerms().get(1) instanceof ConstantTerm);
+		assertEquals("3",((ConstantTerm)c2.getTerms().get(1)).getValue());
+		
+	}
 	// property terms
 	public void testPropertyTerms1() throws Exception {
 		String input = "fact: p[x.f.g]\n";
