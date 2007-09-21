@@ -26,6 +26,7 @@
 	<property name="build.test.jar" value="${build.lib}/${name}-tests-${version}"/>
 	<property name="build.example.jar" value="${build.lib}/${name}-examples-${version}"/>
 	<property name="build.userv.jar" value="${build.lib}/${name}-userv-${version}"/>
+	<property name="build.userv.rt.jar" value="${build.lib}/${name}-userv-rt-${version}"/>
 	
 	<path id="build.classpath">
         <fileset dir="lib">
@@ -71,11 +72,12 @@
         srcdir="${src.dir}"
         classpathref="build.classpath"
 	/>
-	<!-- copy velocity templates and test scripts (they are loaded by the class loader) -->
+	<!-- copy velocity templates, scripts and annotation stores (they are loaded by the class loader) -->
     <copy todir="${build.classes}">
 	    <fileset dir="${src.dir}">
 	      	<include name="**/*.vm"/>
 	    	<include name="**/*.take"/>
+	    	<include name="**/*.xml"/>
 	    </fileset>
 	</copy>
 
@@ -177,6 +179,17 @@
 		includes="example/nz/org/take/compiler/userv/**/*.*"
 	/>
 	
+	<!-- userv example runtime only -->
+	<filter token="TITLE" value="$UServ example"/>
+	<filter token="MAIN" value="example.nz.org.take.compiler.userv.main.Main"/>
+	<delete file="${build.tmp}/manifest.mf"/>
+	<copy file="${config.dir}/userv.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
+	<jar jarfile="${build.userv.rt.jar}.build${today}.jar" 
+		manifest="${build.tmp}/manifest.mf" 
+		basedir="${build.classes}"
+		includes="example/nz/org/take/compiler/userv/domainmodel/*.*,example/nz/org/take/compiler/userv/generated/*.*,example/nz/org/take/compiler/userv/main/*.*,example/nz/org/take/compiler/userv/rules/*.*"
+	/>
+	
 	<!-- examples -->
 	<filter token="TITLE" value="${name} examples"/>
 	<delete file="${build.tmp}/manifest.mf"/>
@@ -244,6 +257,17 @@
 		manifest="${build.tmp}/manifest.mf" 
 		basedir="${build.classes}"
 		includes="example/nz/org/take/compiler/userv/**/*.*"
+	/>
+	
+	<!-- userv example runtime only -->
+	<filter token="TITLE" value="$UServ example"/>
+	<filter token="MAIN" value="example.nz.org.take.compiler.userv.main.Main"/>
+	<delete file="${build.tmp}/manifest.mf"/>
+	<copy file="${config.dir}/userv.mf" tofile="${build.tmp}/manifest.mf" filtering="yes"/>
+	<jar jarfile="${build.userv.rt.jar}.jar" 
+		manifest="${build.tmp}/manifest.mf" 
+		basedir="${build.classes}"
+		includes="example/nz/org/take/compiler/userv/domainmodel/*.*,example/nz/org/take/compiler/userv/generated/*.*,example/nz/org/take/compiler/userv/main/*.*,example/nz/org/take/compiler/userv/rules/*.*"
 	/>
 	
 	<!-- examples -->
