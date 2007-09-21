@@ -18,6 +18,9 @@
 
 package example.nz.org.take.compiler.userv.domainmodel;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 /**
  * Bean class that is part of the example domain model.
  * http://www.businessrulesforum.com/2005_Product_Derby.pdf 
@@ -33,7 +36,7 @@ public class Car {
 	private boolean  hasRollBar = true;
 	private int age = 0;
 	private String category = "compact";
-	private int modelYear = new java.util.Date().getYear()+1900;
+	private int modelYear = new GregorianCalendar().get(Calendar.YEAR);
 	private boolean hasAlarm = false;
 	
 	private String  type = "unknown";

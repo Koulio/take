@@ -43,7 +43,6 @@ import javax.swing.JToolBar;
 public class Main extends JFrame {
 
 	public static void main(String[] args) {
-		org.apache.log4j.BasicConfigurator.configure();
 		Main app = new Main();
 		app.setVisible(true);
 	}
