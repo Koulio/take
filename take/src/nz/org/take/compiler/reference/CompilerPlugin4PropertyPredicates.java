@@ -38,6 +38,8 @@ public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 	public static final String TEMPLATE_M11 = "PropertyPredicateONE2MANY_10.vm";
 	public static final String TEMPLATE_O11N = "PropertyPredicateONE2ONE_11_neg.vm";
 	public static final String TEMPLATE_M11N = "PropertyPredicateONE2MANY_10_neg.vm";
+	public static final String TEMPLATE_M10N = "PropertyPredicateONE2MANY_10_neg.vm";
+	public static final String TEMPLATE_O10N = "PropertyPredicateONE2ONE_10_neg.vm";
 	
 	public CompilerPlugin4PropertyPredicates(DefaultCompiler owner) {
 		super(owner);
@@ -61,9 +63,6 @@ public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 		PropertyPredicate p = (PropertyPredicate)q.getPredicate();
 		boolean param2known = q.getInputParams()[1]; // true - both slots known
 			
-		// load and (lazy) init templates
-		if (!param2known && p.isNegated()) 
-			throw new CompilerException("Cannot generate code for negated property predicates with variable in target slot");
 		String templateName = this.getTemplateName(param2known, p.isOne2One(),p.isNegated());
 		Template template = VelocitySupport.getTemplate(templateName);
 		
@@ -117,9 +116,12 @@ public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 		else if (param2known&&isOne2One&&isNegated)
 			return TEMPLATE_O11N;
 		else if (param2known&&!isOne2One&&isNegated)
-			return TEMPLATE_M11N;		
-		
-		
+			return TEMPLATE_M11N;	
+		else if (!param2known&&isOne2One&&isNegated)
+				return TEMPLATE_O10N;
+		else if (!param2known&&!isOne2One&&isNegated)
+				return TEMPLATE_M10N;
+
 		return null;
 	}
 }
