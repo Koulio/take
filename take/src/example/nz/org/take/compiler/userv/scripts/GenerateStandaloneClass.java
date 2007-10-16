@@ -55,5 +55,10 @@ public class GenerateStandaloneClass {
 		compiler.setPackageName("example.nz.org.take.compiler.userv.generated");
 		compiler.setClassName("UservRules");
 		compiler.compile(ksource.getKnowledgeBase());
+		
+		long before = System.currentTimeMillis();
+		compiler.compile(ksource.getKnowledgeBase());
+		System.out.println("Compilation took "+(System.currentTimeMillis()-before)+"ms");
+		
 	}
 }
