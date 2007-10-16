@@ -42,11 +42,13 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	// under this pseudo id global annotations will be stored
 	private static final String GLOBAL_ANNOTATION_KEY = "___global_annotations";
 	
+	
 	// instance variable names
 	private String varName4DerivationController = "_derivation";
 
 	// custom settings
 	private String derivationControllerClass = "DefaultDerivationController";
+	private boolean autoAnnotate = false;
 	private String[] derivationControllerInitialisationParameters = {}; // will be passed to the constructor of derivationControllerClass
 	private List<Query> publicAgenda = new ArrayList<Query>();
 	private Collection<Query> done = new ArrayList<Query>();
@@ -160,6 +162,9 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	 */
 	public void compile(KnowledgeBase kb)throws CompilerException {
 
+		if (this.isAutoAnnotate()) {
+			AutoAnnotationService.annotateAll(kb);
+		}
 		// put queries to publicAgenda (necessity is checked implicit)
 		for (Query q : kb.getQueries()) {
 			q.setPublic(true);
@@ -1671,5 +1676,13 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		};
 		kb.accept(lookup);
 		return stores;
+	}
+
+	public boolean isAutoAnnotate() {
+		return autoAnnotate;
+	}
+
+	public void setAutoAnnotate(boolean autoAnnotate) {
+		this.autoAnnotate = autoAnnotate;
 	}
 }

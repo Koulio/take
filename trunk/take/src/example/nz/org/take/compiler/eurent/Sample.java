@@ -18,6 +18,10 @@
 
 package example.nz.org.take.compiler.eurent;
 
+import java.util.List;
+import java.util.Map;
+
+import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
 import example.nz.org.take.compiler.eurent.generated.IsAvailable;
 import example.nz.org.take.compiler.eurent.generated.KB;
@@ -42,12 +46,20 @@ public class Sample {
 		c.setScheduledForService(false);
 		c.setStoredAt(b);
 		c.setAssignedTo(null);
-		ResultSet<IsAvailable> rs = new KB().isAvailable(c);
+		KB kb = new KB();
+		ResultSet<IsAvailable> rs = kb.isAvailable10(c);
 		IsAvailable result = rs.next();
+		List<DerivationLogEntry> log = rs.getDerivationLog();
 		System.out.println(result.branch.getName());
-		
-		//rule1: if storedAt[car,branch] and not scheduledForService[car] and not hasAssignedTo[car] then availableAt[car,branch]
-		                                                                                                            
+		for (DerivationLogEntry e:log) {
+			Map<String,String> annotations = kb.getAnnotations(e.getName());
+			if (annotations!=null){
+				System.out.println(annotations.get("take.auto.date"));
+				System.out.println(annotations.get("take.auto.creator"));
+				System.out.println(annotations.get("take.auto.tostring"));
+			}
+		}
+                                                                                                     
 		                                                                                                            
 	}
 

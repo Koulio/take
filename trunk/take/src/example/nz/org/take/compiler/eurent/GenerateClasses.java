@@ -54,6 +54,7 @@ public class GenerateClasses {
 		compiler.setLocation(location);
 		compiler.setPackageName("example.nz.org.take.compiler.eurent.generated");
 		compiler.setClassName("KB");
+		compiler.setAutoAnnotate(true);
 		compiler.compile(ksource.getKnowledgeBase());
 	}
 }

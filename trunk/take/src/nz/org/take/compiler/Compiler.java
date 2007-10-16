@@ -30,6 +30,17 @@ import nz.org.take.KnowledgeBase;
  */
 
 public interface Compiler {
+	
+	/**
+	 * Specify whether annotations should be added automatically.
+	 * @param boolean v
+	 */
+	public void setAutoAnnotate(boolean v);
+	/**
+	 * Indicates  whether annotations are added automatically.
+	 * @return boolean
+	 */
+	public boolean isAutoAnnotate();
 		
 	/**
 	 * Compile the kb with the list of queries in the kb.

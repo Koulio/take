@@ -16,7 +16,20 @@
   </void> 
   <void method="put"> 
    <string>rule1</string> 
-   <object class="java.util.HashMap"/> 
+   <object class="java.util.HashMap"> 
+    <void method="put"> 
+     <string>take.auto.tostring</string> 
+     <string> IF storedAt(&lt;car&gt;,&lt;branch&gt;) AND isScheduledForService(&lt;car&gt;) AND assignedTo(&lt;car&gt;,&lt;rental&gt;) THEN /availableAt(&lt;car&gt;,&lt;branch&gt;)</string> 
+    </void> 
+    <void method="put"> 
+     <string>take.auto.creator</string> 
+     <string>jens</string> 
+    </void> 
+    <void method="put"> 
+     <string>take.auto.date</string> 
+     <string>16/10/2007 12:46:24</string> 
+    </void> 
+   </object> 
   </void> 
  </object> 
 </java> 
