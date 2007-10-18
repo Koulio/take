@@ -68,6 +68,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	private Set<Predicate> publicPredicates = null; // predicates referenced in queries
 	private Map<String,PrintWriter> classWriters = new HashMap<String,PrintWriter>();  
 	private Map<Aggregations,AggregationFunctionGenerator> aggregationFunctionGenerators = new HashMap<Aggregations,AggregationFunctionGenerator>();
+	private Collection<Predicate> predicateClassesGenerated = new HashSet<Predicate>();
 	
 	/**
 	 * Constructor.
@@ -96,12 +97,10 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		this.kb = kb;
 		// step1 - return types
 		for (Predicate p:getPublicPredicates()) {
-			String pClassName = getClassName(p);
-			String fullClassName = packageName + "." + pClassName;
-			PrintWriter out = new PrintWriter(location.getSrcOut(fullClassName));
-			createReturnType(out, pClassName, packageName, p);
-			out.close();
-			endorseClazz(location, fullClassName);
+			createReturnType(p);
+		}
+		for (ExternalFactStore fs:getExternalFactStores().values()) {
+			createReturnType(fs.getPredicate());
 		}
 		
 		// step2 - interfaces for external fact sets
@@ -212,13 +211,11 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 					// already generated with interface
 				}
 				else {	
-					String cn = getClassName(p);
-					fullClassName = packageName + "." + cn;
-					out = new PrintWriter(location.getSrcOut(fullClassName));
-					createReturnType(out, cn, packageName, p);
-					out.close();
-					endorseClazz(location, fullClassName);
+					createReturnType(p);
 				}
+			}
+			for (ExternalFactStore fs:getExternalFactStores().values()) {
+				createReturnType(fs.getPredicate());
 			}
 			
 			// build public main kb class
@@ -540,10 +537,18 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	 * @param pck the package name
 	 * @param p  the predicate
 	 */
-	private void createReturnType(PrintWriter out, String clazz, String pck,Predicate p) throws CompilerException {
+	private void createReturnType(Predicate p) throws CompilerException {
+		
+		if (this.predicateClassesGenerated.contains(p))
+			return;
+		
+		String clazz = getClassName(p);
+		String fullClassName = packageName + "." + clazz;
+		PrintWriter out = new PrintWriter(location.getSrcOut(fullClassName));
+		
 		Slot[] slots = buildSlots(p);
 		out.print("package ");
-		out.print(pck);
+		out.print(packageName);
 		out.println(";");
 
 		out.println("/**");
@@ -591,6 +596,12 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		}
 		
 		out.println("}");
+		
+		out.close();
+		endorseClazz(location, fullClassName);
+		
+		this.predicateClassesGenerated.add(p);
+		
 	}
 	/**
 	 * Create an interface for an external fact store. 
