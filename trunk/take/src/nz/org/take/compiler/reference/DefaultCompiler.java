@@ -212,11 +212,12 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 				}
 				else {	
 					createReturnType(p);
+					for (ExternalFactStore fs:getExternalFactStores().values()) {
+						createReturnType(fs.getPredicate());
+					}
 				}
 			}
-			for (ExternalFactStore fs:getExternalFactStores().values()) {
-				createReturnType(fs.getPredicate());
-			}
+
 			
 			// build public main kb class
 			fullClassName = packageName + "." + this.className;
