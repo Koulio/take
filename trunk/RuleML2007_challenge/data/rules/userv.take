@@ -194,6 +194,10 @@ DE_DAC09: if hasTakenASeniorCitizenDriversRefresherCourse[driver] then hasTraini
 @date=2007-09-12
 @description=If the driver has been convicted of a DUI, then the driver qualifies as a High Risk Driver.
 DE_DRC01: if hasBeenConvictedOfaDUI[driver] then isHighRiskDriver[driver]
+@author=Jens Dietrich
+@date=2007-10-19
+@description=get info about DUI conviction from external data source
+external DRCx: hasBeenConvictedOfaDUI[example.nz.org.take.compiler.userv.domainmodel.Driver]
 @category=Driver Eligibility Rule Set
 @author=Jens Dietrich
 @date=2007-09-12
