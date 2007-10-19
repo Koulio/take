@@ -13,7 +13,6 @@ public class Driver {
 	private boolean hasDriversTrainingFromSchool = false;
 	private boolean  hasDriversTrainingFromLicensedDriverTrainingCompany = false;
 	private boolean hasTakenASeniorCitizenDriversRefresherCourse = false;
-	private boolean hasBeenConvictedOfaDUI = false;
 	private int numberOfAccidentsInvolvedIn = 0;
 	private int numberOfMovingViolationsInLastTwoYears = 0;
 	private int numberOfYearsWithUServ = 0;
@@ -60,12 +59,6 @@ public class Driver {
 	public void setHasTakenASeniorCitizenDriversRefresherCourse(
 			boolean hasTakenASeniorCitizenDriversRefresherCourse) {
 		this.hasTakenASeniorCitizenDriversRefresherCourse = hasTakenASeniorCitizenDriversRefresherCourse;
-	}
-	public boolean hasBeenConvictedOfaDUI() {
-		return hasBeenConvictedOfaDUI;
-	}
-	public void setHasBeenConvictedOfaDUI(boolean hasBeenConvictedOfaDUI) {
-		this.hasBeenConvictedOfaDUI = hasBeenConvictedOfaDUI;
 	}
 	public int getNumberOfAccidentsInvolvedIn() {
 		return numberOfAccidentsInvolvedIn;

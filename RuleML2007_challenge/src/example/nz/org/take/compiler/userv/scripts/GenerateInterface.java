@@ -19,6 +19,7 @@
 
 package example.nz.org.take.compiler.userv.scripts;
 
+import java.io.FileInputStream;
 import java.io.InputStream;
 import org.apache.log4j.BasicConfigurator;
 import nz.org.take.compiler.NameGenerator;
@@ -49,7 +50,7 @@ public class GenerateInterface {
 		compiler.setNameGenerator(nameGenerator);
 		BasicConfigurator.configure();			
 		// generate kb
-		InputStream script = GenerateInterface.class.getResourceAsStream("/example/nz/org/take/compiler/userv/rules/userv.take");
+		InputStream script = new FileInputStream("data/rules/userv.take");
 		ScriptKnowledgeSource ksource = new ScriptKnowledgeSource(script);
 		compiler.setLocation(location);
 		compiler.setPackageName("example.nz.org.take.compiler.userv.spec");

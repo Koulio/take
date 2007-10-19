@@ -42,8 +42,6 @@ import javax.script.SimpleBindings;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import test.nz.org.take.compiler.scenario8.FactStore;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.*;
 import nz.org.take.script.ScriptKnowledgeSource;
@@ -156,7 +154,6 @@ public class UServPanel extends JPanel {
 		add(createBooleanEditor(driver,"hasDriversTrainingFromLicensedDriverTrainingCompany","setHasDriversTrainingFromLicensedDriverTrainingCompany"),"<html><body align=\"right\">has drivers training from licensed<br> driver training company</body></html>",1);
 		add(createBooleanEditor(driver,"hasTakenASeniorCitizenDriversRefresherCourse","setHasTakenASeniorCitizenDriversRefresherCourse"),"<html><body align=\"right\">has taken a senior citizen<br>drivers refresher course</body></html>",1);
 		
-		add(createBooleanEditor(driver,"hasBeenConvictedOfaDUI","setHasBeenConvictedOfaDUI"),"has been convicted of a DUI",2);	
 		add(createIntEditor(driver,"getNumberOfAccidentsInvolvedIn","setNumberOfAccidentsInvolvedIn",0,30),"number of accidents involved in",2,40);
 		add(createIntEditor(driver,"getNumberOfMovingViolationsInLastTwoYears","setNumberOfMovingViolationsInLastTwoYears",0,100),"<html><body align=\"right\">number of moving violations<br>in last two years</body></html>",2,40);
 		add(createIntEditor(driver,"getNumberOfYearsWithUServ","setNumberOfYearsWithUServ",0,50),"number of years with UServ",2,40);
@@ -583,7 +580,9 @@ public class UServPanel extends JPanel {
 		bindings.put("NextYear",new GregorianCalendar().get(Calendar.YEAR)+1);
 		
 		Bindings factStores = new SimpleBindings();
-		factStores.put("DP_00x", new example.nz.org.take.compiler.userv.main.SpecialLocationsSource());
+		factStores.put("DP_00x", new SpecialLocationsSource());
+		factStores.put("DRCx", new DUIConvictionInfoSource());
+		
 		FileInputStream in = null;
 		try {
 			in = new FileInputStream(source);
