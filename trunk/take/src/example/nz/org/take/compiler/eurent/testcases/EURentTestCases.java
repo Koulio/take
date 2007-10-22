@@ -20,8 +20,7 @@ package example.nz.org.take.compiler.eurent.testcases;
 
 import nz.org.take.rt.ResultSet;
 import example.nz.org.take.compiler.eurent.*;
-import example.nz.org.take.compiler.eurent.generated.IsAvailable;
-import example.nz.org.take.compiler.eurent.generated.KB;
+import example.nz.org.take.compiler.eurent.generated.*;
 
 /**
  * Sample script used to query the generated classes.
@@ -43,7 +42,7 @@ public class EURentTestCases extends junit.framework.TestCase{
 		c.setScheduledForService(false);
 		c.setStoredAt(b);
 		c.setAssignedTo(null);
-		ResultSet<IsAvailable> rs = new KB().isAvailable(c);
+		ResultSet<IsAvailable> rs = new KB().isAvailable10(c);
 		IsAvailable result = rs.next();
 		assertEquals("Palmerston North",result.branch.getName());
 			                                                                                                            
