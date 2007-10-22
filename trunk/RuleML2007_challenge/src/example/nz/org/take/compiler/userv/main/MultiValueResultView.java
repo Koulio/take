@@ -45,9 +45,10 @@ public abstract class MultiValueResultView extends JPanel {
 	private JButton logButton = new JButton(" ? ");
 	private List<Integer> values = new ArrayList<Integer>();
 	private List<List<DerivationLogEntry>> logs = new ArrayList<List<DerivationLogEntry>>();
-	
-	public MultiValueResultView() {
+	private UServPanel owner = null;
+	public MultiValueResultView(UServPanel owner) {
 		super();
+		this.owner=owner;
 		setLayout(new BorderLayout(5,5));
 		add(new JScrollPane(list),BorderLayout.CENTER);
 		JPanel bPane = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -59,7 +60,7 @@ public abstract class MultiValueResultView extends JPanel {
 					public void actionPerformed(ActionEvent e) {
 						int pos = list.getSelectedIndex();
 						if (pos<logs.size()) {
-							DerivationLogViewer.displayUsedRules(logs.get(pos),MultiValueResultView.this);
+							DerivationLogViewer.displayUsedRules(logs.get(pos),MultiValueResultView.this,MultiValueResultView.this.owner.getKB());
 						}
 					}
 				}
@@ -79,7 +80,7 @@ public abstract class MultiValueResultView extends JPanel {
 					public void mouseClicked(MouseEvent e) {
 						int pos = list.getSelectedIndex();
 						if (e.getClickCount()>1 && pos<logs.size()) {
-							DerivationLogViewer.displayUsedRules(logs.get(pos),MultiValueResultView.this);
+							DerivationLogViewer.displayUsedRules(logs.get(pos),MultiValueResultView.this,MultiValueResultView.this.owner.getKB());
 						}
 					}
 				}

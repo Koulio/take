@@ -30,6 +30,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+
+import example.nz.org.take.compiler.userv.spec.UservRules;
 import nz.org.take.rt.DerivationLogEntry;
 
 /**
@@ -39,12 +41,12 @@ import nz.org.take.rt.DerivationLogEntry;
 
 public class DerivationLogViewer {
 
-	public static void displayUsedRules(List<DerivationLogEntry> log,JComponent parentComponent) {
+	public static void displayUsedRules(List<DerivationLogEntry> log,JComponent parentComponent,UservRules kb) {
 		
 		if (log.size()==0) 
 			JOptionPane.showMessageDialog(parentComponent, "There are no applicable rules", "", JOptionPane.WARNING_MESSAGE);
 		else {
-			DerivationModel treeModel = new DerivationModel(log);
+			DerivationModel treeModel = new DerivationModel(log,kb);
 			JTree tree = new JTree(treeModel);
 			tree.setShowsRootHandles(true);
 			tree.setRootVisible(false);
