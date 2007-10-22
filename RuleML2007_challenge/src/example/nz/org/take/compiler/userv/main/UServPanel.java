@@ -86,7 +86,7 @@ public class UServPanel extends JPanel {
 	JTextField txtDriverEligibility = createOutputTextField();
 	JTextField txtHasTrainingCertification = createOutputTextField();
 	JTextField txtHighRiskDriver = createOutputTextField();
-	MultiValueResultView multiOutPolicyEligibilityScore = new MultiValueResultView() {
+	MultiValueResultView multiOutPolicyEligibilityScore = new MultiValueResultView(this) {
 		public int extractValue(Object object) {
 			PolicyEligibilityScore pes = (PolicyEligibilityScore)object;
 			return pes.score;
@@ -95,19 +95,19 @@ public class UServPanel extends JPanel {
 	JTextField txtInsuranceEligibility = createOutputTextField();
 	JTextField txtLongTermClient = createOutputTextField();
 	JTextField txtBasePremium = createOutputTextField();
-	MultiValueResultView multiAdditionalPremium = new MultiValueResultView() {
+	MultiValueResultView multiAdditionalPremium = new MultiValueResultView(this) {
 		public int extractValue(Object object) {
 			AdditionalPremium pes = (AdditionalPremium)object;
 			return pes.premium;
 		}
 	};
-	MultiValueResultView multiAdditionalDriverPremium = new MultiValueResultView() {
+	MultiValueResultView multiAdditionalDriverPremium = new MultiValueResultView(this) {
 		public int extractValue(Object object) {
 			AdditionalDriverPremium pes = (AdditionalDriverPremium)object;
 			return pes.premium;
 		}
 	};
-	MultiValueResultView multiPremiumDiscount = new MultiValueResultView() {
+	MultiValueResultView multiPremiumDiscount = new MultiValueResultView(this) {
 		public int extractValue(Object object) {
 			PremiumDiscount pes = (PremiumDiscount)object;
 			return pes.discount;
@@ -368,7 +368,7 @@ public class UServPanel extends JPanel {
 	}
 	
 	private void displayUsedRules(List<DerivationLogEntry> logs) {
-		DerivationLogViewer.displayUsedRules(logs,this);	
+		DerivationLogViewer.displayUsedRules(logs,this,kb);	
 	}
 
 	private JCheckBox createBooleanEditor(final Object bean, final String getter, final String setter) {
@@ -613,6 +613,10 @@ public class UServPanel extends JPanel {
 			applyRules();
 			JOptionPane.showMessageDialog(this,"New rules loaded","", JOptionPane.INFORMATION_MESSAGE);
 		}
+	}
+
+	UservRules getKB() {
+		return kb;
 	}
 
 }

@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
-import example.nz.org.take.compiler.userv.generated.UservRules;
+import example.nz.org.take.compiler.userv.spec.UservRules;
 import nz.org.take.rt.DerivationController;
 import nz.org.take.rt.DerivationLogEntry;
 
@@ -38,7 +38,7 @@ import nz.org.take.rt.DerivationLogEntry;
 public class DerivationModel  implements TreeModel {
 	private List<DerivationLogEntry> derivationLog = new ArrayList<DerivationLogEntry>();
 	private Map<String,List<Annotation>> annotations = new HashMap<String,List<Annotation>>();
-	private UservRules kb = new UservRules();
+	private UservRules kb = null;
 	class Annotation {
 		String owner,key,value;
 		public Annotation(String owner, String key, String value) {
@@ -52,13 +52,14 @@ public class DerivationModel  implements TreeModel {
 		}
 	}
 	
-	public DerivationModel(List<DerivationLogEntry> log) {
+	public DerivationModel(List<DerivationLogEntry> log, UservRules kb) {
 		
 		for (DerivationLogEntry e:log) {
 			if (e.getKind()==DerivationController.RULE || e.getKind()==DerivationController.FACT || e.getKind()==DerivationController.EXTERNAL_FACT_SET) {
 				derivationLog.add(e);
 			}
 		}
+		this.kb=kb;
 	}
 
 
