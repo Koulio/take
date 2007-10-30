@@ -32,7 +32,7 @@ import org.apache.velocity.app.VelocityEngine;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class VelocitySupport {
+public class DefaultTemplateManager extends TemplateManager{
 	
 	public static final String TEMPLATEPATH = "nz/org/take/compiler/reference/";
 	public static VelocityEngine VE = new VelocityEngine();
@@ -63,7 +63,7 @@ public class VelocitySupport {
 	 * @return a template
 	 * @throws CompilerException
 	 */
-	public static Template getTemplate(String name) throws CompilerException {
+	public Template getTemplate(String name) throws CompilerException {
 		synchronized(cache) {
 			Template template = cache.get(name);
 			if (template==null) {
@@ -80,7 +80,7 @@ public class VelocitySupport {
 	/**
 	 * Reset the cache, will reload all templates.
 	 */
-	public static void reset() {
+	public void reset() {
 		synchronized(cache) {
 			cache.clear();
 		}

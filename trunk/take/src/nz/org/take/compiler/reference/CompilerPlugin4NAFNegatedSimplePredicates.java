@@ -56,7 +56,7 @@ public class CompilerPlugin4NAFNegatedSimplePredicates extends CompilerPlugin {
 	public String createMethod(PrintWriter out, Query q) throws CompilerException {
 
 		String templateName = "NAFNegatedSimplePredicate.vm";
-		Template template = VelocitySupport.getTemplate(templateName);
+		Template template = TemplateManager.getInstance().getTemplate(templateName);
 		SimplePredicate p = (SimplePredicate)q.getPredicate();
 		
 		// bind template variables

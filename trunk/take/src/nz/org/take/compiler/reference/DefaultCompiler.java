@@ -713,7 +713,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		context.put("templatename", templateName);
 		context.put("annotationStore", annotationStore);
 		context.put("class", className);
-		Template template = VelocitySupport.getTemplate(templateName);
+		Template template = TemplateManager.getInstance().getTemplate(templateName);
 		try {
 			template.merge(context, out);
 		} catch (Exception x) {
@@ -722,7 +722,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		
 		// create method for global annotations
 		templateName = "GlobalAnnotationMethod.vm";
-		template = VelocitySupport.getTemplate(templateName);
+		template = TemplateManager.getInstance().getTemplate(templateName);
 		context.put("templatename", templateName); // override
 		context.put("globalAnnotationKey",GLOBAL_ANNOTATION_KEY);
 		try {

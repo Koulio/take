@@ -45,7 +45,7 @@ public abstract class AbstractTemplatedBasedAggregationFunctionGenerator impleme
 	
 	public Query createAggregationFunction(PrintWriter out,AggregationFunction f, CompilerUtils owner)throws CompilerException {
 		String templateName = getTemplateName();
-		Template template = VelocitySupport.getTemplate(templateName);
+		Template template = TemplateManager.getInstance().getTemplate(templateName);
 		Predicate predicate = f.getQuery().getPredicate();
 		
 		// build the query and the variable list

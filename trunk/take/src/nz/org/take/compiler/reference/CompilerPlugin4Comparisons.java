@@ -54,7 +54,7 @@ public class CompilerPlugin4Comparisons extends CompilerPlugin {
 			
 		// load and (lazy) init template		
 		String templateName = "Comparison_11.vm";
-		Template template = VelocitySupport.getTemplate(templateName);
+		Template template = TemplateManager.getInstance().getTemplate(templateName);
 		
 		// bind template variables
 		Slot[] slots = this.buildSlots(q.getPredicate());

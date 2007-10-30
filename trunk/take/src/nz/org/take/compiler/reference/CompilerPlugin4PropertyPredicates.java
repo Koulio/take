@@ -64,7 +64,7 @@ public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 		boolean param2known = q.getInputParams()[1]; // true - both slots known
 			
 		String templateName = this.getTemplateName(param2known, p.isOne2One(),p.isNegated());
-		Template template = VelocitySupport.getTemplate(templateName);
+		Template template = TemplateManager.getInstance().getTemplate(templateName);
 		
 		// bind template variables
 		String methodName = getMethodName(q);
