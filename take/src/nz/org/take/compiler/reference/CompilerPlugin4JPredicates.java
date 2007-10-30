@@ -60,7 +60,7 @@ public class CompilerPlugin4JPredicates extends CompilerPlugin {
 			
 		// load and (lazy) init templates
 		String templateName = p.isNegated()?TEMPLATE2:TEMPLATE1;
-		Template template = VelocitySupport.getTemplate(templateName);
+		Template template = TemplateManager.getInstance().getTemplate(templateName);
 		
 		// bind template variables
 		String methodName = getMethodName(q);
