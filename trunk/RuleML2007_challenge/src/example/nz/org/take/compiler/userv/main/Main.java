@@ -92,10 +92,12 @@ public class Main extends JFrame {
 				validateRules();
 			}});
 		**/
+		/**
 		toolbar.add(new AbstractAction("show rules"){
 			public void actionPerformed(ActionEvent e) {
 				ScriptViewer.showScript();
 			}});
+			*/
 		toolbar.add(new AbstractAction("load rules"){
 			public void actionPerformed(ActionEvent e) {
 			    JFileChooser chooser = new JFileChooser();
