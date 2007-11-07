@@ -21,7 +21,6 @@ import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.io.File;
-
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -29,6 +28,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 /**
  * Executable UServ application. Starts a user interface to interact with the rules.
@@ -39,7 +40,12 @@ import javax.swing.JToolBar;
  */
 
 public class Main extends JFrame {
-
+	
+	static {
+		org.apache.log4j.BasicConfigurator.configure();
+		Logger.getRoot().setLevel(Level.INFO);
+	}
+	private Logger logger = org.apache.log4j.Logger.getLogger("userv");
 	private UServPanel uservPanel = new UServPanel();
 	public static void main(String[] args) {
 		Main app = new Main();
@@ -68,7 +74,7 @@ public class Main extends JFrame {
 	
 	private void init() {
 		
-		org.apache.log4j.BasicConfigurator.configure();
+		checkJDK();
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("UServ");
@@ -124,6 +130,24 @@ public class Main extends JFrame {
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation((screen.width-W)/2,(screen.height-H)/2);
 	}
+	private void checkJDK() {
+
+		String javaVersion = System.getProperty("java.version");
+		logger.info("Java version is " + javaVersion);
+		if (	javaVersion.startsWith("1.0") ||
+				javaVersion.startsWith("1.1") ||
+				javaVersion.startsWith("1.2") ||
+				javaVersion.startsWith("1.3") ||
+				javaVersion.startsWith("1.4") ||
+				javaVersion.startsWith("1.5")
+		) {
+			System.err.println("Java 1.6 or better is required to run this application!");
+			System.err.println("Application will exist now");
+			System.exit(0);
+		}
+		
+	}
+
 	/** removed - requires signed lib to run with webstart
 	private void validateRules() {
 		try {
@@ -148,7 +172,7 @@ public class Main extends JFrame {
 						"UServ Implementation based on take. See <tt>http://code.google.com/p/take</tt> for details.<br>" + 
 						"&copy; Jens Dietrich, Massey University (<tt>http://www-ist.massey.ac.nz/jbdietrich</tt>) 2007. (software)<br>" + 
 						"&copy; Business Rules Forum (<tt>http://www.businessrulesforum.com</tt>) 2005. (UServ Product Derby Case Study)<br>" + 
-						"The software is licensed under the GNU Lesser General Public License (LGPL) version 2" + 
+						"This software is licensed under the Apache License version 2.0" + 
 						"</html>";
 		JOptionPane.showMessageDialog(this,about,"About UServ",JOptionPane.INFORMATION_MESSAGE);
 	}
