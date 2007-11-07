@@ -128,7 +128,7 @@ public class Main extends JFrame {
 						"UServ Implementation based on take. See <tt>http://code.google.com/p/take</tt> for details.<br>" + 
 						"&copy; Jens Dietrich, Massey University (<tt>http://www-ist.massey.ac.nz/jbdietrich</tt>) 2007. (software)<br>" + 
 						"&copy; Business Rules Forum (<tt>http://www.businessrulesforum.com</tt>) 2005. (UServ Product Derby Case Study)<br>" + 
-						"The software is licensed under the GNU Lesser General Public License (LGPL) version 2" + 
+						"This software is licensed under the Apache License version 2.0" + 
 						"</html>";
 		JOptionPane.showMessageDialog(this,about,"About UServ",JOptionPane.INFORMATION_MESSAGE);
 	}
