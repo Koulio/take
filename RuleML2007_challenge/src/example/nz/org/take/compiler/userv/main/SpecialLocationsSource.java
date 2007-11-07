@@ -15,6 +15,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
+import org.apache.log4j.Logger;
+
 import nz.org.take.rt.EmptyIterator;
 import nz.org.take.rt.ResourceIterator;
 import nz.org.take.rt.SingletonIterator;
@@ -31,6 +34,8 @@ import example.nz.org.take.compiler.userv.spec.specialLocation;
 public class SpecialLocationsSource implements
 		ExternalFactStore4specialLocation {
 
+	private static Logger logger = org.apache.log4j.Logger.getLogger("userv");
+	
 	public SpecialLocationsSource() {
 		super();
 		try {
@@ -41,16 +46,18 @@ public class SpecialLocationsSource implements
 				Statement statement = connection.createStatement();
 				statement.execute("CREATE TEXT TABLE locations (loc VARCHAR(20),PRIMARY KEY(loc))");
 				statement.execute("SET TABLE locations SOURCE \"riskylocations.csv\"");
+				logger.info("risky location database initialized");
 			}
 			catch (Exception x) {
 				// assume table already exists
 			}
 		}
 		catch (Exception x) {
+			logger.warn("Cannot find JDBC driver class",x);
 			throw new RuntimeException("Cannot find JDBC driver class",x);
 		}
 	}
-	
+	// for testing only
 	public static void main(String[] args) throws Exception {
 		new SpecialLocationsSource();
 		Connection connection = null;
@@ -77,15 +84,15 @@ public class SpecialLocationsSource implements
 			connection = DriverManager.getConnection("jdbc:hsqldb:file:data/locations/riskylocations", "sa", "");
 			statement = connection.createStatement();
 			String query = "SELECT * FROM locations WHERE loc='"+driver.getLocation()+"'";
-			System.out.println("query db: " + query);
+			logger.info("Query db: " + query);
 			result = statement.executeQuery(query);
 			isInRiskyLocation = result.next();
-			// System.out.println("the result is " + isInRiskyLocation);
 			result.close();
 			connection.close();
 		}
 		catch (Exception x) {
-			x.printStackTrace();
+			logger.error("Error querying db",x);
+			return EmptyIterator.DEFAULT;
 		}
 
 		if (isInRiskyLocation) {

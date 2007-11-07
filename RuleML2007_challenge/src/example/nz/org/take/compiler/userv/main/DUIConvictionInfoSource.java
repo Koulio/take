@@ -11,12 +11,11 @@
 
 package example.nz.org.take.compiler.userv.main;
 
-import java.io.IOException;
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.log4j.Logger;
 import nz.org.take.rt.EmptyIterator;
 import nz.org.take.rt.ResourceIterator;
 import nz.org.take.rt.SingletonIterator;
@@ -32,6 +31,8 @@ import example.nz.org.take.compiler.userv.spec.hasBeenConvictedOfaDUI;
 
 public class DUIConvictionInfoSource implements ExternalFactStore4hasBeenConvictedOfaDUI {
 
+	private static Logger logger = org.apache.log4j.Logger.getLogger("userv");
+	
 	public static final String URL = "http://localhost:8080/DUILookup/DUILookup";
 	public DUIConvictionInfoSource() {
 		super();
@@ -54,20 +55,18 @@ public class DUIConvictionInfoSource implements ExternalFactStore4hasBeenConvict
         get.setFollowRedirects(true);
         get.setQueryString(new NameValuePair[]{new NameValuePair("id",driver.getId())});        
 		try {
-			System.out.println("DUI conviction lookup " + get.getURI());
+			logger.info("DUI conviction lookup " + get.getURI());
 			client.executeMethod(get);
 			String response = get.getResponseBodyAsString();
-			System.out.println("DUI conviction lookup result: " + response);
+			logger.info("DUI conviction lookup result: " + response);
 			if (response!=null && "true".equals(response.trim())) {
 				hasBeenConvictedOfaDUI record = new hasBeenConvictedOfaDUI();
 				record.slot1 = driver;
 				get.releaseConnection();
 				return new SingletonIterator<hasBeenConvictedOfaDUI>(record);	
 			}
-		} catch (HttpException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.error("Error connecting to web service " + URL);
 		}
 		return EmptyIterator.DEFAULT;
         
