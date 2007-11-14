@@ -1,0 +1,64 @@
+
+DOCUMENT START
+NON-TERMINALS
+	parse	:=	( var | ref | comment | globalannotation | localannotation | aggregation | query | factStore | rule )*
+	localannotation	:=	<GLOBALANNOTATION>
+	globalannotation	:=	<LOCALANNOTATION>
+	comment	:=	<COMMENT>
+	query	:=	<QUERY> ( negated )? predicateQ "[" io ( "," io )* "]"
+	aggregation	:=	<AGGREGATION> name <EQ> aggfunction aggvar aggcondition
+	aggvar	:=	<NAME>
+	aggfunction	:=	avg
+		|	min
+		|	max
+		|	count
+		|	sum
+	avg	:=	<AVG>
+	min	:=	<MIN>
+	max	:=	<MAX>
+	count	:=	<COUNT>
+	sum	:=	<SUM>
+	name	:=	<NAME>
+	negated	:=	<NOT>
+	predicateQ	:=	<NAME>
+	io	:=	in
+		|	out
+	in	:=	<IN>
+	out	:=	<OUT>
+	var	:=	<VAR> dectype ( <DOT> dectype )* decname ( "," decname )*
+	ref	:=	<REF> dectype ( <DOT> dectype )* decname ( "," decname )*
+	dectype	:=	<NAME>
+	decname	:=	<NAME>
+	rule	:=	id ( <IF> condition ( <AND> condition )* <THEN> )? condition
+	factStore	:=	<EXTERNAL> id predicateName "[" className ( <COMMA> className )* "]"
+	id	:=	<LABEL>
+	predicateName	:=	<NAME>
+	className	:=	classNameToken ( <DOT> classNameToken )*
+	classNameToken	:=	<NAME>
+	condition	:=	buildCondition
+	aggcondition	:=	buildCondition3
+	buildCondition	:=	buildCondition2
+		|	buildCondition1
+	buildCondition1	:=	term comparison term
+	buildCondition2	:=	( negation )? predicate "[" terms "]"
+	buildCondition3	:=	predicate "[" terms "]"
+	negation	:=	<NOT>
+	terms	:=	term ( "," term )*
+	term	:=	complexTerm
+		|	simpleTerm
+	simpleTerm	:=	variableTerm
+		|	stringLiteral
+		|	intLiteral
+		|	doubleLiteral
+	variableTerm	:=	variableToken ( <DOT> variableToken )*
+	variableToken	:=	<NAME>
+	stringLiteral	:=	<STRING_LITERAL>
+	intLiteral	:=	<INTEGER_NUMBER>
+	doubleLiteral	:=	<DECIMAL_NUMBER>
+	complexTerm	:=	( function | arithmeticoperation ) "(" terms ")"
+	function	:=	<NAME>
+	arithmeticoperation	:=	<ARITHMETICOPERATION>
+	predicate	:=	<NAME>
+	comparison	:=	<COMPARISON>
+
+DOCUMENT END
