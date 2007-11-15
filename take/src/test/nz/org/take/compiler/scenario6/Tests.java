@@ -10,18 +10,19 @@
 
 package test.nz.org.take.compiler.scenario6;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
-import javax.script.Bindings;
-import javax.script.SimpleBindings;
-
-import test.nz.org.take.TakeTestCase;
-import test.nz.org.take.compiler.scenario6.generated.*;
+import junit.framework.TestCase;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.DerivationController;
 import nz.org.take.rt.ResultSet;
 import nz.org.take.script.ScriptKnowledgeSource;
-import junit.framework.TestCase;
+import test.nz.org.take.TakeTestCase;
+import test.nz.org.take.compiler.scenario6.generated.IsFatherOf;
+import test.nz.org.take.compiler.scenario6.generated.IsGrandfatherOf;
+import test.nz.org.take.compiler.scenario6.generated.KB;
 
 /**
  * Tests for this scenario. 
@@ -55,7 +56,7 @@ public class Tests extends TakeTestCase
 	{
 		super.setUp();
 		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
-		Bindings bindings = new SimpleBindings();
+		Map<String,Object> bindings = new HashMap<String,Object>();
 		bindings.put("Frank",new Person("Frank"));
 		bindings.put("Guenther",new Person("Guenther"));
 		bindings.put("Jens",new Person("Jens"));

@@ -13,14 +13,18 @@
 package example.nz.org.take.compiler.example1;
 
 import java.io.InputStream;
-import javax.script.Bindings;
-import javax.script.SimpleBindings;
-import org.apache.log4j.BasicConfigurator;
-import example.nz.org.take.compiler.example1.spec.*;
+import java.util.HashMap;
+import java.util.Map;
+
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
 import nz.org.take.script.ScriptKnowledgeSource;
+
+import org.apache.log4j.BasicConfigurator;
+
+import example.nz.org.take.compiler.example1.spec.CustomerDiscount;
+import example.nz.org.take.compiler.example1.spec.DiscountPolicy;
 
 
 /**
@@ -43,14 +47,13 @@ public class Example {
 
 		// compile and bind constants referenced in rules
 		KnowledgeBaseManager<DiscountPolicy> kbm = new KnowledgeBaseManager<DiscountPolicy>();
-		Bindings bindings = new SimpleBindings();		
+		Map<String,Object> bindings = new HashMap<String,Object>();		
 		bindings.put("goldCustomerDiscount",new Discount(20,true));
 		InputStream scriptSource = GenerateInterface.class.getResourceAsStream("/example/nz/org/take/compiler/example1/crm-example.take");
 		KB = kbm.getKnowledgeBase(
 				DiscountPolicy.class, 
 				new ScriptKnowledgeSource(scriptSource),
 				bindings);
-
 		
 		// now use the generated classes to query the kb
 		Customer john = new Customer("John");

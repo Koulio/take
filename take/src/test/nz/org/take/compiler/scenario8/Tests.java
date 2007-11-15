@@ -11,16 +11,17 @@
 package test.nz.org.take.compiler.scenario8;
 
 import java.io.File;
-import javax.script.Bindings;
-import javax.script.SimpleBindings;
+import java.util.HashMap;
+import java.util.Map;
+
+import junit.framework.TestCase;
+import nz.org.take.deployment.KnowledgeBaseManager;
+import nz.org.take.rt.ResultSet;
+import nz.org.take.script.ScriptKnowledgeSource;
 import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.scenario8.generated.IsFatherOf;
 import test.nz.org.take.compiler.scenario8.generated.IsGrandfatherOf;
 import test.nz.org.take.compiler.scenario8.generated.KB;
-import nz.org.take.deployment.KnowledgeBaseManager;
-import nz.org.take.rt.ResultSet;
-import nz.org.take.script.ScriptKnowledgeSource;
-import junit.framework.TestCase;
 
 /**
  * Tests for this scenario. 
@@ -54,12 +55,12 @@ public class Tests extends TakeTestCase
 	{
 		super.setUp();
 		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
-		Bindings factStores = new SimpleBindings();
+		Map<String,Object> factStores = new HashMap<String,Object>();
 		factStores.put("facts1", new FactStore());
 		kb = kbm.getKnowledgeBase(
 				KB.class, 
 				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/scenario8/rules8.take")),
-				new SimpleBindings(),
+				new HashMap<String,Object>(),
 				factStores
 		); 
 		
