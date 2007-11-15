@@ -9,15 +9,22 @@
  */
 
 
-package nz.org.take.compiler.util;
+package nz.org.take.deployment;
 
-import org.apache.log4j.Category;
-
+import nz.org.take.TakeException;
 /**
- * Loggers used by the compiler.
+ * Adapter for different Java compilers. Possible implementations include adapters for JSR199, for ANTs javac task,
+ * for SUNs compiler and for the Eclipse JDT compiler. See also compiler adapters used in JASPER.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-public interface Logging {
-	public static final Category LOGGER = Category.getInstance("take");
 
+public interface CompilerAdapter {
+	/**
+	 * Compile all classes in a package located in a srcFolder.
+	 * @param packageName
+	 * @param srcFolder
+	 * @param binFolder
+	 * @throws TakeException
+	 */
+	public void compile(String packageName,String srcFolder,String binFolder) throws TakeException ;
 }

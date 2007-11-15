@@ -10,14 +10,16 @@
 
 package test.nz.org.take.compiler.misc1;
 
-import javax.script.Bindings;
-import javax.script.SimpleBindings;
-import test.nz.org.take.TakeTestCase;
-import test.nz.org.take.compiler.misc1.generated.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import junit.framework.TestCase;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.ResultSet;
 import nz.org.take.script.ScriptKnowledgeSource;
-import junit.framework.TestCase;
+import test.nz.org.take.TakeTestCase;
+import test.nz.org.take.compiler.misc1.generated.IsFatherOf;
+import test.nz.org.take.compiler.misc1.generated.KB;
 
 /**
  * Tests for this scenario. 
@@ -53,14 +55,13 @@ public class Tests extends TakeTestCase
 	{
 		super.setUp();
 		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
-		Bindings factStores = new SimpleBindings();
+		Map<String,Object> factStores = new HashMap<String,Object>();
 		kb = kbm.getKnowledgeBase(
 				KB.class, 
 				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/misc1/rules.take")),
-				new SimpleBindings(),
+				new HashMap<String,Object>(),
 				factStores
 		); 
-
 	}
 
 	/**

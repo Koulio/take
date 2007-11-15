@@ -11,9 +11,6 @@
 package test.nz.org.take.compiler.annotations;
 
 import java.util.Map;
-
-import javax.script.Bindings;
-import javax.script.SimpleBindings;
 import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.annotations.generated.KB;
 import nz.org.take.deployment.KnowledgeBaseManager;
@@ -54,12 +51,9 @@ public class Tests extends TakeTestCase
 	{
 		super.setUp();
 		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
-		Bindings factStores = new SimpleBindings();
 		kb = kbm.getKnowledgeBase(
 				KB.class, 
-				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/annotations/rules.take")),
-				new SimpleBindings(),
-				factStores
+				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/annotations/rules.take"))
 		); 
 
 	}

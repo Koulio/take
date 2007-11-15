@@ -19,17 +19,10 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
-import javax.script.Bindings;
-import javax.script.SimpleBindings;
-import javax.tools.JavaCompiler;
-import javax.tools.JavaFileObject;
-import javax.tools.StandardJavaFileManager;
-import javax.tools.ToolProvider;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.KnowledgeSource;
 import nz.org.take.TakeException;
@@ -38,7 +31,9 @@ import nz.org.take.compiler.NameGenerator;
 import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.DefaultNameGenerator;
+import nz.org.take.compiler.util.Logging;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
+import nz.org.take.deployment.ant.ANTCompilerAdapter;
 
 
 /**
@@ -47,7 +42,7 @@ import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class KnowledgeBaseManager<I> {
+public class KnowledgeBaseManager<I> implements Logging {
 	
 	// data format used in generated class names
 	private DateFormat dateFormat = new SimpleDateFormat("yyMMdd_HHmmss");
@@ -55,12 +50,35 @@ public class KnowledgeBaseManager<I> {
 	private String workingDirRoot = "takeWorkingDir/";
 	// the name of the kb class
 	private String className = "KBImpl";
-	// whether to ccheck 
+	// whether to check bindings 
 	private boolean checkBindingsForCompleteness = true;
 	// the parent of the classloader that will be used to load 
 	// generated classes
 	private ClassLoader baseClassLoader = this.getClass().getClassLoader();
+	// the Java compiler is responsible for compiling the generated source code classes
+	private CompilerAdapter javaCompiler = new ANTCompilerAdapter();
 
+	public KnowledgeBaseManager() {
+		super();
+		// init compiler adapter
+		String compilerAdapterName = this.getCompilerAdapterClassName();
+		try {
+			LOGGER.info("Trying to install compiler adapter " + compilerAdapterName);
+			javaCompiler = (CompilerAdapter)Class.forName(compilerAdapterName).newInstance();
+			LOGGER.debug("Installed Java compiler adapter " + compilerAdapterName);
+		}
+		catch (Exception x) {
+			LOGGER.error("Error installing Java compiler adapter " + compilerAdapterName,x);
+		}
+	}
+
+	protected String getCompilerAdapterClassName() {
+		String javaVersion = System.getProperty("java.version");
+		if (javaVersion.startsWith("1.5")) {
+			return "nz.org.take.deployment.ant.ANTCompilerAdapter";
+		}
+		return "nz.org.take.deployment.jsr199.JSR199CompilerAdapter";
+	}
 	/**
 	 * Get an instance of the compiled knowledge base.
 	 * @param spec the interface to be implemented by the compiled knowledge base
@@ -70,7 +88,7 @@ public class KnowledgeBaseManager<I> {
 	 */
 	
 	public I getKnowledgeBase(Class spec,KnowledgeSource ksource) throws TakeException {
-		return this.getKnowledgeBase(spec, ksource,new SimpleBindings(),new SimpleBindings());
+		return this.getKnowledgeBase(spec, ksource,new HashMap<String,Object> (),new HashMap<String,Object> ());
 	}
 	
 	/**
@@ -81,8 +99,8 @@ public class KnowledgeBaseManager<I> {
 	 * @return an instance of the kb
 	 * @throws TakeException
 	 */
-	public I getKnowledgeBase(Class spec,KnowledgeSource ksource,Bindings constants) throws TakeException {
-		return this.getKnowledgeBase(spec, ksource,constants,new SimpleBindings());
+	public I getKnowledgeBase(Class spec,KnowledgeSource ksource,Map<String,Object> constants) throws TakeException {
+		return this.getKnowledgeBase(spec, ksource,constants,new HashMap<String,Object> ());
 	}
 	
 
@@ -95,11 +113,10 @@ public class KnowledgeBaseManager<I> {
 	 * @return an instance of the kb
 	 * @throws TakeException
 	 */
-	public I getKnowledgeBase(Class spec,KnowledgeSource ksource,Bindings constants,Bindings factStores) throws TakeException {
+	public I getKnowledgeBase(Class spec,KnowledgeSource ksource,Map<String,Object> constants, Map<String,Object> factStores) throws TakeException {
 	
 		KnowledgeBase kb = ksource.getKnowledgeBase();
 		assert(spec.isInterface());
-		NameGenerator nameGenerator = new DefaultNameGenerator();
 		checkFolder(workingDirRoot);
 		String srcFolder = workingDirRoot+"src/";
 		String binFolder = workingDirRoot+"bin/";
@@ -117,26 +134,12 @@ public class KnowledgeBaseManager<I> {
 		kbCompiler.setPackageName(packageName);
 		kbCompiler.setClassName(className);
 		kbCompiler.setInterfaceNames(spec.getName());
+		kbCompiler.setNameGenerator(new DefaultNameGenerator());
 		String interfacePackageName = spec.getPackage().getName();
 		kbCompiler.setImportStatements(interfacePackageName+".*"); // the interface
 		kbCompiler.compile(kb);
 		
-		// java compilation
-		String javaFolder = srcFolder + packageName.replace('.','/');
-		
-		File[] files = new File(javaFolder).listFiles();
-		List<File> sources = new ArrayList<File>();
-		for (File f:files) {
-			if (f.getAbsolutePath().endsWith(".java"))
-				sources.add(f);
-		}
-		
-		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-        StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
-        Iterable<? extends JavaFileObject> compilationUnits1 =
-        	fileManager.getJavaFileObjectsFromFiles(sources);
-        String[] options = new String[]{"-d",binFolder};
-	    compiler.getTask(null, fileManager, null, Arrays.asList(options), null, compilationUnits1).call();
+	    javaCompiler.compile(packageName,srcFolder,binFolder);
 	    
 	    // copy resource from src to bin folder
 	    copyResources(new File(srcFolder),binFolder);
@@ -183,7 +186,7 @@ public class KnowledgeBaseManager<I> {
 						    in.close();
 						} 
 						catch (IOException e) {
-							e.printStackTrace();
+							// e.printStackTrace(); TODO logging
 						}
 			    	}
 			    }
@@ -191,7 +194,7 @@ public class KnowledgeBaseManager<I> {
 		}
 	}
 
-	private void setupBindings(Bindings bindings, String constantClassName,ClassLoader classloader) throws TakeException{
+	private void setupBindings(Map<String,Object> bindings, String constantClassName,ClassLoader classloader) throws TakeException{
 		Class constantClass = null;
 		if (bindings.size()>0) {			
 			try {
@@ -248,5 +251,13 @@ public class KnowledgeBaseManager<I> {
 
 	public void setBaseClassLoader(ClassLoader baseClassLoader) {
 		this.baseClassLoader = baseClassLoader;
+	}
+
+	public CompilerAdapter getJavaCompiler() {
+		return javaCompiler;
+	}
+
+	public void setJavaCompiler(CompilerAdapter javaCompiler) {
+		this.javaCompiler = javaCompiler;
 	}
 }

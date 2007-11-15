@@ -10,7 +10,6 @@
 
 package test.nz.org.take.compiler.scenario10;
 
-import javax.script.SimpleBindings;
 import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.scenario10.generated.CanFly;
 import test.nz.org.take.compiler.scenario10.generated.KB;
@@ -50,10 +49,8 @@ public class Tests extends TakeTestCase
 		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
 		kb = kbm.getKnowledgeBase(
 				KB.class, 
-				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/scenario10/rules10.take")),
-				new SimpleBindings()
+				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/scenario10/rules10.take"))
 		); 
-
 	}
 
 	/**
