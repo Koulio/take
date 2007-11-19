@@ -20,8 +20,6 @@ package nz.org.take.r2ml;
 
 import javax.xml.namespace.QName;
 
-import test.nz.org.take.r2ml.userv.domain.Airbag;
-
 /**
  * Defines a Mapping from qualified xml names to Java datatypes. Each type is
  * identified by a <code>javax.xml.namespace.QName</code>.
