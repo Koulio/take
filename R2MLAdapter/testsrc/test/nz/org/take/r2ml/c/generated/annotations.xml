@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0" class="java.beans.XMLDecoder"> 
+ <object class="java.util.HashMap"> 
+  <void method="put"> 
+   <string>equalityTestRule</string> 
+   <object class="java.util.HashMap"> 
+    <void method="put"> 
+     <string>de.tu_cottbus.r2ml.RuleSet.ruleSetId</string> 
+     <string>DRS001</string> 
+    </void> 
+    <void method="put"> 
+     <string>de.tu_cottbus.r2ml.RuleText.format</string> 
+     <string>plain</string> 
+    </void> 
+    <void method="put"> 
+     <string>de.tu_cottbus.r2ml.RuleText</string> 
+     <string>
+					if
+						equals(lastname(person1), lastName(person2))
+					then
+						isFamily(person1, person2)
+				</string> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="put"> 
+   <string>___global_annotations</string> 
+   <object class="java.util.HashMap"> 
+    <void method="put"> 
+     <string>dc:creator</string> 
+     <string>R2MLAdapter v0.1</string> 
+    </void> 
+    <void method="put"> 
+     <string>dc:date</string> 
+     <string>Tue Nov 20 15:58:26 GMT+01:00 2007</string> 
+    </void> 
+    <void method="put"> 
+     <string>dc:author</string> 
+     <string>schenke</string> 
+    </void> 
+   </object> 
+  </void> 
+ </object> 
+</java> 

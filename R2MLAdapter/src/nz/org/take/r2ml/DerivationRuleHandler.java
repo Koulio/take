@@ -85,7 +85,7 @@ class DerivationRuleHandler implements XmlTypeHandler {
 				dRules.add(dRule);
 			} // for
 		} catch (R2MLException e) {
-			throw new R2MLException("Unable to map Derivationrule (" + xDRule.getRuleID() + ")", e);
+			throw new R2MLException("Error in rule \"" + xDRule.getRuleID() + "\": " + e.getMessage());
 		} // try catch
 
 		return dRules;
@@ -125,10 +125,10 @@ class DerivationRuleHandler implements XmlTypeHandler {
 	private List<List<Prerequisite>> extractBody(
 			de.tu_cottbus.r2ml.DerivationRule rule, MappingContext context, R2MLDriver driver)
 			throws R2MLException {
-		List<List<Prerequisite>> body = null;
+		List<List<Prerequisite>> ruleBodies = null;
 		XmlTypeHandler handler = driver.getHandlerByXmlType(rule.getConditions().getClass());
-		body = (List<List<Prerequisite>>) handler.importObject(rule.getConditions());
-		return body;
+		ruleBodies = (List<List<Prerequisite>>) handler.importObject(rule.getConditions());
+		return ruleBodies;
 	}
 
 }

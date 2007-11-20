@@ -80,7 +80,7 @@ public class MappingContext {
 	}
 
 	void addVariable(QName name, Variable variable) {
-
+		variables.put(name, variable);
 	}
 
 	/**

@@ -68,19 +68,25 @@ public class R2MLKnowledgeSource implements KnowledgeSource {
 		this();
 		this.rb = ruleBase;
 	}
+	
+	public KnowledgeBase getKnowledgeBase() throws TakeException {
+		return getKnowledgeBase(false);
+	}
 
 	/**
 	 * Get a knowledge base.
+	 * @param generateQuerries if true generate all possible querries for all supported predicates else dont
 	 * 
 	 * @return a knowledge base
 	 */
-	public KnowledgeBase getKnowledgeBase() throws TakeException {
+	public KnowledgeBase getKnowledgeBase(boolean generateQuerries) throws TakeException {
 		if (kb == null) {
 			if (rb == null) {
 				unmarshallRuleBase();
 			}
 			kb = driver.importKB(rb);
-			GenerateQueries.generateQueries(kb);
+			if (generateQuerries)
+				GenerateQueries.generateQueries(kb);
 		}
 		return kb;
 	}

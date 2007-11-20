@@ -65,15 +65,15 @@ public class DefaultDatatypeMapper implements DatatypeMapper {
 	/* (non-Javadoc)
 	 * @see nz.org.take.r2ml.DatatypeMapper#setType(javax.xml.namespace.QName, java.lang.Class)
 	 */
-	public void setType (QName key, Class value) {
-		types.put(key, value);
+	public void setType (QName fullName, Class value) {
+		types.put(fullName, value);
 	}
 
 	/* (non-Javadoc)
 	 * @see nz.org.take.r2ml.DatatypeMapper#setType(java.lang.String, java.lang.Class)
 	 */
-	public void setType(String name, Class clazz) {
-		setType(new QName("", name), clazz);
+	public void setType(String localName, Class clazz) {
+		setType(new QName("", localName), clazz);
 	}
 	
 }

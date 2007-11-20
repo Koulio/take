@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Copyright (C) 2007 Bastian Schenke (bastian.schenke(at)gmail.com) and 
+ <a href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+-->
+<r2ml:RuleBase xmlns:r2ml='http://www.rewerse.net/I1/2006/R2ML'
+	xmlns:xs='http://www.w3.org/2001/XMLSchema'
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.rewerse.net/I1/2006/R2ML http://oxygen.informatik.tu-cottbus.de/R2ML/0.4/R2ML.xsd"
+	>
+	<r2ml:DerivationRuleSet r2ml:ruleSetID="DRS0047">
+		
+		<r2ml:DerivationRule r2ml:ruleID="DR047a">
+			<r2ml:conditions>
+				<r2ml:qf.Disjunction>
+					<r2ml:GenericAtom r2ml:predicateID='pred1'>
+						<r2ml:arguments>
+							<r2ml:TypedLiteral r2ml:datatypeID='xs:string'
+								r2ml:lexicalValue='A'/>
+						</r2ml:arguments>
+					</r2ml:GenericAtom>
+					<r2ml:GenericAtom r2ml:predicateID='pred2'>
+						<r2ml:arguments>
+							<r2ml:TypedLiteral r2ml:datatypeID='xs:string'
+								r2ml:lexicalValue='B'/>
+						</r2ml:arguments>
+					</r2ml:GenericAtom>
+				</r2ml:qf.Disjunction>
+			</r2ml:conditions>
+			<r2ml:conclusion>
+				<r2ml:GenericAtom r2ml:predicateID='dummy'>
+					<r2ml:arguments>
+						<r2ml:TypedLiteral r2ml:datatypeID='xs:string'
+							r2ml:lexicalValue='C'/>
+					</r2ml:arguments>
+				</r2ml:GenericAtom>
+			</r2ml:conclusion>
+		</r2ml:DerivationRule>
+		
+		<r2ml:DerivationRule r2ml:ruleID="DR047b">
+			<r2ml:conditions>
+				<r2ml:qf.Conjunction>
+					<r2ml:qf.Disjunction>
+						<r2ml:GenericAtom r2ml:predicateID='dummy'>
+							<r2ml:arguments>
+								<r2ml:TypedLiteral r2ml:datatypeID='xs:string'
+									r2ml:lexicalValue='A'/>
+							</r2ml:arguments>
+						</r2ml:GenericAtom>
+						<r2ml:GenericAtom r2ml:predicateID='dummy'>
+							<r2ml:arguments>
+								<r2ml:TypedLiteral r2ml:datatypeID='xs:string'
+									r2ml:lexicalValue='B'/>
+							</r2ml:arguments>
+						</r2ml:GenericAtom>
+					</r2ml:qf.Disjunction>
+					<r2ml:qf.StrongNegation>
+						<r2ml:GenericAtom r2ml:predicateID='dummy'>
+							<r2ml:arguments>
+								<r2ml:TypedLiteral r2ml:datatypeID='xs:string'
+									r2ml:lexicalValue='C'/>
+							</r2ml:arguments>
+						</r2ml:GenericAtom>
+					</r2ml:qf.StrongNegation>
+				</r2ml:qf.Conjunction>
+			</r2ml:conditions>
+			<r2ml:conclusion>
+				<r2ml:GenericAtom r2ml:predicateID='dummy'>
+					<r2ml:arguments>
+						<r2ml:TypedLiteral r2ml:datatypeID='xs:string'
+							r2ml:lexicalValue='C'/>
+					</r2ml:arguments>
+				</r2ml:GenericAtom>
+			</r2ml:conclusion>
+		</r2ml:DerivationRule>
+		
+		<r2ml:DerivationRule r2ml:ruleID="DR047c">
+			<r2ml:conditions>
+				<r2ml:EqualityAtom>
+					<r2ml:ObjectVariable r2ml:name="A" r2ml:classID="string" />
+					<r2ml:ObjectVariable r2ml:name="B" r2ml:classID="string" />
+					<r2ml:ObjectVariable r2ml:name="C" r2ml:classID="string" />
+				</r2ml:EqualityAtom>
+				<r2ml:qf.Disjunction>
+					<r2ml:GenericAtom r2ml:predicateID='dummy'>
+						<r2ml:arguments>
+							<r2ml:TypedLiteral r2ml:datatypeID='xs:string'
+								r2ml:lexicalValue='A'/>
+						</r2ml:arguments>
+					</r2ml:GenericAtom>
+					<r2ml:GenericAtom r2ml:predicateID='dummy'>
+						<r2ml:arguments>
+							<r2ml:TypedLiteral r2ml:datatypeID='xs:string'
+								r2ml:lexicalValue='B'/>
+						</r2ml:arguments>
+					</r2ml:GenericAtom>
+				</r2ml:qf.Disjunction>
+			</r2ml:conditions>
+			<r2ml:conclusion>
+				<r2ml:GenericAtom r2ml:predicateID='dummy'>
+					<r2ml:arguments>
+						<r2ml:TypedLiteral r2ml:datatypeID='xs:string'
+							r2ml:lexicalValue='C'/>
+					</r2ml:arguments>
+				</r2ml:GenericAtom>
+			</r2ml:conclusion>
+		</r2ml:DerivationRule>
+	</r2ml:DerivationRuleSet>
+</r2ml:RuleBase>
