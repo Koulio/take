@@ -36,10 +36,6 @@ class DerivationRuleSetHandler implements XmlTypeHandler {
 	 * Maps a DerivationRuleSet to a List containing KnowledgeElements
 	 * where each rule is transformed into one KnowledgeElement.
 	 * 
-	 * TODO implement protected Vocabulary vocabulary;
-	 * TODO implement protected String externalVocabularyID;
-	 * TODO implement protected String externalVocabularyLanguage;
-	 * 
 	 * @param obj
 	 *            a DerivationRuleSet
 	 * @return List<KnowledgeElement> containing all rules of the
@@ -74,8 +70,8 @@ class DerivationRuleSetHandler implements XmlTypeHandler {
 				} // for
 			} catch (R2MLException e) {
 				driver.logger.info(e.getMessage());
-				driver.logger.error("Error while importing DerivationRuleSet "
-						+ id + ".", e);
+				driver.logger.warn("Error while importing DerivationRuleSet "
+						+ id + ".");
 			} catch (ClassCastException cce) {
 				throw new R2MLException("Error while processing DerivationRuleSet " + id + "", cce, R2MLException.CLASS_CAST_ERROR);
 			} // try-catch

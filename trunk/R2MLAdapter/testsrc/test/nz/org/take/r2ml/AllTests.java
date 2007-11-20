@@ -16,37 +16,31 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-package nz.org.take.r2ml;
+package test.nz.org.take.r2ml;
 
-import java.util.HashMap;
-import java.util.Map;
+import test.nz.org.take.r2ml.a.DisjunctiveConditionsTest;
+import test.nz.org.take.r2ml.a.R2MLDriverTest;
+import test.nz.org.take.r2ml.b.AttributionAtomHandlerTest;
+import test.nz.org.take.r2ml.c.EqualityAtomHandlerTest;
+import test.nz.org.take.r2ml.scenario3.Scenario3Test;
+import test.nz.org.take.r2ml.scenario4.Scenario4Test;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
-import javax.xml.namespace.QName;
-
-
-public class DefaultNameMapper implements NameMapper {
-
-	Map<QName, String[]> slotNames = new HashMap<QName, String[]>();
-	Map<QName, String> attrPredNames = new HashMap<QName, String>();
-
-	public DefaultNameMapper() {
-	}
-
-	public String[] getSlotNames(QName predicateID) {
-		String[] names = slotNames.get(predicateID); 
-		return names;
-	}
-
-	public void addSlotNames(QName key, String[] value) {
-		slotNames.put(key, value);
-	}
-
-	public void addSlotNames(Map<QName, String[]> names) {
-		slotNames.putAll(names);
-	}
+public class AllTests {
 	
-	public void setAttrPredName() {
-		
+	public static Test suite() {
+		TestSuite ts;
+		ts = new TestSuite();
+		ts.addTestSuite(R2MLDriverTest.class);
+		ts.addTestSuite(DisjunctiveConditionsTest.class);
+		ts.addTestSuite(AttributionAtomHandlerTest.class);
+		ts.addTestSuite(EqualityAtomHandlerTest.class);
+		ts.addTestSuite(Scenario3Test.class);
+		ts.addTestSuite(Scenario4Test.class);
+		return ts;
 	}
 
+	void test1() {
+	}
 }

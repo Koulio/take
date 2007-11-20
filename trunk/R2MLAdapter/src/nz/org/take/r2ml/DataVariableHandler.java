@@ -30,11 +30,16 @@ class DataVariableHandler implements XmlTypeHandler {
 		Variable var = context.getVariable(dVar.getName());
 		if (var != null)
 			return var;
-		if (driver.logger.isInfoEnabled()) {
-			driver.logger.info("Create new Variable ("
-					+ dVar.getName() + ":"
-					+ driver.getDatatypeMapper().getType(dVar.getDatatypeID())
-							.getSimpleName() + ").");
+		try {
+			if (driver.logger.isInfoEnabled()) {
+				driver.logger.info("Create new Variable ("
+						+ dVar.getName() + ":"
+						+ driver.getDatatypeMapper().getType(dVar.getDatatypeID())
+								 + ").");
+			}
+		} catch (RuntimeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		var = new Variable();
 		var.setName(dVar.getName());

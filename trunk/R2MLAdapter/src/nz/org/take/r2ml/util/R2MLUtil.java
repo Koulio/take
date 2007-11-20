@@ -11,6 +11,7 @@ import java.lang.reflect.Modifier;
 
 import de.tu_cottbus.r2ml.Atom;
 import de.tu_cottbus.r2ml.EqualityAtom;
+import de.tu_cottbus.r2ml.GenericAtom;
 import de.tu_cottbus.r2ml.InequalityAtom;
 import de.tu_cottbus.r2ml.QfConjunction;
 
@@ -95,19 +96,27 @@ public class R2MLUtil {
 	}
 
 	public static boolean returnsListOfPrerequisites(Object formula) {
-		
-		return false 
-			&& (formula instanceof QfConjunction);
+		if (formula instanceof QfConjunction)
+			return true;
+		else
+			return false;
 	}
 
 	public static boolean returnsListOfFacts(Object formula) {
-		return true
-			&& (formula instanceof EqualityAtom)
-			&& (formula instanceof InequalityAtom);
+		if (formula instanceof EqualityAtom)
+			return true;
+		else if (formula instanceof EqualityAtom)
+			return true;
+		else if (formula instanceof InequalityAtom)
+			return true;
+		else
+			return false;
 	}
 	
 	public static boolean returnsFact(Object formula) {
-		return true;
+		if (formula instanceof GenericAtom)
+			return true;
+		return false;
 	}
 	
 	public static PropertyDescriptor buildProperty(String name, Class clazz) {

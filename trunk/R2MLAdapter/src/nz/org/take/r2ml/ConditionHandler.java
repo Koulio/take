@@ -52,34 +52,45 @@ class ConditionHandler implements XmlTypeHandler {
 	@SuppressWarnings("unchecked")
 	public Object importObject(Object obj) throws R2MLException {
 		R2MLDriver driver = R2MLDriver.get();
-		MappingContext.get().enter(this);
 		Condition condition = (Condition) obj;
 		List<List<Prerequisite>> bodies = new ArrayList<List<Prerequisite>>();
 		// normalize condition into DNF
-		List<JAXBElement<? extends QfAndOrNafNegFormula>> formula =
-			driver.getNormalizer().normalize(condition).getQfAndOrNafNegFormula();
+		List<JAXBElement<? extends QfAndOrNafNegFormula>> formula = driver
+				.getNormalizer().normalize(condition).getQfAndOrNafNegFormula();
+		MappingContext.get().enter(this);
 		List<Prerequisite> body = null;
 		for (JAXBElement<? extends QfAndOrNafNegFormula> item : formula) {
-			XmlTypeHandler handler = driver.getHandlerByXmlType(item.getValue().getClass());
-			// disjunctions occur only as single toplevel
+			XmlTypeHandler handler = driver.getHandlerByXmlType(item.getValue()
+					.getClass());
+			// disjunctions occur only as single toplevel elements, see
+			// Normalizer.normalize()
 			if (item.getValue() instanceof QfDisjunction) {
-				bodies = (List<List<Prerequisite>>) handler.importObject(item.getValue());
+				bodies = (List<List<Prerequisite>>) handler.importObject(item
+						.getValue());
 				break;
 			} // if
 			if (body == null) {
 				body = new ArrayList<Prerequisite>();
 				bodies.add(body);
 			} // if
-//			if (R2MLUtil.returnsListOfPrerequisites(item.getValue())) {
-//				body.addAll((List<? extends Prerequisite>) handler.importObject(item.getValue()));
-//			} else 
-			if (R2MLUtil.returnsListOfFacts(item.getValue())) {
-				for (Fact fact : (List<Fact>)handler.importObject(item.getValue())) {
+			if (R2MLUtil.returnsListOfPrerequisites(item.getValue())) {
+				body.addAll((List<? extends Prerequisite>) handler
+						.importObject(item.getValue()));
+			} else if (R2MLUtil.returnsListOfFacts(item.getValue())) {
+				for (Fact fact : (List<Fact>) handler.importObject(item
+						.getValue())) {
 					body.add(R2MLUtil.factAsPrerequisite(fact));
 				} // for
-			} else if (R2MLUtil.returnsFact(item.getValue())) {
-				body.add(R2MLUtil.factAsPrerequisite((Fact)handler.importObject(item.getValue())));
-			} // if else
+			} else
+				// if (R2MLUtil.returnsFact(item.getValue())) {
+				body.add(R2MLUtil.factAsPrerequisite((Fact) handler
+						.importObject(item.getValue())));
+			// } else {
+			// driver.logger.warn("Condition dont know the return type of " +
+			// item.getName());
+			// throw new RuntimeException("Condition dont know the return type
+			// of " + item.getName());
+			// }
 		} // for
 		MappingContext.get().leave(this);
 		return bodies;
