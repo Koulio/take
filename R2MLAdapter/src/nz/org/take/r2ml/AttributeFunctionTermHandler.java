@@ -32,8 +32,12 @@ public class AttributeFunctionTermHandler implements XmlTypeHandler {
 		contextArgument = (Term) contextHandler.importObject(term.getContextArgument().getObjectTerm().getValue());
 		takeTerm.setTerms(new Term[] {contextArgument});
 		
+		String localName = term.getAttributeID().getLocalPart();
 		// building method
-		PropertyDescriptor prop = R2MLUtil.buildProperty(term.getAttributeID().getLocalPart(), contextArgument.getType());
+		PropertyDescriptor prop = R2MLUtil.buildProperty(localName, contextArgument.getType());
+		if (prop == null) {
+			throw new R2MLException("The domain class \"" + contextArgument.getType().getSimpleName() + "\" does not support the property \"" + localName + "\".");
+		}
 		JFunction jFunction = new JFunction();
 		jFunction.setMethod(prop.getReadMethod());
 		takeTerm.setFunction(jFunction);
