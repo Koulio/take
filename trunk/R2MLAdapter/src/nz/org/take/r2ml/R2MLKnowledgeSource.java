@@ -38,6 +38,8 @@ public class R2MLKnowledgeSource implements KnowledgeSource {
 
 	private RuleBase rb = null;
 
+	private boolean generateQuerries = false;
+
 	public R2MLKnowledgeSource() {
 		super();
 		this.driver = R2MLDriver.get();
@@ -69,23 +71,19 @@ public class R2MLKnowledgeSource implements KnowledgeSource {
 		this.rb = ruleBase;
 	}
 	
-	public KnowledgeBase getKnowledgeBase() throws TakeException {
-		return getKnowledgeBase(false);
-	}
-
 	/**
 	 * Get a knowledge base.
 	 * @param generateQuerries if true generate all possible querries for all supported predicates else dont
 	 * 
 	 * @return a knowledge base
 	 */
-	public KnowledgeBase getKnowledgeBase(boolean generateQuerries) throws TakeException {
+	public KnowledgeBase getKnowledgeBase() throws TakeException {
 		if (kb == null) {
 			if (rb == null) {
 				unmarshallRuleBase();
 			}
 			kb = driver.importKB(rb);
-			if (generateQuerries)
+			if (generateQuerries )
 				GenerateQueries.generateQueries(kb);
 		}
 		return kb;
@@ -156,6 +154,14 @@ public class R2MLKnowledgeSource implements KnowledgeSource {
 			ret = false;
 		}
 		return ret;
+	}
+
+	public boolean isGenerateQuerries() {
+		return generateQuerries;
+	}
+
+	public void setGenerateQuerries(boolean generateQuerries) {
+		this.generateQuerries = generateQuerries;
 	}
 
 }

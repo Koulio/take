@@ -82,8 +82,8 @@ class ObjectClassificationAtomHandler extends AbstractPropertyHandler {
 			name.append(localName.substring(1));
 			PropertyDescriptor prop = AbstractPropertyHandler.buildProperty(name.toString(), R2MLDriver.get().getDatatypeMapper().getType(atom.getClassID()));
 			jp.setMethod(prop.getReadMethod());
-			System.out.println(name.toString() + " : " + tTerm.toString());
-			//jp.setMethod(R2MLUtil.getMethod(name.toString(), new Term[]{ tTerm }));
+			if (R2MLDriver.get().logger.isDebugEnabled())
+				R2MLDriver.get().logger.debug(name.toString() + " : " + tTerm.toString());
 			jp.setNegated(R2MLUtil.isNegated(atom));
 			jp.setSlotNames(R2MLDriver.get().getNameMapper().getSlotNames(atom.getClassID()));
 			context.addPredicate(jp);

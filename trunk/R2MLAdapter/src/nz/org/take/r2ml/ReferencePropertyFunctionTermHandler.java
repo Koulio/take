@@ -1,19 +1,11 @@
 package nz.org.take.r2ml;
 
-import java.beans.BeanInfo;
-import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 
 import nz.org.take.ComplexTerm;
-import nz.org.take.Fact;
 import nz.org.take.JFunction;
-import nz.org.take.Predicate;
-import nz.org.take.PropertyPredicate;
-import nz.org.take.SimplePredicate;
 import nz.org.take.Term;
 import nz.org.take.r2ml.util.R2MLUtil;
-import de.tu_cottbus.r2ml.ObjectTerm;
-import de.tu_cottbus.r2ml.PropertyAtom;
 import de.tu_cottbus.r2ml.ReferencePropertyFunctionTerm;
 
 public class ReferencePropertyFunctionTermHandler implements XmlTypeHandler {

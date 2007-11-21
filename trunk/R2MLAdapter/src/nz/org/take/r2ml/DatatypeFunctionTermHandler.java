@@ -33,7 +33,6 @@ public class DatatypeFunctionTermHandler implements XmlTypeHandler {
 		int i = 0;
 		for (JAXBElement<? extends DataTerm> argElement : r2mlTerm.getDataArguments().getDataTerm()) {
 			DataTerm dTerm = argElement.getValue();
-			System.out.println("FunctionID: " + ((DatatypeFunctionTerm) dTerm).getDatatypeFunctionID()); 
 			XmlTypeHandler handler = driver.getHandlerByXmlType(dTerm.getClass());
 			args[i++] = (Term) handler.importObject(dTerm);
 		}
