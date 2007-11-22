@@ -75,7 +75,7 @@ public class FactStore implements ExternalFactStore4IsFatherOf  {
 				query = "SELECT * FROM people";
 			if (son!=null && father==null)
 				query = "SELECT * FROM people WHERE son='"+son.getName()+"'";
-			if (father==null && father!=null)
+			if (son==null && father!=null)
 				query = "SELECT * FROM people WHERE father='"+father.getName()+"'";
 			if (son!=null && father!=null)
 				query = "SELECT * FROM people WHERE son='"+son.getName()+"' AND father='"+father.getName()+"'";
