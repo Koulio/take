@@ -27,7 +27,6 @@ import nz.org.take.KnowledgeBase;
 import nz.org.take.KnowledgeSource;
 import nz.org.take.TakeException;
 import nz.org.take.compiler.Location;
-import nz.org.take.compiler.NameGenerator;
 import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.DefaultNameGenerator;
@@ -57,6 +56,9 @@ public class KnowledgeBaseManager<I> implements Logging {
 	private ClassLoader baseClassLoader = this.getClass().getClassLoader();
 	// the Java compiler is responsible for compiling the generated source code classes
 	private CompilerAdapter javaCompiler = new ANTCompilerAdapter();
+	// folders for src and bin
+	private String srcFolder = workingDirRoot+"src/";
+	private String binFolder = workingDirRoot+"bin/";
 
 	public KnowledgeBaseManager() {
 		super();
@@ -118,8 +120,6 @@ public class KnowledgeBaseManager<I> implements Logging {
 		KnowledgeBase kb = ksource.getKnowledgeBase();
 		assert(spec.isInterface());
 		checkFolder(workingDirRoot);
-		String srcFolder = workingDirRoot+"src/";
-		String binFolder = workingDirRoot+"bin/";
 		checkFolder(srcFolder);
 		checkFolder(binFolder);
 		
@@ -148,7 +148,7 @@ public class KnowledgeBaseManager<I> implements Logging {
 	    String fullClassName = packageName+'.'+className;
 	    try {
 	    	URL classLoc = new File(binFolder).toURL();	  
-	    	ClassLoader classloader = new URLClassLoader(new URL[]{classLoc});
+	    	ClassLoader classloader = new URLClassLoader(new URL[]{classLoc},this.baseClassLoader);
 	    	// handle bindings, i.e. bind names to objects that are referenced in rules as constant terms
 		    String constantClassName = packageName+'.'+kbCompiler.getNameGenerator().getConstantRegistryClassName();
 		    setupBindings(constants,constantClassName,classloader);	
@@ -259,5 +259,21 @@ public class KnowledgeBaseManager<I> implements Logging {
 
 	public void setJavaCompiler(CompilerAdapter javaCompiler) {
 		this.javaCompiler = javaCompiler;
+	}
+
+	public String getSrcFolder() {
+		return srcFolder;
+	}
+
+	public void setSrcFolder(String srcFolder) {
+		this.srcFolder = srcFolder;
+	}
+
+	public String getBinFolder() {
+		return binFolder;
+	}
+
+	public void setBinFolder(String binFolder) {
+		this.binFolder = binFolder;
 	}
 }
