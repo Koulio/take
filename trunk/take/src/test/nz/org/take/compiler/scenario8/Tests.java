@@ -115,5 +115,19 @@ public class Tests extends TakeTestCase
 		results.close();
 	}
 	
+	/**
+	 * Test 3.
+	 */
+	public void test3(){
+		ResultSet<IsFatherOf> results = kb.getSons(new Person("Jens"));	
+		assertTrue(results.hasNext());
+		IsFatherOf r = results.next();
+		Person son = r.son;
+		assertEquals(new Person("Max"),son);
+		assertFalse(results.hasNext());
+		results.close();
+	}
+	
+	
 }
 	

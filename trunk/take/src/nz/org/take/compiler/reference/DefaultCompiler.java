@@ -1072,7 +1072,9 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			// see whether we can use a parameter, otherwise use null
 			String param = "null";
 			for (int j=0;j<islots.length;j++) {
-				if (i==j) {
+				// bugfix by Jens 22/11/07
+				// thanks to Christoph Walzer for reporting problems in scenario8
+				if (i==islots[j].position) {
 					param = islots[j].name;
 					break;
 				}					
