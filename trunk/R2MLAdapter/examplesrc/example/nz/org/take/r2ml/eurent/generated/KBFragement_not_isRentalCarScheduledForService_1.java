@@ -15,7 +15,7 @@ class KBFragement_not_isRentalCarScheduledForService_1 {
      * @return an iterator for instances of not_isRentalCarScheduledForService
     */
     public static ResultSet<not_isRentalCarScheduledForService> not_isRentalCarScheduledForService_1(
-        final example.nz.org.take.r2ml.eurent.RentalCar slot1) {
+        final example.nz.org.take.r2ml.eurent.domain.RentalCar slot1) {
         DerivationController _derivation = new DefaultDerivationController();
         ResultSet<not_isRentalCarScheduledForService> _result = new ResultSet(KBFragement_not_isRentalCarScheduledForService_1.not_isRentalCarScheduledForService_1(
                     slot1, _derivation), _derivation);
@@ -31,7 +31,7 @@ class KBFragement_not_isRentalCarScheduledForService_1 {
      * code generated using velocity template JPredicate_11_neg.vm
     */
     static ResourceIterator<not_isRentalCarScheduledForService> not_isRentalCarScheduledForService_1(
-        final example.nz.org.take.r2ml.eurent.RentalCar slot1,
+        final example.nz.org.take.r2ml.eurent.domain.RentalCar slot1,
         final DerivationController _derivation) {
         _derivation.log("public boolean example.nz.org.take.r2ml.eurent.RentalCar.isRentalCarScheduledForService()",
             DerivationController.JAVA_METHOD);

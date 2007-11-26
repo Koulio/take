@@ -1,4 +1,4 @@
-package example.nz.org.take.r2ml.eurent;
+package example.nz.org.take.r2ml.eurent.domain;
 
 import nz.org.take.r2ml.reference.DefaultDatatypeMapper;
 

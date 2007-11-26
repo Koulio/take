@@ -15,7 +15,7 @@ class KBFragement_not_assignedTo_10 {
      * @return an iterator for instances of not_assignedTo
     */
     public static ResultSet<not_assignedTo> not_assignedTo_10(
-        final example.nz.org.take.r2ml.eurent.RentalCar rentalCar) {
+        final example.nz.org.take.r2ml.eurent.domain.RentalCar rentalCar) {
         DerivationController _derivation = new DefaultDerivationController();
         ResultSet<not_assignedTo> _result = new ResultSet(KBFragement_not_assignedTo_10.not_assignedTo_10(
                     rentalCar, _derivation), _derivation);
@@ -31,7 +31,7 @@ class KBFragement_not_assignedTo_10 {
      * code generated using velocity template PropertyPredicateONE2ONE_10_neg.vm
     */
     static ResourceIterator<not_assignedTo> not_assignedTo_10(
-        final example.nz.org.take.r2ml.eurent.RentalCar source,
+        final example.nz.org.take.r2ml.eurent.domain.RentalCar source,
         final DerivationController _derivation) {
         _derivation.log("property assignedTo",
             DerivationController.BEAN_PROPERTY, source);

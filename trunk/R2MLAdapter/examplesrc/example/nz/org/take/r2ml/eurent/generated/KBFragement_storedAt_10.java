@@ -15,7 +15,7 @@ class KBFragement_storedAt_10 {
      * @return an iterator for instances of storedAt
     */
     public static ResultSet<storedAt> storedAt_10(
-        final example.nz.org.take.r2ml.eurent.RentalCar rentalCar) {
+        final example.nz.org.take.r2ml.eurent.domain.RentalCar rentalCar) {
         DerivationController _derivation = new DefaultDerivationController();
         ResultSet<storedAt> _result = new ResultSet(KBFragement_storedAt_10.storedAt_10(
                     rentalCar, _derivation), _derivation);
@@ -30,7 +30,7 @@ class KBFragement_storedAt_10 {
      * code generated using velocity template PropertyPredicateONE2ONE_10.vm
     */
     static ResourceIterator<storedAt> storedAt_10(
-        final example.nz.org.take.r2ml.eurent.RentalCar source,
+        final example.nz.org.take.r2ml.eurent.domain.RentalCar source,
         final DerivationController _derivation) {
         _derivation.log("property storedAt",
             DerivationController.BEAN_PROPERTY, source, DerivationController.NIL);

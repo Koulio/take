@@ -52,8 +52,8 @@ public class EURentKB {
     * @return an iterator for instances of availableAt
     */
     public ResultSet<availableAt> availableAt_11(
-        final example.nz.org.take.r2ml.eurent.RentalCar rentalCar,
-        final example.nz.org.take.r2ml.eurent.Branch branch) {
+        final example.nz.org.take.r2ml.eurent.domain.RentalCar rentalCar,
+        final example.nz.org.take.r2ml.eurent.domain.Branch branch) {
         DerivationController _derivation = new DefaultDerivationController();
         ResultSet<availableAt> _result = new ResultSet(KBFragement_availableAt_11.availableAt_11(
                     rentalCar, branch, _derivation), _derivation);
@@ -67,7 +67,7 @@ public class EURentKB {
      * @return an iterator for instances of availableAt
     */
     public ResultSet<availableAt> availableAt_01(
-        final example.nz.org.take.r2ml.eurent.Branch branch) {
+        final example.nz.org.take.r2ml.eurent.domain.Branch branch) {
         DerivationController _derivation = new DefaultDerivationController();
         ResultSet<availableAt> _result = new ResultSet(KBFragement_availableAt_01.availableAt_01(
                     branch, _derivation), _derivation);
@@ -81,7 +81,7 @@ public class EURentKB {
      * @return an iterator for instances of availableAt
     */
     public ResultSet<availableAt> availableAt_10(
-        final example.nz.org.take.r2ml.eurent.RentalCar rentalCar) {
+        final example.nz.org.take.r2ml.eurent.domain.RentalCar rentalCar) {
         DerivationController _derivation = new DefaultDerivationController();
         ResultSet<availableAt> _result = new ResultSet(KBFragement_availableAt_10.availableAt_10(
                     rentalCar, _derivation), _derivation);

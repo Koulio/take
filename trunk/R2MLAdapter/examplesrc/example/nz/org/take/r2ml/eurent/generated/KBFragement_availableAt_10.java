@@ -15,7 +15,7 @@ class KBFragement_availableAt_10 {
      * @return an iterator for instances of availableAt
     */
     public static ResultSet<availableAt> availableAt_10(
-        final example.nz.org.take.r2ml.eurent.RentalCar rentalCar) {
+        final example.nz.org.take.r2ml.eurent.domain.RentalCar rentalCar) {
         DerivationController _derivation = new DefaultDerivationController();
         ResultSet<availableAt> _result = new ResultSet(KBFragement_availableAt_10.availableAt_10(
                     rentalCar, _derivation), _derivation);
@@ -29,7 +29,7 @@ class KBFragement_availableAt_10 {
      * @return an iterator for instances of availableAt
     */
     static ResourceIterator<availableAt> availableAt_10(
-        final example.nz.org.take.r2ml.eurent.RentalCar rentalCar,
+        final example.nz.org.take.r2ml.eurent.domain.RentalCar rentalCar,
         final DerivationController _derivation) {
         final int _derivationlevel = _derivation.getDepth();
         ResourceIterator<availableAt> result = new IteratorChain<availableAt>(1) {
@@ -66,7 +66,7 @@ class KBFragement_availableAt_10 {
      * @return an iterator for instances of availableAt
     */
     private static ResourceIterator<availableAt> availableAt_10_0(
-        final example.nz.org.take.r2ml.eurent.RentalCar rentalCar,
+        final example.nz.org.take.r2ml.eurent.domain.RentalCar rentalCar,
         final DerivationController _derivation) {
         _derivation.log("car_availability", DerivationController.RULE,
             rentalCar, DerivationController.NIL);
@@ -74,13 +74,13 @@ class KBFragement_availableAt_10 {
         // Variable bindings in rule:  IF assignedTo(<rentalCar>,<rental>) AND storedAt(<rentalCar>,<storageBranch>) AND isRentalCarScheduledForService(<rentalCar>) THEN /availableAt(<rentalCar>,<storageBranch>)
         class bindingsInRule1 {
             // Property generated for term  "<storageBranch>"
-            example.nz.org.take.r2ml.eurent.Branch p1;
+            example.nz.org.take.r2ml.eurent.domain.Branch p1;
 
             // Property generated for term  "<rental>"
-            example.nz.org.take.r2ml.eurent.Rental p2;
+            example.nz.org.take.r2ml.eurent.domain.Rental p2;
 
             // Property generated for term  "<rentalCar>"
-            example.nz.org.take.r2ml.eurent.RentalCar p3;
+            example.nz.org.take.r2ml.eurent.domain.RentalCar p3;
         }
         ;
 
