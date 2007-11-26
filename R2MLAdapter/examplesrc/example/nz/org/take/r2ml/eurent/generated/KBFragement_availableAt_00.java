@@ -68,13 +68,13 @@ class KBFragement_availableAt_00 {
         // Variable bindings in rule:  IF assignedTo(<rentalCar>,<rental>) AND storedAt(<rentalCar>,<storageBranch>) AND isRentalCarScheduledForService(<rentalCar>) THEN /availableAt(<rentalCar>,<storageBranch>)
         class bindingsInRule1 {
             // Property generated for term  "<storageBranch>"
-            example.nz.org.take.r2ml.eurent.Branch p1;
+            example.nz.org.take.r2ml.eurent.domain.Branch p1;
 
             // Property generated for term  "<rental>"
-            example.nz.org.take.r2ml.eurent.Rental p2;
+            example.nz.org.take.r2ml.eurent.domain.Rental p2;
 
             // Property generated for term  "<rentalCar>"
-            example.nz.org.take.r2ml.eurent.RentalCar p3;
+            example.nz.org.take.r2ml.eurent.domain.RentalCar p3;
         }
         ;
 

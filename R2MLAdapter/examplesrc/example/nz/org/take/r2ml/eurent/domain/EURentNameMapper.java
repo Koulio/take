@@ -1,7 +1,7 @@
 /**
  * 
  */
-package example.nz.org.take.r2ml.eurent;
+package example.nz.org.take.r2ml.eurent.domain;
 
 import javax.xml.namespace.QName;
 

@@ -22,6 +22,9 @@ package example.nz.org.take.r2ml.eurent;
 import java.io.InputStream;
 import org.apache.log4j.BasicConfigurator;
 
+import example.nz.org.take.r2ml.eurent.domain.EURentDatatypeMapper;
+import example.nz.org.take.r2ml.eurent.domain.EURentNameMapper;
+
 import nz.org.take.KnowledgeBase;
 import nz.org.take.compiler.NameGenerator;
 import nz.org.take.compiler.reference.DefaultCompiler;

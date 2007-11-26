@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package example.nz.org.take.r2ml.eurent;
+package example.nz.org.take.r2ml.eurent.domain;
 
 /**
  * Domain class implemented as PLOJO (plain old Java object). 

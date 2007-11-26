@@ -6,10 +6,10 @@ package example.nz.org.take.r2ml.eurent.generated;
  * @version Wed Nov 21 16:25:54 GMT+01:00 2007
  */
 public class not_isRentalCarScheduledForService {
-    public example.nz.org.take.r2ml.eurent.RentalCar slot1;
+    public example.nz.org.take.r2ml.eurent.domain.RentalCar slot1;
 
     public not_isRentalCarScheduledForService(
-        example.nz.org.take.r2ml.eurent.RentalCar slot1) {
+        example.nz.org.take.r2ml.eurent.domain.RentalCar slot1) {
         super();
         this.slot1 = slot1;
     }

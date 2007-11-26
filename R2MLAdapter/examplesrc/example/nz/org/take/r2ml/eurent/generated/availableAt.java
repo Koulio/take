@@ -6,11 +6,11 @@ package example.nz.org.take.r2ml.eurent.generated;
  * @version Wed Nov 21 16:25:54 GMT+01:00 2007
  */
 public class availableAt {
-    public example.nz.org.take.r2ml.eurent.RentalCar rentalCar;
-    public example.nz.org.take.r2ml.eurent.Branch branch;
+    public example.nz.org.take.r2ml.eurent.domain.RentalCar rentalCar;
+    public example.nz.org.take.r2ml.eurent.domain.Branch branch;
 
-    public availableAt(example.nz.org.take.r2ml.eurent.RentalCar rentalCar,
-        example.nz.org.take.r2ml.eurent.Branch branch) {
+    public availableAt(example.nz.org.take.r2ml.eurent.domain.RentalCar rentalCar,
+        example.nz.org.take.r2ml.eurent.domain.Branch branch) {
         super();
         this.rentalCar = rentalCar;
         this.branch = branch;
