@@ -2,8 +2,8 @@
 DOCUMENT START
 NON-TERMINALS
 	parse	:=	( var | ref | comment | globalannotation | localannotation | aggregation | query | factStore | rule )*
-	localannotation	:=	<GLOBALANNOTATION>
-	globalannotation	:=	<LOCALANNOTATION>
+	globalannotation	:=	<GLOBALANNOTATION>
+	localannotation	:=	<LOCALANNOTATION>
 	comment	:=	<COMMENT>
 	query	:=	<QUERY> ( negated )? predicateQ "[" io ( "," io )* "]"
 	aggregation	:=	<AGGREGATION> name <EQ> aggfunction aggvar aggcondition

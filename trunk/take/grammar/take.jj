@@ -56,7 +56,7 @@ void parse(Script script):
 {
 	(var(script)|ref(script)|comment(script)|globalannotation(script)|localannotation(script)|aggregation(script)|query(script)|factStore(script)|rule(script))*
 }
-void localannotation(Script script):
+void globalannotation(Script script):
 {
 	Token t;
 }
@@ -68,7 +68,7 @@ void localannotation(Script script):
 	{a.setPosition(t.beginLine,t.beginColumn);}
 	{script.add(a);}
 }
-void globalannotation(Script script):
+void localannotation(Script script):
 {
 	Token t;
 }

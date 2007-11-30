@@ -37,10 +37,10 @@
       case COMMENT:
         comment(script);
         break;
-      case LOCALANNOTATION:
+      case GLOBALANNOTATION:
         globalannotation(script);
         break;
-      case GLOBALANNOTATION:
+      case LOCALANNOTATION:
         localannotation(script);
         break;
       case AGGREGATION:
@@ -63,7 +63,7 @@
     }
   }
 
-  static final public void localannotation(Script script) throws ParseException {
+  static final public void globalannotation(Script script) throws ParseException {
         Token t;
          Annotation a = new Annotation();
     t = jj_consume_token(GLOBALANNOTATION);
@@ -73,7 +73,7 @@
          script.add(a);
   }
 
-  static final public void globalannotation(Script script) throws ParseException {
+  static final public void localannotation(Script script) throws ParseException {
         Token t;
          Annotation a = new Annotation();
     t = jj_consume_token(LOCALANNOTATION);
