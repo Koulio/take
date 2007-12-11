@@ -118,7 +118,7 @@ public abstract class CompilerUtils {
 			return Float.TYPE.getName();
 		
 		else if (clazz==Double.class)
-			return Byte.TYPE.getName();
+			return Double.TYPE.getName();
 		
 		else return clazz.getName();
 	}
