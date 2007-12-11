@@ -25,10 +25,10 @@ public class BinaryArithmeticFunction implements Function {
 	public static BinaryArithmeticFunction getInstance(String name,Class type1,Class type2) {
 		// TODO caching 
 		Class returnType = null;
-		if (type1==Integer.TYPE || type1==Integer.class||type2==Integer.TYPE || type2==Integer.class) 
+		if ((type1==Integer.TYPE || type1==Integer.class) && (type2==Integer.TYPE || type2==Integer.class))
 			returnType=Integer.class;
 		if (type1==Double.TYPE || type1==Double.class||type2==Double.TYPE || type2==Double.class) 
-			returnType=Integer.class;	
+			returnType=Double.class;	
 		if (returnType==null)
 			throw new IllegalArgumentException();
 		return new BinaryArithmeticFunction(name,returnType,type1,type2);
