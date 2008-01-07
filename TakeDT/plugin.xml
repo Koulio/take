@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="nz.ac.massey.take.takeep.editor.TakeEditor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            extensions="take"
+            icon="icons/fishhook.jpg"
+            id="TakeEP.takeEditor"
+            name="Take Editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+               <category 
+         id="ac.nz.massey.take" 
+         name="Take"/> 
+         
+      <view
+            allowMultiple="false"
+            category="ac.nz.massey.take"
+            class="nz.ac.massey.take.takeep.view.TakeView"
+            icon="icons/fishhook.jpg"
+            id="TakeDT.view"
+            name="View">
+      </view>
+   </extension>
+
+</plugin>
