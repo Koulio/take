@@ -9,7 +9,6 @@ import javax.swing.text.StyledEditorKit.BoldAction;
 import nz.ac.massey.take.takeep.editor.tokens.TakePartitionScanner;
 import nz.ac.massey.take.takeep.editor.tokens.WhitespaceDetector;
 import nz.ac.massey.take.takeep.editor.tokens.TakePartitionScanner.TAKE_PARTITIONS;
-import nz.ac.massey.take.takeep.editor.tokens.TakePartitionScanner.TAKE_TOKENS;
 
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextDoubleClickStrategy;
@@ -45,6 +44,13 @@ public class TakeSourceViewerConfiguration extends SourceViewerConfiguration {
 
 	private DesignManager designManager;
 
+	public enum TAKE_TOKENS
+	{
+		TAKE_KEYWORD,
+		TAKE_STRING_LITERAL
+		
+	}
+	
 	public TakeSourceViewerConfiguration(DesignManager colorManager) {
 		this.designManager = colorManager;
 	}
@@ -86,9 +92,9 @@ public class TakeSourceViewerConfiguration extends SourceViewerConfiguration {
 	}
 	
 	
-	class HighlightDefaultScanner extends RuleBasedScanner {
+	class BodyScanner extends RuleBasedScanner {
 		private String[] keyWords = {"var", "not" , "ref", "and","if","then","query","external","in","out","aggregation","sum","max","min","avg","count"};
-		public HighlightDefaultScanner() {
+		public BodyScanner() {
 			WordRule rule = new WordRule(new IWordDetector() {
 				public boolean isWordStart(char c) { 
 					return Character.isJavaIdentifierStart(c); 
@@ -96,18 +102,38 @@ public class TakeSourceViewerConfiguration extends SourceViewerConfiguration {
 				public boolean isWordPart(char c) {   
 					return Character.isJavaIdentifierPart(c); 
 				}
-			});
+				
+				
+			}){
+
+				@Override
+				public IToken evaluate(ICharacterScanner scanner) {
+					scanner.unread();
+					int c = scanner.read();
+					if(Character.isLetterOrDigit(c))
+					{
+						return Token.UNDEFINED;
+					}
+					return super.evaluate(scanner);
+				}
+				
+			};
 			
+
 			Token keyword = buildTextAttributeToken(designManager.getColor(TAKE_TOKENS.TAKE_KEYWORD.name()), designManager.getStyle(TAKE_TOKENS.TAKE_KEYWORD.name()));
 
 			for(String s : keyWords)
 			{
 				rule.addWord(s, keyword);
 			}
+			
+			Token stringLiteral = buildTextAttributeToken(designManager.getColor(TAKE_TOKENS.TAKE_STRING_LITERAL.name()), designManager.getStyle(TAKE_TOKENS.TAKE_STRING_LITERAL.name()));
+			SingleLineRule stringLiteralRule = new SingleLineRule("\"","\"",stringLiteral,(char) 0);
+			
 
-
+			
 			setRules(new IRule[] {
-					rule
+					rule,stringLiteralRule
 			});
 		}
 	}
@@ -124,13 +150,16 @@ public class TakeSourceViewerConfiguration extends SourceViewerConfiguration {
 		
 		setUpDamageReconciler(reconciler, TAKE_TOKENS.TAKE_STRING_LITERAL.name());
 
-		DefaultDamagerRepairer dr = new DefaultDamagerRepairer(new HighlightDefaultScanner());
+		DefaultDamagerRepairer bodyDR = new DefaultDamagerRepairer(new BodyScanner());
 		
-		setKeywordHighlightingPartition(reconciler, dr, IDocument.DEFAULT_CONTENT_TYPE);
-		setKeywordHighlightingPartition(reconciler, dr, TAKE_PARTITIONS.TAKE_EXTERNAL.name());
-		setKeywordHighlightingPartition(reconciler, dr, TAKE_PARTITIONS.TAKE_QUERY.name());
-		setKeywordHighlightingPartition(reconciler, dr, TAKE_PARTITIONS.TAKE_RULE_OR_FACT.name());
-		setKeywordHighlightingPartition(reconciler, dr, TAKE_PARTITIONS.TAKE_VAR.name());
+		setKeywordHighlightingPartition(reconciler, bodyDR, IDocument.DEFAULT_CONTENT_TYPE);
+		setKeywordHighlightingPartition(reconciler, bodyDR, TAKE_PARTITIONS.TAKE_EXTERNAL.name());
+		setKeywordHighlightingPartition(reconciler, bodyDR, TAKE_PARTITIONS.TAKE_QUERY.name());
+		setKeywordHighlightingPartition(reconciler, bodyDR, TAKE_PARTITIONS.TAKE_RULE_OR_FACT.name());
+		setKeywordHighlightingPartition(reconciler, bodyDR, TAKE_PARTITIONS.TAKE_REF.name());
+		setKeywordHighlightingPartition(reconciler, bodyDR, TAKE_PARTITIONS.TAKE_VAR.name());
+		setKeywordHighlightingPartition(reconciler, bodyDR, TAKE_PARTITIONS.TAKE_AGGREGATION.name());
+		
 		return reconciler;
 	}
 
