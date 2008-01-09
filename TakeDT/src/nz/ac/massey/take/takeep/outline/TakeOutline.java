@@ -22,6 +22,8 @@ import org.eclipse.jface.text.TypedRegion;
 import org.eclipse.jface.text.projection.Segment;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
+import org.eclipse.jface.text.source.Annotation;
+import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -48,6 +50,7 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.texteditor.MarkerUtilities;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
@@ -140,27 +143,27 @@ public class TakeOutline extends ContentOutlinePage
 					URL url = null;
 					if(region.getType() == TAKE_PARTITIONS.TAKE_LOCAL_ANNOTATION.name())
 					{
-						 url = Activator.getDefault().getBundle().getEntry("/icons/partitions/localannotation.gif");
-						 
+						url = Activator.getDefault().getBundle().getEntry("/icons/partitions/localannotation.gif");
+
 					}
 					else if(region.getType() == TAKE_PARTITIONS.TAKE_GLOBAL_ANNOTATION.name())
 					{
 						url = Activator.getDefault().getBundle().getEntry("/icons/partitions/statement.gif");
 					}
-					
+
 					if(url != null)
 					{
-					img = ImageDescriptor.createFromURL(url).createImage();
-					images.put(region.getType(), img);
+						img = ImageDescriptor.createFromURL(url).createImage();
+						images.put(region.getType(), img);
 					}
 					else
 					{
 						images.put(region.getType(), null);
 					}
 				}
-				
+
 				return images.get(region.getType());
-				
+
 			}
 			return null;
 		}
@@ -169,8 +172,9 @@ public class TakeOutline extends ContentOutlinePage
 		public String getText(Object element) {
 			if(element instanceof ITypedRegion && getTreeViewer() instanceof TreeViewer)
 			{
+				ITypedRegion region = (ITypedRegion)element;
 				try {
-					ITypedRegion region = (ITypedRegion)element;	
+						
 
 					Object root = ((ITreeContentProvider)((TreeViewer)getTreeViewer()).getContentProvider()).getParent(element);
 					IDocument document= editor.getDocumentProvider().getDocument(root);
@@ -246,8 +250,13 @@ public class TakeOutline extends ContentOutlinePage
 
 
 					return processedLine;
-				} catch (BadLocationException e) {
-
+				} catch (Exception e) {
+					
+					IAnnotationModel annotationModel = editor.getDocumentProvider().getAnnotationModel(editor.getEditorInput());
+					Annotation annotation = new Annotation("org.eclipse.ui.workbench.texteditor.error",false,"");
+					anno.add(annotation);
+					annotationModel.addAnnotation(annotation, new Position(region.getOffset(),region.getLength()));
+					
 					e.printStackTrace();
 				}
 
@@ -256,9 +265,22 @@ public class TakeOutline extends ContentOutlinePage
 			return element.toString();
 		}
 
+		@Override
+		public void dispose() {
+			
+			for(Image i : images.values())
+			{
+				if(i != null)
+				{
+					i.dispose();
+				}
+			}
+			super.dispose();
+		}
+
 	}
 
-
+	private LinkedList<Annotation> anno = new LinkedList<Annotation>();
 
 	private class TreeHugger implements ITreeContentProvider
 	{
@@ -289,15 +311,29 @@ public class TakeOutline extends ContentOutlinePage
 			}
 		}
 
+		
+		
+		
 		private void parse(IDocument document) {
 			regions.clear();
 			try {
+				IAnnotationModel annotationModel = editor.getDocumentProvider().getAnnotationModel(editor.getEditorInput());
+				for(Annotation a : anno)
+				{
+					annotationModel.removeAnnotation(a);
+					
+				}
+				anno.clear();
 				ITypedRegion[] re = document.computePartitioning(0, document.getLength());
 
 				for(ITypedRegion ty : re)
 				{
 					if(ty.getType() == IDocument.DEFAULT_CONTENT_TYPE)
 					{
+						
+						Annotation annotation = new Annotation("org.eclipse.ui.workbench.texteditor.error",false,"");
+						anno.add(annotation);
+						annotationModel.addAnnotation(annotation, new Position(ty.getOffset(),ty.getLength()));
 						continue;
 					}
 					regions.add(ty);
