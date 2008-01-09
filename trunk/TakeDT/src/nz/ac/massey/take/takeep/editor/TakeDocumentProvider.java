@@ -2,6 +2,8 @@ package nz.ac.massey.take.takeep.editor;
 
 import java.util.ArrayList;
 
+import javax.annotation.processing.SupportedAnnotationTypes;
+
 import nz.ac.massey.take.takeep.editor.tokens.TakePartitionScanner;
 import nz.ac.massey.take.takeep.editor.tokens.TakePartitionScanner.TAKE_PARTITIONS;
 
@@ -10,9 +12,11 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.rules.FastPartitioner;
+import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.editors.text.FileDocumentProvider;
+import org.eclipse.ui.texteditor.AnnotationPreference;
 
 
 public class TakeDocumentProvider extends FileDocumentProvider {
@@ -28,7 +32,6 @@ public class TakeDocumentProvider extends FileDocumentProvider {
 				strings.add(tp.name());
 			}
 
-					
 			IDocumentPartitioner partitioner =
 				new FastPartitioner(
 					new TakePartitionScanner(),strings.toArray(new String[strings.size()]));
@@ -38,5 +41,7 @@ public class TakeDocumentProvider extends FileDocumentProvider {
 		}
 		return document;
 	}
+
+
 	
 }
