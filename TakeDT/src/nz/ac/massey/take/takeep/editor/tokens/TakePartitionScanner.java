@@ -34,29 +34,28 @@ public class TakePartitionScanner extends RuleBasedPartitionScanner{
 		TAKE_RULE_OR_FACT,
 		TAKE_VAR,
 		TAKE_QUERY,
-		TAKE_EXTERNAL
-	}
-	
-	
-	public enum TAKE_TOKENS
-	{
-		TAKE_KEYWORD,
-		TAKE_STRING_LITERAL
-		
+		TAKE_EXTERNAL, 
+		TAKE_REF, 
+		TAKE_AGGREGATION
 	}
 
-	
+
+
+
+
 	class CompleteLine extends EndOfLineRule
 	{
 
 		public CompleteLine(String startSequence, IToken token) {
 			super(startSequence, token);
-			// TODO Auto-generated constructor stub
+			//this.setColumnConstraint(0);
 		}
-		private boolean newLineStart = true;
+
+
+
 		protected boolean sequenceDetected(ICharacterScanner scanner, char[] sequence, boolean eofAllowed) {
-			
-			if(newLineStart && sequence == fStartSequence)
+
+			if(sequence == fStartSequence)
 			{
 
 				scanner.unread();
@@ -68,14 +67,101 @@ public class TakePartitionScanner extends RuleBasedPartitionScanner{
 					return false;
 				}
 			}
-			
-				return super.sequenceDetected(scanner, sequence, eofAllowed);
-			
+
+			return super.sequenceDetected(scanner, sequence, eofAllowed);
+
 		}
 
 	}
+
+	class StatementRule extends EndOfLineRule
+	{
+		public StatementRule(String startSequence, IToken token) {
+			super(startSequence, token);
+			// TODO Auto-generated constructor stub
+		}
+
+		private char escapeChar = ' ';
+		private char detectedChar = ':';
+		
+
+
+		@Override
+		public IToken evaluate(ICharacterScanner scanner, boolean resume) {
+			// TODO Auto-generated method stub
+			return doEvaluate(scanner, resume);
+		}
+
+
 	
-	
+
+
+		@Override
+		protected IToken doEvaluate(ICharacterScanner scanner, boolean resume) {
+			if (resume) {
+
+				if (endSequenceDetected(scanner))
+					return fToken;
+
+			} else {
+
+
+				
+					if (sequenceDetected(scanner, fStartSequence, false)) {
+						if (endSequenceDetected(scanner))
+							return fToken;
+					}
+				
+			}
+			
+			
+			return Token.UNDEFINED;
+		}
+
+
+		protected boolean sequenceDetected(ICharacterScanner scanner, char[] sequence, boolean eofAllowed) {
+
+			if(sequence == fStartSequence)
+			{
+				
+				scanner.unread();
+				scanner.unread();
+				int nlc = scanner.read();
+				scanner.read();
+				if(nlc != '\n' && nlc != '\r')
+				{
+					return false;
+				}
+				int c = scanner.read();
+				
+				boolean breakLoop = (c == '\n' || c == '\r') || c == escapeChar || c == ICharacterScanner.EOF ;
+
+				int j = 1;
+				while(!breakLoop) {
+					
+					if(c == detectedChar)
+					{
+						return true;
+					}
+					
+					j++;
+					c = scanner.read();
+					breakLoop = (c == '\n' || c == '\r') || c == escapeChar || c == ICharacterScanner.EOF ;
+				}
+				
+				for (int i= 1; i < j; i++)
+					scanner.unread();
+				return false;
+
+			}
+
+
+
+			return super.sequenceDetected(scanner, sequence, eofAllowed);
+
+		}
+	}
+
 	public TakePartitionScanner()
 	{
 		super();
@@ -85,13 +171,15 @@ public class TakePartitionScanner extends RuleBasedPartitionScanner{
 		IToken query = new Token(TAKE_PARTITIONS.TAKE_QUERY.name());
 		IToken external = new Token(TAKE_PARTITIONS.TAKE_EXTERNAL.name());
 		IToken var = new Token(TAKE_PARTITIONS.TAKE_VAR.name());
-		
+		IToken ref = new Token(TAKE_PARTITIONS.TAKE_REF.name());
+		IToken aggregation = new Token(TAKE_PARTITIONS.TAKE_AGGREGATION.name());
+
+		IToken statement = new Token(TAKE_PARTITIONS.TAKE_RULE_OR_FACT.name());
+
 		LinkedList<IPredicateRule> rules = new LinkedList<IPredicateRule>();
 
 		rules.add(new EndOfLineRule("//",comment));
 
-		//rules.add(new SingleLineRule("\"","\"",stringLiteral,(char) 0));
-		
 		rules.add(new CompleteLine("@@",gAnotation));
 		//rules.add(new EndOfLineRule("@@",gAnotation));
 		rules.add(new CompleteLine("@",lAnotation));
@@ -99,8 +187,10 @@ public class TakePartitionScanner extends RuleBasedPartitionScanner{
 		rules.add(new CompleteLine("query ",query));
 		rules.add(new CompleteLine("external ",external));
 		rules.add(new CompleteLine("var ",var));
-		
-		
+		rules.add(new CompleteLine("ref ",ref));
+		rules.add(new CompleteLine("aggregation ", aggregation));
+
+		rules.add(new StatementRule("bih", statement));
 		setPredicateRules(rules.toArray(new IPredicateRule[rules.size()]));
 
 

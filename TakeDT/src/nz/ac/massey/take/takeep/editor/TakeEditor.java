@@ -1,8 +1,8 @@
 package nz.ac.massey.take.takeep.editor;
 
+import nz.ac.massey.take.takeep.editor.TakeSourceViewerConfiguration.TAKE_TOKENS;
 import nz.ac.massey.take.takeep.editor.tokens.TakePartitionScanner;
 import nz.ac.massey.take.takeep.editor.tokens.TakePartitionScanner.TAKE_PARTITIONS;
-import nz.ac.massey.take.takeep.editor.tokens.TakePartitionScanner.TAKE_TOKENS;
 import nz.ac.massey.take.takeep.outline.TakeOutline;
 
 import org.eclipse.swt.SWT;
@@ -36,6 +36,7 @@ public class TakeEditor extends TextEditor{
 		
 		cm.addColor(TAKE_PARTITIONS.TAKE_GLOBAL_ANNOTATION.name(), new RGB(128,128,128));
 		cm.addStyle(TAKE_PARTITIONS.TAKE_GLOBAL_ANNOTATION.name(), SWT.ITALIC);
+		
 		
 		cm.addColor(TAKE_TOKENS.TAKE_STRING_LITERAL.name(), new RGB(0,0,192));
 		
