@@ -7,54 +7,27 @@ import java.util.StringTokenizer;
 
 import nz.ac.massey.take.takeep.Activator;
 import nz.ac.massey.take.takeep.editor.TakeEditor;
-import nz.ac.massey.take.takeep.editor.tokens.TakePartitionScanner;
 import nz.ac.massey.take.takeep.editor.tokens.TakePartitionScanner.TAKE_PARTITIONS;
 
-import org.eclipse.core.runtime.preferences.IEclipsePreferences.INodeChangeListener;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.jface.text.Position;
-import org.eclipse.jface.text.TypedRegion;
-import org.eclipse.jface.text.projection.Segment;
-import org.eclipse.jface.text.rules.IToken;
-import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.IAnnotationModel;
-import org.eclipse.jface.viewers.BaseLabelProvider;
-import org.eclipse.jface.viewers.IContentProvider;
-import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.viewers.ILazyTreeContentProvider;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeColumn;
-import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.ISelectionListener;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.texteditor.MarkerUtilities;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
-import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
-
-import sun.awt.image.ImageDecoder;
 
 public class TakeOutline extends ContentOutlinePage
 {
@@ -69,6 +42,7 @@ public class TakeOutline extends ContentOutlinePage
 	}
 
 
+	@Override
 	public void createControl(Composite parent) {
 
 		super.createControl(parent);
@@ -82,25 +56,11 @@ public class TakeOutline extends ContentOutlinePage
 		if (fInput != null)
 			viewer.setInput(fInput);
 
-//		viewer.addFilter(new ViewerFilter(){
-
-//		@Override
-//		public boolean select(Viewer viewer, Object parentElement,
-//		Object element) {
-//		if(element instanceof ITypedRegion)
-//		{
-//		ITypedRegion it = (ITypedRegion) element;
-//		if(it.getType() == TAKE_PARTITIONS.TAKE_RULE_OR_FACT.name())
-//		{
-//		return true;
-//		}
-//		}
-//		return false;
-//		}});
 
 	}
 
 
+	@Override
 	public void selectionChanged(SelectionChangedEvent event) {
 
 		super.selectionChanged(event);
@@ -176,7 +136,7 @@ public class TakeOutline extends ContentOutlinePage
 				try {
 						
 
-					Object root = ((ITreeContentProvider)((TreeViewer)getTreeViewer()).getContentProvider()).getParent(element);
+					Object root = ((ITreeContentProvider)(getTreeViewer()).getContentProvider()).getParent(element);
 					IDocument document= editor.getDocumentProvider().getDocument(root);
 
 

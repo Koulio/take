@@ -27,6 +27,38 @@
             name="View">
       </view>
    </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="nz.ac.massey.take.takeep.actionSets"
+            label="Take Actions"
+            visible="true">
+            
+    		<action id="nz.ac.massey.take.takeep.actionsSets.TakeCompileToClasses"
+          		toolbarPath="org.eclipse.debug.ui.launchActionSet/C2C"
+          		icon="icons/fishhookCla.JPG"
+          		tooltip="Compile to Classes"
+          		label = "Compile2Classes"
+          		class="nz.ac.massey.take.takeep.actionsSets.TakeCompileToClasses">
+    		</action>
+    		
+            <action id="nz.ac.massey.take.takeep.actionsSets.TakeCompileToInterfaces"
+          		toolbarPath="org.eclipse.debug.ui.launchActionSet/C2C"
+          		icon="icons/fishhookInt.JPG"
+          		tooltip="Compile to Interfaces"
+          		label = "Compile2Classes"
+          		class="nz.ac.massey.take.takeep.actionsSets.TakeCompileToInterfaces">
+    		</action>
+    		
+    		<action id="nz.ac.massey.take.takeep.actionsSets.TakeRunVerifiers"
+          		toolbarPath="org.eclipse.debug.ui.launchActionSet/C2C"
+          		icon="icons/fishhookVer.JPG"
+          		tooltip="Run verifiers"
+          		label = "Compile2Classes"
+          		class="nz.ac.massey.take.takeep.actionsSets.TakeRunVerifiers">
+    		</action>		
+      </actionSet>
+   </extension>
 
 
 </plugin>

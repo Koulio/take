@@ -1,6 +1,5 @@
 package nz.ac.massey.take.takeep.editor.tokens;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 
 import org.eclipse.jface.text.rules.IPredicateRule;
@@ -9,19 +8,7 @@ import org.eclipse.jface.text.rules.RuleBasedPartitionScanner;
 import org.eclipse.jface.text.rules.Token;
 
 import org.eclipse.jface.text.rules.ICharacterScanner;
-import org.eclipse.jface.text.rules.IRule;
-import org.eclipse.jface.text.rules.IWordDetector;
-import org.eclipse.jface.text.rules.MultiLineRule;
 import org.eclipse.jface.text.rules.EndOfLineRule;
-import org.eclipse.jface.text.rules.NumberRule;
-import org.eclipse.jface.text.rules.SingleLineRule;
-import org.eclipse.jface.text.rules.PatternRule;
-import org.eclipse.jface.text.rules.WhitespaceRule;
-import org.eclipse.jface.text.rules.WordPatternRule;
-import org.eclipse.jface.text.rules.WordRule;
-
-import com.sun.org.apache.xalan.internal.xsltc.dom.SingletonIterator;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.RegularExpression;
 
 
 public class TakePartitionScanner extends RuleBasedPartitionScanner{
@@ -53,6 +40,7 @@ public class TakePartitionScanner extends RuleBasedPartitionScanner{
 
 
 
+		@Override
 		protected boolean sequenceDetected(ICharacterScanner scanner, char[] sequence, boolean eofAllowed) {
 
 			if(sequence == fStartSequence)
@@ -119,6 +107,7 @@ public class TakePartitionScanner extends RuleBasedPartitionScanner{
 		}
 
 
+		@Override
 		protected boolean sequenceDetected(ICharacterScanner scanner, char[] sequence, boolean eofAllowed) {
 
 			if(sequence == fStartSequence)
