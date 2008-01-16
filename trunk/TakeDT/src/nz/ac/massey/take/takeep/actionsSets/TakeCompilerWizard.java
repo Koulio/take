@@ -17,9 +17,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.jdt.internal.ui.wizards.SuperInterfaceSelectionDialog;
-import org.eclipse.jdt.ui.wizards.NewClassWizardPage;
-import org.eclipse.jdt.ui.wizards.NewTypeWizardPage;
 public class TakeCompilerWizard extends Wizard{
 
 
