@@ -1,46 +1,52 @@
 package nz.ac.massey.take.takeep.actionsSets;
 
+import java.net.URL;
+
+import nz.ac.massey.take.takeep.Activator;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
 
-public class TakeCompileToClasses extends Action implements IWorkbenchWindowActionDelegate {
+public class TakeCompileToClasses extends TakeAbstractAction {
 
 	@Override
-	public void dispose() {
+	protected String getImageLocation() {
 		// TODO Auto-generated method stub
-		
+		return "icons/fishhookCla.JPG";
 	}
 
 	@Override
-	public void init(IWorkbenchWindow window) {
-		
-		
+	protected String getToolTip() {
+		// TODO Auto-generated method stub
+		return "Compile to Classes";
 	}
 
 	@Override
-	public void run(IAction action) {
+	public void run() {
 		TakeCompilerWizard wizard = new TakeCompilerWizard();
-	      
 
-        Shell shell =
-            PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-          WizardDialog dialog= new WizardDialog(shell, wizard);
-          dialog.create();
-          dialog.open();
-		
-	}
-
-	@Override
-	public void selectionChanged(IAction action, ISelection selection) {
-		// TODO Auto-generated method stub
-		
+		Shell shell =
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+		WizardDialog dialog= new WizardDialog(shell, wizard);
+		dialog.create();
+		dialog.open();
 	}
 
 
+
+	
+
+
+
+
+
+	
 }

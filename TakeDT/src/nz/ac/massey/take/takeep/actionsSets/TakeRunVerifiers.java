@@ -6,29 +6,26 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
-public class TakeRunVerifiers extends Action implements IWorkbenchWindowActionDelegate {
+public class TakeRunVerifiers extends TakeAbstractAction {
 
 	@Override
-	public void dispose() {
+	protected String getImageLocation() {
+		// TODO Auto-generated method stub
+		return "icons/fishhookVer.JPG";
+	}
+
+	@Override
+	protected String getToolTip() {
+		// TODO Auto-generated method stub
+		return "Run Verifiers";
+	}
+
+	@Override
+	public void run() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public void init(IWorkbenchWindow window) {
-		
-		
-	}
 
-	@Override
-	public void run(IAction action) {
-		System.out.println("RV");
-		
-	}
 
-	@Override
-	public void selectionChanged(IAction action, ISelection selection) {
-		// TODO Auto-generated method stub
-		
-	}
 }
