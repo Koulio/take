@@ -4,9 +4,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import nz.ac.massey.take.takeep.Activator;
-import nz.ac.massey.take.takeep.actionsSets.TakeCompileToClasses;
-import nz.ac.massey.take.takeep.actionsSets.TakeCompileToInterfaces;
-import nz.ac.massey.take.takeep.actionsSets.TakeRunVerifiers;
+import nz.ac.massey.take.takeep.actionsSets.compileActions.TakeCompileToClasses;
+import nz.ac.massey.take.takeep.actionsSets.compileActions.TakeCompileToInterfaces;
+import nz.ac.massey.take.takeep.actionsSets.verifyActions.TakeRunVerifiers;
 
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IToolBarManager;

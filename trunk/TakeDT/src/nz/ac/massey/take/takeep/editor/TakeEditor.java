@@ -1,14 +1,17 @@
 package nz.ac.massey.take.takeep.editor;
 
-import nz.ac.massey.take.takeep.actionsSets.TakeCompileToClasses;
-import nz.ac.massey.take.takeep.actionsSets.TakeCompileToInterfaces;
-import nz.ac.massey.take.takeep.actionsSets.TakeRunVerifiers;
+import nz.ac.massey.take.takeep.actionsSets.compileActions.TakeCompileToClasses;
+import nz.ac.massey.take.takeep.actionsSets.compileActions.TakeCompileToInterfaces;
+import nz.ac.massey.take.takeep.actionsSets.takeSourceActions.TakeCompilerAnnotations;
+import nz.ac.massey.take.takeep.actionsSets.verifyActions.TakeRunVerifiers;
 import nz.ac.massey.take.takeep.editor.TakeSourceViewerConfiguration.TAKE_TOKENS;
 import nz.ac.massey.take.takeep.editor.tokens.TakePartitionScanner.TAKE_PARTITIONS;
 import nz.ac.massey.take.takeep.outline.TakeOutline;
 
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.text.source.AnnotationRulerColumn;
 import org.eclipse.jface.text.source.CompositeRuler;
 import org.eclipse.jface.text.source.IVerticalRuler;
@@ -94,9 +97,9 @@ public class TakeEditor extends TextEditor{
 	protected void createActions() {
 		// TODO Auto-generated method stub
 		super.createActions();
-		this.setAction(TakeCompileToClasses.class.toString(),new TakeCompileToClasses());
-		this.setAction(TakeCompileToInterfaces.class.toString(),new TakeCompileToInterfaces());
-		this.setAction(TakeRunVerifiers.class.toString(),new TakeRunVerifiers());
+//		this.setAction(TakeCompileToClasses.class.toString(),new TakeCompileToClasses());
+//		this.setAction(TakeCompileToInterfaces.class.toString(),new TakeCompileToInterfaces());
+//		this.setAction(TakeRunVerifiers.class.toString(),new TakeRunVerifiers());
 
 
 	}
@@ -108,10 +111,24 @@ public class TakeEditor extends TextEditor{
 		super.editorContextMenuAboutToShow(menu);
 	
 		this.addGroup(menu, ITextEditorActionConstants.GROUP_EDIT, "Take");
-		this.addAction(menu, "Take", TakeCompileToClasses.class.toString());
-		this.addAction(menu, "Take", TakeCompileToInterfaces.class.toString());
-		this.addAction(menu, "Take", TakeRunVerifiers.class.toString());
+//		this.addAction(menu, "Take", TakeCompileToClasses.class.toString());
+//		this.addAction(menu, "Take", TakeCompileToInterfaces.class.toString());
+//		this.addAction(menu, "Take", TakeRunVerifiers.class.toString());
 		
+		
+		 MenuManager compileMenu = new MenuManager("Take Compile");
+		 compileMenu.add(new TakeCompileToClasses());
+		 compileMenu.add(new TakeCompileToInterfaces());
+		 menu.appendToGroup("Take", compileMenu);
+		
+		 
+		 MenuManager verifyMenu = new MenuManager("Take Verify");
+		 verifyMenu.add(new TakeRunVerifiers());
+		 menu.appendToGroup("Take", verifyMenu);
+		 
+		 MenuManager takeSource = new MenuManager("Take Source");
+		 takeSource.add(new TakeCompilerAnnotations());
+		 menu.appendToGroup("Take", takeSource);
 		
 	}
 

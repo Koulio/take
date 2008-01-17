@@ -29,19 +29,22 @@ public abstract class TakeAbstractAction extends Action implements IWorkbenchWin
 	}
 	protected abstract String getImageLocation();
 	protected abstract String getToolTip();
-	
-	
+
+
 	protected String getMenuText() {
 		// TODO Auto-generated method stub
 		return getToolTip();
 	}
-	
-	
-	
+
+
+
 	public TakeAbstractAction() {
 		super();
-		URL url = Activator.getDefault().getBundle().getEntry(getImageLocation());
-		setImageDescriptor(ImageDescriptor.createFromURL(url));
+		if(getImageLocation() != null)
+		{
+			URL url = Activator.getDefault().getBundle().getEntry(getImageLocation());
+			setImageDescriptor(ImageDescriptor.createFromURL(url));
+		}
 		this.setToolTipText(getToolTip());
 		this.setId(this.getClass().toString());
 		this.setText(getMenuText());
@@ -50,8 +53,8 @@ public abstract class TakeAbstractAction extends Action implements IWorkbenchWin
 
 	@Override
 	public abstract void run();
-	
-	
+
+
 	@Override
 	public void runWithEvent(Event event) {
 
@@ -64,12 +67,12 @@ public abstract class TakeAbstractAction extends Action implements IWorkbenchWin
 
 	}
 
-	
+
 	@Override
 	public void selectionChanged(IAction action, ISelection selection) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
+
+
 }
