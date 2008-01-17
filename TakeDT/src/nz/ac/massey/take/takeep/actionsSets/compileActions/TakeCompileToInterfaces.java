@@ -1,4 +1,6 @@
-package nz.ac.massey.take.takeep.actionsSets;
+package nz.ac.massey.take.takeep.actionsSets.compileActions;
+
+import nz.ac.massey.take.takeep.actionsSets.TakeAbstractAction;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -10,19 +12,16 @@ public class TakeCompileToInterfaces extends TakeAbstractAction {
 
 	@Override
 	protected String getImageLocation() {
-		// TODO Auto-generated method stub
 		return "icons/fishhookInt.JPG";
 	}
 
 	@Override
 	protected String getToolTip() {
-		// TODO Auto-generated method stub
 		return "Compile to Interfaces";
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		
 	}
 

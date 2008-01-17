@@ -1,4 +1,4 @@
-package nz.ac.massey.take.takeep.actionsSets;
+package nz.ac.massey.take.takeep.actionsSets.panels;
 
 import java.util.LinkedList;
 import java.util.StringTokenizer;
@@ -41,7 +41,7 @@ import org.eclipse.ui.internal.editors.text.FileEditorInputAdapterFactory;
 public class TakeCompileWizardPanel extends WizardPage
 {
 
-	protected TakeCompileWizardPanel(String name) {
+	public TakeCompileWizardPanel(String name) {
 		super(name);
 		// TODO Auto-generated constructor stub
 	}
@@ -349,10 +349,12 @@ public class TakeCompileWizardPanel extends WizardPage
 		
 		Button aabtn = new Button(topLevel,SWT.CHECK);
 		aabtn.setText("Auto Annotate");
+		aabtn.setSelection(this.isAutoAnotate());
 		
 		
 		Button ppbtn = new Button(topLevel,SWT.CHECK);
 		ppbtn.setText("Pretty Print Source");
+		ppbtn.setSelection(this.isSourceTransform());
 	}
 
 

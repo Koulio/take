@@ -1,8 +1,10 @@
-package nz.ac.massey.take.takeep.actionsSets;
+package nz.ac.massey.take.takeep.actionsSets.compileActions;
 
 import java.net.URL;
 
 import nz.ac.massey.take.takeep.Activator;
+import nz.ac.massey.take.takeep.actionsSets.TakeAbstractAction;
+import nz.ac.massey.take.takeep.actionsSets.wizards.TakeCompilerWizard;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;

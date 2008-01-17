@@ -1,7 +1,9 @@
-package nz.ac.massey.take.takeep.actionsSets;
+package nz.ac.massey.take.takeep.actionsSets.wizards;
 
 import java.util.LinkedList;
 import java.util.StringTokenizer;
+
+import nz.ac.massey.take.takeep.actionsSets.panels.TakeCompileWizardPanel;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.wizard.Wizard;
@@ -29,7 +31,6 @@ public class TakeCompilerWizard extends Wizard{
 		super();
 		this.setWindowTitle("Take Compiler Wizard");
 		this.setNeedsProgressMonitor(false);
-		
 		wp = createWizardPage();
 		this.addPage(wp);
 	}
@@ -37,7 +38,6 @@ public class TakeCompilerWizard extends Wizard{
 	private TakeCompileWizardPanel createWizardPage() {
 		TakeCompileWizardPanel wp = new TakeCompileWizardPanel("TakeWizard");
 		wp.setPageComplete(true);
-		
 		return wp;
 	}
 

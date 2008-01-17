@@ -1,4 +1,6 @@
-package nz.ac.massey.take.takeep.actionsSets;
+package nz.ac.massey.take.takeep.actionsSets.verifyActions;
+
+import nz.ac.massey.take.takeep.actionsSets.TakeAbstractAction;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -22,7 +24,6 @@ public class TakeRunVerifiers extends TakeAbstractAction {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		
 	}
 
