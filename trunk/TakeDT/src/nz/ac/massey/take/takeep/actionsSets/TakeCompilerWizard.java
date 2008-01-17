@@ -29,8 +29,7 @@ public class TakeCompilerWizard extends Wizard{
 		super();
 		this.setWindowTitle("Take Compiler Wizard");
 		this.setNeedsProgressMonitor(false);
-
-
+		
 		wp = createWizardPage();
 		this.addPage(wp);
 	}

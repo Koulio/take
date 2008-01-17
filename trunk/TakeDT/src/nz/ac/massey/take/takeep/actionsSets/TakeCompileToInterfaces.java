@@ -6,25 +6,26 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
-public class TakeCompileToInterfaces extends Action implements IWorkbenchWindowActionDelegate {
+public class TakeCompileToInterfaces extends TakeAbstractAction {
 
 	@Override
-	public void dispose() {
+	protected String getImageLocation() {
+		// TODO Auto-generated method stub
+		return "icons/fishhookInt.JPG";
 	}
 
 	@Override
-	public void init(IWorkbenchWindow window) {
+	protected String getToolTip() {
+		// TODO Auto-generated method stub
+		return "Compile to Interfaces";
 	}
 
 	@Override
-	public void run(IAction action) {
-		System.out.println("C2I");
-		
-	}
-
-	@Override
-	public void selectionChanged(IAction action, ISelection selection) {
+	public void run() {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
 }

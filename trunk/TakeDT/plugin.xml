@@ -5,7 +5,7 @@
          point="org.eclipse.ui.editors">
       <editor
             class="nz.ac.massey.take.takeep.editor.TakeEditor"
-            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            contributorClass="nz.ac.massey.take.takeep.editor.TakeEditorActionContributor"
             extensions="take"
             icon="icons/fishhook.jpg"
             id="TakeEP.takeEditor"
@@ -27,6 +27,7 @@
             name="View">
       </view>
    </extension>
+   <!--
    <extension
          point="org.eclipse.ui.actionSets">
       <actionSet
@@ -35,7 +36,7 @@
             visible="true">
             
     		<action id="nz.ac.massey.take.takeep.actionsSets.TakeCompileToClasses"
-          		toolbarPath="org.eclipse.debug.ui.launchActionSet/C2C"
+          		toolbarPath="nz.ac.massey.take.takeep.editor.TakeEditor/C2C"
           		icon="icons/fishhookCla.JPG"
           		tooltip="Compile to Classes"
           		label = "Compile2Classes"
@@ -43,7 +44,7 @@
     		</action>
     		
             <action id="nz.ac.massey.take.takeep.actionsSets.TakeCompileToInterfaces"
-          		toolbarPath="org.eclipse.debug.ui.launchActionSet/C2C"
+          		toolbarPath="nz.ac.massey.take.takeep.editor.TakeEditor/C2C"
           		icon="icons/fishhookInt.JPG"
           		tooltip="Compile to Interfaces"
           		label = "Compile2Classes"
@@ -51,7 +52,7 @@
     		</action>
     		
     		<action id="nz.ac.massey.take.takeep.actionsSets.TakeRunVerifiers"
-          		toolbarPath="org.eclipse.debug.ui.launchActionSet/C2C"
+          		toolbarPath="nz.ac.massey.take.takeep.editor.TakeEditor/C2C"
           		icon="icons/fishhookVer.JPG"
           		tooltip="Run verifiers"
           		label = "Compile2Classes"
@@ -60,5 +61,5 @@
       </actionSet>
    </extension>
 
-
+-->
 </plugin>
