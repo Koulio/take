@@ -15,8 +15,12 @@ import de.odysseus.el.tree.Tree;
 import de.odysseus.el.tree.TreeBuilder;
 import de.odysseus.el.tree.impl.Builder;
 import de.odysseus.el.tree.impl.ast.AstBinary;
-import de.odysseus.el.tree.impl.ast.AstNode;
+import de.odysseus.el.tree.impl.ast.AstEval;
+import de.odysseus.el.tree.impl.ast.AstNumber;
+import de.odysseus.el.tree.impl.ast.AstString;
+import de.odysseus.el.tree.impl.ast.AstUnary;
 import de.odysseus.el.tree.impl.ast.AstBinary.Operator;
+import nz.org.take.Constant;
 import nz.org.take.Predicate;
 import nz.org.take.Prerequisite;
 import nz.org.take.Term;
@@ -59,7 +63,43 @@ public class JSPELParser {
 		return parseTerm(tree.getRoot());
 	}
 	public Term parseTerm(Node n) throws ScriptException {
-		throw new ScriptException ("Not yet implemented");
+		boolean MINUS = false;
+		
+		if (n instanceof AstEval) {
+			n = n.getChild(0);
+		}
+		
+		if (n instanceof AstUnary && ((AstUnary)n).getOperator()==AstUnary.NEG) {
+			MINUS=true;
+			n = n.getChild(0);
+		} 
+		
+		
+		if (n instanceof AstNumber) {
+			AstNumber _n = (AstNumber)n;
+			Number o = (Number)_n.eval(null,null);
+			Constant c = new Constant();
+			if (MINUS) {
+				if (o instanceof Double) {
+					o = new Double(-o.doubleValue());
+				}
+				else if (o instanceof Long) {
+					o = new Long(-o.longValue());
+				}
+			}
+			c.setObject(o);
+			return c;
+		}
+		
+		else if (n instanceof AstString) {
+			AstString _n = (AstString)n;
+			String o = (String)_n.eval(null,null);
+			Constant c = new Constant();
+			c.setObject(o);
+			return c;
+		}
+		
+		throw new ScriptException("Cannot parse EL expression: " + n);
 	}
 
 }
