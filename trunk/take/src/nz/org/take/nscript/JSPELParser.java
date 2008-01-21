@@ -9,21 +9,34 @@
  */
 package nz.org.take.nscript;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.util.HashMap;
+import java.util.Map;
 import de.odysseus.el.tree.ExpressionNode;
 import de.odysseus.el.tree.Node;
 import de.odysseus.el.tree.Tree;
 import de.odysseus.el.tree.TreeBuilder;
 import de.odysseus.el.tree.impl.Builder;
 import de.odysseus.el.tree.impl.ast.AstBinary;
+import de.odysseus.el.tree.impl.ast.AstDot;
 import de.odysseus.el.tree.impl.ast.AstEval;
+import de.odysseus.el.tree.impl.ast.AstIdentifier;
+import de.odysseus.el.tree.impl.ast.AstNode;
 import de.odysseus.el.tree.impl.ast.AstNumber;
 import de.odysseus.el.tree.impl.ast.AstString;
 import de.odysseus.el.tree.impl.ast.AstUnary;
 import de.odysseus.el.tree.impl.ast.AstBinary.Operator;
+import nz.org.take.ComplexTerm;
 import nz.org.take.Constant;
+import nz.org.take.JFunction;
 import nz.org.take.Predicate;
 import nz.org.take.Prerequisite;
+import nz.org.take.PropertyPredicate;
 import nz.org.take.Term;
+import nz.org.take.Variable;
 
 /**
  * JUEL based parser for JSP EL expressions.
@@ -31,8 +44,24 @@ import nz.org.take.Term;
  */
 
 public class JSPELParser {
+	
+	private Map<String,Variable> variables = new HashMap<String,Variable>();
+	private Map<String,Constant> constants = new HashMap<String,Constant>();
+	
 	private TreeBuilder builder = new Builder();
-	public Prerequisite parseCondition(String s) throws ScriptException {
+	
+	public JSPELParser(Map<String, Variable> variables,
+			Map<String, Constant> constants) {
+		super();
+		this.variables = variables;
+		this.constants = constants;
+	}
+	
+	public JSPELParser() {
+		super();
+	}
+	
+	public Prerequisite parseCondition(String s,int line) throws ScriptException {
 		s = "${" + s + "}"; // EL parser expects this
 		Tree tree = builder.build(s);
 		ExpressionNode root = tree.getRoot();
@@ -41,8 +70,8 @@ public class JSPELParser {
 			if (child instanceof AstBinary) {
 				AstBinary binN = (AstBinary)child;
 				Operator op = binN.getOperator();
-				Term t1 = this.parseTerm(binN.getChild(0)); // left
-				Term t2 = this.parseTerm(binN.getChild(1)); // right
+				Term t1 = this.parseTerm(binN.getChild(0),line); // left
+				Term t2 = this.parseTerm(binN.getChild(1),line); // right
 				Predicate p = getPredicate(op,t1.getType(),t2.getType());
 				Prerequisite prereq = new Prerequisite();
 				prereq.setPredicate(p);
@@ -57,12 +86,12 @@ public class JSPELParser {
 		// TODO 
 		return null;
 	}
-	public Term parseTerm(String s) throws ScriptException {
+	public Term parseTerm(String s,int line) throws ScriptException {
 		s = "${" + s + "}"; // EL parser expects this
 		Tree tree = builder.build(s);
-		return parseTerm(tree.getRoot());
+		return parseTerm(tree.getRoot(),line);
 	}
-	public Term parseTerm(Node n) throws ScriptException {
+	public Term parseTerm(Node n,int line) throws ScriptException {
 		boolean MINUS = false;
 		
 		if (n instanceof AstEval) {
@@ -99,7 +128,74 @@ public class JSPELParser {
 			return c;
 		}
 		
+		else if (n instanceof AstDot) {
+			AstDot d = (AstDot)n;
+			// TODO hack: remove ". " prefix - will have to modify JUEL to access property name directly
+			String p = d.toString().substring(2);
+			AstNode c = d.getChild(0); // head
+			Term t = this.parseTerm(c,line);
+			// verify property
+			PropertyDescriptor property = findProperty(t.getType(),p,line);
+			JFunction f = new JFunction();
+			f.setMethod(property.getReadMethod());
+			ComplexTerm ct = new ComplexTerm();
+			ct.setFunction(f);
+			ct.setTerms(new Term[]{t});
+			return ct;
+		}
+		
+		else if (n instanceof AstIdentifier) {
+			// TODO hack: remove toString and  modify JUEL to access name property directly
+			String identifier = n.toString();
+			// try to find a variable 
+			Term t = this.variables.get(identifier);
+			if (t!=null) 
+				return t;
+			// try to find a constant 
+			t = this.constants.get(identifier);
+			if (t!=null) 
+				return t;	
+			else 
+				this.error(line,"Identifier ",identifier,"has not yet been declared - use var or ref to declare it");
+		}
+		
 		throw new ScriptException("Cannot parse EL expression: " + n);
 	}
+	private PropertyDescriptor findProperty(Class type, String p, int line) throws ScriptException {
+		PropertyDescriptor[] properties = null;
+		try {
+			BeanInfo beanInfo = Introspector.getBeanInfo(type);
+			properties = beanInfo.getPropertyDescriptors();
+			for (PropertyDescriptor property:properties) {
+				if (property.getName().equals(p)) {
+					return property;
+				}
+			}
+		}
+		catch (IntrospectionException x) {}
+		this.error(line,"introspection exception "," cannot find property ",p,"in class ",type.getName());
+		return null;
+	}
+	public Map<String, Variable> getVariables() {
+		return variables;
+	}
+	public void setVariables(Map<String, Variable> variables) {
+		this.variables = variables;
+	}
+	public Map<String, Constant> getConstants() {
+		return constants;
+	}
+	public void setConstants(Map<String, Constant> constants) {
+		this.constants = constants;
+	}
 
+	private void error(int no,String... description) throws ScriptException{
+		StringBuffer buf = new StringBuffer();
+		buf.append("Parser exception at line ");
+		buf.append(no);
+		buf.append(' ');
+		for (String t:description)
+			buf.append(t);
+		throw new ScriptException(buf.toString());
+	}
 }
