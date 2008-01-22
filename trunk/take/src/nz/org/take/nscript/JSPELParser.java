@@ -34,7 +34,6 @@ import nz.org.take.Constant;
 import nz.org.take.JFunction;
 import nz.org.take.Predicate;
 import nz.org.take.Prerequisite;
-import nz.org.take.PropertyPredicate;
 import nz.org.take.Term;
 import nz.org.take.Variable;
 
@@ -196,6 +195,6 @@ public class JSPELParser {
 		buf.append(' ');
 		for (String t:description)
 			buf.append(t);
-		throw new ScriptException(buf.toString());
+		throw new ScriptException(buf.toString(),no);
 	}
 }

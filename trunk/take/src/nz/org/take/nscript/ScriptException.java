@@ -19,23 +19,46 @@ import nz.org.take.TakeException;
 
 public class ScriptException extends TakeException {
 
+	private int line = -1;
+	
 	public ScriptException() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public ScriptException(String arg0) {
 		super(arg0);
-		// TODO Auto-generated constructor stub
 	}
 
 	public ScriptException(Throwable arg0) {
 		super(arg0);
-		// TODO Auto-generated constructor stub
 	}
 
 	public ScriptException(String arg0, Throwable arg1) {
 		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
+	}
+	
+	public ScriptException(int line) {
+		this();
+		this.line = line;
+	}
+
+	public ScriptException(String arg0,int line) {
+		super(arg0);
+		this.line = line;
+	}
+
+	public ScriptException(Throwable arg0,int line) {
+		super(arg0);
+		this.line = line;
+	}
+
+	public ScriptException(String arg0, Throwable arg1,int line) {
+		super(arg0, arg1);
+		this.line = line;
+	}
+	
+
+	public int getLine() {
+		return line;
 	}
 
 }
