@@ -10,11 +10,13 @@
 
 package test.nz.org.take.nscript;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import nz.org.take.*;
 import nz.org.take.nscript.JSPELParser;
 import nz.org.take.nscript.ScriptException;
+import nz.org.take.script.Condition;
 import junit.framework.TestCase;
 
 /**
@@ -156,5 +158,70 @@ public class JSPELParserTests extends TestCase {
 			assertTrue(true);
 		}
 	}
+	
+	public void testCondition1() throws Exception {
+		Map<String,Constant> consts = new HashMap<String,Constant>();
+		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Variable var = new Variable();
+		var.setName("bean1");
+		var.setType(TestBean.class);
+		vars.put("bean1",var);
+		Prerequisite c = new JSPELParser(vars,consts).parseCondition("bean1.name==\'Max\'",42);
+		Predicate p = c.getPredicate();
+		assertTrue(p instanceof JPredicate);
+		Method m = ((JPredicate)p).getMethod();
+		assertEquals("equals",m.getName());
+		assertEquals(1,m.getParameterTypes().length);
+		assertEquals(Object.class,m.getParameterTypes()[0]);
+		Term t = c.getTerms()[0];
+		assertTrue(t instanceof ComplexTerm);
+		assertEquals(String.class,t.getType());
+		t = c.getTerms()[1];
+		assertTrue(t instanceof Constant);
+		assertEquals(String.class,t.getType());
+	}
+	
+	public void testCondition2() throws Exception {
+		Map<String,Constant> consts = new HashMap<String,Constant>();
+		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Variable var = new Variable();
+		var.setName("bean1");
+		var.setType(TestBean.class);
+		vars.put("bean1",var);
+		Prerequisite c = new JSPELParser(vars,consts).parseCondition("\'Max\'==bean1.name",42);
+		Predicate p = c.getPredicate();
+		assertTrue(p instanceof JPredicate);
+		Method m = ((JPredicate)p).getMethod();
+		assertEquals("equals",m.getName());
+		assertEquals(1,m.getParameterTypes().length);
+		assertEquals(Object.class,m.getParameterTypes()[0]);
+		Term t = c.getTerms()[1];
+		assertTrue(t instanceof ComplexTerm);
+		assertEquals(String.class,t.getType());
+		t = c.getTerms()[0];
+		assertTrue(t instanceof Constant);
+		assertEquals(String.class,t.getType());
+	}
+	
+	public void testCondition3() throws Exception {
+		Map<String,Constant> consts = new HashMap<String,Constant>();
+		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Variable var = new Variable();
+		var.setName("bean1");
+		var.setType(TestBean.class);
+		vars.put("bean1",var);
+		Prerequisite c = new JSPELParser(vars,consts).parseCondition("bean1.id==42",42);
+		Predicate p = c.getPredicate();
+		assertTrue(p instanceof Comparison);
+		assertEquals(new Comparison("=="),p);
+		Term t = c.getTerms()[0];
+		assertTrue(t instanceof ComplexTerm);
+		assertEquals(int.class,t.getType());
+		t = c.getTerms()[1];
+		assertTrue(t instanceof Constant);
+		assertEquals(Long.class,t.getType());
+	}
+	
+
 	
 }
