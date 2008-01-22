@@ -13,6 +13,7 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import de.odysseus.el.tree.ExpressionNode;
@@ -29,11 +30,14 @@ import de.odysseus.el.tree.impl.ast.AstNumber;
 import de.odysseus.el.tree.impl.ast.AstString;
 import de.odysseus.el.tree.impl.ast.AstUnary;
 import de.odysseus.el.tree.impl.ast.AstBinary.Operator;
+import nz.org.take.Comparison;
 import nz.org.take.ComplexTerm;
 import nz.org.take.Constant;
 import nz.org.take.JFunction;
+import nz.org.take.JPredicate;
 import nz.org.take.Predicate;
 import nz.org.take.Prerequisite;
+import nz.org.take.TakeException;
 import nz.org.take.Term;
 import nz.org.take.Variable;
 
@@ -71,7 +75,7 @@ public class JSPELParser {
 				Operator op = binN.getOperator();
 				Term t1 = this.parseTerm(binN.getChild(0),line); // left
 				Term t2 = this.parseTerm(binN.getChild(1),line); // right
-				Predicate p = getPredicate(op,t1.getType(),t2.getType());
+				Predicate p = getPredicate(op,t1.getType(),t2.getType(),line);
 				Prerequisite prereq = new Prerequisite();
 				prereq.setPredicate(p);
 				prereq.setTerms(new Term[]{t1,t2});
@@ -81,9 +85,37 @@ public class JSPELParser {
 		// TODO handle other cases
 		throw new ScriptException ("Unsupported EL expression: " + s );
 	} 
-	private Predicate getPredicate(Operator op, Class type, Class type2) {
-		// TODO 
+	private Predicate getPredicate(Operator op, Class type1, Class type2,int line) throws ScriptException  {
+		if (op == AstBinary.EQ && isNumeric(type1) &&  isNumeric(type2)) {
+			try {
+				return new Comparison("==");
+			} catch (TakeException e) {
+				error(line,e.getMessage());
+			}
+		} 
+		else if (op == AstBinary.EQ && !isNumeric(type1) && !isNumeric(type2)) {
+			try {
+				Method m = type1.getMethod("equals",new Class[]{Object.class});
+				JPredicate p = new JPredicate();
+				p.setMethod(m);
+				return p;
+			} catch (Exception e) {
+				// nothing todo - always exists
+			}
+		} 
+		this.error(line,"Cannot build predicate for operation ",op.toString());
 		return null;
+	}
+	
+	private boolean isNumeric(Class type) {
+		return (type.isPrimitive() && type!=Boolean.TYPE) || 
+			Byte.class==type ||
+			Double.class==type ||
+			Float.class==type ||
+			Integer.class==type ||
+			Long.class==type ||
+			Short.class==type ||
+			Character.class==type;
 	}
 	public Term parseTerm(String s,int line) throws ScriptException {
 		s = "${" + s + "}"; // EL parser expects this
