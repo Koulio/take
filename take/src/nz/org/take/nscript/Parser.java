@@ -11,7 +11,7 @@ package nz.org.take.nscript;
 
 
 /**
- * Script parser.
+ * Script parser. Stateful, instances should not be shared. 
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
@@ -66,7 +66,16 @@ public class Parser {
 	private Map<String,String> localAnnotations = new HashMap<String,String>();
 	private List<QuerySpec> querySpecs = new ArrayList<QuerySpec>();
 	
+	private List<ScriptException> issues = null;
+	private boolean verificationMode = false;
+	
+	public List<ScriptException> check (Reader reader)  throws ScriptException {
+		verificationMode = true;
+		return this.issues = new ArrayList<ScriptException>();
+	}
+	
 	public KnowledgeBase parse (Reader reader) throws ScriptException  {
+		verificationMode = false;
 		kb = new DefaultKnowledgeBase();
 		LineNumberReader bufReader = new LineNumberReader(reader);
 		String line = null;
@@ -101,7 +110,7 @@ public class Parser {
 					parseRule(line,no);
 				}
 				else {
-					//System.out.println("parse line " + no + " - ?? " + line);
+					error(no,"Unable to parse this line (unknown syntax type): " + line);
 				}
 				
 			}
@@ -122,7 +131,15 @@ public class Parser {
 		buf.append(' ');
 		for (String t:description)
 			buf.append(t);
-		throw new ScriptException(buf.toString());
+		error(no,buf.toString());
+	}
+	private void error(int no,String message) throws ScriptException{
+		if (this.verificationMode) {
+			this.issues.add(new ScriptException(message,no));
+		}
+		else {
+			throw new ScriptException(message,no);
+		}
 	}
 	private void check(int no,String txt,Pattern pattern,String... errorMessage) throws ScriptException {
 		if (!pattern.matcher(txt).matches()) 
