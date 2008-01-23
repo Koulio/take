@@ -8,6 +8,21 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
 
+	
+	/**
+	 * C2C
+	 * example.nz.co...eurent.generateclasses main method
+	 * jopy code formmater boolean
+	 * borwse for source
+	 * ...
+	 * 
+	 * 
+	 * C2I
+	 * senerio one, generate interfaces
+	 * same calss compile to interfaces
+	 * 
+	 * 
+	 */
 	// The plug-in ID
 	public static final String PLUGIN_ID = "TakeEP";
 
