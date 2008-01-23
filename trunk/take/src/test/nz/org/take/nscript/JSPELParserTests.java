@@ -222,6 +222,39 @@ public class JSPELParserTests extends TestCase {
 		assertEquals(Long.class,t.getType());
 	}
 	
+	public void testCondition4() throws Exception {
+		Map<String,Constant> consts = new HashMap<String,Constant>();
+		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Variable var = new Variable();
+		var.setName("bean1");
+		var.setType(TestBean.class);
+		vars.put("bean1",var);
+		try{
+			new JSPELParser(vars,consts).parseCondition("bean1.name==\'Max\' || bean1.name==\'Bender\'",42);
+			assertTrue(false);
+		}
+		catch (ScriptException x) {
+			assertTrue(true);
+		}
+		
+	}
+	
+	public void testCondition5() throws Exception {
+		Map<String,Constant> consts = new HashMap<String,Constant>();
+		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Variable var = new Variable();
+		var.setName("bean1");
+		var.setType(TestBean.class);
+		vars.put("bean1",var);
+		try{
+			new JSPELParser(vars,consts).parseCondition("bean1.name==\'Max\' && bean1.id==42",42);
+			assertTrue(false);
+		}
+		catch (ScriptException x) {
+			assertTrue(true);
+		}
+		
+	}
 
 	
 }

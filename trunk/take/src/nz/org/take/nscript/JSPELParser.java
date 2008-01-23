@@ -73,6 +73,12 @@ public class JSPELParser {
 			if (child instanceof AstBinary) {
 				AstBinary binN = (AstBinary)child;
 				Operator op = binN.getOperator();
+				
+				if (op == AstBinary.AND) 
+					this.error(line,"The logical operator AND (&&) is not allowed here, use multiple conditions in rule body instead");
+				else if (op == AstBinary.OR) 
+					this.error(line,"The logical operator OR (||) not allowed here, use multiple rules instead");
+				
 				Term t1 = this.parseTerm(binN.getChild(0),line); // left
 				Term t2 = this.parseTerm(binN.getChild(1),line); // right
 				Predicate p = getPredicate(op,t1.getType(),t2.getType(),line);
@@ -86,6 +92,7 @@ public class JSPELParser {
 		throw new ScriptException ("Unsupported EL expression: " + s );
 	} 
 	private Predicate getPredicate(Operator op, Class type1, Class type2,int line) throws ScriptException  {
+		
 		if (op == AstBinary.EQ && isNumeric(type1) &&  isNumeric(type2)) {
 			try {
 				return new Comparison("==");
@@ -102,6 +109,40 @@ public class JSPELParser {
 			} catch (Exception e) {
 				// nothing todo - always exists
 			}
+		} 
+		else if (op == AstBinary.NE && isNumeric(type1) &&  isNumeric(type2)) {
+			try {
+				return new Comparison("!=");
+			} catch (TakeException e) {
+				error(line,e.getMessage());
+			}
+		} 
+		else if (op == AstBinary.NE && !isNumeric(type1) && !isNumeric(type2)) {
+			try {
+				Method m = type1.getMethod("equals",new Class[]{Object.class});
+				JPredicate p = new JPredicate();
+				p.setNegated(true);
+				p.setMethod(m);
+				return p;
+			} catch (Exception e) {
+				// nothing todo - always exists
+			}
+		} 
+		else if (isNumeric(type1) && isNumeric(type2)) {
+			// all other operators are numeric
+			try {
+				if (op == AstBinary.GE)
+					return new Comparison(">=");
+				else if (op == AstBinary.GT)
+					return new Comparison(">");
+				else if (op == AstBinary.LE)
+					return new Comparison("<=");
+				else if (op == AstBinary.LT)
+					return new Comparison("<");
+			} catch (TakeException e) {
+				error(line,e.getMessage());
+			}
+				
 		} 
 		this.error(line,"Cannot build predicate for operation ",op.toString());
 		return null;
