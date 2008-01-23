@@ -9,6 +9,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.jdt.core.IMember;
 import org.eclipse.jdt.ui.IJavaElementSearchConstants;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -46,14 +47,14 @@ public class TakeCompileWizardPanel extends WizardPage
 		// TODO Auto-generated constructor stub
 	}
 
-	private String packageName = "";
+	private String packageName = "generated.nz.ac";
 	private String className = "KB";
 
-	private String sourceOutputLocation = "";
+	private String sourceOutputLocation = "src";
 
-	private LinkedList<Object> importStatements = new LinkedList<Object>();
+	private LinkedList<String> importStatements = new LinkedList<String>();
 
-	private LinkedList<Object> additionalInterfaces = new LinkedList<Object>();
+	private LinkedList<String> additionalInterfaces = new LinkedList<String>();
 
 	private boolean autoAnotate  = true;
 	private boolean sourceTransform = true;
@@ -82,8 +83,6 @@ public class TakeCompileWizardPanel extends WizardPage
 		addInterfacePanel(composite, nColumns);
 
 		addCheckPanel(composite, nColumns);
-		this.setDescription("Compile Wizard");
-		this.setTitle("Compile Wizard");
 
 		this.setControl(composite);
 	}
@@ -190,14 +189,10 @@ public class TakeCompileWizardPanel extends WizardPage
 		Button addBtn = new Button(right,SWT.PUSH);
 		addBtn.setText("Add");
 
-		IWorkbench iworkbench = PlatformUI.getWorkbench();
-		if (iworkbench == null){System.out.println("no i workbench"); return;}
-		IWorkbenchWindow iworkbenchwindow = iworkbench.getActiveWorkbenchWindow();
-		if (iworkbenchwindow == null){System.out.println("no i workbenchwindows"); return;}
-		IWorkbenchPage iworkbenchpage = iworkbenchwindow.getActivePage();
-		if (iworkbenchpage == null){System.out.println("no i workbenchpage"); return;}
-
-		final IProject project = getProject(iworkbenchpage);
+		IWorkbenchPage iworkbenchpage = getWorkbench();
+		if(iworkbenchpage == null)return;
+		
+		final IProject project = getProjectFromWorkbench(iworkbenchpage);
 
 		addBtn.addSelectionListener(new SelectionListener(){
 
@@ -221,7 +216,10 @@ public class TakeCompileWizardPanel extends WizardPage
 			        
 			        for(Object o : types)
 			        {
-			        	interfaceList.add(o.toString());
+			        	//org.eclipse.jdt.internal.core.BinaryType
+			        	String elementName = ((IMember)o).getParent().getParent().getElementName() + "." + ((IMember)o).getElementName();
+						interfaceList.add(elementName);
+			        	importStatements.add(elementName);
 			        }
 				
 				} catch (Exception e1) {
@@ -247,6 +245,8 @@ public class TakeCompileWizardPanel extends WizardPage
 					public void widgetSelected(SelectionEvent e) {
 						for(int i : interfaceList.getSelectionIndices())
 						{
+							
+							importStatements.remove(interfaceList.getItem(i));
 							interfaceList.remove(i);
 						}
 						
@@ -274,14 +274,10 @@ public class TakeCompileWizardPanel extends WizardPage
 		Button addBtn = new Button(right,SWT.PUSH);
 		addBtn.setText("Add");
 
-		IWorkbench iworkbench = PlatformUI.getWorkbench();
-		if (iworkbench == null){System.out.println("no i workbench"); return;}
-		IWorkbenchWindow iworkbenchwindow = iworkbench.getActiveWorkbenchWindow();
-		if (iworkbenchwindow == null){System.out.println("no i workbenchwindows"); return;}
-		IWorkbenchPage iworkbenchpage = iworkbenchwindow.getActivePage();
-		if (iworkbenchpage == null){System.out.println("no i workbenchpage"); return;}
-
-		final IProject project = getProject(iworkbenchpage);
+		IWorkbenchPage iworkbenchpage = getWorkbench();
+		if(iworkbenchpage == null)return;
+		
+		final IProject project = getProjectFromWorkbench(iworkbenchpage);
 
 		addBtn.addSelectionListener(new SelectionListener(){
 
@@ -305,7 +301,10 @@ public class TakeCompileWizardPanel extends WizardPage
 			        
 			        for(Object o : types)
 			        {
-			        	interfaceList.add(o.toString());
+			        	String elementName = ((IMember)o).getParent().getParent().getElementName() + "." + ((IMember)o).getElementName();
+			        	interfaceList.add(elementName);
+			        	additionalInterfaces.add(elementName);
+			        	
 			        }
 				
 				} catch (Exception e1) {
@@ -331,10 +330,23 @@ public class TakeCompileWizardPanel extends WizardPage
 					public void widgetSelected(SelectionEvent e) {
 						for(int i : interfaceList.getSelectionIndices())
 						{
+							additionalInterfaces.remove(interfaceList.getItem(i));
 							interfaceList.remove(i);
+							
 						}
 						
 					}});
+	}
+
+
+	public static IWorkbenchPage getWorkbench() {
+		IWorkbench iworkbench = PlatformUI.getWorkbench();
+		if (iworkbench == null){System.out.println("no i workbench"); return null;}
+		IWorkbenchWindow iworkbenchwindow = iworkbench.getActiveWorkbenchWindow();
+		if (iworkbenchwindow == null){System.out.println("no i workbenchwindows"); return null;}
+		IWorkbenchPage iworkbenchpage = iworkbenchwindow.getActivePage();
+		if (iworkbenchpage == null){System.out.println("no i workbenchpage"); return null;}
+		return iworkbenchpage;
 	}
 
 
@@ -373,12 +385,12 @@ public class TakeCompileWizardPanel extends WizardPage
 	}
 
 
-	public LinkedList<Object> getImportStatements() {
+	public LinkedList<String> getImportStatements() {
 		return importStatements;
 	}
 
 
-	public LinkedList<Object> getAdditionalInterfaces() {
+	public LinkedList<String> getAdditionalInterfaces() {
 		return additionalInterfaces;
 	}
 
@@ -395,7 +407,7 @@ public class TakeCompileWizardPanel extends WizardPage
 
 
 
-	private IProject getProject(IWorkbenchPage iworkbenchpage) {
+	private IProject getProjectFromWorkbench(IWorkbenchPage iworkbenchpage) {
 		IResource res = extractSelection(iworkbenchpage.getSelection());
 
 		if(res == null)

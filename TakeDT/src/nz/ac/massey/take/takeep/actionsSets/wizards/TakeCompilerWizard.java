@@ -1,11 +1,25 @@
 package nz.ac.massey.take.takeep.actionsSets.wizards;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 import nz.ac.massey.take.takeep.actionsSets.panels.TakeCompileWizardPanel;
+import nz.org.take.TakeException;
+import nz.org.take.compiler.CompilerException;
+import nz.org.take.compiler.NameGenerator;
+import nz.org.take.compiler.reference.DefaultCompiler;
+import nz.org.take.compiler.util.DefaultLocation;
+import nz.org.take.compiler.util.DefaultNameGenerator;
+import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
+import nz.org.take.script.ScriptKnowledgeSource;
 
+import org.apache.tools.ant.util.ReaderInputStream;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.text.source.LineRange;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -19,13 +33,16 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.part.FileEditorInput;
+
 public class TakeCompilerWizard extends Wizard{
 
 
 
 	private TakeCompileWizardPanel wp;
-	
 
+	private boolean interfaces = false;
 
 	public TakeCompilerWizard() {
 		super();
@@ -35,6 +52,12 @@ public class TakeCompilerWizard extends Wizard{
 		this.addPage(wp);
 	}
 
+	public TakeCompilerWizard(boolean interfaces)
+	{
+		this();
+		this.interfaces = interfaces;
+	}
+	
 	private TakeCompileWizardPanel createWizardPage() {
 		TakeCompileWizardPanel wp = new TakeCompileWizardPanel("TakeWizard");
 		wp.setPageComplete(true);
@@ -42,29 +65,77 @@ public class TakeCompilerWizard extends Wizard{
 	}
 
 
-	
+
 	@Override
 	public boolean performFinish() {
 
-		System.out.println("Package Name : " + wp.getPackageName());
-		System.out.println("Class Name : " + wp.getClassName());
-		System.out.println("Location : " + wp.getSourceOutputLocation());
-		
-		for(Object o : wp.getImportStatements())
+
+
+		DefaultLocation location = new DefaultLocation();
+
+
+		NameGenerator nameGenerator = new DefaultNameGenerator();
+		nz.org.take.compiler.Compiler compiler = new DefaultCompiler();
+
+		if(wp.isSourceTransform())
 		{
-			System.out.println("import : " + o);
+			compiler.add(new JalopyCodeFormatter());
 		}
-		
-		for(Object o : wp.getAdditionalInterfaces())
+		compiler.setAutoAnnotate(wp.isAutoAnotate());
+
+
+		compiler.setNameGenerator(nameGenerator);
+
+		IEditorInput editorInput = TakeCompileWizardPanel.getWorkbench().getActiveEditor().getEditorInput();
+		if(editorInput instanceof FileEditorInput)
 		{
-			System.out.println("interface : " + o);
+			try {
+				InputStream script = ((FileEditorInput)editorInput).getFile().getContents();
+
+				ScriptKnowledgeSource ksource = new ScriptKnowledgeSource(script);
+
+				compiler.setLocation(location);
+
+				location.setSrcFolder(((FileEditorInput)editorInput).getFile().getProject().getFolder(wp.getSourceOutputLocation()).getLocation().toString());
+
+				compiler.setLocation(location);
+				compiler.setImportStatements(wp.getImportStatements().toArray(new String[wp.getImportStatements().size()]));
+				compiler.setInterfaceNames(wp.getAdditionalInterfaces().toArray(new String[wp.getAdditionalInterfaces().size()]));
+
+				compiler.setPackageName(wp.getPackageName());
+				compiler.setClassName(wp.getClassName());
+
+
+				if(!interfaces)
+				{
+				compiler.compile(ksource.getKnowledgeBase());
+				}
+				else
+				{
+					compiler.compileInterface(ksource.getKnowledgeBase());
+				}
+			} catch (CompilerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (TakeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
 		}
-		
-		System.out.println("Auto annotate : " + wp.isAutoAnotate());
-		System.out.println("Source Tranform: " + wp.isSourceTransform());
+		else
+		{
+			return false;
+		}
 		return true;
 	}
 
+	public TakeCompileWizardPanel getWp() {
+		return wp;
+	}
+
+
 }
 
-	

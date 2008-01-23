@@ -34,7 +34,7 @@ public class TakeCompileToClasses extends TakeAbstractAction {
 	@Override
 	public void run() {
 		TakeCompilerWizard wizard = new TakeCompilerWizard();
-
+		wizard.getWp().setTitle(getToolTip());
 		Shell shell =
 			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 		WizardDialog dialog= new WizardDialog(shell, wizard);
