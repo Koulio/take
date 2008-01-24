@@ -73,6 +73,7 @@ public class JSPELParser {
 		ExpressionNode root = tree.getRoot();
 		if (root.getCardinality()==1) {
 			Node child = root.getChild(0);
+			// expressions like 42<person.age
 			if (child instanceof AstBinary) {
 				AstBinary binN = (AstBinary)child;
 				Operator op = binN.getOperator();
@@ -90,9 +91,59 @@ public class JSPELParser {
 				prereq.setTerms(new Term[]{t1,t2});
 				return prereq;
 			}
+			// expression like person.male or person.isMale
+			else if (child instanceof AstDot) {
+				AstDot d = (AstDot)child;
+				// TODO hack: remove ". " prefix - will have to modify JUEL to access property name directly
+				String p = d.toString().substring(2);
+				AstNode c = d.getChild(0); // head
+				Term t = this.parseTerm(c,line);
+				Method m = null;
+				// verify property
+				PropertyDescriptor property = null;
+				try {
+					property = findProperty(t.getType(),p,line);
+				}
+				catch (ScriptException x) {
+					// ignore - try to find a matching getter
+				}
+				if (property!=null) {
+					if (property.getPropertyType()!=Boolean.TYPE) {
+						this.error(line,"Only boolean properties can be used as predicates, but ",property.getName()," in ",t.getType().getName()," has the following type: ",property.getPropertyType().getName());
+					}
+					else {
+						m = property.getReadMethod();
+					}
+				}
+				else {
+					// try to find a method with this name
+					// the advantage is that we can use  expressions like person.isMale 
+					// by only using properties we would have to use person.male
+					try {
+						Method m2 = t.getType().getMethod(p,new Class[]{});
+						if (m2.getReturnType()==Boolean.TYPE && java.lang.reflect.Modifier.isPublic(m2.getModifiers())) {
+							m = m2;
+						}
+					}
+					catch (Exception x) {
+						error(line,x);
+					}
+				}
+				if (m==null) {
+					this.error(line,"Cannot build predicate for ",p," - it represents neither a boolean property nor a getter for such a property in ",t.getType() );
+				}
+				else {
+					JPredicate predicate = new JPredicate();
+					predicate.setMethod(m);
+					Prerequisite prereq = new Prerequisite();
+					prereq.setPredicate(predicate);
+					prereq.setTerms(new Term[]{t});
+					return prereq;
+				}
+			}
 		}
-		// TODO handle other cases
-		throw new ScriptException ("Unsupported EL expression: " + s );
+		this.error(line,"Unsupported EL expression: ",s );
+		return null;
 	} 
 	private Function getFunction(Operator op, Class type1, Class type2,int line) throws ScriptException  {
 		
@@ -303,13 +354,16 @@ public class JSPELParser {
 		this.constants = constants;
 	}
 
-	private void error(int no,String... description) throws ScriptException{
+	private void error(int no,Object... description) throws ScriptException{
 		StringBuffer buf = new StringBuffer();
 		buf.append("Parser exception at line ");
 		buf.append(no);
 		buf.append(' ');
-		for (String t:description)
+		for (Object t:description)
 			buf.append(t);
 		throw new ScriptException(buf.toString(),no);
+	}
+	private void error(int no,Throwable t) throws ScriptException{
+		throw new ScriptException(t.getMessage(),t,no);
 	}
 }

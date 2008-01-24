@@ -19,6 +19,7 @@ public class TestBean {
 	private String name = "";
 	private int id = 0;
 	private TestProperty property = null;
+	private boolean cool = false;
 	public String getName() {
 		return name;
 	}
@@ -36,5 +37,11 @@ public class TestBean {
 	}
 	public void setProperty(TestProperty property) {
 		this.property = property;
+	}
+	public boolean isCool() {
+		return cool;
+	}
+	public void setCool(boolean cool) {
+		this.cool = cool;
 	}
 }

@@ -304,23 +304,85 @@ public class JSPELParserTests extends TestCase {
 		}
 		
 	}
-	
-	public void testCondition5() throws Exception {
+	// reference to property
+	public void testJCondition1() throws Exception {
 		Map<String,Constant> consts = new HashMap<String,Constant>();
 		Map<String,Variable> vars = new HashMap<String,Variable>();
 		Variable var = new Variable();
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
-		try{
-			new JSPELParser(vars,consts).parseCondition("bean1.name==\'Max\' && bean1.id==42",42);
+		Prerequisite c = new JSPELParser(vars,consts).parseCondition("bean1.cool",42);
+		Predicate p = c.getPredicate();
+		assertTrue(p instanceof JPredicate);
+		Method m = ((JPredicate)p).getMethod();
+		assertEquals("isCool",m.getName());
+		assertEquals(0,m.getParameterTypes().length);
+		assertEquals(Boolean.TYPE,m.getReturnType());
+		Term t = c.getTerms()[0];
+		assertTrue(t instanceof Variable);
+		assertEquals(TestBean.class,t.getType());
+		assertEquals("bean1",((Variable)t).getName());
+		
+	}
+	// reference to getter
+	public void testJCondition2() throws Exception {
+		Map<String,Constant> consts = new HashMap<String,Constant>();
+		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Variable var = new Variable();
+		var.setName("bean1");
+		var.setType(TestBean.class);
+		vars.put("bean1",var);
+		// alternative syntax using getter names instead of properties
+		Prerequisite c = new JSPELParser(vars,consts).parseCondition("bean1.isCool",42);
+		Predicate p = c.getPredicate();
+		assertTrue(p instanceof JPredicate);
+		Method m = ((JPredicate)p).getMethod();
+		assertEquals("isCool",m.getName());
+		assertEquals(0,m.getParameterTypes().length);
+		assertEquals(Boolean.TYPE,m.getReturnType());
+		Term t = c.getTerms()[0];
+		assertTrue(t instanceof Variable);
+		assertEquals(TestBean.class,t.getType());
+		assertEquals("bean1",((Variable)t).getName());
+		
+	}
+	// property of complex term
+	public void testJCondition3() throws Exception {
+		Map<String,Constant> consts = new HashMap<String,Constant>();
+		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Variable var = new Variable();
+		var.setName("bean1");
+		var.setType(TestBean.class);
+		vars.put("bean1",var);
+		Prerequisite c = new JSPELParser(vars,consts).parseCondition("bean1.property.tested",42);
+		Predicate p = c.getPredicate();
+		assertTrue(p instanceof JPredicate);
+		Method m = ((JPredicate)p).getMethod();
+		assertEquals("isTested",m.getName());
+		assertEquals(0,m.getParameterTypes().length);
+		assertEquals(Boolean.TYPE,m.getReturnType());
+		Term t = c.getTerms()[0];
+		assertTrue(t instanceof ComplexTerm);
+		assertEquals(TestProperty.class,t.getType());
+		
+	}
+	
+	// exception handling
+	public void testJCondition4() throws Exception {
+		Map<String,Constant> consts = new HashMap<String,Constant>();
+		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Variable var = new Variable();
+		var.setName("bean1");
+		var.setType(TestBean.class);
+		vars.put("bean1",var);
+		try {
+			Prerequisite c = new JSPELParser(vars,consts).parseCondition("bean1.isNotSoCool",42);
 			assertTrue(false);
 		}
 		catch (ScriptException x) {
 			assertTrue(true);
-		}
-		
+		}		
 	}
-
 	
 }

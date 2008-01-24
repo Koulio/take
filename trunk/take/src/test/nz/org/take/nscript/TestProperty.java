@@ -18,6 +18,7 @@ package test.nz.org.take.nscript;
 
 public class TestProperty {
 	private String name = "";
+	private boolean tested = false;
 
 	public String getName() {
 		return name;
@@ -25,5 +26,13 @@ public class TestProperty {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean isTested() {
+		return tested;
+	}
+
+	public void setTested(boolean tested) {
+		this.tested = tested;
 	}
 }
