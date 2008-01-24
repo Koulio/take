@@ -1,21 +1,38 @@
 package nz.ac.massey.take.takeep.actionsSets.panels;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
+import javax.sound.sampled.SourceDataLine;
+
 import nz.ac.massey.take.takeep.editor.TakeEditor;
 
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMember;
+import org.eclipse.jdt.core.IPackageFragment;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.internal.ui.wizards.NewWizardMessages;
+import org.eclipse.jdt.internal.ui.wizards.TypedElementSelectionValidator;
+import org.eclipse.jdt.internal.ui.wizards.TypedViewerFilter;
 import org.eclipse.jdt.ui.IJavaElementSearchConstants;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -24,6 +41,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
@@ -36,8 +54,15 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
+import org.eclipse.ui.dialogs.ISelectionStatusValidator;
+import org.eclipse.ui.dialogs.ResourceSelectionDialog;
 import org.eclipse.ui.dialogs.SelectionDialog;
 import org.eclipse.ui.internal.editors.text.FileEditorInputAdapterFactory;
+import org.eclipse.ui.model.WorkbenchContentProvider;
+import org.eclipse.ui.model.WorkbenchLabelProvider;
+import org.eclipse.ui.views.navigator.ResourceComparator;
+import org.eclipse.ui.wizards.newresource.BasicNewFolderResourceWizard;
 
 public class TakeCompileWizardPanel extends WizardPage
 {
@@ -91,7 +116,7 @@ public class TakeCompileWizardPanel extends WizardPage
 	private void addNamingPanel(Composite parent, int numcols)
 	{
 		Composite topLevel = new Composite(parent, SWT.NONE);
-		topLevel.setLayout(new GridLayout(2, false));
+		topLevel.setLayout(new GridLayout(3, false));
 		topLevel.setLayoutData(new GridData(GridData.FILL,GridData.CENTER,true,false,numcols,1));
 
 		Label pnLbl = new Label(topLevel,SWT.CENTER);
@@ -108,6 +133,47 @@ public class TakeCompileWizardPanel extends WizardPage
 
 			}});
 
+
+		
+		final IWorkbenchPage iworkbenchpage = getWorkbench();
+		if(iworkbenchpage == null)return;
+		
+		Button pnbtn = new Button(topLevel,SWT.PUSH);
+		pnbtn.setText("Browse");
+		
+		pnbtn.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {}
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					SelectionDialog dialog = JavaUI.createPackageDialog(getShell(), JavaCore.create(getProjectFromWorkbench(iworkbenchpage)), SWT.NONE);
+					
+					if (dialog.open() == IDialogConstants.CANCEL_ID)
+			            return;
+
+			        Object[] types= dialog.getResult();
+			        if (types == null || types.length == 0)
+			            return ;
+			        
+			        for(Object o : types)
+			        {
+			        	//org.eclipse.jdt.internal.core.PackageFragment
+			        	String elementName = ((IPackageFragment)o).getElementName();
+			        	pnTB.setText(elementName);
+			        	packageName = elementName;
+			        }
+				
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}});
+		
+		
 		Label cnLbl = new Label(topLevel,SWT.CENTER);
 		cnLbl.setText("Class Name");
 
@@ -126,7 +192,7 @@ public class TakeCompileWizardPanel extends WizardPage
 	private void addLocationPanel(Composite parent, int numcols)
 	{
 		Composite topLevel = new Composite(parent, SWT.NONE);
-		topLevel.setLayout(new GridLayout(2, false));
+		topLevel.setLayout(new GridLayout(3, false));
 		topLevel.setLayoutData(new GridData(GridData.FILL,GridData.CENTER,true,false,numcols,1));
 
 		Label lLbl = new Label(topLevel,SWT.CENTER);
@@ -145,8 +211,76 @@ public class TakeCompileWizardPanel extends WizardPage
 			}});
 
 
+		IWorkbenchPage iworkbenchpage = getWorkbench();
+		if(iworkbenchpage == null)return;
+		
+		final IProject project = getProjectFromWorkbench(iworkbenchpage);
+		
+			
+		
+		Button lcbtn = new Button(topLevel,SWT.PUSH);
+		lcbtn.setText("Browse");
+		
+		lcbtn.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {}
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					
+					IFolder chooseFolder = chooseFolder(project,"Title","message",project.getLocation());
+					System.out.println(chooseFolder.getLocation().toString());
+					
+//					if (dialog.open() == IDialogConstants.CANCEL_ID)
+//			            return;
+//ElementTreeSelectionDialog
+//			        Object[] types= dialog.getResult();
+//			        if (types == null || types.length == 0)
+//			            return ;
+//			        
+//			        for(Object o : types)
+//			        {
+//
+//			        }
+				
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}});
+
 	}
 
+	private IFolder chooseFolder(IProject currProject, String title, String message, IPath initialPath) {	
+		Class[] acceptedClasses= new Class[] { IFolder.class };
+		ISelectionStatusValidator validator= new TypedElementSelectionValidator(acceptedClasses, false);
+		ViewerFilter filter= new TypedViewerFilter(acceptedClasses, null);	
+		
+		ILabelProvider lp= new WorkbenchLabelProvider();
+		ITreeContentProvider cp= new WorkbenchContentProvider();
+
+
+		ElementTreeSelectionDialog dialog= new ElementTreeSelectionDialog(getShell(), lp, cp);
+		dialog.setValidator(validator);
+		dialog.setTitle(title);
+		dialog.setMessage(message);
+		dialog.addFilter(filter);
+		dialog.setInput(currProject);
+		dialog.setComparator(new ResourceComparator(ResourceComparator.NAME));
+		IResource res= currProject.findMember(initialPath);
+		if (res != null) {
+			dialog.setInitialSelection(res);
+		}
+
+		if (dialog.open() == Window.OK) {
+			return (IFolder) dialog.getFirstResult();
+		}			
+		return null;		
+	}
+	
 	private void addImportPanel(Composite parent, int numcols)
 	{
 //		Composite topLevel = new Composite(parent, SWT.NONE);
@@ -207,6 +341,7 @@ public class TakeCompileWizardPanel extends WizardPage
 				try {
 					SelectionDialog dialog = JavaUI.createTypeDialog(getShell(),getWizard().getContainer(),project,IJavaElementSearchConstants.CONSIDER_ALL_TYPES,true);
 					
+
 					if (dialog.open() == IDialogConstants.CANCEL_ID)
 			            return;
 
