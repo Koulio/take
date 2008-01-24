@@ -23,17 +23,44 @@ public class BinaryArithmeticFunction implements Function {
 	private Class[] paramTypes = null;
 	
 	public static BinaryArithmeticFunction getInstance(String name,Class type1,Class type2) {
-		// TODO caching 
-		Class returnType = null;
-		if ((type1==Integer.TYPE || type1==Integer.class) && (type2==Integer.TYPE || type2==Integer.class))
-			returnType=Integer.class;
-		if (type1==Double.TYPE || type1==Double.class||type2==Double.TYPE || type2==Double.class) 
-			returnType=Double.class;	
-		if (returnType==null)
-			throw new IllegalArgumentException();
+		Class returnType = getReturnType(type1,type2);
 		return new BinaryArithmeticFunction(name,returnType,type1,type2);
-		
 	}
+	
+	private static Class getPrimitive(Class type) {
+		if (type.isPrimitive())
+			return type;
+		else if (type==Integer.class)
+			return Integer.TYPE;
+		else if (type==Character.class)
+			return Character.TYPE;
+		else if (type==Short.class)
+			return Short.TYPE;
+		else if (type==Long.class)
+			return Long.TYPE;
+		else if (type==Float.class)
+			return Float.TYPE;
+		else if (type==Double.class)
+			return Double.TYPE;
+		else if (type==Byte.class)
+			return Byte.TYPE;
+		else throw new IllegalArgumentException(""+type+" is not a numeric type");
+	}
+	
+	private static boolean isFloatingPoint(Class type) {
+		return type==Float.TYPE || type==Double.TYPE;
+	}
+	
+	private static Class getReturnType(Class t1,Class t2) {
+		t1 = getPrimitive(t1);
+		t2 = getPrimitive(t2);
+		if (isFloatingPoint(t1) || isFloatingPoint(t2))
+			return Double.class;
+		else if (t1==Long.TYPE || t2==Long.TYPE)
+			return Long.class;
+		else return Integer.class;
+	}
+	
 	
 	public BinaryArithmeticFunction() {
 		super();

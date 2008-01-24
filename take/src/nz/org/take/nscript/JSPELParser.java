@@ -25,14 +25,17 @@ import de.odysseus.el.tree.impl.ast.AstBinary;
 import de.odysseus.el.tree.impl.ast.AstDot;
 import de.odysseus.el.tree.impl.ast.AstEval;
 import de.odysseus.el.tree.impl.ast.AstIdentifier;
+import de.odysseus.el.tree.impl.ast.AstNested;
 import de.odysseus.el.tree.impl.ast.AstNode;
 import de.odysseus.el.tree.impl.ast.AstNumber;
 import de.odysseus.el.tree.impl.ast.AstString;
 import de.odysseus.el.tree.impl.ast.AstUnary;
 import de.odysseus.el.tree.impl.ast.AstBinary.Operator;
+import nz.org.take.BinaryArithmeticFunction;
 import nz.org.take.Comparison;
 import nz.org.take.ComplexTerm;
 import nz.org.take.Constant;
+import nz.org.take.Function;
 import nz.org.take.JFunction;
 import nz.org.take.JPredicate;
 import nz.org.take.Predicate;
@@ -91,6 +94,28 @@ public class JSPELParser {
 		// TODO handle other cases
 		throw new ScriptException ("Unsupported EL expression: " + s );
 	} 
+	private Function getFunction(Operator op, Class type1, Class type2,int line) throws ScriptException  {
+		
+		if (op == AstBinary.ADD && isNumeric(type1) &&  isNumeric(type2)) {
+			return BinaryArithmeticFunction.getInstance("+",type1,type2);
+		} 
+		else if (op == AstBinary.SUB && isNumeric(type1) &&  isNumeric(type2)) {
+			return BinaryArithmeticFunction.getInstance("-",type1,type2);
+		} 
+		else if (op == AstBinary.MUL && isNumeric(type1) &&  isNumeric(type2)) {
+			return BinaryArithmeticFunction.getInstance("*",type1,type2);
+		} 
+		else if (op == AstBinary.DIV && isNumeric(type1) &&  isNumeric(type2)) {
+			return BinaryArithmeticFunction.getInstance("/",type1,type2);
+		} 
+		else if (op == AstBinary.MOD && isNumeric(type1) &&  isNumeric(type2)) {
+			return BinaryArithmeticFunction.getInstance("%",type1,type2);
+		} 
+		else 
+			this.error(line,"Cannot build function ",op.toString()," with parameter types ",type1.toString()," ",type2.toString());
+		return null;
+	}
+
 	private Predicate getPredicate(Operator op, Class type1, Class type2,int line) throws ScriptException  {
 		
 		if (op == AstBinary.EQ && isNumeric(type1) &&  isNumeric(type2)) {
@@ -229,6 +254,23 @@ public class JSPELParser {
 				return t;	
 			else 
 				this.error(line,"Identifier ",identifier,"has not yet been declared - use var or ref to declare it");
+		}
+		
+		else if (n instanceof AstBinary) {
+			AstBinary binN = (AstBinary)n;
+			Operator op = binN.getOperator();
+			Term t1 = this.parseTerm(binN.getChild(0),line); // left
+			Term t2 = this.parseTerm(binN.getChild(1),line); // right
+			Function f = this.getFunction(op,t1.getType(),t2.getType(),line);
+			ComplexTerm ct = new ComplexTerm();
+			ct.setFunction(f);
+			ct.setTerms(new Term[]{t1,t2});
+			return ct;
+		}
+		
+		else if (n instanceof AstNested) {
+			AstNested nn = (AstNested)n;
+			return this.parseTerm(nn.getChild(0), line);
 		}
 		
 		throw new ScriptException("Cannot parse EL expression: " + n);
