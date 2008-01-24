@@ -64,10 +64,10 @@ public class Parser {
 	private Map<String,Constant> constants = new HashMap<String,Constant>();
 	private Map<String,AggregationFunction> aggregationFunctions = new HashMap<String,AggregationFunction>();
 	private Map<String,String> localAnnotations = new HashMap<String,String>();
-	private List<QuerySpec> querySpecs = new ArrayList<QuerySpec>();
-	
+	private List<QuerySpec> querySpecs = new ArrayList<QuerySpec>();	
 	private List<ScriptException> issues = null;
-	private boolean verificationMode = false;
+	private boolean verificationMode = false;	
+	private JSPELParser elParser = new JSPELParser(variables,constants);
 	
 	public List<ScriptException> check (Reader reader)  throws ScriptException {
 		verificationMode = true;
@@ -309,9 +309,10 @@ public class Parser {
 	}
 	
 	private Fact parseCondition (String s,int no, boolean isPrerequisite,boolean isNegated) throws ScriptException {
-		Fact fact = isPrerequisite?new Prerequisite():new Fact();
-		int sep = -1;
+		
 		if (CONDITION1.matcher(s).matches()) {
+			int sep = -1;
+			Fact fact = isPrerequisite?new Prerequisite():new Fact();
 			// type of the condition is predicate[terms]
 			sep=s.indexOf('[');
 			String p = s.substring(0,sep);
@@ -338,9 +339,11 @@ public class Parser {
 			if (!isPrerequisite) {
 				throw new ScriptException("Error in line " + no + " - the rule head must have the following form: predicate[term_1,..,term_n]");
 			}
-			// try to parse this condition as JSP-EL expression
+			else {
+				// parse with JUEL
+				return elParser.parseCondition(s,no);
+			}
 		}
-		return fact;
 	}
 	
 	private Term parseTerm(String s) throws ScriptException {
