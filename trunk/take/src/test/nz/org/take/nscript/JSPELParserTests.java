@@ -66,6 +66,72 @@ public class JSPELParserTests extends TestCase {
 		assertEquals(Double.class,t.getType());
 		assertEquals(new Double(-42e2),((Constant)t).getObject());
 	}
+	public void testComplexArithmeticTerm1() throws Exception {
+		Term t = new JSPELParser().parseTerm("4+2",42);
+		assertTrue(t instanceof ComplexTerm);
+		ComplexTerm ct = (ComplexTerm)t;
+		Function f = ct.getFunction();
+		BinaryArithmeticFunction bf = (BinaryArithmeticFunction)f;
+		assertEquals("+",bf.getName());
+		assertEquals(Long.class,bf.getReturnType());
+	}
+	
+	public void testComplexArithmeticTermPrecedence1 () throws Exception {
+		Term t = new JSPELParser().parseTerm("4*2+3",42);
+		assertTrue(t instanceof ComplexTerm);
+		ComplexTerm ct = (ComplexTerm)t;
+		Function f = ct.getFunction();
+		BinaryArithmeticFunction bf = (BinaryArithmeticFunction)f;
+		assertEquals("+",bf.getName());
+		assertEquals(Long.class,bf.getReturnType());
+		Term t1 = ct.getTerms()[0];
+		Term t2 = ct.getTerms()[1];
+		assertTrue(t1 instanceof ComplexTerm);
+		assertTrue(t2 instanceof Constant);
+	}
+	
+	public void testComplexArithmeticTermPrecedence2() throws Exception {
+		Term t = new JSPELParser().parseTerm("4+2*3",42);
+		assertTrue(t instanceof ComplexTerm);
+		ComplexTerm ct = (ComplexTerm)t;
+		Function f = ct.getFunction();
+		BinaryArithmeticFunction bf = (BinaryArithmeticFunction)f;
+		assertEquals("+",bf.getName());
+		assertEquals(Long.class,bf.getReturnType());
+		Term t1 = ct.getTerms()[0];
+		Term t2 = ct.getTerms()[1];
+		assertTrue(t1 instanceof Constant);
+		assertTrue(t2 instanceof ComplexTerm);
+	}
+	
+	public void testComplexArithmeticTermBrackets1() throws Exception {
+		Term t = new JSPELParser().parseTerm("(4+2)*3",42);
+		assertTrue(t instanceof ComplexTerm);
+		ComplexTerm ct = (ComplexTerm)t;
+		Function f = ct.getFunction();
+		BinaryArithmeticFunction bf = (BinaryArithmeticFunction)f;
+		assertEquals("*",bf.getName());
+		assertEquals(Long.class,bf.getReturnType());
+		Term t1 = ct.getTerms()[0];
+		Term t2 = ct.getTerms()[1];
+		assertTrue(t1 instanceof ComplexTerm);
+		assertTrue(t2 instanceof Constant);
+	}
+	
+	public void testComplexArithmeticTermBrackets2() throws Exception {
+		Term t = new JSPELParser().parseTerm("((4+2))*3",42);
+		assertTrue(t instanceof ComplexTerm);
+		ComplexTerm ct = (ComplexTerm)t;
+		Function f = ct.getFunction();
+		BinaryArithmeticFunction bf = (BinaryArithmeticFunction)f;
+		assertEquals("*",bf.getName());
+		assertEquals(Long.class,bf.getReturnType());
+		Term t1 = ct.getTerms()[0];
+		Term t2 = ct.getTerms()[1];
+		assertTrue(t1 instanceof ComplexTerm);
+		assertTrue(t2 instanceof Constant);
+	}
+	
 	public void testTermStringLiteral1() throws Exception {
 		Term t = new JSPELParser().parseTerm("'test'",42);
 		assertTrue(t instanceof Constant);
