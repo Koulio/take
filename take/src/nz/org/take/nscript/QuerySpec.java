@@ -14,22 +14,19 @@ package nz.org.take.nscript;
 import java.util.ArrayList;
 import java.util.List;
 
+import nz.org.take.AbstractAnnotatable;
+
 /**
  * Utility class representing query specifications during parsing.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class QuerySpec {
+public class QuerySpec extends AbstractAnnotatable {
 	private String predicate = null;
 	private List<Boolean> ioSpec = new ArrayList<Boolean>();
-	private boolean negated = false;
+	private int line = -1;
 
-	public boolean isNegated() {
-		return negated;
-	}
-	public void setNegated(boolean negated) {
-		this.negated = negated;
-	}
+
 	public void setIoSpec(List<Boolean> ioSpec) {
 		this.ioSpec = ioSpec;
 	}
@@ -44,5 +41,11 @@ public class QuerySpec {
 	}
 	public void addToIOSpec(boolean io) {
 		this.ioSpec.add(io);
+	}
+	public int getLine() {
+		return line;
+	}
+	public void setLine(int line) {
+		this.line = line;
 	}
 }

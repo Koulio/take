@@ -20,19 +20,27 @@ import java.io.LineNumberReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.Map.Entry;
 import java.util.regex.Pattern;
+import nz.org.take.AbstractPredicate;
 import nz.org.take.AggregationFunction;
 import nz.org.take.Annotatable;
+import nz.org.take.AnnotationKeys;
 import nz.org.take.Constant;
 import nz.org.take.DefaultKnowledgeBase;
 import nz.org.take.DerivationRule;
 import nz.org.take.Fact;
 import nz.org.take.KnowledgeBase;
+import nz.org.take.KnowledgeElement;
+import nz.org.take.Predicate;
 import nz.org.take.Prerequisite;
+import nz.org.take.Query;
 import nz.org.take.SimplePredicate;
 import nz.org.take.Term;
 import nz.org.take.Variable;
@@ -57,17 +65,20 @@ public class Parser {
 	public static final Pattern CONDITION1 = Pattern.compile(_NAME2+"\\[(.)*\\]");
 	public static final Pattern STRING_LITERAL = Pattern.compile("\'(.)*\'"); // TODO handle escaped quotes
 	
-	private ClassLoader classloader = Parser.class.getClassLoader(); 
-	
+	private ClassLoader classloader = Parser.class.getClassLoader(); 	
 	private KnowledgeBase kb = null;
 	private Map<String,Variable> variables = new HashMap<String,Variable>();
 	private Map<String,Constant> constants = new HashMap<String,Constant>();
 	private Map<String,AggregationFunction> aggregationFunctions = new HashMap<String,AggregationFunction>();
 	private Map<String,String> localAnnotations = new HashMap<String,String>();
 	private List<QuerySpec> querySpecs = new ArrayList<QuerySpec>();	
+	private Map<String,SimplePredicate> predicatesByName = new HashMap<String,SimplePredicate>();
+	private Map<SimplePredicate,SimplePredicate> predicates = new HashMap<SimplePredicate,SimplePredicate>(); // use map for simple lookup with get
 	private List<ScriptException> issues = null;
+	private Collection<String> ids = new HashSet<String>();
 	private boolean verificationMode = false;	
 	private JSPELParser elParser = new JSPELParser(variables,constants);
+	
 	
 	public List<ScriptException> check (Reader reader)  throws ScriptException {
 		verificationMode = true;
@@ -109,17 +120,49 @@ public class Parser {
 					System.out.println("parse line " + no + " as rule: " + line);
 					parseRule(line,no);
 				}
+				else if (FACT.matcher(line).matches()) {
+					System.out.println("parse line " + no + " as fact: " + line);
+					parseFact(line,no);
+				}
 				else {
 					error(no,"Unable to parse this line (unknown syntax type): " + line);
 				}
 				
 			}
+			
+			// build queries
+			buildQueries();
+			
 		} catch (IOException e) {
 			throw new ScriptException(e);
 		}	
 		return kb;
 	}
 	
+	private void buildQueries() throws ScriptException {
+		for (QuerySpec spec:this.querySpecs) {
+			SimplePredicate p = this.predicatesByName.get(spec.getPredicate());
+			if (p==null) {
+				this.error(spec.getLine(),"There is no rule or fact supporting the query predicate ",spec.getPredicate()," in the script");
+			}
+			else if (p.isNegated()) {
+				this.error(spec.getLine(),"There is no rule or fact supporting the unnegated query predicate ",spec.getPredicate()," in the script");
+			}
+			else {
+				Query query = new Query();
+				query.setPredicate(p);
+				boolean[] io = new boolean[spec.getIoSpec().size()];
+				for (int i=0;i<io.length;i++) {
+					io[i]=spec.getIoSpec().get(i);
+				}
+				query.setInputParams(io);
+				query.addAnnotations(spec.getAnnotations());
+				takeOverAnnotations(query);
+				this.kb.add(query);
+			}	
+		}
+	}
+
 	private void error(int no,String line,Pattern pattern,String... description) throws ScriptException{
 		StringBuffer buf = new StringBuffer();
 		buf.append("Parser exception at line ");
@@ -128,6 +171,15 @@ public class Parser {
 		buf.append(line);
 		buf.append(" does not match pattern ");
 		buf.append(pattern.pattern());
+		buf.append(' ');
+		for (String t:description)
+			buf.append(t);
+		error(no,buf.toString());
+	}
+	private void error(int no,String... description) throws ScriptException{
+		StringBuffer buf = new StringBuffer();
+		buf.append("Parser exception at line ");
+		buf.append(no);
 		buf.append(' ');
 		for (String t:description)
 			buf.append(t);
@@ -190,16 +242,19 @@ public class Parser {
 		line = line.substring(6).trim();
 		
 		QuerySpec query = new QuerySpec();
+		query.setLine(no);
+		this.consumeAnnotations(query);
 		
-		boolean isNegated = false;
+		// TODO should we support explicit negation here?
 		if (line.startsWith("not ")) {
-			query.setNegated(true);
-			line = line.substring(4).trim();
+			this.error(no,"Negation is not supported here");
+			//query.setNegated(true);
+			//line = line.substring(4).trim();
 		}
 
 		int sep = line.indexOf('[');
 		String name = line.substring(0,sep).trim();
-		String sign = line.substring(sep,line.length()-1).trim();
+		String sign = line.substring(sep+1,line.length()-1).trim();
 		
 		query.setPredicate(name);
 		
@@ -224,7 +279,6 @@ public class Parser {
 		String unparsedHead = null;
 		BitSet neg = new BitSet();
 		
-		boolean literalMode = false;
 		StringBuffer b = new StringBuffer();
 		
 		List<String> tokens = Tokenizer.tokenize(line," and "," then ");
@@ -239,6 +293,7 @@ public class Parser {
 		}
 		
 		DerivationRule rule = new DerivationRule();
+		this.checkId(label,no);
 		rule.setId(label);
 		Fact head = this.parseCondition(unparsedHead,no,false,false);
 		rule.setHead(head);
@@ -249,17 +304,18 @@ public class Parser {
 		this.consumeAnnotations(rule);
 		this.kb.add(rule);
 		
-		
-		// tmp test code
-		for (int i=0;i<unparsedConditions.size();i++) {
-		System.out.print("- ");
-			if (neg.get(i)) System.out.print("+ ");
-			else System.out.print("- ");
-				
-			System.out.println(unparsedConditions.get(i));
-		}
-		System.out.print("->");
-		System.out.println(unparsedHead);
+	}
+	
+	
+	private void parseFact(String line, int no) throws ScriptException {
+
+		int sep = line.indexOf(":"); //take off label
+		String label = line.substring(0,sep);
+		line = line.substring(sep+1).trim();		
+		Fact fact = this.parseCondition(line,no,false,false);
+		this.checkId(label,no);
+		fact.setId(label);
+		this.kb.add(fact);
 
 	}
 	
@@ -323,7 +379,7 @@ public class Parser {
 			List<String> unparsedTerms = Tokenizer.tokenize(t,",");
 			List<Term> terms = new ArrayList<Term>();
 			for (String ut:unparsedTerms) {
-				terms.add(parseTerm(ut));
+				terms.add(parseTerm(ut,no));
 			}
 			Class[] types = new Class[terms.size()];
 			for (int i=0;i<terms.size();i++) {
@@ -331,6 +387,7 @@ public class Parser {
 			}
 			predicate.setSlotTypes(types);
 			predicate.setNegated(isNegated);
+			predicate = registerPredicate(predicate,no);
 			fact.setPredicate(predicate);
 			fact.setTerms(terms.toArray(new Term[terms.size()]));
 			return fact;
@@ -346,7 +403,31 @@ public class Parser {
 		}
 	}
 	
-	private Term parseTerm(String s) throws ScriptException {
+	private SimplePredicate registerPredicate(SimplePredicate predicate,int no) throws ScriptException {
+		// make sure that there is only one predicate - this is important to keep the annotations consistent
+		SimplePredicate p = this.predicates.get(predicate);
+		if (p!=null)
+			predicate = p; 
+		else 
+			this.predicates.put(predicate,predicate);
+		
+		//register predicates in a map that can later be used to build queries
+		String name = predicate.getName();
+		SimplePredicate other = this.predicatesByName.get(name);
+		if (other==null) {
+			this.predicatesByName.put(name,predicate);
+		}
+		else if (other!=predicate){
+			this.error(no,"Predicate ",name," has been used before with different slot types");
+		}
+		return predicate;
+	}
+
+	private Term parseTerm(String s,int line) throws ScriptException {
+		
+		return this.elParser.parseTerm(s, line);
+		
+		/*
 		// try to parse literal
 		Object o = null;
 		try {o = Integer.valueOf(s);}
@@ -357,7 +438,9 @@ public class Parser {
 				catch (NumberFormatException x2){};
 			}
 		}
-		if (o==null && STRING_LITERAL.matcher(s).matches()) {o = s.substring(1,s.length()-1);}
+		if (o==null && STRING_LITERAL.matcher(s).matches()) {
+			o = s.substring(1,s.length()-1);
+		}
 		
 		if (o!=null) {
 			Constant c = new Constant();
@@ -377,6 +460,7 @@ public class Parser {
 		}
 		// FIXME parse EL if null
 		return null;
+		*/
 	}
 
 	
@@ -384,5 +468,40 @@ public class Parser {
 	private void consumeAnnotations(Annotatable a) {
 		a.addAnnotations(this.localAnnotations);
 		this.localAnnotations.clear();
+	}
+	
+	private void checkId(String id,int line) throws ScriptException {
+
+		if (id==null || id.trim().length()==0)
+			this.error(line,"element has no proper id");
+		else if (ids.contains(id)) 
+			this.error(line,"duplicated id ",id);
+		else 
+			ids.add(id);
+	}
+	
+	// take over query annotations for the query predicate
+	private void takeOverAnnotations(Query q) {
+		Predicate p = q.getPredicate();
+		for (Entry<String,String> e:q.getAnnotations().entrySet())  {
+			String key = e.getKey();
+			p.addAnnotation(key,e.getValue());	
+			if (AnnotationKeys.TAKE_GENERATE_SLOTS.equals(key)) {
+				// set slot names from annotation
+				List<String> slots = new ArrayList<String>();
+				for (StringTokenizer tok = new StringTokenizer(e.getValue(),",");tok.hasMoreTokens();) {
+					slots.add(tok.nextToken().trim());
+				}
+				if (slots.size()!=p.getSlotTypes().length) {
+					// TODO log warning
+				}
+				else {
+					String[] arr = slots.toArray(new String[slots.size()]);
+					if (p instanceof AbstractPredicate) 
+						((AbstractPredicate)p).setSlotNames(arr);
+					//else  TODO log warning
+				}
+			}
+		}
 	}
 }

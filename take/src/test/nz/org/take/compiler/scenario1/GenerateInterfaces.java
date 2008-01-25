@@ -14,8 +14,8 @@ package test.nz.org.take.compiler.scenario1;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
-import nz.org.take.script.ScriptKnowledgeSource;
-import nz.org.take.script.ScriptException;
+import nz.org.take.nscript.ScriptKnowledgeSource;
+import nz.org.take.nscript.ScriptException;
 import org.apache.log4j.BasicConfigurator;
 
 
