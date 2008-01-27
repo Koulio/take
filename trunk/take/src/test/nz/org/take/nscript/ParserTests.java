@@ -11,9 +11,11 @@
 package test.nz.org.take.nscript;
 
 import java.io.StringReader;
+import java.util.Arrays;
 import java.util.List;
 import nz.org.take.Constant;
 import nz.org.take.DerivationRule;
+import nz.org.take.ExternalFactStore;
 import nz.org.take.Fact;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.Predicate;
@@ -94,6 +96,16 @@ public class ParserTests extends TestCase {
 		assertTrue(body.get(0).getPredicate().isNegated());
 		assertFalse(body.get(1).getPredicate().isNegated());
 		assertTrue(body.get(2).getPredicate().isNegated());
+	}
+	
+	public void test4() throws Exception {
+		String script =  "// test3\nexternal factstore1: cond[java.util.Date,long]";
+		KnowledgeBase kb = new Parser().parse(new StringReader(script));
+		assertEquals(1,kb.getElements().size());
+		ExternalFactStore x = (ExternalFactStore)kb.getElement("factstore1");
+		assertEquals("factstore1",x.getId());
+		assertEquals("cond",x.getPredicate().getName());
+		assertTrue(Arrays.equals(new Class[]{java.util.Date.class,long.class},x.getPredicate().getSlotTypes()));
 	}
 
 }

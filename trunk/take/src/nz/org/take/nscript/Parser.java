@@ -44,6 +44,7 @@ import nz.org.take.Comparison;
 import nz.org.take.Constant;
 import nz.org.take.DefaultKnowledgeBase;
 import nz.org.take.DerivationRule;
+import nz.org.take.ExternalFactStore;
 import nz.org.take.Fact;
 import nz.org.take.JPredicate;
 import nz.org.take.KnowledgeBase;
@@ -66,6 +67,7 @@ public class Parser {
 	public static final Pattern COMMENT = Pattern.compile("//(.)*");
 	public static final Pattern GLOBAL_ANNOTATION = Pattern.compile("@@(.)+=(.)+");
 	public static final Pattern LOCAL_ANNOTATION = Pattern.compile("@[^@](.)*=(.)+");	
+	public static final Pattern EXTERNAL = Pattern.compile("external[\\s]+[a-zA-Z_][a-zA-Z0-9_]*:[\\s]+[a-zA-Z_][a-zA-Z0-9_]*\\[(.)*\\]");	
 	//public static final Pattern VAR_DECLARATION = Pattern.compile("var( )+([a-zA-Z0-9_.]+)( )+([a-zA-Z0-9_,]+)");
 	//public static final Pattern REF_DECLARATION = Pattern.compile("ref( )+([a-zA-Z0-9_.]+)( )+([a-zA-Z0-9_,]+)");
 	public static final Pattern QUERY = Pattern.compile("(not[\\s]+)?"+_NAME2+"[\\s]*\\[[\\s]*(in|out)([\\s]*,[\\s]*(in|out))*[\\s]*\\]");
@@ -111,6 +113,7 @@ public class Parser {
 					// comment, don't parse
 				}
 				else if (line.startsWith("@@")) {
+					System.out.println("parse line " + no + " as local annotation: " + line);
 					parseGlobalAnnotation(line,no);
 				}
 				else if (line.startsWith("@")) {
@@ -129,6 +132,10 @@ public class Parser {
 					System.out.println("parse line " + no + " as query: " + line);
 					parseQuery(line,no);
 				}
+				else if (line.startsWith("external ")) {
+					System.out.println("parse line " + no + " as external fact store: " + line);
+					parseExternalFactStore(line,no);
+				}
 				else if (RULE.matcher(line).matches()) {
 					System.out.println("parse line " + no + " as rule: " + line);
 					parseRule(line,no);
@@ -137,6 +144,7 @@ public class Parser {
 					System.out.println("parse line " + no + " as fact: " + line);
 					parseFact(line,no);
 				}
+
 				else {
 					error(no,"Unable to parse this line (unknown syntax type): " + line);
 				}
@@ -351,6 +359,44 @@ public class Parser {
 		String key=line.substring(0,sep).trim();
 		String value=line.substring(sep+1).trim();
 		this.localAnnotations.put(key, value);
+	}
+	
+	private void parseExternalFactStore(String line, int no) throws ScriptException {
+		check(no,line,EXTERNAL,"this is not a valid external fact store");
+		line = line.substring(9).trim(); // take off external
+		int sep = line.indexOf(":"); //take off label
+		String id = line.substring(0,sep);
+		line = line.substring(sep+1).trim();
+		
+		sep = line.indexOf('[');
+		String name = line.substring(0,sep).trim();
+		String typeNames = line.substring(sep+1,line.length()-1).trim();
+		
+		StringTokenizer tokenizer = new StringTokenizer(typeNames,",");
+		List<Class> types = new ArrayList<Class>();
+		while (tokenizer.hasMoreTokens()) {
+			String typeName = tokenizer.nextToken().trim();
+			check(no,typeName,TYPE_NAME,"this is not a valid type name");
+			Class clazz = this.classForName(typeName,no);
+			types.add(clazz);
+		}
+		SimplePredicate predicate = new SimplePredicate();
+		predicate.setName(name);
+		predicate.setSlotTypes(types.toArray(new Class[types.size()]));
+		String pid = this.getId(predicate);
+		Predicate existingPredicate = predicatesByName.get(pid);
+		if (existingPredicate==null) {
+			predicatesByName.put(pid,predicate);
+		}
+		else {
+			predicate = (SimplePredicate)existingPredicate;
+		}
+		ExternalFactStore exFacts = new ExternalFactStore();
+		exFacts.setId(id);
+		exFacts.setPredicate(predicate);
+		this.consumeAnnotations(exFacts);
+		
+		this.kb.add(exFacts);
 	}
 
 	private Class classForName(String type,int line) throws ScriptException {
