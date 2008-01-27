@@ -231,8 +231,9 @@ public class TakeCompileWizardPanel extends WizardPage
 				try {
 					
 					IFolder chooseFolder = chooseFolder(project,"Title","message",project.getLocation());
-					System.out.println(chooseFolder.getLocation().toString());
-					
+					if(chooseFolder == null)return;
+					sourceOutputLocation = chooseFolder.getProjectRelativePath().toString();
+					lTB.setText(sourceOutputLocation);
 //					if (dialog.open() == IDialogConstants.CANCEL_ID)
 //			            return;
 //ElementTreeSelectionDialog
