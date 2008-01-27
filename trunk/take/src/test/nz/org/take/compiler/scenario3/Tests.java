@@ -12,10 +12,10 @@ package test.nz.org.take.compiler.scenario3;
 
 import java.util.*;
 import nz.org.take.deployment.KnowledgeBaseManager;
+import nz.org.take.nscript.ScriptKnowledgeSource;
 import nz.org.take.rt.DerivationController;
 import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
-import nz.org.take.script.ScriptKnowledgeSource;
 import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.scenario3.generated.*;
 import junit.framework.TestCase;
@@ -40,9 +40,7 @@ public class Tests extends TakeTestCase
 
 	/**
 	 * Perform pre-test initialization
-	 *
 	 * @throws Exception
-	 *
 	 * @see TestCase#setUp()
 	 */
 	protected void setUp() throws Exception
@@ -57,7 +55,6 @@ public class Tests extends TakeTestCase
 
 	/**
 	 * Perform post-test clean up
-	 *
 	 * @throws Exception
 	 *
 	 * @see TestCase#tearDown()

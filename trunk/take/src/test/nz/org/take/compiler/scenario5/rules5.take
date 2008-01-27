@@ -9,4 +9,4 @@ ref test.nz.org.take.compiler.scenario5.CustomerCategory goldCustomer
 @take.compilerhint.method=getDiscount
 query discount[in,out]
 // rules
-rule1: if equals[category(customer),goldCustomer] then discount[customer,goldCustomerDiscount] 
+rule1: if customer.category==goldCustomer then discount[customer,goldCustomerDiscount] 

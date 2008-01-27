@@ -11,5 +11,5 @@ query isBrother[in,in]
 @take.compilerhint.method=isBrother2
 query isBrother2[in,in]
 // rules
-rule1: if sameAs[getFather(person1),getFather(person2)] then isBrother[person1,person2] 
-rule2: if equals[getFather(person1),getFather(person2)] then isBrother2[person1,person2] 
+rule1: if sameAs[person1.father,person2.father] then isBrother[person1,person2] 
+rule2: if person1.father==person2.father then isBrother2[person1,person2] 

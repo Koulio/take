@@ -15,9 +15,14 @@ package nz.org.take.nscript;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
@@ -28,20 +33,26 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
+
+import org.apache.log4j.Logger;
+
 import nz.org.take.AbstractPredicate;
 import nz.org.take.AggregationFunction;
 import nz.org.take.Annotatable;
 import nz.org.take.AnnotationKeys;
+import nz.org.take.Comparison;
 import nz.org.take.Constant;
 import nz.org.take.DefaultKnowledgeBase;
 import nz.org.take.DerivationRule;
 import nz.org.take.Fact;
+import nz.org.take.JPredicate;
 import nz.org.take.KnowledgeBase;
-import nz.org.take.KnowledgeElement;
 import nz.org.take.Predicate;
 import nz.org.take.Prerequisite;
+import nz.org.take.PropertyPredicate;
 import nz.org.take.Query;
 import nz.org.take.SimplePredicate;
+import nz.org.take.TakeException;
 import nz.org.take.Term;
 import nz.org.take.Variable;
 
@@ -72,12 +83,14 @@ public class Parser {
 	private Map<String,AggregationFunction> aggregationFunctions = new HashMap<String,AggregationFunction>();
 	private Map<String,String> localAnnotations = new HashMap<String,String>();
 	private List<QuerySpec> querySpecs = new ArrayList<QuerySpec>();	
-	private Map<String,SimplePredicate> predicatesByName = new HashMap<String,SimplePredicate>();
+	private Map<String,Predicate> predicatesByName = new HashMap<String,Predicate>();
 	private Map<SimplePredicate,SimplePredicate> predicates = new HashMap<SimplePredicate,SimplePredicate>(); // use map for simple lookup with get
 	private List<ScriptException> issues = null;
 	private Collection<String> ids = new HashSet<String>();
 	private boolean verificationMode = false;	
 	private JSPELParser elParser = new JSPELParser(variables,constants);
+	
+	public Logger LOGGER = Logger.getLogger(Parser.class);
 	
 	
 	public List<ScriptException> check (Reader reader)  throws ScriptException {
@@ -141,7 +154,8 @@ public class Parser {
 	
 	private void buildQueries() throws ScriptException {
 		for (QuerySpec spec:this.querySpecs) {
-			SimplePredicate p = this.predicatesByName.get(spec.getPredicate());
+			String id = this.getId(spec);
+			Predicate p = this.predicatesByName.get(id);
 			if (p==null) {
 				this.error(spec.getLine(),"There is no rule or fact supporting the query predicate ",spec.getPredicate()," in the script");
 			}
@@ -372,8 +386,7 @@ public class Parser {
 			// type of the condition is predicate[terms]
 			sep=s.indexOf('[');
 			String p = s.substring(0,sep);
-			SimplePredicate predicate = new SimplePredicate(); 
-			predicate.setName(p);
+
 			
 			String t = s.substring(sep+1,s.length()-1);
 			List<String> unparsedTerms = Tokenizer.tokenize(t,",");
@@ -385,9 +398,7 @@ public class Parser {
 			for (int i=0;i<terms.size();i++) {
 				types[i]=terms.get(i).getType();
 			}
-			predicate.setSlotTypes(types);
-			predicate.setNegated(isNegated);
-			predicate = registerPredicate(predicate,no);
+			Predicate predicate = this.buildPredicate(p, isNegated, terms.toArray(new Term[terms.size()]),no);
 			fact.setPredicate(predicate);
 			fact.setTerms(terms.toArray(new Term[terms.size()]));
 			return fact;
@@ -402,65 +413,9 @@ public class Parser {
 			}
 		}
 	}
-	
-	private SimplePredicate registerPredicate(SimplePredicate predicate,int no) throws ScriptException {
-		// make sure that there is only one predicate - this is important to keep the annotations consistent
-		SimplePredicate p = this.predicates.get(predicate);
-		if (p!=null)
-			predicate = p; 
-		else 
-			this.predicates.put(predicate,predicate);
-		
-		//register predicates in a map that can later be used to build queries
-		String name = predicate.getName();
-		SimplePredicate other = this.predicatesByName.get(name);
-		if (other==null) {
-			this.predicatesByName.put(name,predicate);
-		}
-		else if (other!=predicate){
-			this.error(no,"Predicate ",name," has been used before with different slot types");
-		}
-		return predicate;
-	}
 
 	private Term parseTerm(String s,int line) throws ScriptException {
-		
 		return this.elParser.parseTerm(s, line);
-		
-		/*
-		// try to parse literal
-		Object o = null;
-		try {o = Integer.valueOf(s);}
-		catch (NumberFormatException x){
-			try {o = Float.valueOf(s);}
-			catch (NumberFormatException x1){
-				try {o = Double.valueOf(s);}
-				catch (NumberFormatException x2){};
-			}
-		}
-		if (o==null && STRING_LITERAL.matcher(s).matches()) {
-			o = s.substring(1,s.length()-1);
-		}
-		
-		if (o!=null) {
-			Constant c = new Constant();
-			c.setObject(o);
-			c.setType(o.getClass());
-			return c;
-		}
-		// try to find name
-		if (NAME.matcher(s).matches()) {
-			Term t = null;
-			t = constants.get(s);
-			if (t!=null)
-				return t;
-			t = this.variables.get(s);
-			if (t!=null)
-				return t;
-		}
-		// FIXME parse EL if null
-		return null;
-		*/
 	}
 
 	
@@ -504,4 +459,123 @@ public class Parser {
 			}
 		}
 	}
+	
+	private nz.org.take.Predicate buildPredicate(String name,boolean negated, Term[] terms,int line) throws ScriptException {
+		Predicate predicate = null;
+		
+		Method m = getMethod(name,terms);
+		PropertyDescriptor property = null;
+		if (m==null)
+			property = getProperty(name, terms[0].getType());
+		
+		if (m!=null) {
+			debug("Interpreting predicate symbol ",name," as Java method ",m," in line ",line);
+			JPredicate p = new JPredicate();
+			Class[] paramTypes = getParamTypes( terms);
+			p.setMethod(m);
+			p.setNegated(negated);
+			predicate=p;			
+		}
+		else if (property!=null) {
+			debug("Interpreting predicate symbol ",name," as bean property"," in line ",line);
+			PropertyPredicate p = new PropertyPredicate();
+			p.setProperty(property);
+			p.setOwnerType(terms[0].getType());
+			p.setNegated(negated);
+			// todo remove this line that just does lazy initialization
+			predicate=p;			
+		}
+		else {
+			debug("Interpreting predicate symbol ",name," as simple predicate"," in line ",line);
+			SimplePredicate p = new SimplePredicate();
+			p.setName(name);
+			p.setNegated(negated);
+			Class[] types = new Class[terms.length];
+			for (int i=0;i<terms.length;i++) { 
+				types[i] = terms[i].getType();			
+			}
+			p.setSlotTypes(types);
+			predicate=p;
+		}
+		String id = this.getId(predicate);
+		Predicate existingPredicate = predicatesByName.get(id);
+		if (existingPredicate==null) {
+			predicatesByName.put(this.getId(predicate),predicate);
+			return predicate;
+		}
+		else
+			return existingPredicate;
+	}
+	
+	private Class[] getParamTypes(nz.org.take.Term[] terms) {
+		Class[] paramTypes = new Class[terms.length-1];
+		for (int i=1;i<terms.length;i++) {
+			paramTypes[i-1]=terms[i].getType();
+		}
+		return paramTypes;
+	}
+	
+	private Method getMethod(String name,nz.org.take.Term[] terms) throws ScriptException  {		
+		Class clazz = terms[0].getType();
+		Class[] paramTypes = new Class[terms.length-1];
+		Method m = null;
+		for (int i=1;i<terms.length;i++) {
+			paramTypes[i-1]=terms[i].getType();
+		}
+		try {
+			m = clazz.getMethod(name,paramTypes);
+		}
+		catch (Exception x) {}
+		if (m==null) {
+			// start investigating supertypes
+			Method[] methods = clazz.getMethods();
+			for (Method m1:methods) {
+				if (m1.getReturnType()==Boolean.TYPE && Modifier.isPublic(m1.getModifiers())) {
+					if (m1.getName().equals(name) && m1.getParameterTypes().length==paramTypes.length) {
+						// check types
+						boolean ok = true;
+						for (int i=0;i<paramTypes.length;i++) {
+							ok = ok && m1.getParameterTypes()[i].isAssignableFrom(paramTypes[i]);
+						}
+						if (ok){
+							m = m1;
+							break;
+						}
+					}
+				}
+			}
+		}
+		return m;
+		
+	}
+	
+	private PropertyDescriptor getProperty(String name,Class clazz) throws ScriptException  {
+		try {
+			BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
+			PropertyDescriptor[] properties = beanInfo.getPropertyDescriptors();
+			for (PropertyDescriptor property:properties) {
+				if (name.equals(property.getName()) && property.getReadMethod()!=null) {
+					return property;
+				}
+			}
+		}
+		catch (Exception x) {}
+		return null;
+	}
+	private String getId(Predicate p) {
+		return p.getName()+'_'+p.getSlotTypes().length+(p.isNegated()?"-":"+");
+	}
+	private String getId(QuerySpec q) {
+		return q.getPredicate()+'_'+q.getIoSpec().size()+"+";
+	}
+	private void debug(Object ...strings) {
+		if (LOGGER.isDebugEnabled()) {
+			StringBuffer b = new StringBuffer();
+			for (Object s:strings)
+				b.append(s);
+			LOGGER.debug(b);
+		}
+		
+	}
+	
 }
