@@ -9,5 +9,5 @@ var test.nz.org.take.compiler.scenario10.Bird bird
 query canFly[in]
 // rules
 rule1: if not isFlightless[bird] then canFly[bird]
-rule2: if equals[bird.kind,"kiwi"] then isFlightless[bird]
-rule3: if equals[bird.kind,"ostrich"] then isFlightless[bird]
+rule2: if bird.kind=='kiwi' then isFlightless[bird]
+rule3: if bird.kind=='ostrich' then isFlightless[bird]
