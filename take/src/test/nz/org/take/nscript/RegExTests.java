@@ -126,4 +126,22 @@ public class RegExTests extends TestCase {
 	public void testCondition1() throws Exception {
 		shouldMatch(Parser.CONDITION1,"cond2[42,bbb]");
 	}
+	public void testExternalFactStore1() throws Exception {
+		shouldMatch(Parser.EXTERNAL,"external factstore1: cond[java.util.Date,long]");
+	}
+	public void testExternalFactStore2() throws Exception {
+		shouldNotMatch(Parser.EXTERNAL,"externa factstore1: cond[java.util.Date,long]");
+	}
+	public void testExternalFactStore3() throws Exception {
+		shouldMatch(Parser.EXTERNAL,"external factstore_1: cond[java.util.Date]");
+	}
+	public void testExternalFactStore4() throws Exception {
+		shouldMatch(Parser.EXTERNAL,"external factstore_1: cond[int]");
+	}
+	public void testExternalFactStore5() throws Exception {
+		shouldNotMatch(Parser.EXTERNAL,"external factstore_1:cond[int]");
+	}
+	public void testExternalFactStore6() throws Exception {
+		shouldNotMatch(Parser.EXTERNAL,"external factstore_1 cond[int]");
+	}
 }

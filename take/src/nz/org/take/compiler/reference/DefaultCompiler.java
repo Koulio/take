@@ -521,7 +521,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 					counter = counter + 1;
 					map.put(t, property);
 					this.printOneLineComment(out,	"Property generated for term  \"", t,"\"");
-					out.print(t.getType().getName());
+					out.print(this.getTypeName(t.getType()));
 					out.print(" ");
 					out.print(property);
 					out.println(";");
@@ -1235,7 +1235,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 					
 					Class termType = t.getType();
 					Class slotType = previousFact.getPredicate().getSlotTypes()[i];
-					String cast = termType.equals(slotType)?null:termType.getName();
+					String cast = termType.equals(slotType)?null:this.getTypeName(termType);
 					String ref = refs.get(t);
 					if (t instanceof Variable) {
 						Variable vt = (Variable) t;						
