@@ -12,7 +12,6 @@ package test.nz.org.take.compiler.scenario5;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import junit.framework.TestCase;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.ResultSet;
