@@ -17,8 +17,8 @@ import java.util.List;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.KnowledgeSource;
 import nz.org.take.TakeException;
-import nz.org.take.script.ScriptException;
-import nz.org.take.script.ScriptKnowledgeSource;
+import nz.org.take.nscript.ScriptException;
+import nz.org.take.nscript.ScriptKnowledgeSource;
 
 /**
  * Script to generate a memory KB.

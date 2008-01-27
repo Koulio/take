@@ -38,11 +38,11 @@ public class ParserTests extends TestCase {
 		assertNotNull(r);
 		Fact head = r.getHead();
 		Predicate p = head.getPredicate();
-		assertTrue(java.util.Arrays.equals(p.getSlotTypes(),new Class[]{Integer.class,String.class}));
+		assertTrue(java.util.Arrays.equals(p.getSlotTypes(),new Class[]{Long.class,String.class}));
 		assertEquals("cond2",p.getName());
 		Term t = head.getTerms()[0];
 		assertTrue(t instanceof Constant);
-		assertEquals(Integer.valueOf(42),((Constant)t).getObject());
+		assertEquals(Long.valueOf(42),((Constant)t).getObject());
 		t = head.getTerms()[1];
 		assertTrue(t instanceof Constant);
 		assertEquals("bbb",((Constant)t).getObject());
@@ -51,7 +51,7 @@ public class ParserTests extends TestCase {
 		Prerequisite prereq = body.get(0);
 		p = prereq.getPredicate();
 		assertEquals("cond1",p.getName());
-		assertTrue(java.util.Arrays.equals(p.getSlotTypes(),new Class[]{String.class,Integer.class,Float.class}));
+		assertTrue(java.util.Arrays.equals(p.getSlotTypes(),new Class[]{String.class,Long.class,Double.class}));
 	}
 	
 	public void test2() throws Exception {

@@ -16,7 +16,7 @@ import java.util.Map;
 import junit.framework.TestCase;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.ResultSet;
-import nz.org.take.script.ScriptKnowledgeSource;
+import nz.org.take.nscript.ScriptKnowledgeSource;
 import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.scenario5.generated.KB;
 import test.nz.org.take.compiler.scenario5.generated.discount;
