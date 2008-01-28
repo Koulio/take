@@ -21,6 +21,8 @@ import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.SubMenuManager;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.AnnotationRulerColumn;
@@ -84,18 +86,18 @@ public class TakeEditor extends TextEditor{
 			@Override
 			public void elementContentAboutToBeReplaced(Object element) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void elementContentReplaced(Object element) {
-						
+
 			}
 
 			@Override
 			public void elementDeleted(Object element) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
@@ -104,61 +106,72 @@ public class TakeEditor extends TextEditor{
 				{
 					verifyRegions();
 				}
-				
+
 			}
 
 			@Override
 			public void elementMoved(Object originalElement, Object movedElement) {
 				// TODO Auto-generated method stub
-				
+
 			}});
 
 	}
 
 	private LinkedList<Annotation> anno = new LinkedList<Annotation>();
-	
+
 	private void verifyRegions()
 	{
 		try {
-		Parser p = new Parser();
-		InputStream script;
+			IAnnotationModel annotationModel = getDocumentProvider().getAnnotationModel(getEditorInput());
+			for(Annotation a : anno)
+			{
+				annotationModel.removeAnnotation(a);
 
+			}
+			anno.clear();
+
+			Parser p = new Parser();
+			InputStream script;
+			System.out.println("Asf");
 			script = ((FileEditorInput)this.getEditorInput()).getFile().getContents();
-		
-		List<ScriptException> check = p.check(new InputStreamReader(script));
-		
-		for(ScriptException se : check)
-		{
-			System.out.println(se.getLine());
-		}
-//		System.out.println("LOL");
-//		IAnnotationModel annotationModel = getDocumentProvider().getAnnotationModel(getEditorInput());
-//		Annotation annotation = new Annotation("org.eclipse.ui.workbench.texteditor.error",false,"");
-//		anno.add(annotation);
-//		annotationModel.addAnnotation(annotation, new Position(region.getOffset(),region.getLength()));
-//		
-//		
-//		
-//		
-//		for(Annotation a : anno)
-//		{
-//			annotationModel.removeAnnotation(a);
-//			
-//		}
-//		anno.clear();
-//		
-//		Annotation annotation = new Annotation("org.eclipse.ui.workbench.texteditor.error",false,"");
-//		anno.add(annotation);
-//		annotationModel.addAnnotation(annotation, new Position(ty.getOffset(),ty.getLength()));
-//		
+
+			//p.parse(new InputStreamReader(script));
+			List<ScriptException> check = p.check(new InputStreamReader(script));
+
+			for(ScriptException se : check)
+			{
+
+				Annotation annotation = new Annotation("org.eclipse.ui.workbench.texteditor.error",false,"");
+				annotation.setText(se.getMessage());
+				anno.add(annotation);
+				IRegion lineInformation = this.getSourceViewer().getDocument().getLineInformation(se.getLine()-1);
+				annotationModel.addAnnotation(annotation, new Position(lineInformation.getOffset(),lineInformation.getLength()));
+				
+			}
+//			System.out.println("LOL");
+//			IAnnotationModel annotationModel = getDocumentProvider().getAnnotationModel(getEditorInput());
+
+
+
+
+
+
+
+//			Annotation annotation = new Annotation("org.eclipse.ui.workbench.texteditor.error",false,"");
+//			anno.add(annotation);
+//			annotationModel.addAnnotation(annotation, new Position(ty.getOffset(),ty.getLength()));
+
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ScriptException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
+
 	}
 
 
@@ -201,27 +214,27 @@ public class TakeEditor extends TextEditor{
 	protected void editorContextMenuAboutToShow(IMenuManager menu) {
 		// TODO Auto-generated method stub
 		super.editorContextMenuAboutToShow(menu);
-	
+
 		this.addGroup(menu, ITextEditorActionConstants.GROUP_EDIT, "Take");
 //		this.addAction(menu, "Take", TakeCompileToClasses.class.toString());
 //		this.addAction(menu, "Take", TakeCompileToInterfaces.class.toString());
 //		this.addAction(menu, "Take", TakeRunVerifiers.class.toString());
-		
-		
-		 MenuManager compileMenu = new MenuManager("Take Compile");
-		 compileMenu.add(new TakeCompileToClasses());
-		 compileMenu.add(new TakeCompileToInterfaces());
-		 menu.appendToGroup("Take", compileMenu);
-		
-		 
-		 MenuManager verifyMenu = new MenuManager("Take Verify");
-		 verifyMenu.add(new TakeRunVerifiers());
-		 menu.appendToGroup("Take", verifyMenu);
-		 
-		 MenuManager takeSource = new MenuManager("Take Source");
-		 takeSource.add(new TakeCompilerAnnotations());
-		 menu.appendToGroup("Take", takeSource);
-		
+
+
+		MenuManager compileMenu = new MenuManager("Take Compile");
+		compileMenu.add(new TakeCompileToClasses());
+		compileMenu.add(new TakeCompileToInterfaces());
+		menu.appendToGroup("Take", compileMenu);
+
+
+		MenuManager verifyMenu = new MenuManager("Take Verify");
+		verifyMenu.add(new TakeRunVerifiers());
+		menu.appendToGroup("Take", verifyMenu);
+
+		MenuManager takeSource = new MenuManager("Take Source");
+		takeSource.add(new TakeCompilerAnnotations());
+		menu.appendToGroup("Take", takeSource);
+
 	}
 
 
