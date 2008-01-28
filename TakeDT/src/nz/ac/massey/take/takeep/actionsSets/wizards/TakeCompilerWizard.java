@@ -14,9 +14,9 @@ import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.DefaultNameGenerator;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
-import nz.org.take.script.ScriptKnowledgeSource;
+import nz.org.take.nscript.ScriptKnowledgeSource;
 
-import org.apache.tools.ant.util.ReaderInputStream;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.text.source.LineRange;
