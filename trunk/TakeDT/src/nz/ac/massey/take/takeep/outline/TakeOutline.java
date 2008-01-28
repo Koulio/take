@@ -212,11 +212,7 @@ public class TakeOutline extends ContentOutlinePage
 					return processedLine;
 				} catch (Exception e) {
 					
-					IAnnotationModel annotationModel = editor.getDocumentProvider().getAnnotationModel(editor.getEditorInput());
-					Annotation annotation = new Annotation("org.eclipse.ui.workbench.texteditor.error",false,"");
-					anno.add(annotation);
-					annotationModel.addAnnotation(annotation, new Position(region.getOffset(),region.getLength()));
-					
+
 					e.printStackTrace();
 				}
 
@@ -240,7 +236,7 @@ public class TakeOutline extends ContentOutlinePage
 
 	}
 
-	private LinkedList<Annotation> anno = new LinkedList<Annotation>();
+	
 
 	private class TreeHugger implements ITreeContentProvider
 	{
@@ -278,12 +274,8 @@ public class TakeOutline extends ContentOutlinePage
 			regions.clear();
 			try {
 				IAnnotationModel annotationModel = editor.getDocumentProvider().getAnnotationModel(editor.getEditorInput());
-				for(Annotation a : anno)
-				{
-					annotationModel.removeAnnotation(a);
-					
-				}
-				anno.clear();
+
+				
 				ITypedRegion[] re = document.computePartitioning(0, document.getLength());
 
 				for(ITypedRegion ty : re)
@@ -291,9 +283,7 @@ public class TakeOutline extends ContentOutlinePage
 					if(ty.getType() == IDocument.DEFAULT_CONTENT_TYPE)
 					{
 						
-						Annotation annotation = new Annotation("org.eclipse.ui.workbench.texteditor.error",false,"");
-						anno.add(annotation);
-						annotationModel.addAnnotation(annotation, new Position(ty.getOffset(),ty.getLength()));
+
 						continue;
 					}
 					regions.add(ty);

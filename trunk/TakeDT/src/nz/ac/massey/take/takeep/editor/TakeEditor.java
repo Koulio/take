@@ -1,5 +1,10 @@
 package nz.ac.massey.take.takeep.editor;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.List;
+
 import nz.ac.massey.take.takeep.actionsSets.compileActions.TakeCompileToClasses;
 import nz.ac.massey.take.takeep.actionsSets.compileActions.TakeCompileToInterfaces;
 import nz.ac.massey.take.takeep.actionsSets.takeSourceActions.TakeCompilerAnnotations;
@@ -7,19 +12,28 @@ import nz.ac.massey.take.takeep.actionsSets.verifyActions.TakeRunVerifiers;
 import nz.ac.massey.take.takeep.editor.TakeSourceViewerConfiguration.TAKE_TOKENS;
 import nz.ac.massey.take.takeep.editor.tokens.TakePartitionScanner.TAKE_PARTITIONS;
 import nz.ac.massey.take.takeep.outline.TakeOutline;
+import nz.org.take.nscript.Parser;
+import nz.org.take.nscript.ScriptException;
 
+import org.apache.tools.ant.util.ReaderInputStream;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.SubMenuManager;
+import org.eclipse.jface.text.Position;
+import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.AnnotationRulerColumn;
 import org.eclipse.jface.text.source.CompositeRuler;
+import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.internal.ActionSetMenuManager;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
+import org.eclipse.ui.texteditor.IElementStateListener;
 import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
@@ -65,10 +79,87 @@ public class TakeEditor extends TextEditor{
 
 		getPreferenceStore().setValue(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_LINE_NUMBER_RULER,true);
 
+		this.getDocumentProvider().addElementStateListener(new IElementStateListener(){
+
+			@Override
+			public void elementContentAboutToBeReplaced(Object element) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void elementContentReplaced(Object element) {
+						
+			}
+
+			@Override
+			public void elementDeleted(Object element) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void elementDirtyStateChanged(Object element, boolean isDirty) {
+				if(!isDirty)
+				{
+					verifyRegions();
+				}
+				
+			}
+
+			@Override
+			public void elementMoved(Object originalElement, Object movedElement) {
+				// TODO Auto-generated method stub
+				
+			}});
 
 	}
 
+	private LinkedList<Annotation> anno = new LinkedList<Annotation>();
+	
+	private void verifyRegions()
+	{
+		try {
+		Parser p = new Parser();
+		InputStream script;
 
+			script = ((FileEditorInput)this.getEditorInput()).getFile().getContents();
+		
+		List<ScriptException> check = p.check(new InputStreamReader(script));
+		
+		for(ScriptException se : check)
+		{
+			System.out.println(se.getLine());
+		}
+//		System.out.println("LOL");
+//		IAnnotationModel annotationModel = getDocumentProvider().getAnnotationModel(getEditorInput());
+//		Annotation annotation = new Annotation("org.eclipse.ui.workbench.texteditor.error",false,"");
+//		anno.add(annotation);
+//		annotationModel.addAnnotation(annotation, new Position(region.getOffset(),region.getLength()));
+//		
+//		
+//		
+//		
+//		for(Annotation a : anno)
+//		{
+//			annotationModel.removeAnnotation(a);
+//			
+//		}
+//		anno.clear();
+//		
+//		Annotation annotation = new Annotation("org.eclipse.ui.workbench.texteditor.error",false,"");
+//		anno.add(annotation);
+//		annotationModel.addAnnotation(annotation, new Position(ty.getOffset(),ty.getLength()));
+//		
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ScriptException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 
 	@Override
@@ -103,6 +194,7 @@ public class TakeEditor extends TextEditor{
 
 
 	}
+
 
 
 	@Override
