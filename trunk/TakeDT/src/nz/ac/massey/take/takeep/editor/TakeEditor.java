@@ -1,5 +1,6 @@
 package nz.ac.massey.take.takeep.editor;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
@@ -15,6 +16,7 @@ import nz.ac.massey.take.takeep.outline.TakeOutline;
 import nz.org.take.nscript.Parser;
 import nz.org.take.nscript.ScriptException;
 
+import org.apache.tools.ant.filters.StringInputStream;
 import org.apache.tools.ant.util.ReaderInputStream;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.IContributionItem;
@@ -22,6 +24,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.source.Annotation;
@@ -38,6 +41,8 @@ import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.IElementStateListener;
 import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
+
+import com.sun.org.apache.xerces.internal.dom.DocumentImpl;
 
 public class TakeEditor extends TextEditor{
 
@@ -104,7 +109,7 @@ public class TakeEditor extends TextEditor{
 			public void elementDirtyStateChanged(Object element, boolean isDirty) {
 				if(!isDirty)
 				{
-					verifyRegions();
+					runVerifier();
 				}
 
 			}
@@ -119,7 +124,8 @@ public class TakeEditor extends TextEditor{
 
 	private LinkedList<Annotation> anno = new LinkedList<Annotation>();
 
-	private void verifyRegions()
+
+	public void runVerifier()
 	{
 		try {
 			IAnnotationModel annotationModel = getDocumentProvider().getAnnotationModel(getEditorInput());
@@ -132,8 +138,9 @@ public class TakeEditor extends TextEditor{
 
 			Parser p = new Parser();
 			InputStream script;
-			System.out.println("Asf");
 			script = ((FileEditorInput)this.getEditorInput()).getFile().getContents();
+			script = new StringInputStream(this.getDocumentProvider().getDocument(this.getEditorInput()).get());
+			
 
 			//p.parse(new InputStreamReader(script));
 			List<ScriptException> check = p.check(new InputStreamReader(script));
@@ -150,11 +157,6 @@ public class TakeEditor extends TextEditor{
 			}
 //			System.out.println("LOL");
 //			IAnnotationModel annotationModel = getDocumentProvider().getAnnotationModel(getEditorInput());
-
-
-
-
-
 
 
 //			Annotation annotation = new Annotation("org.eclipse.ui.workbench.texteditor.error",false,"");
