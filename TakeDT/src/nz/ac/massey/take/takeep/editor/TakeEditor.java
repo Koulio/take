@@ -1,13 +1,23 @@
 package nz.ac.massey.take.takeep.editor;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
+import javax.tools.JavaCompiler;
 
 import nz.ac.massey.take.takeep.actionsSets.compileActions.TakeCompileToClasses;
 import nz.ac.massey.take.takeep.actionsSets.compileActions.TakeCompileToInterfaces;
+import nz.ac.massey.take.takeep.actionsSets.panels.TakeCompileWizardPanel;
 import nz.ac.massey.take.takeep.actionsSets.takeSourceActions.TakeCompilerAnnotations;
 import nz.ac.massey.take.takeep.actionsSets.verifyActions.TakeRunVerifiers;
 import nz.ac.massey.take.takeep.editor.TakeSourceViewerConfiguration.TAKE_TOKENS;
@@ -18,7 +28,17 @@ import nz.org.take.nscript.ScriptException;
 
 import org.apache.tools.ant.filters.StringInputStream;
 import org.apache.tools.ant.util.ReaderInputStream;
+import org.eclipse.core.internal.resources.Marker;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.jdt.core.IClasspathEntry;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.internal.compiler.tool.EclipseCompiler;
+import org.eclipse.jdt.internal.core.ClasspathEntry;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -34,12 +54,14 @@ import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.internal.ActionSetMenuManager;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.IElementStateListener;
 import org.eclipse.ui.texteditor.ITextEditorActionConstants;
+import org.eclipse.ui.texteditor.ResourceMarkerAnnotationModel;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 import com.sun.org.apache.xerces.internal.dom.DocumentImpl;
@@ -125,10 +147,90 @@ public class TakeEditor extends TextEditor{
 	private LinkedList<Annotation> anno = new LinkedList<Annotation>();
 
 
+
+
+
+
+
+	public static URLClassLoader getProjectClassLoader(IJavaProject project) {
+		List<URL> pathElements = getProjectClassPathURLs(project);
+		URL urlPaths[] = (URL[]) pathElements.toArray(new URL[pathElements.size()]);
+		return new URLClassLoader(urlPaths, Thread.currentThread().getContextClassLoader());
+	}
+
+	private static URL getRawLocationURL(IPath simplePath)
+	throws MalformedURLException {
+		File file = getRawLocationFile(simplePath);
+		return file.toURI().toURL();
+	}
+
+	private static File getRawLocationFile(IPath simplePath) {
+		org.eclipse.core.resources.IResource resource = ResourcesPlugin.getWorkspace().getRoot().findMember(simplePath);
+		File file = null;
+		if (resource != null) {
+			file = resource.getRawLocation().toFile();
+		} else {
+			file = simplePath.toFile();
+		}
+		return file;
+	}
+
+	public static List<URL> getProjectClassPathURLs(IJavaProject project) {
+		List<URL> pathElements = new LinkedList<URL>();
+		try {
+			IClasspathEntry[] paths = project.getResolvedClasspath(true);
+			if (paths != null) {
+
+				for ( int i = 0; i < paths.length; i++ ) {
+					IClasspathEntry path = paths[i];
+					if (path.getEntryKind() == IClasspathEntry.CPE_LIBRARY) {
+						URL url = getRawLocationURL(path.getPath());
+						pathElements.add(url);
+					}
+				}
+			}
+			IPath location = getProjectLocation(project.getProject());
+			IPath outputPath = location.append(project.getOutputLocation()
+					.removeFirstSegments(1));
+			pathElements.add(outputPath.toFile().toURL());
+
+			// also add classpath of required projects
+			String[] names = project.getRequiredProjectNames();
+			for ( int i = 0; i < names.length; i++ ) {
+				String projectName = names[i];
+				IProject reqProject = project.getProject().getWorkspace()
+				.getRoot().getProject(projectName);
+				if (reqProject != null) {
+					IJavaProject reqJavaProject = JavaCore.create(reqProject);
+					pathElements.addAll(getProjectClassPathURLs(reqJavaProject));
+				}
+			}
+		} catch (JavaModelException e) {
+			//DroolsIDEPlugin.log(e);
+		} catch (MalformedURLException e) {
+			//DroolsIDEPlugin.log(e);
+		}
+		return pathElements;
+	}
+
+	public static IPath getProjectLocation(IProject project) {
+		if (project.getRawLocation() == null) {
+			return project.getLocation();
+		} else {
+			return project.getRawLocation();
+		}
+	}
+
 	public void runVerifier()
 	{
 		try {
-			IAnnotationModel annotationModel = getDocumentProvider().getAnnotationModel(getEditorInput());
+			IWorkbenchPage workbench = TakeCompileWizardPanel.getWorkbench();
+			IProject project = TakeCompileWizardPanel.getProjectFromWorkbench(workbench);
+			IJavaProject create = JavaCore.create(project);
+			LinkedList<URL> urls = new LinkedList<URL>();
+			ClassLoader cl = getProjectClassLoader(create);
+
+			ResourceMarkerAnnotationModel annotationModel = (ResourceMarkerAnnotationModel)getDocumentProvider().getAnnotationModel(getEditorInput());
 			for(Annotation a : anno)
 			{
 				annotationModel.removeAnnotation(a);
@@ -137,23 +239,24 @@ public class TakeEditor extends TextEditor{
 			anno.clear();
 
 			Parser p = new Parser();
+
 			InputStream script;
 			script = ((FileEditorInput)this.getEditorInput()).getFile().getContents();
 			script = new StringInputStream(this.getDocumentProvider().getDocument(this.getEditorInput()).get());
-			
+
 
 			//p.parse(new InputStreamReader(script));
 			List<ScriptException> check = p.check(new InputStreamReader(script));
-
 			for(ScriptException se : check)
 			{
 
 				Annotation annotation = new Annotation("org.eclipse.ui.workbench.texteditor.error",false,"");
+
 				annotation.setText(se.getMessage());
 				anno.add(annotation);
 				IRegion lineInformation = this.getSourceViewer().getDocument().getLineInformation(se.getLine()-1);
 				annotationModel.addAnnotation(annotation, new Position(lineInformation.getOffset(),lineInformation.getLength()));
-				
+
 			}
 //			System.out.println("LOL");
 //			IAnnotationModel annotationModel = getDocumentProvider().getAnnotationModel(getEditorInput());

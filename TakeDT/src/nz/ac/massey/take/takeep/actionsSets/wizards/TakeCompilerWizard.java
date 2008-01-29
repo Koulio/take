@@ -17,7 +17,10 @@ import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
 import nz.org.take.nscript.ScriptKnowledgeSource;
 
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.text.source.LineRange;
 import org.eclipse.jface.wizard.Wizard;
@@ -34,6 +37,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.part.FileEditorInput;
 
 public class TakeCompilerWizard extends Wizard{
@@ -70,7 +74,11 @@ public class TakeCompilerWizard extends Wizard{
 	public boolean performFinish() {
 
 
-
+		IWorkbenchPage workbench = TakeCompileWizardPanel.getWorkbench();
+		IProject project = TakeCompileWizardPanel.getProjectFromWorkbench(workbench);
+		System.out.println(project);
+		
+		
 		DefaultLocation location = new DefaultLocation();
 
 
@@ -86,14 +94,14 @@ public class TakeCompilerWizard extends Wizard{
 
 		compiler.setNameGenerator(nameGenerator);
 
-		IEditorInput editorInput = TakeCompileWizardPanel.getWorkbench().getActiveEditor().getEditorInput();
+		IEditorInput editorInput = workbench.getActiveEditor().getEditorInput();
 		if(editorInput instanceof FileEditorInput)
 		{
 			try {
 				InputStream script = ((FileEditorInput)editorInput).getFile().getContents();
 
 				ScriptKnowledgeSource ksource = new ScriptKnowledgeSource(script);
-
+				
 				compiler.setLocation(location);
 
 				location.setSrcFolder(((FileEditorInput)editorInput).getFile().getProject().getFolder(wp.getSourceOutputLocation()).getLocation().toString());
@@ -104,8 +112,8 @@ public class TakeCompilerWizard extends Wizard{
 
 				compiler.setPackageName(wp.getPackageName());
 				compiler.setClassName(wp.getClassName());
-
-
+				
+				
 				if(!interfaces)
 				{
 				compiler.compile(ksource.getKnowledgeBase());
@@ -114,6 +122,8 @@ public class TakeCompilerWizard extends Wizard{
 				{
 					compiler.compileInterface(ksource.getKnowledgeBase());
 				}
+				
+				project.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 			} catch (CompilerException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -129,6 +139,8 @@ public class TakeCompilerWizard extends Wizard{
 		{
 			return false;
 		}
+		
+
 		return true;
 	}
 
