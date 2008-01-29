@@ -8,6 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,7 +30,9 @@ import nz.org.take.nscript.ScriptException;
 import org.apache.tools.ant.filters.StringInputStream;
 import org.apache.tools.ant.util.ReaderInputStream;
 import org.eclipse.core.internal.resources.Marker;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -39,6 +42,7 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.compiler.tool.EclipseCompiler;
 import org.eclipse.jdt.internal.core.ClasspathEntry;
+import org.eclipse.jdt.internal.corext.refactoring.util.ResourceUtil;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -112,19 +116,14 @@ public class TakeEditor extends TextEditor{
 
 			@Override
 			public void elementContentAboutToBeReplaced(Object element) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void elementContentReplaced(Object element) {
-
 			}
 
 			@Override
 			public void elementDeleted(Object element) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -133,29 +132,22 @@ public class TakeEditor extends TextEditor{
 				{
 					runVerifier();
 				}
-
 			}
 
 			@Override
 			public void elementMoved(Object originalElement, Object movedElement) {
-				// TODO Auto-generated method stub
 
 			}});
 
 	}
-
-	private LinkedList<Annotation> anno = new LinkedList<Annotation>();
-
-
-
-
 
 
 
 	public static URLClassLoader getProjectClassLoader(IJavaProject project) {
 		List<URL> pathElements = getProjectClassPathURLs(project);
 		URL urlPaths[] = (URL[]) pathElements.toArray(new URL[pathElements.size()]);
-		return new URLClassLoader(urlPaths, Thread.currentThread().getContextClassLoader());
+		
+		return new URLClassLoader(urlPaths);
 	}
 
 	private static URL getRawLocationURL(IPath simplePath)
@@ -206,9 +198,9 @@ public class TakeEditor extends TextEditor{
 				}
 			}
 		} catch (JavaModelException e) {
-			//DroolsIDEPlugin.log(e);
+			e.printStackTrace();
 		} catch (MalformedURLException e) {
-			//DroolsIDEPlugin.log(e);
+			e.printStackTrace();
 		}
 		return pathElements;
 	}
@@ -221,50 +213,44 @@ public class TakeEditor extends TextEditor{
 		}
 	}
 
+	private HashMap<Annotation,IMarker> anno = new HashMap<Annotation,IMarker>();
 	public void runVerifier()
 	{
+		
 		try {
 			IWorkbenchPage workbench = TakeCompileWizardPanel.getWorkbench();
 			IProject project = TakeCompileWizardPanel.getProjectFromWorkbench(workbench);
-			IJavaProject create = JavaCore.create(project);
-			LinkedList<URL> urls = new LinkedList<URL>();
-			ClassLoader cl = getProjectClassLoader(create);
-
+			ClassLoader cl = getProjectClassLoader(JavaCore.create(project));
+			
 			ResourceMarkerAnnotationModel annotationModel = (ResourceMarkerAnnotationModel)getDocumentProvider().getAnnotationModel(getEditorInput());
-			for(Annotation a : anno)
+			for(Annotation a : anno.keySet())
 			{
 				annotationModel.removeAnnotation(a);
+				anno.get(a).delete();
 
 			}
 			anno.clear();
 
 			Parser p = new Parser();
-
+			p.setClassLoader(cl);
 			InputStream script;
 			script = ((FileEditorInput)this.getEditorInput()).getFile().getContents();
 			script = new StringInputStream(this.getDocumentProvider().getDocument(this.getEditorInput()).get());
 
 
-			//p.parse(new InputStreamReader(script));
 			List<ScriptException> check = p.check(new InputStreamReader(script));
 			for(ScriptException se : check)
 			{
-
-				Annotation annotation = new Annotation("org.eclipse.ui.workbench.texteditor.error",false,"");
-
-				annotation.setText(se.getMessage());
-				anno.add(annotation);
+				IMarker marker = ((FileEditorInput)this.getEditorInput()).getFile().createMarker(IMarker.PROBLEM);
+				marker.setAttribute(IMarker.MESSAGE, se.getMessage());
+				marker.setAttribute(IMarker.LOCATION, "line " + se.getLine());
+				Annotation annotation = new Annotation("org.eclipse.ui.workbench.texteditor.error",false,se.getMessage());
+				anno.put(annotation,marker);
 				IRegion lineInformation = this.getSourceViewer().getDocument().getLineInformation(se.getLine()-1);
 				annotationModel.addAnnotation(annotation, new Position(lineInformation.getOffset(),lineInformation.getLength()));
 
 			}
-//			System.out.println("LOL");
-//			IAnnotationModel annotationModel = getDocumentProvider().getAnnotationModel(getEditorInput());
 
-
-//			Annotation annotation = new Annotation("org.eclipse.ui.workbench.texteditor.error",false,"");
-//			anno.add(annotation);
-//			annotationModel.addAnnotation(annotation, new Position(ty.getOffset(),ty.getLength()));
 
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block

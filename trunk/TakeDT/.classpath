@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="lib/take-1.4.build3001081045.jar" sourcepath="/takeProject"/>
 	<classpathentry exported="true" kind="lib" path="lib/ant-1.7.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/ant-launcher.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-collections-3.1.jar"/>
@@ -13,7 +14,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/velocity-dep-1.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="bin/"/>
 	<classpathentry exported="true" kind="lib" path="lib/juel-2.1.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/take-1.4.build2801081237.jar" sourcepath="/takeProject"/>
 	<classpathentry exported="true" kind="lib" path="lib/take-examples-1.4.build2801081237.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/take-javac1.5-1.4.build2801081237.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/take-javac1.6-1.4.build2801081237.jar"/>
