@@ -24,6 +24,7 @@ import nz.org.take.Query;
 import nz.org.take.Term;
 import nz.org.take.Variable;
 import nz.org.take.compiler.CompilerException;
+import nz.org.take.compiler.util.PrimitiveTypeUtils;
 
 /**
  * Abstract superclass for template based function generators.
@@ -70,6 +71,10 @@ public abstract class AbstractTemplatedBasedAggregationFunctionGenerator impleme
 		}
 		
 		QueryRef query = new QueryRef(predicate,io,queryParams);
+		Class returnType = null;
+		Class convertedType = PrimitiveTypeUtils.getType(f.getReturnType());
+		if (convertedType!=null)
+			returnType = convertedType;
 		
 		// query invocation
 		StringWriter sout = new StringWriter();
@@ -82,7 +87,7 @@ public abstract class AbstractTemplatedBasedAggregationFunctionGenerator impleme
 		context.put("query", query);
 		context.put("methodname",methodName);
 		context.put("methodparameters",methodParams);
-		context.put("resulttype", f.getReturnType());
+		context.put("resulttype",returnType);
 		context.put("templatename",templateName);
 		context.put("invocation",sout.getBuffer().toString());
 		context.put("varslot",aggregationVariable);

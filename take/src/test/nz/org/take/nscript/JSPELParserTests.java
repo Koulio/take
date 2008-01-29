@@ -16,7 +16,6 @@ import java.util.Map;
 import nz.org.take.*;
 import nz.org.take.nscript.JSPELParser;
 import nz.org.take.nscript.ScriptException;
-import nz.org.take.script.Condition;
 import junit.framework.TestCase;
 
 /**

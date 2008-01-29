@@ -14,7 +14,7 @@ import java.util.Map;
 import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.annotations.generated.KB;
 import nz.org.take.deployment.KnowledgeBaseManager;
-import nz.org.take.script.ScriptKnowledgeSource;
+import nz.org.take.nscript.ScriptKnowledgeSource;
 import junit.framework.TestCase;
 
 /**

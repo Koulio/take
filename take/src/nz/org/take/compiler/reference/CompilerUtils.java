@@ -18,6 +18,7 @@ import nz.org.take.compiler.CompilerException;
 import nz.org.take.compiler.Location;
 import nz.org.take.compiler.NameGenerator;
 import nz.org.take.compiler.SourceTransformation;
+import nz.org.take.compiler.util.PrimitiveTypeUtils;
 
 
 /**
@@ -96,42 +97,11 @@ public abstract class CompilerUtils {
 	 * 
 	 */
 	protected String getTypeName(Class clazz) {
-		Class t = null;
-		if (clazz.isPrimitive()) {
-			t = clazz;
-		}
-		if (clazz==Boolean.class)
-			return Boolean.TYPE.getName();		
-	 	else if (clazz==Character.class)
-	 		t = Character.TYPE;		
-	 	else if (clazz==Byte.class)
-	 		t = Byte.TYPE;		
-	 	else if (clazz==Short.class)
-	 		t = Short.TYPE;		
-		else if (clazz==Integer.class)
-			t = Integer.TYPE;		
-		else if (clazz==Long.class)
-			t = Long.TYPE;		
-		else if (clazz==Float.class)
-			t =  Float.TYPE;		
-		else if (clazz==Double.class)
-			t =  Double.TYPE;
-		
-		if (t!=null) {
-			// use only long, double and boolean
-			// this will ensure that Widening Primitive Conversion is performed
-			// see also http://java.sun.com/docs/books/jls/second_edition/html/conversions.doc.html
-			
-			if (t==Boolean.TYPE)
-				return t.getName();
-			else if (t==Double.TYPE)
-				return t.getName();
-			else if (t==Float.TYPE) 
-				return Double.TYPE.getName();
-			else return Long.TYPE.getName();
-		}
-		
-		else return clazz.getName();
+		Class type = PrimitiveTypeUtils.getType(clazz);
+		if (type==null)
+			return clazz.getName();
+		else
+			return type.getName();
 	}
 
 	/**
