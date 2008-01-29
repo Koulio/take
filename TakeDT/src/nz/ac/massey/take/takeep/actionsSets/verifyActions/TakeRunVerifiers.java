@@ -31,7 +31,6 @@ public class TakeRunVerifiers extends TakeAbstractAction {
 		IWorkbenchPage iworkbenchpage = TakeCompileWizardPanel.getWorkbench();
 		if(iworkbenchpage == null)return;
 		IEditorPart activeEditor = iworkbenchpage.getActiveEditor();
-		System.out.println(activeEditor);
 		if(activeEditor instanceof TakeEditor)
 		{
 			((TakeEditor)activeEditor).runVerifier();

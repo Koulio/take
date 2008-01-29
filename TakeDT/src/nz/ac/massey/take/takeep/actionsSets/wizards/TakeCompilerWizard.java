@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 import nz.ac.massey.take.takeep.actionsSets.panels.TakeCompileWizardPanel;
+import nz.ac.massey.take.takeep.editor.TakeEditor;
 import nz.org.take.TakeException;
 import nz.org.take.compiler.CompilerException;
 import nz.org.take.compiler.NameGenerator;
@@ -21,6 +22,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.text.source.LineRange;
 import org.eclipse.jface.wizard.Wizard;
@@ -76,8 +78,8 @@ public class TakeCompilerWizard extends Wizard{
 
 		IWorkbenchPage workbench = TakeCompileWizardPanel.getWorkbench();
 		IProject project = TakeCompileWizardPanel.getProjectFromWorkbench(workbench);
-		System.out.println(project);
 		
+		ClassLoader cl = TakeEditor.getProjectClassLoader(JavaCore.create(project));
 		
 		DefaultLocation location = new DefaultLocation();
 
@@ -90,7 +92,7 @@ public class TakeCompilerWizard extends Wizard{
 			compiler.add(new JalopyCodeFormatter());
 		}
 		compiler.setAutoAnnotate(wp.isAutoAnotate());
-
+		
 
 		compiler.setNameGenerator(nameGenerator);
 
@@ -101,7 +103,7 @@ public class TakeCompilerWizard extends Wizard{
 				InputStream script = ((FileEditorInput)editorInput).getFile().getContents();
 
 				ScriptKnowledgeSource ksource = new ScriptKnowledgeSource(script);
-				
+				ksource.setClassLoader(cl);
 				compiler.setLocation(location);
 
 				location.setSrcFolder(((FileEditorInput)editorInput).getFile().getProject().getFolder(wp.getSourceOutputLocation()).getLocation().toString());
