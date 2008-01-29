@@ -141,11 +141,12 @@ public class JSPELParserTests extends TestCase {
 	public void testPropertyTerm1() throws Exception {
 		Map<String,Constant> consts = new HashMap<String,Constant>();
 		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Map<String,AggregationFunction> aggs = new HashMap<String,AggregationFunction>();
 		Variable var = new Variable();
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
-		Term t = new JSPELParser(vars,consts).parseTerm("bean1.name",42);
+		Term t = new JSPELParser(vars,consts,aggs).parseTerm("bean1.name",42);
 		assertTrue(t instanceof ComplexTerm);
 		ComplexTerm xt = (ComplexTerm)t;
 		JFunction f = (JFunction)xt.getFunction();
@@ -157,11 +158,12 @@ public class JSPELParserTests extends TestCase {
 	public void testPropertyTerm2() throws Exception {
 		Map<String,Constant> consts = new HashMap<String,Constant>();
 		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Map<String,AggregationFunction> aggs = new HashMap<String,AggregationFunction>();
 		Variable var = new Variable();
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
-		Term t = new JSPELParser(vars,consts).parseTerm("bean1.id",42);
+		Term t = new JSPELParser(vars,consts,aggs).parseTerm("bean1.id",42);
 		assertTrue(t instanceof ComplexTerm);
 		ComplexTerm xt = (ComplexTerm)t;
 		JFunction f = (JFunction)xt.getFunction();
@@ -173,11 +175,12 @@ public class JSPELParserTests extends TestCase {
 	public void testPropertyTerm3DeepAccess() throws Exception {
 		Map<String,Constant> consts = new HashMap<String,Constant>();
 		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Map<String,AggregationFunction> aggs = new HashMap<String,AggregationFunction>();
 		Variable var = new Variable();
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
-		Term t = new JSPELParser(vars,consts).parseTerm("bean1.property.name",42);
+		Term t = new JSPELParser(vars,consts,aggs).parseTerm("bean1.property.name",42);
 		
 		ComplexTerm xt = (ComplexTerm)t;
 		JFunction f = (JFunction)xt.getFunction();
@@ -196,12 +199,13 @@ public class JSPELParserTests extends TestCase {
 	public void testPropertyTerm4() throws Exception {
 		Map<String,Constant> consts = new HashMap<String,Constant>();
 		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Map<String,AggregationFunction> aggs = new HashMap<String,AggregationFunction>();
 		Variable var = new Variable();
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
 		try {
-			Term t = new JSPELParser(vars,consts).parseTerm("bean2.name",42);
+			Term t = new JSPELParser(vars,consts,aggs).parseTerm("bean2.name",42);
 			assertTrue(false);
 		}
 		catch (ScriptException x) {
@@ -212,12 +216,13 @@ public class JSPELParserTests extends TestCase {
 	public void testPropertyTerm5() throws Exception {
 		Map<String,Constant> consts = new HashMap<String,Constant>();
 		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Map<String,AggregationFunction> aggs = new HashMap<String,AggregationFunction>();
 		Variable var = new Variable();
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
 		try {
-			Term t = new JSPELParser(vars,consts).parseTerm("bean1.name2",42);
+			Term t = new JSPELParser(vars,consts,aggs).parseTerm("bean1.name2",42);
 			assertTrue(false);
 		}
 		catch (ScriptException x) {
@@ -228,11 +233,12 @@ public class JSPELParserTests extends TestCase {
 	public void testCondition1() throws Exception {
 		Map<String,Constant> consts = new HashMap<String,Constant>();
 		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Map<String,AggregationFunction> aggs = new HashMap<String,AggregationFunction>();
 		Variable var = new Variable();
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
-		Prerequisite c = new JSPELParser(vars,consts).parseCondition("bean1.name==\'Max\'",42);
+		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.name==\'Max\'",42);
 		Predicate p = c.getPredicate();
 		assertTrue(p instanceof JPredicate);
 		Method m = ((JPredicate)p).getMethod();
@@ -250,11 +256,12 @@ public class JSPELParserTests extends TestCase {
 	public void testCondition2() throws Exception {
 		Map<String,Constant> consts = new HashMap<String,Constant>();
 		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Map<String,AggregationFunction> aggs = new HashMap<String,AggregationFunction>();
 		Variable var = new Variable();
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
-		Prerequisite c = new JSPELParser(vars,consts).parseCondition("\'Max\'==bean1.name",42);
+		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("\'Max\'==bean1.name",42);
 		Predicate p = c.getPredicate();
 		assertTrue(p instanceof JPredicate);
 		Method m = ((JPredicate)p).getMethod();
@@ -272,11 +279,12 @@ public class JSPELParserTests extends TestCase {
 	public void testCondition3() throws Exception {
 		Map<String,Constant> consts = new HashMap<String,Constant>();
 		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Map<String,AggregationFunction> aggs = new HashMap<String,AggregationFunction>();
 		Variable var = new Variable();
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
-		Prerequisite c = new JSPELParser(vars,consts).parseCondition("bean1.id==42",42);
+		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.id==42",42);
 		Predicate p = c.getPredicate();
 		assertTrue(p instanceof Comparison);
 		assertEquals(new Comparison("=="),p);
@@ -291,12 +299,13 @@ public class JSPELParserTests extends TestCase {
 	public void testCondition4() throws Exception {
 		Map<String,Constant> consts = new HashMap<String,Constant>();
 		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Map<String,AggregationFunction> aggs = new HashMap<String,AggregationFunction>();
 		Variable var = new Variable();
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
 		try{
-			new JSPELParser(vars,consts).parseCondition("bean1.name==\'Max\' || bean1.name==\'Bender\'",42);
+			new JSPELParser(vars,consts,aggs).parseCondition("bean1.name==\'Max\' || bean1.name==\'Bender\'",42);
 			assertTrue(false);
 		}
 		catch (ScriptException x) {
@@ -308,11 +317,12 @@ public class JSPELParserTests extends TestCase {
 	public void testJCondition1() throws Exception {
 		Map<String,Constant> consts = new HashMap<String,Constant>();
 		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Map<String,AggregationFunction> aggs = new HashMap<String,AggregationFunction>();
 		Variable var = new Variable();
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
-		Prerequisite c = new JSPELParser(vars,consts).parseCondition("bean1.cool",42);
+		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.cool",42);
 		Predicate p = c.getPredicate();
 		assertTrue(p instanceof JPredicate);
 		Method m = ((JPredicate)p).getMethod();
@@ -329,12 +339,13 @@ public class JSPELParserTests extends TestCase {
 	public void testJCondition2() throws Exception {
 		Map<String,Constant> consts = new HashMap<String,Constant>();
 		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Map<String,AggregationFunction> aggs = new HashMap<String,AggregationFunction>();
 		Variable var = new Variable();
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
 		// alternative syntax using getter names instead of properties
-		Prerequisite c = new JSPELParser(vars,consts).parseCondition("bean1.isCool",42);
+		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.isCool",42);
 		Predicate p = c.getPredicate();
 		assertTrue(p instanceof JPredicate);
 		Method m = ((JPredicate)p).getMethod();
@@ -351,11 +362,12 @@ public class JSPELParserTests extends TestCase {
 	public void testJCondition3() throws Exception {
 		Map<String,Constant> consts = new HashMap<String,Constant>();
 		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Map<String,AggregationFunction> aggs = new HashMap<String,AggregationFunction>();
 		Variable var = new Variable();
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
-		Prerequisite c = new JSPELParser(vars,consts).parseCondition("bean1.property.tested",42);
+		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.property.tested",42);
 		Predicate p = c.getPredicate();
 		assertTrue(p instanceof JPredicate);
 		Method m = ((JPredicate)p).getMethod();
@@ -372,12 +384,13 @@ public class JSPELParserTests extends TestCase {
 	public void testJCondition4() throws Exception {
 		Map<String,Constant> consts = new HashMap<String,Constant>();
 		Map<String,Variable> vars = new HashMap<String,Variable>();
+		Map<String,AggregationFunction> aggs = new HashMap<String,AggregationFunction>();
 		Variable var = new Variable();
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
 		try {
-			Prerequisite c = new JSPELParser(vars,consts).parseCondition("bean1.isNotSoCool",42);
+			Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.isNotSoCool",42);
 			assertTrue(false);
 		}
 		catch (ScriptException x) {

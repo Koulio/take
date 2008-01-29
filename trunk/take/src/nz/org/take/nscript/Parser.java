@@ -33,14 +33,10 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
-
-import org.apache.log4j.Logger;
-
 import nz.org.take.AbstractPredicate;
 import nz.org.take.AggregationFunction;
 import nz.org.take.Annotatable;
 import nz.org.take.AnnotationKeys;
-import nz.org.take.Comparison;
 import nz.org.take.Constant;
 import nz.org.take.DefaultKnowledgeBase;
 import nz.org.take.DerivationRule;
@@ -53,12 +49,11 @@ import nz.org.take.Prerequisite;
 import nz.org.take.PropertyPredicate;
 import nz.org.take.Query;
 import nz.org.take.SimplePredicate;
-import nz.org.take.TakeException;
 import nz.org.take.Term;
 import nz.org.take.Variable;
 
 
-public class Parser {
+public class Parser extends ParserSupport {
 	public static final String _NAME1 = "[a-zA-Z][a-zA-Z0-9_]*"; // names for types
 	public static final String _NAME2 = "[a-zA-Z_][a-zA-Z0-9_]*"; // names for var and ref declarations
 	public static final Pattern TYPE_NAME = Pattern.compile(_NAME1+"(\\."+_NAME1+")*");
@@ -68,11 +63,8 @@ public class Parser {
 	public static final Pattern GLOBAL_ANNOTATION = Pattern.compile("@@(.)+=(.)+");
 	public static final Pattern LOCAL_ANNOTATION = Pattern.compile("@[^@](.)*=(.)+");	
 	public static final Pattern EXTERNAL = Pattern.compile("external[\\s]+[a-zA-Z_][a-zA-Z0-9_]*:[\\s]+[a-zA-Z_][a-zA-Z0-9_]*\\[(.)*\\]");	
-	//public static final Pattern VAR_DECLARATION = Pattern.compile("var( )+([a-zA-Z0-9_.]+)( )+([a-zA-Z0-9_,]+)");
-	//public static final Pattern REF_DECLARATION = Pattern.compile("ref( )+([a-zA-Z0-9_.]+)( )+([a-zA-Z0-9_,]+)");
+	public static final Pattern AGGREGATION = Pattern.compile("aggregation[\\s]+(.)*\\[(.)*\\]");	 // not very precise, needs improvement
 	public static final Pattern QUERY = Pattern.compile("(not[\\s]+)?"+_NAME2+"[\\s]*\\[[\\s]*(in|out)([\\s]*,[\\s]*(in|out))*[\\s]*\\]");
-	//query potentialTheftRating[in,out]
-	//public static final Pattern _REF_DECLARATION = Pattern.compile("ref( )+([a-zA-Z0-9_.]+)( )+([a-zA-Z0-9_,]+)");
 	public static final Pattern RULE = Pattern.compile(_NAME1+":[\\s]+if[\\s]+(.)*");
 	public static final Pattern FACT = Pattern.compile(_NAME1+":(.)*");
 	public static final Pattern CONDITION1 = Pattern.compile(_NAME2+"\\[(.)*\\]");
@@ -87,21 +79,19 @@ public class Parser {
 	private List<QuerySpec> querySpecs = new ArrayList<QuerySpec>();	
 	private Map<String,Predicate> predicatesByName = new HashMap<String,Predicate>();
 	private Map<SimplePredicate,SimplePredicate> predicates = new HashMap<SimplePredicate,SimplePredicate>(); // use map for simple lookup with get
-	private List<ScriptException> issues = null;
+	List<ScriptException> issues = null;
 	private Collection<String> ids = new HashSet<String>();
-	private boolean verificationMode = false;	
-	private JSPELParser elParser = new JSPELParser(variables,constants);
-	
-	public Logger LOGGER = Logger.getLogger(Parser.class);
-	
+	boolean verificationMode = false;	
+	private JSPELParser elParser = new JSPELParser(variables,constants,aggregationFunctions);
 	
 	public List<ScriptException> check (Reader reader)  throws ScriptException {
 		verificationMode = true;
-		return this.issues = new ArrayList<ScriptException>();
+		this.issues = new ArrayList<ScriptException>();
+		parse(reader);
+		return this.issues;
 	}
 	
 	public KnowledgeBase parse (Reader reader) throws ScriptException  {
-		verificationMode = false;
 		kb = new DefaultKnowledgeBase();
 		LineNumberReader bufReader = new LineNumberReader(reader);
 		String line = null;
@@ -113,40 +103,44 @@ public class Parser {
 					// comment, don't parse
 				}
 				else if (line.startsWith("@@")) {
-					System.out.println("parse line " + no + " as local annotation: " + line);
+					debug("parse line "," as global annotation: ",line);
 					parseGlobalAnnotation(line,no);
 				}
 				else if (line.startsWith("@")) {
-					System.out.println("parse line " + no + " as local annotation: " + line);
+					debug("parse line "," as local annotation: ",line);
 					parseLocalAnnotation(line,no);
 				}
 				else if (line.startsWith("var ")) {
-					System.out.println("parse line " + no + " as var declaration: " + line);
+					debug("parse line "," as var declaration: ",line);
 					parseVarDeclaration(line,no);
 				}
 				else if (line.startsWith("ref ")) {
-					System.out.println("parse line " + no + " as ref declaration: " + line);
+					debug("parse line "," as ref declaration: ",line);
 					parseRefDeclaration(line,no);
 				}
 				else if (line.startsWith("query ")) {
-					System.out.println("parse line " + no + " as query: " + line);
+					debug("parse line "," as query: ",line);
 					parseQuery(line,no);
 				}
 				else if (line.startsWith("external ")) {
-					System.out.println("parse line " + no + " as external fact store: " + line);
+					debug("parse line "," as external fact store: ",line);
 					parseExternalFactStore(line,no);
 				}
+				else if (line.startsWith("aggregation ")) {
+					debug("parse line "," as external fact store: ",line);
+					parseAggregation(line,no);
+				}
 				else if (RULE.matcher(line).matches()) {
-					System.out.println("parse line " + no + " as rule: " + line);
+					debug("parse line "," as rule: ",line);
 					parseRule(line,no);
 				}
 				else if (FACT.matcher(line).matches()) {
-					System.out.println("parse line " + no + " as fact: " + line);
+					debug("parse line "," as fact: ",line);
 					parseFact(line,no);
 				}
 
 				else {
-					error(no,"Unable to parse this line (unknown syntax type): " + line);
+					error(no,"Unable to parse this line (unknown syntax type): ",line);
 				}
 				
 			}
@@ -160,6 +154,55 @@ public class Parser {
 		return kb;
 	}
 	
+	private void parseAggregation(String line, int no) throws ScriptException {
+		check(no,line,AGGREGATION,"this is not a valid aggregation declaration");
+		line = line.substring(12).trim(); // take off aggregation
+		
+		// name
+		int sep = line.indexOf('='); // separate function name
+		String name = line.substring(0,sep).trim();
+		line = line.substring(sep+1).trim();
+		AggregationFunction f = new AggregationFunction();
+		f.setName(name);
+		
+		// kind of aggregation 
+		sep = line.indexOf(' '); // separate function name
+		String aggFunction = line.substring(0,sep);
+		line = line.substring(sep+1).trim();
+		if (aggFunction.equals("avg")) {
+			f.setAggregation(nz.org.take.Aggregations.AVG);
+		}
+		else if (aggFunction.equals("sum")) {
+			f.setAggregation(nz.org.take.Aggregations.SUM);
+		}
+		else if (aggFunction.equals("count")) {
+			f.setAggregation(nz.org.take.Aggregations.COUNT);
+		}
+		else if (aggFunction.equals("min")) {
+			f.setAggregation(nz.org.take.Aggregations.MIN);
+		}
+		else if (aggFunction.equals("max")) {
+			f.setAggregation(nz.org.take.Aggregations.MAX);
+		}
+		else {
+			error(no,"Unknown aggregation function ",aggFunction);
+		}
+		
+		// variable
+		sep = line.indexOf(' '); 
+		String vname = line.substring(0,sep);
+		line = line.substring(sep+1).trim();
+		Variable var = this.variables.get(vname);
+		if (var==null)
+			this.error(no,"The variable used in an aggregation must be declared first using the statement \"var <a type> ",vname,"\"");
+		f.setVariable(var);
+		
+		Fact query = this.parseCondition(line, no,false,false);
+		f.setQuery(query);
+		
+		aggregationFunctions.put(f.getName(),f);
+	}
+
 	private void buildQueries() throws ScriptException {
 		for (QuerySpec spec:this.querySpecs) {
 			String id = this.getId(spec);
@@ -197,23 +240,6 @@ public class Parser {
 		for (String t:description)
 			buf.append(t);
 		error(no,buf.toString());
-	}
-	private void error(int no,String... description) throws ScriptException{
-		StringBuffer buf = new StringBuffer();
-		buf.append("Parser exception at line ");
-		buf.append(no);
-		buf.append(' ');
-		for (String t:description)
-			buf.append(t);
-		error(no,buf.toString());
-	}
-	private void error(int no,String message) throws ScriptException{
-		if (this.verificationMode) {
-			this.issues.add(new ScriptException(message,no));
-		}
-		else {
-			throw new ScriptException(message,no);
-		}
 	}
 	private void check(int no,String txt,Pattern pattern,String... errorMessage) throws ScriptException {
 		if (!pattern.matcher(txt).matches()) 
@@ -286,7 +312,7 @@ public class Parser {
 			String token = tok.nextToken().trim();
 			query.getIoSpec().add("in".equals(token));
 		}
-		
+	
 		this.querySpecs.add(query);
 	}
 	
@@ -614,14 +640,14 @@ public class Parser {
 	private String getId(QuerySpec q) {
 		return q.getPredicate()+'_'+q.getIoSpec().size()+"+";
 	}
-	private void debug(Object ...strings) {
-		if (LOGGER.isDebugEnabled()) {
-			StringBuffer b = new StringBuffer();
-			for (Object s:strings)
-				b.append(s);
-			LOGGER.debug(b);
+	
+	protected void error(int no, String message) throws ScriptException {
+		if (this.verificationMode) {
+			this.issues.add(new ScriptException(message,no));
 		}
-		
+		else {
+			super.error(no, message);
+		}
 	}
 	
 }

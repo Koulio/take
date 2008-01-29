@@ -31,6 +31,7 @@ import de.odysseus.el.tree.impl.ast.AstNumber;
 import de.odysseus.el.tree.impl.ast.AstString;
 import de.odysseus.el.tree.impl.ast.AstUnary;
 import de.odysseus.el.tree.impl.ast.AstBinary.Operator;
+import nz.org.take.AggregationFunction;
 import nz.org.take.BinaryArithmeticFunction;
 import nz.org.take.Comparison;
 import nz.org.take.ComplexTerm;
@@ -49,18 +50,21 @@ import nz.org.take.Variable;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class JSPELParser {
+public class JSPELParser extends ParserSupport {
 	
 	private Map<String,Variable> variables = new HashMap<String,Variable>();
 	private Map<String,Constant> constants = new HashMap<String,Constant>();
+	private Map<String,AggregationFunction> aggregations = new HashMap<String,AggregationFunction>();
 	
 	private TreeBuilder builder = new Builder();
 	
 	public JSPELParser(Map<String, Variable> variables,
-			Map<String, Constant> constants) {
+			Map<String, Constant> constants,
+			Map<String,AggregationFunction> aggregations) {
 		super();
 		this.variables = variables;
 		this.constants = constants;
+		this.aggregations = aggregations;
 	}
 	
 	public JSPELParser() {
@@ -282,14 +286,33 @@ public class JSPELParser {
 			String p = d.toString().substring(2);
 			AstNode c = d.getChild(0); // head
 			Term t = this.parseTerm(c,line);
-			// verify property
+			ComplexTerm ct = null;
+			// try to find an aggregation function with this name
+			AggregationFunction af = this.aggregations.get(p);
+			if (af!=null) {
+				ct = new ComplexTerm();
+				this.debug("interpreting ",p," in line ",line," as aggregation function");
+				ct.setFunction(af);
+				ct.setTerms(new Term[]{t});
+			}
+			// try to find a property with this name
 			PropertyDescriptor property = findProperty(t.getType(),p,line);
-			JFunction f = new JFunction();
-			f.setMethod(property.getReadMethod());
-			ComplexTerm ct = new ComplexTerm();
-			ct.setFunction(f);
-			ct.setTerms(new Term[]{t});
-			return ct;
+			if (ct!=null && property!=null) {
+				this.warn("there are aggregations and properties defined for the name ",p," in line ",line," the symbol will be interpreted as an aggregation");
+			}
+			if (ct==null && property!=null) {
+				ct = new ComplexTerm();
+				this.debug("interpreting ",p," in line ",line," as property function");
+				JFunction f = new JFunction();
+				f.setMethod(property.getReadMethod());
+				ct = new ComplexTerm();
+				ct.setFunction(f);
+				ct.setTerms(new Term[]{t});
+			}
+			if (ct!=null)
+				return ct;
+			else 
+				this.error(line,"function symbol ",p," is neither a property nor an aggregation function");
 		}
 		
 		else if (n instanceof AstIdentifier) {
@@ -338,7 +361,7 @@ public class JSPELParser {
 			}
 		}
 		catch (IntrospectionException x) {}
-		this.error(line,"introspection exception "," cannot find property ",p,"in class ",type.getName());
+		
 		return null;
 	}
 	public Map<String, Variable> getVariables() {
@@ -354,16 +377,11 @@ public class JSPELParser {
 		this.constants = constants;
 	}
 
-	private void error(int no,Object... description) throws ScriptException{
-		StringBuffer buf = new StringBuffer();
-		buf.append("Parser exception at line ");
-		buf.append(no);
-		buf.append(' ');
-		for (Object t:description)
-			buf.append(t);
-		throw new ScriptException(buf.toString(),no);
+	public Map<String, AggregationFunction> getAggregations() {
+		return aggregations;
 	}
-	private void error(int no,Throwable t) throws ScriptException{
-		throw new ScriptException(t.getMessage(),t,no);
+
+	public void setAggregations(Map<String, AggregationFunction> aggregations) {
+		this.aggregations = aggregations;
 	}
 }
