@@ -543,7 +543,7 @@ public class TakeCompileWizardPanel extends WizardPage
 
 
 
-	private IProject getProjectFromWorkbench(IWorkbenchPage iworkbenchpage) {
+	public static IProject getProjectFromWorkbench(IWorkbenchPage iworkbenchpage) {
 		IResource res = extractSelection(iworkbenchpage.getSelection());
 
 		if(res == null)
@@ -557,7 +557,7 @@ public class TakeCompileWizardPanel extends WizardPage
 		return res.getProject();
 	}
 
-	private IResource extractSelection(ISelection sel) {
+	public static IResource extractSelection(ISelection sel) {
 		if (!(sel instanceof IStructuredSelection))
 			return null;
 		IStructuredSelection ss = (IStructuredSelection) sel;
@@ -571,7 +571,7 @@ public class TakeCompileWizardPanel extends WizardPage
 		return (IResource) adapter;
 	}
 
-	private IResource extractResource(IEditorPart editor) {
+	public static IResource extractResource(IEditorPart editor) {
 		IEditorInput input = editor.getEditorInput();
 		if (!(input instanceof IFileEditorInput))
 			return null;
