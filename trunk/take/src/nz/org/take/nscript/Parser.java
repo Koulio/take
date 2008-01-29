@@ -70,7 +70,7 @@ public class Parser extends ParserSupport {
 	public static final Pattern CONDITION1 = Pattern.compile(_NAME2+"\\[(.)*\\]");
 	public static final Pattern STRING_LITERAL = Pattern.compile("\'(.)*\'"); // TODO handle escaped quotes
 	
-	private ClassLoader classloader = Parser.class.getClassLoader(); 	
+	private ClassLoader classLoader = Parser.class.getClassLoader(); 	
 	private KnowledgeBase kb = null;
 	private Map<String,Variable> variables = new HashMap<String,Variable>();
 	private Map<String,Constant> constants = new HashMap<String,Constant>();
@@ -443,7 +443,7 @@ public class Parser extends ParserSupport {
 				return Float.TYPE;
 			if ("boolean".equals(type))
 				return Boolean.TYPE;
-			return  this.classloader.loadClass(type);
+			return  this.classLoader.loadClass(type);
 		}
 		catch (ClassNotFoundException x) {
 			throw new ScriptException("Can not load the type " + type + " referenced in line " + line,x);
@@ -648,6 +648,14 @@ public class Parser extends ParserSupport {
 		else {
 			super.error(no, message);
 		}
+	}
+
+	public ClassLoader getClassLoader() {
+		return classLoader;
+	}
+
+	public void setClassLoader(ClassLoader classloader) {
+		this.classLoader = classloader;
 	}
 	
 }

@@ -31,10 +31,13 @@ import nz.org.take.TakeException;
 
 public class ScriptKnowledgeSource implements KnowledgeSource {
 
-	private Reader reader = null;
+	private Reader reader = null; 
+	private ClassLoader classLoader = this.getClass().getClassLoader();
 	
 	public KnowledgeBase getKnowledgeBase() throws TakeException {
-		return new Parser().parse(reader);
+		Parser parser = new Parser();
+		parser.setClassLoader(classLoader);
+		return parser.parse(reader);
 	}
 
 	public ScriptKnowledgeSource (Reader reader) {
@@ -55,6 +58,14 @@ public class ScriptKnowledgeSource implements KnowledgeSource {
 	public ScriptKnowledgeSource (String fileName) throws FileNotFoundException {
 		super();
 		this.reader = new FileReader(new File(fileName));
+	}
+
+	public ClassLoader getClassLoader() {
+		return classLoader;
+	}
+
+	public void setClassLoader(ClassLoader classLoader) {
+		this.classLoader = classLoader;
 	}	
 	
 }
