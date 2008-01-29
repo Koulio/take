@@ -14,7 +14,7 @@ import java.io.StringReader;
 import org.apache.log4j.BasicConfigurator;
 import test.nz.org.take.TakeTestCase;
 import nz.org.take.KnowledgeBase;
-import nz.org.take.script.*;
+import nz.org.take.nscript.*;
 import nz.org.take.verification.CheckPredicatesInQueries;
 import nz.org.take.verification.CheckVariablesInQueries;
 
