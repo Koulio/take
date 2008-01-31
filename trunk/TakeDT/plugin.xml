@@ -7,7 +7,7 @@
             class="nz.ac.massey.take.takeep.editor.TakeEditor"
             contributorClass="nz.ac.massey.take.takeep.editor.TakeEditorActionContributor"
             extensions="take"
-            icon="icons/fishhook.jpg"
+            icon="src/icons/fishhook.jpg"
             id="TakeEP.takeEditor"
             name="Take Editor">
       </editor>
@@ -22,7 +22,7 @@
             allowMultiple="false"
             category="ac.nz.massey.take"
             class="nz.ac.massey.take.takeep.view.TakeView"
-            icon="icons/fishhook.jpg"
+            icon="src/icons/fishhook.jpg"
             id="TakeDT.view"
             name="View">
       </view>

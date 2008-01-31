@@ -1,6 +1,8 @@
 package nz.ac.massey.take.takeep.actionsSets.wizards;
 
 import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringReader;
 
 import nz.ac.massey.take.takeep.actionsSets.panels.TakeCompileWizardPanel;
 import nz.ac.massey.take.takeep.editor.TakeEditor;
@@ -73,9 +75,9 @@ public class TakeCompilerWizard extends Wizard {
 		IEditorInput editorInput = workbench.getActiveEditor().getEditorInput();
 		if (editorInput instanceof FileEditorInput) {
 			try {
-				InputStream script = ((FileEditorInput) editorInput).getFile()
-						.getContents();
-
+				Reader script;
+				script = new StringReader(((TakeEditor)workbench.getActiveEditor()).getDocumentProvider() .getDocument(editorInput).get());
+				
 				ScriptKnowledgeSource ksource = new ScriptKnowledgeSource(
 						script);
 				ksource.setClassLoader(cl);
