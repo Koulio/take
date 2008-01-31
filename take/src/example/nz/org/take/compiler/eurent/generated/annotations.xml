@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?> 
-<java version="1.6.0_02" class="java.beans.XMLDecoder"> 
+<java version="1.6.0_01" class="java.beans.XMLDecoder"> 
  <object class="java.util.HashMap"> 
   <void method="put"> 
    <string>___global_annotations</string> 
@@ -18,16 +18,16 @@
    <string>rule1</string> 
    <object class="java.util.HashMap"> 
     <void method="put"> 
-     <string>take.auto.tostring</string> 
+     <string>take.auto.name</string> 
      <string> IF storedAt(&lt;car&gt;,&lt;branch&gt;) AND isScheduledForService(&lt;car&gt;) AND assignedTo(&lt;car&gt;,&lt;rental&gt;) THEN /availableAt(&lt;car&gt;,&lt;branch&gt;)</string> 
     </void> 
     <void method="put"> 
      <string>take.auto.creator</string> 
-     <string>jens</string> 
+     <string>jbdietri</string> 
     </void> 
     <void method="put"> 
      <string>take.auto.date</string> 
-     <string>16/10/2007 12:46:24</string> 
+     <string>1/02/2008 10:15:13</string> 
     </void> 
    </object> 
   </void> 

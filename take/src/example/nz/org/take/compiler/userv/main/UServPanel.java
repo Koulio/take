@@ -79,7 +79,7 @@ public class UServPanel extends JPanel {
 	MultiValueResultView multiOutPolicyEligibilityScore = new MultiValueResultView() {
 		public int extractValue(Object object) {
 			PolicyEligibilityScore pes = (PolicyEligibilityScore)object;
-			return pes.score;
+			return (int)pes.score;
 		}
 	};
 	JTextField txtInsuranceEligibility = createOutputTextField();
@@ -88,19 +88,19 @@ public class UServPanel extends JPanel {
 	MultiValueResultView multiAdditionalPremium = new MultiValueResultView() {
 		public int extractValue(Object object) {
 			AdditionalPremium pes = (AdditionalPremium)object;
-			return pes.premium;
+			return (int)pes.premium;
 		}
 	};
 	MultiValueResultView multiAdditionalDriverPremium = new MultiValueResultView() {
 		public int extractValue(Object object) {
 			AdditionalDriverPremium pes = (AdditionalDriverPremium)object;
-			return pes.premium;
+			return (int)pes.premium;
 		}
 	};
 	MultiValueResultView multiPremiumDiscount = new MultiValueResultView() {
 		public int extractValue(Object object) {
 			PremiumDiscount pes = (PremiumDiscount)object;
-			return pes.discount;
+			return (int)pes.discount;
 		}
 	};
 	public UServPanel() {
