@@ -33,10 +33,12 @@ public class ScriptKnowledgeSource implements KnowledgeSource {
 
 	private Reader reader = null; 
 	private ClassLoader classLoader = this.getClass().getClassLoader();
+	private AnnotationPropagationPolicy annotationPolicy = AnnotationPropagationPolicy.ALL;
 	
 	public KnowledgeBase getKnowledgeBase() throws TakeException {
 		Parser parser = new Parser();
 		parser.setClassLoader(classLoader);
+		parser.setAnnotationPolicy(annotationPolicy);
 		return parser.parse(reader);
 	}
 
@@ -66,6 +68,14 @@ public class ScriptKnowledgeSource implements KnowledgeSource {
 
 	public void setClassLoader(ClassLoader classLoader) {
 		this.classLoader = classLoader;
+	}
+
+	public AnnotationPropagationPolicy getAnnotationPolicy() {
+		return annotationPolicy;
+	}
+
+	public void setAnnotationPolicy(AnnotationPropagationPolicy annotationPolicy) {
+		this.annotationPolicy = annotationPolicy;
 	}	
 	
 }

@@ -70,7 +70,6 @@ public class Parser extends ParserSupport {
 	public static final Pattern FACT = Pattern.compile(_NAME1+":(.)*");
 	public static final Pattern CONDITION1 = Pattern.compile(_NAME2+"\\[(.)*\\]");
 	public static final Pattern STRING_LITERAL = Pattern.compile("\'(.)*\'"); // TODO handle escaped quotes
-	
 	private ClassLoader classLoader = Parser.class.getClassLoader(); 	
 	private KnowledgeBase kb = null;
 	private Map<String,Variable> variables = new HashMap<String,Variable>();
@@ -84,7 +83,7 @@ public class Parser extends ParserSupport {
 	private Collection<String> ids = new HashSet<String>();
 	boolean verificationMode = false;	
 	private JSPELParser elParser = new JSPELParser(variables,constants,aggregationFunctions);
-	
+	private AnnotationPropagationPolicy annotationPolicy = AnnotationPropagationPolicy.ALL;
 	public List<ScriptException> check (Reader reader)  throws ScriptException {
 		verificationMode = true;
 		this.issues = new ArrayList<ScriptException>();
@@ -509,6 +508,11 @@ public class Parser extends ParserSupport {
 	
 	
 	private void consumeAnnotations(Annotatable a) {
+		for (String gaKey:this.kb.getAnnotations().keySet()) {
+			if (this.annotationPolicy.propagateAnnotation(gaKey)) {
+				a.addAnnotation(gaKey,this.kb.getAnnotation(gaKey));
+			}
+		}
 		a.addAnnotations(this.localAnnotations);
 		this.localAnnotations.clear();
 	}
@@ -672,6 +676,14 @@ public class Parser extends ParserSupport {
 
 	public void setClassLoader(ClassLoader classloader) {
 		this.classLoader = classloader;
+	}
+
+	public AnnotationPropagationPolicy getAnnotationPolicy() {
+		return annotationPolicy;
+	}
+
+	public void setAnnotationPolicy(AnnotationPropagationPolicy annotationPolicy) {
+		this.annotationPolicy = annotationPolicy;
 	}
 	
 }
