@@ -1,8 +1,11 @@
 package nz.ac.massey.take.takeep.editor;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -13,7 +16,6 @@ import java.util.List;
 import nz.ac.massey.take.takeep.actionsSets.compileActions.TakeCompileToClasses;
 import nz.ac.massey.take.takeep.actionsSets.compileActions.TakeCompileToInterfaces;
 import nz.ac.massey.take.takeep.actionsSets.panels.TakeCompileWizardPanel;
-import nz.ac.massey.take.takeep.actionsSets.takeSourceActions.TakeCompilerAnnotations;
 import nz.ac.massey.take.takeep.actionsSets.verifyActions.TakeRunVerifiers;
 import nz.ac.massey.take.takeep.editor.TakeSourceViewerConfiguration.TAKE_TOKENS;
 import nz.ac.massey.take.takeep.editor.tokens.TakePartitionScanner.TAKE_PARTITIONS;
@@ -49,7 +51,6 @@ import org.eclipse.ui.texteditor.IElementStateListener;
 import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.eclipse.ui.texteditor.ResourceMarkerAnnotationModel;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
-import org.hsqldb.lib.StringInputStream;
 
 public class TakeEditor extends TextEditor {
 
@@ -219,14 +220,11 @@ public class TakeEditor extends TextEditor {
 
 			Parser p = new Parser();
 			p.setClassLoader(cl);
-			InputStream script;
-			script = ((FileEditorInput) this.getEditorInput()).getFile()
-					.getContents();
-			script = new StringInputStream(this.getDocumentProvider()
-					.getDocument(this.getEditorInput()).get());
+			Reader script;
+			script = new StringReader(this.getDocumentProvider() .getDocument(this.getEditorInput()).get());
 
 			List<ScriptException> check = p
-					.check(new InputStreamReader(script));
+					.check(script);
 			for (ScriptException se : check) {
 				IMarker marker = ((FileEditorInput) this.getEditorInput())
 						.getFile().createMarker(IMarker.PROBLEM);
@@ -253,7 +251,7 @@ public class TakeEditor extends TextEditor {
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 
 	}
 
@@ -306,9 +304,6 @@ public class TakeEditor extends TextEditor {
 		verifyMenu.add(new TakeRunVerifiers());
 		menu.appendToGroup("Take", verifyMenu);
 
-		MenuManager takeSource = new MenuManager("Take Source");
-		takeSource.add(new TakeCompilerAnnotations());
-		menu.appendToGroup("Take", takeSource);
 
 	}
 
