@@ -13,6 +13,8 @@ package nz.org.take;
 import java.util.ArrayList;
 import java.util.List;
 
+import nz.org.take.compiler.util.PrimitiveTypeUtils;
+
 /**
  * Function aggregation the results of several other queries.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
@@ -92,7 +94,7 @@ public class AggregationFunction implements Function {
 
 	public Class getReturnType() {
 		if (this.getAggregation()==Aggregations.COUNT)
-			return Integer.TYPE;
+			return PrimitiveTypeUtils.getDefaultIntegerType();
 		else
 			return this.variable.getType();		
 	}

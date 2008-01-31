@@ -17,6 +17,9 @@ package nz.org.take.compiler.util;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 public class PrimitiveTypeUtils {
+	public static Class getDefaultIntegerType() {
+		return Long.TYPE;
+	}
 	public static Class getType(Class clazz) {
 		Class t = null;
 		if (clazz.isPrimitive()) {
