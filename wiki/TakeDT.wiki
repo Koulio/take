@@ -1,6 +1,4 @@
 #labels Plugin,TakeDT,Take
-#The description of the TakeDT project, and how to access this plug-in
-
 = Introduction =
 
 This is about TakeDT, the Eclipse plug-in
@@ -19,4 +17,3 @@ Using the Eclipse Update Manager
 4. Click Finish then select the plug-in to install.
 
 This is a beta plug-in, so we claim no responsibility if your eclipse dies, or computer blows up, or anything in between.
-
