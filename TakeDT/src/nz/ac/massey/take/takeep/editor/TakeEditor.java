@@ -23,8 +23,10 @@ import nz.ac.massey.take.takeep.outline.TakeOutline;
 import nz.org.take.nscript.Parser;
 import nz.org.take.nscript.ScriptException;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -213,9 +215,12 @@ public class TakeEditor extends TextEditor {
 					.getAnnotationModel(getEditorInput());
 			for (Annotation a : this.anno.keySet()) {
 				annotationModel.removeAnnotation(a);
-				this.anno.get(a).delete();
+				
 
 			}
+			IFile file = ((FileEditorInput) this.getEditorInput())
+			.getFile();
+			file.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
 			this.anno.clear();
 
 			Parser p = new Parser();
@@ -226,10 +231,10 @@ public class TakeEditor extends TextEditor {
 			List<ScriptException> check = p
 					.check(script);
 			for (ScriptException se : check) {
-				IMarker marker = ((FileEditorInput) this.getEditorInput())
-						.getFile().createMarker(IMarker.PROBLEM);
+				
+				IMarker marker = file.createMarker(IMarker.PROBLEM);
 				marker.setAttribute(IMarker.MESSAGE, se.getMessage());
-				marker.setAttribute(IMarker.LOCATION, "line " + se.getLine());
+				marker.setAttribute(IMarker.LOCATION,""+ se.getLine());
 				Annotation annotation = new Annotation(
 						"org.eclipse.ui.workbench.texteditor.error", false, se
 								.getMessage());
