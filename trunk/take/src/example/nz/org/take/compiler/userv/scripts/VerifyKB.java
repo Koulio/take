@@ -15,7 +15,7 @@ package example.nz.org.take.compiler.userv.scripts;
 import java.io.InputStream;
 import org.apache.log4j.BasicConfigurator;
 import nz.org.take.KnowledgeBase;
-import nz.org.take.script.ScriptKnowledgeSource;
+import nz.org.take.nscript.ScriptKnowledgeSource;
 import nz.org.take.verification.DefaultVerificationTool;
 
 

@@ -19,7 +19,7 @@ import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.DefaultNameGenerator;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
-import nz.org.take.script.ScriptKnowledgeSource;
+import nz.org.take.nscript.ScriptKnowledgeSource;
 
 
 /**
@@ -47,7 +47,6 @@ public class GenerateStandaloneClass {
 		compiler.setLocation(location);
 		compiler.setPackageName("example.nz.org.take.compiler.userv.generated");
 		compiler.setClassName("UservRules");
-		compiler.compile(ksource.getKnowledgeBase());
 		
 		long before = System.currentTimeMillis();
 		compiler.compile(ksource.getKnowledgeBase());

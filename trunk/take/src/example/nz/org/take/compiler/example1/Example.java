@@ -15,14 +15,11 @@ package example.nz.org.take.compiler.example1;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
-import nz.org.take.script.ScriptKnowledgeSource;
-
+import nz.org.take.nscript.ScriptKnowledgeSource;
 import org.apache.log4j.BasicConfigurator;
-
 import example.nz.org.take.compiler.example1.spec.CustomerDiscount;
 import example.nz.org.take.compiler.example1.spec.DiscountPolicy;
 

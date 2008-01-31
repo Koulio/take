@@ -198,12 +198,12 @@ DE_DRC01: if hasBeenConvictedOfaDUI[driver] then isHighRiskDriver[driver]
 @author=Jens Dietrich
 @date=2007-09-12
 @description=If the number of accidents the applicant has been involved in is greater than 2, then the driver is a High Risk Driver.
-DE_DRC02: if driver.getNumberOfAccidentsInvolvedIn>2 then isHighRiskDriver[driver]
+DE_DRC02: if driver.numberOfAccidentsInvolvedIn>2 then isHighRiskDriver[driver]
 @category=Driver Eligibility Rule Set
 @author=Jens Dietrich
 @date=2007-09-12
 @description=If the driver has had more that 3 moving violations in the last two years, then the driver is a High Risk Driver.
-DE_DRC03: if driver.getNumberOfMovingViolationsInLastTwoYears>3 then isHighRiskDriver[driver]
+DE_DRC03: if driver.numberOfMovingViolationsInLastTwoYears>3 then isHighRiskDriver[driver]
 // Eligibility Scoring Rule Set
 @category=Eligibility Scoring Rule Set
 @author=Jens Dietrich
@@ -418,7 +418,7 @@ DP_08: if isHighRiskDriver[driver] then additionalDriverPremium[driver,1000]
 @description=Raise the premium by $ 150 per accident.
 // remark1 - added prerequisite, otherwise there will be an additional driver premium of 0 for clients without accidents
 // remark2 - the scripting of the mathematical function in the rule head is rather clumsy, this will be changed in a future version
-DP_09: if driver.getNumberOfAccidentsInvolvedIn>0 then additionalDriverPremium[driver,*(150,driver.getNumberOfAccidentsInvolvedIn)]
+DP_09: if driver.numberOfAccidentsInvolvedIn>0 then additionalDriverPremium[driver,150*driver.numberOfAccidentsInvolvedIn]
 // Market Discounts Rule Set
 @category=Market Discounts Rule Set
 @author=Jens Dietrich
