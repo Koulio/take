@@ -37,6 +37,7 @@ import nz.org.take.AbstractPredicate;
 import nz.org.take.AggregationFunction;
 import nz.org.take.Annotatable;
 import nz.org.take.AnnotationKeys;
+import nz.org.take.ComplexTerm;
 import nz.org.take.Constant;
 import nz.org.take.DefaultKnowledgeBase;
 import nz.org.take.DerivationRule;
@@ -362,8 +363,23 @@ public class Parser extends ParserSupport {
 		line = line.substring(sep+1).trim();		
 		Fact fact = this.parseCondition(line,no,false,false);
 		this.checkId(label,no);
-		fact.setId(label);
-		this.kb.add(fact);
+		// if fact contains variables, it should be added as a rule
+		// TODO: this should better be done by the compiler
+		boolean hasVars = false;
+		for (Term t:fact.getTerms()) {
+			hasVars = hasVars || (t instanceof Variable) || (t instanceof ComplexTerm);
+		}
+		
+		if (hasVars) {
+			DerivationRule rule = new DerivationRule();
+			rule.setId(label);
+			rule.setHead(fact);
+			this.kb.add(rule);
+		}
+		else {
+			fact.setId(label);
+			this.kb.add(fact);
+		}
 
 	}
 	

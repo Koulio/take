@@ -16,7 +16,6 @@ import test.nz.org.take.compiler.scenario10.generated.KB;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.ResultSet;
 import nz.org.take.nscript.ScriptKnowledgeSource;
-import junit.framework.TestCase;
 
 /**
  * Tests for this scenario. 

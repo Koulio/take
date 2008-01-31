@@ -11,8 +11,6 @@
 package test.nz.org.take.compiler.scenario9;
 
 import java.util.HashMap;
-import java.util.Map;
-import junit.framework.TestCase;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.ResultSet;
 import nz.org.take.nscript.ScriptKnowledgeSource;
@@ -52,7 +50,6 @@ public class Tests extends TakeTestCase
 	{
 		super.setUp();
 		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
-		Map<String,Object> factStores = new HashMap<String,Object>();
 		kb = kbm.getKnowledgeBase(
 				KB.class, 
 				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/scenario9/rules9.take")),

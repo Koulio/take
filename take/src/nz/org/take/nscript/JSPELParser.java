@@ -16,6 +16,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import javax.el.ELException;
 import de.odysseus.el.tree.ExpressionNode;
 import de.odysseus.el.tree.Node;
 import de.odysseus.el.tree.Tree;
@@ -24,6 +25,7 @@ import de.odysseus.el.tree.impl.Builder;
 import de.odysseus.el.tree.impl.ast.AstBinary;
 import de.odysseus.el.tree.impl.ast.AstDot;
 import de.odysseus.el.tree.impl.ast.AstEval;
+import de.odysseus.el.tree.impl.ast.AstFunction;
 import de.odysseus.el.tree.impl.ast.AstIdentifier;
 import de.odysseus.el.tree.impl.ast.AstNested;
 import de.odysseus.el.tree.impl.ast.AstNode;
@@ -37,13 +39,13 @@ import nz.org.take.Comparison;
 import nz.org.take.ComplexTerm;
 import nz.org.take.Constant;
 import nz.org.take.Function;
-import nz.org.take.JFunction;
 import nz.org.take.JPredicate;
 import nz.org.take.Predicate;
 import nz.org.take.Prerequisite;
 import nz.org.take.TakeException;
 import nz.org.take.Term;
 import nz.org.take.Variable;
+import nz.org.take.compiler.util.PrimitiveTypeUtils;
 
 /**
  * JUEL based parser for JSP EL expressions.
@@ -229,19 +231,17 @@ public class JSPELParser extends ParserSupport {
 	}
 	
 	private boolean isNumeric(Class type) {
-		return (type.isPrimitive() && type!=Boolean.TYPE) || 
-			Byte.class==type ||
-			Double.class==type ||
-			Float.class==type ||
-			Integer.class==type ||
-			Long.class==type ||
-			Short.class==type ||
-			Character.class==type;
+		return PrimitiveTypeUtils.isNumericType(type);
 	}
 	public Term parseTerm(String s,int line) throws ScriptException {
 		s = "${" + s + "}"; // EL parser expects this
-		Tree tree = builder.build(s);
-		return parseTerm(tree.getRoot(),line);
+		try {
+			Tree tree = builder.build(s);
+			return parseTerm(tree.getRoot(),line);
+		}
+		catch (ELException x) {
+			throw new ScriptException("Parser exception at line "+line+ " caused by EL parser exception",line);
+		}
 	}
 	public Term parseTerm(Node n,int line) throws ScriptException {
 		boolean MINUS = false;
@@ -254,8 +254,7 @@ public class JSPELParser extends ParserSupport {
 			MINUS=true;
 			n = n.getChild(0);
 		} 
-		
-		
+				
 		if (n instanceof AstNumber) {
 			AstNumber _n = (AstNumber)n;
 			Number o = (Number)_n.eval(null,null);
@@ -286,33 +285,15 @@ public class JSPELParser extends ParserSupport {
 			String p = d.toString().substring(2);
 			AstNode c = d.getChild(0); // head
 			Term t = this.parseTerm(c,line);
-			ComplexTerm ct = null;
-			// try to find an aggregation function with this name
-			AggregationFunction af = this.aggregations.get(p);
-			if (af!=null) {
-				ct = new ComplexTerm();
-				this.debug("interpreting ",p," in line ",line," as aggregation function");
-				ct.setFunction(af);
-				ct.setTerms(new Term[]{t});
-			}
-			// try to find a property with this name
-			PropertyDescriptor property = findProperty(t.getType(),p,line);
-			if (ct!=null && property!=null) {
-				this.warn("there are aggregations and properties defined for the name ",p," in line ",line," the symbol will be interpreted as an aggregation");
-			}
-			if (ct==null && property!=null) {
-				ct = new ComplexTerm();
-				this.debug("interpreting ",p," in line ",line," as property function");
-				JFunction f = new JFunction();
-				f.setMethod(property.getReadMethod());
-				ct = new ComplexTerm();
+			
+			// function with this name
+			Function f = createFunction(p, line,t.getType());
+			if (f!=null) {
+				ComplexTerm ct = new ComplexTerm();
 				ct.setFunction(f);
 				ct.setTerms(new Term[]{t});
-			}
-			if (ct!=null)
 				return ct;
-			else 
-				this.error(line,"function symbol ",p," is neither a property nor an aggregation function");
+			}			
 		}
 		
 		else if (n instanceof AstIdentifier) {
@@ -327,7 +308,7 @@ public class JSPELParser extends ParserSupport {
 			if (t!=null) 
 				return t;	
 			else 
-				this.error(line,"Identifier ",identifier,"has not yet been declared - use var or ref to declare it");
+				this.error(line,"identifier ",identifier,"has not yet been declared - use var or ref to declare it");
 		}
 		
 		else if (n instanceof AstBinary) {
@@ -346,8 +327,39 @@ public class JSPELParser extends ParserSupport {
 			AstNested nn = (AstNested)n;
 			return this.parseTerm(nn.getChild(0), line);
 		}
+		else if (n instanceof AstFunction) {
+			AstFunction f = (AstFunction)n;
+			String name = f.getName();
+			int s = f.getCardinality();
+			Term[] terms = new Term[s];
+			Class[] termTypes = new Class[s];
+			for (int i=0;i<s;i++) {
+				terms[i] = this.parseTerm(n.getChild(i), line);
+				termTypes[i] = terms[i].getType();
+			}
+			ComplexTerm ct = new ComplexTerm();
+			ct.setTerms(terms);
+			
+			Function af = createFunction(name,line,termTypes);
+			if (af!=null) {
+				ct.setFunction(af);
+				return ct;
+			}
+		}
 		
-		throw new ScriptException("Cannot parse EL expression: " + n);
+		this.error(line,"cannot parse EL expression: ",n);
+		return null;
+	}
+	private Function createFunction(String name,int line,Class... termTypes) throws ScriptException {
+		Function f = FunctionFactory.getDefaultInstance().createFunction(name,this.aggregations,termTypes);	
+		if (f==null) {
+			this.error(line,"cannot interpret ",name," as a function");
+			return null;
+		}
+		else {
+			this.debug("interpreting ",name," in line ",line," as function ",f);
+			return f;
+		}
 	}
 	private PropertyDescriptor findProperty(Class type, String p, int line) throws ScriptException {
 		PropertyDescriptor[] properties = null;

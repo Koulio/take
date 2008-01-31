@@ -11,14 +11,12 @@
 package test.nz.org.take.compiler.scenario1;
 
 import java.util.Iterator;
-
 import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.scenario1.generated.*;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.nscript.ScriptKnowledgeSource;
 import nz.org.take.rt.DerivationController;
 import nz.org.take.rt.ResultSet;
-import junit.framework.TestCase;
 
 /**
  * Tests for this scenario. 
