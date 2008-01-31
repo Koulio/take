@@ -20,6 +20,16 @@ public class PrimitiveTypeUtils {
 	public static Class getDefaultIntegerType() {
 		return Long.TYPE;
 	}
+	public static boolean isNumericType(Class type) {
+		return (type.isPrimitive() && type!=Boolean.TYPE) || 
+			Byte.class==type ||
+			Double.class==type ||
+			Float.class==type ||
+			Integer.class==type ||
+			Long.class==type ||
+			Short.class==type ||
+			Character.class==type;
+	}
 	public static Class getType(Class clazz) {
 		Class t = null;
 		if (clazz.isPrimitive()) {

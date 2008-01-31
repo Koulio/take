@@ -13,7 +13,6 @@ package test.nz.org.take.compiler.scenario6;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import junit.framework.TestCase;
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.rt.DerivationController;
 import nz.org.take.rt.ResultSet;

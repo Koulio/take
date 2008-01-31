@@ -21,7 +21,6 @@ import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
 import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.scenario2.generated.*;
-import junit.framework.TestCase;
 
 /**
  * Tests for this scenario. 
@@ -75,7 +74,6 @@ public class Tests extends TakeTestCase
 		System.out.println("starting test case 1");
 		nz.org.take.rt.ResultSet<AncestorRelationship> results = kb.isAncestor("r0","r");	
 		assertTrue(results.hasNext());
-		AncestorRelationship next = results.next();
 		List<DerivationLogEntry> x = results.getDerivationLog();
 		results.getDerivationController().printLog();
 		assertEquals("Wrong number of rules",1,countRules(x));
@@ -89,7 +87,6 @@ public class Tests extends TakeTestCase
 		
 		ResultSet<AncestorRelationship> results = kb.isAncestor("r1","r");	
 		assertTrue(results.hasNext());
-		AncestorRelationship next = results.next();
 		List<DerivationLogEntry> x = results.getDerivationLog();
 		results.getDerivationController().printLog();
 		assertEquals("Wrong number of rules",1,countRules(x));
@@ -103,7 +100,6 @@ public class Tests extends TakeTestCase
 		
 		ResultSet<AncestorRelationship> results = kb.isAncestor("r00","r");	
 		assertTrue(results.hasNext());
-		AncestorRelationship next = results.next();
 		List<DerivationLogEntry> x = results.getDerivationLog();
 		results.getDerivationController().printLog();
 		assertEquals("Wrong number of rules",2,countRules(x));
@@ -118,7 +114,6 @@ public class Tests extends TakeTestCase
 		
 		ResultSet<AncestorRelationship> results = kb.isAncestor("r11","r");	
 		assertTrue(results.hasNext());
-		AncestorRelationship next = results.next();
 		List<DerivationLogEntry> x = results.getDerivationLog();
 		results.getDerivationController().printLog();
 		assertEquals("Wrong number of rules",2,countRules(x));
@@ -133,7 +128,6 @@ public class Tests extends TakeTestCase
 		
 		ResultSet<AncestorRelationship> results = kb.isAncestor("r000","r");	
 		assertTrue(results.hasNext());
-		AncestorRelationship next = results.next();
 		List<DerivationLogEntry> x = results.getDerivationLog();
 		results.getDerivationController().printLog();
 		assertEquals("Wrong number of rules",2,countRules(x));

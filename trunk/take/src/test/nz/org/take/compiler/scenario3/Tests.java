@@ -18,7 +18,6 @@ import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
 import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.scenario3.generated.*;
-import junit.framework.TestCase;
 
 /**
  * Tests for this scenario. 
@@ -100,15 +99,6 @@ public class Tests extends TakeTestCase
 		}
 		return count;
 	} 
-	private int countFacts(List<DerivationLogEntry> x) {
-		Set<DerivationLogEntry> set = new HashSet<DerivationLogEntry>(); // remove duplicates
-		set.addAll(x);
-		int count = 0;
-		for (DerivationLogEntry e:set) {
-			if (e.getKind()==DerivationController.FACT)
-				count = count+1;
-		}
-		return count;
-	} 
+
 }
 	
