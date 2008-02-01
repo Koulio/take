@@ -13,7 +13,6 @@ package nz.org.take;
 import java.util.ArrayList;
 import java.util.List;
 
-import nz.org.take.compiler.util.PrimitiveTypeUtils;
 
 /**
  * Function aggregation the results of several other queries.

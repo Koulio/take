@@ -42,10 +42,11 @@ import nz.org.take.Function;
 import nz.org.take.JPredicate;
 import nz.org.take.Predicate;
 import nz.org.take.Prerequisite;
+import nz.org.take.PrimitiveTypeUtils;
 import nz.org.take.TakeException;
 import nz.org.take.Term;
+import nz.org.take.UnaryArithmeticFunction;
 import nz.org.take.Variable;
-import nz.org.take.compiler.util.PrimitiveTypeUtils;
 
 /**
  * JUEL based parser for JSP EL expressions.
@@ -245,7 +246,7 @@ public class JSPELParser extends ParserSupport {
 	}
 	public Term parseTerm(Node n,int line) throws ScriptException {
 		boolean MINUS = false;
-		
+		Term t = null;
 		if (n instanceof AstEval) {
 			n = n.getChild(0);
 		}
@@ -259,16 +260,8 @@ public class JSPELParser extends ParserSupport {
 			AstNumber _n = (AstNumber)n;
 			Number o = (Number)_n.eval(null,null);
 			Constant c = new Constant();
-			if (MINUS) {
-				if (o instanceof Double) {
-					o = new Double(-o.doubleValue());
-				}
-				else if (o instanceof Long) {
-					o = new Long(-o.longValue());
-				}
-			}
 			c.setObject(o);
-			return c;
+			t = c;
 		}
 		
 		else if (n instanceof AstString) {
@@ -276,7 +269,7 @@ public class JSPELParser extends ParserSupport {
 			String o = (String)_n.eval(null,null);
 			Constant c = new Constant();
 			c.setObject(o);
-			return c;
+			t = c;
 		}
 		
 		else if (n instanceof AstDot) {
@@ -284,15 +277,15 @@ public class JSPELParser extends ParserSupport {
 			// TODO hack: remove ". " prefix - will have to modify JUEL to access property name directly
 			String p = d.toString().substring(2);
 			AstNode c = d.getChild(0); // head
-			Term t = this.parseTerm(c,line);
+			Term t2 = this.parseTerm(c,line);
 			
 			// function with this name
-			Function f = createFunction(p, line,t.getType());
+			Function f = createFunction(p, line,t2.getType());
 			if (f!=null) {
 				ComplexTerm ct = new ComplexTerm();
 				ct.setFunction(f);
-				ct.setTerms(new Term[]{t});
-				return ct;
+				ct.setTerms(new Term[]{t2});
+				t = ct;
 			}			
 		}
 		
@@ -300,15 +293,17 @@ public class JSPELParser extends ParserSupport {
 			// TODO hack: remove toString and  modify JUEL to access name property directly
 			String identifier = n.toString();
 			// try to find a variable 
-			Term t = this.variables.get(identifier);
-			if (t!=null) 
-				return t;
+			Term t2 = this.variables.get(identifier);
+			if (t2!=null) 
+				t = t2;
 			// try to find a constant 
-			t = this.constants.get(identifier);
-			if (t!=null) 
-				return t;	
-			else 
-				this.error(line,"identifier ",identifier,"has not yet been declared - use var or ref to declare it");
+			else {
+				t2 = this.constants.get(identifier);
+				if (t2!=null) 
+					t = t2;	
+				else 
+					this.error(line,"identifier ",identifier," has not yet been declared - use var or ref to declare it");
+			}
 		}
 		
 		else if (n instanceof AstBinary) {
@@ -320,12 +315,12 @@ public class JSPELParser extends ParserSupport {
 			ComplexTerm ct = new ComplexTerm();
 			ct.setFunction(f);
 			ct.setTerms(new Term[]{t1,t2});
-			return ct;
+			t = ct;
 		}
 		
 		else if (n instanceof AstNested) {
 			AstNested nn = (AstNested)n;
-			return this.parseTerm(nn.getChild(0), line);
+			t = this.parseTerm(nn.getChild(0), line);
 		}
 		else if (n instanceof AstFunction) {
 			AstFunction f = (AstFunction)n;
@@ -343,13 +338,54 @@ public class JSPELParser extends ParserSupport {
 			Function af = createFunction(name,line,termTypes);
 			if (af!=null) {
 				ct.setFunction(af);
-				return ct;
+				t = ct;
 			}
 		}
+		// negate if necessary
+		if (MINUS) {
+			t = applyMinus(t,line);
+		}
+			
+		
+		if (t!=null)
+			return t;
 		
 		this.error(line,"cannot parse EL expression: ",n);
 		return null;
 	}
+	private Term applyMinus(Term t,int line) throws ScriptException {
+		Class type = t.getType();
+		if (PrimitiveTypeUtils.isNumericType(type)) {
+			if (t instanceof Constant) {
+				if (type == Long.class) {
+					Constant c = new Constant();
+					c.setObject(new Long(-((Long)((Constant)t).getObject()).longValue()));
+					return c;
+				}
+				else if (type == Double.class) {
+					Constant c = new Constant();
+					c.setObject(new Double(-((Double)((Constant)t).getObject()).doubleValue()));
+					return c;
+				}
+				else {
+					this.error(line,"Unsupported numeric type ",type);
+				}
+			}
+			else {
+				ComplexTerm ct = new ComplexTerm();
+				Function f = UnaryArithmeticFunction.getMINUS(t.getType());
+				ct.setTerms(new Term[]{t});
+				ct.setFunction(f);
+				return ct;
+			}
+			
+		}
+		else {
+			this.error(line,"minus operator cannot be applied to terms of type ",type );
+		}
+		return null;
+	}
+
 	private Function createFunction(String name,int line,Class... termTypes) throws ScriptException {
 		Function f = FunctionFactory.getDefaultInstance().createFunction(name,this.aggregations,termTypes);	
 		if (f==null) {
