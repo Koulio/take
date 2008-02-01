@@ -8,26 +8,16 @@
  * and limitations under the License.
  */
 
-package nz.org.take.script;
+package test.nz.org.take.compiler.scenario11;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Bean {
+	private int ranking = 0;
 
-/**
- * Abstract term container type.
- * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
- */
-
-public abstract class TermContainer  extends ScriptElement {
-	
-	protected List<Term> terms = new ArrayList<Term>();
-
-
-	public List<Term> getTerms() {
-		return terms;
-	}
-	public void add(Term t) {
-		this.terms.add(t);
+	public int getRanking() {
+		return ranking;
 	}
 
+	public void setRanking(int ranking) {
+		this.ranking = ranking;
+	}
 }

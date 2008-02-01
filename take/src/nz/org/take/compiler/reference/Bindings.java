@@ -20,6 +20,7 @@ import nz.org.take.BinaryArithmeticFunction;
 import nz.org.take.ComplexTerm;
 import nz.org.take.JFunction;
 import nz.org.take.Term;
+import nz.org.take.UnaryArithmeticFunction;
 import nz.org.take.compiler.CompilerException;
 import nz.org.take.compiler.NameGenerator;
 
@@ -93,6 +94,11 @@ public class Bindings  {
 			buf.append(this.getRef(terms[0]));
 			buf.append(f.getName());
 			buf.append(this.getRef(terms[1]));
+		}
+		else if (t.getFunction() instanceof UnaryArithmeticFunction) {
+			UnaryArithmeticFunction f = (UnaryArithmeticFunction)t.getFunction();
+			buf.append(f.getName());
+			buf.append(this.getRef(terms[0]));
 		}
 		else 
 			throw new CompilerException("ComplexTerms are only supported if the function is a JFunction or an AggregationFunction");

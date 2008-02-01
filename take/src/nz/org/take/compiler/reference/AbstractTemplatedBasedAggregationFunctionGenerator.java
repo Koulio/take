@@ -20,11 +20,11 @@ import nz.org.take.AggregationFunction;
 import nz.org.take.Aggregations;
 import nz.org.take.Constant;
 import nz.org.take.Predicate;
+import nz.org.take.PrimitiveTypeUtils;
 import nz.org.take.Query;
 import nz.org.take.Term;
 import nz.org.take.Variable;
 import nz.org.take.compiler.CompilerException;
-import nz.org.take.compiler.util.PrimitiveTypeUtils;
 
 /**
  * Abstract superclass for template based function generators.

@@ -11,31 +11,35 @@
 
 package nz.org.take;
 
-
 /**
- * Functions representing binary operations on numbers.
+ * Functions representing unary operations on numbers.
+ * Right now only minus (-) is supported!!
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class BinaryArithmeticFunction implements Function {
+public class UnaryArithmeticFunction implements Function {
 	
 	private String name = null;
 	private Class returnType = null;
 	private Class[] paramTypes = null;
 	
-	public static BinaryArithmeticFunction getInstance(String name,Class type1,Class type2) {
-		Class returnType = PrimitiveTypeUtils.getBinOperationReturnType(type1,type2);
-		return new BinaryArithmeticFunction(name,returnType,type1,type2);
+	private static UnaryArithmeticFunction getInstance(String name,Class type) {
+		Class returnType = PrimitiveTypeUtils.getUnaryOperationReturnType(type);
+		return new UnaryArithmeticFunction(name,returnType,type);
 	}
 	
-	public BinaryArithmeticFunction() {
+	public static UnaryArithmeticFunction getMINUS(Class type) {
+		return getInstance("-",type);
+	}
+	
+	public UnaryArithmeticFunction() {
 		super();
 	}
-	public BinaryArithmeticFunction(String name, Class returnType,Class paramType1,Class paramType2) {
+	public UnaryArithmeticFunction(String name, Class returnType,Class paramType) {
 		super();
 		this.name = name;
 		this.returnType = returnType;
-		this.paramTypes = new Class[]{paramType1,paramType2};
+		this.paramTypes = new Class[]{paramType};
 	}
 	public String getName() {
 		return name;

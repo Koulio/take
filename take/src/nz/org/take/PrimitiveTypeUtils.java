@@ -8,7 +8,7 @@
  * and limitations under the License.
  */
 
-package nz.org.take.compiler.util;
+package nz.org.take;
 
 /**
  * Useful utilities to deal with primitive types.
@@ -30,6 +30,19 @@ public class PrimitiveTypeUtils {
 			Short.class==type ||
 			Character.class==type;
 	}
+	
+	public static Class getBinOperationReturnType(Class t1,Class t2) {
+		t1 = getType(t1);
+		t2 = getType(t2);
+		if (t1==Double.class || t2==Double.class)
+			return Double.TYPE;
+		else return Long.class;
+	}
+	
+	public static Class getUnaryOperationReturnType(Class t) {
+		return getType(t);
+	}
+	
 	public static Class getType(Class clazz) {
 		Class t = null;
 		if (clazz.isPrimitive()) {

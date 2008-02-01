@@ -18,7 +18,6 @@ import nz.org.take.compiler.CompilerException;
 import nz.org.take.compiler.Location;
 import nz.org.take.compiler.NameGenerator;
 import nz.org.take.compiler.SourceTransformation;
-import nz.org.take.compiler.util.PrimitiveTypeUtils;
 
 
 /**
