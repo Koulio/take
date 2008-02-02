@@ -7,13 +7,13 @@
     static ResourceIterator< $resulttype > $methodname (
         final $sourcetype source, 
         final $targettype target, 
-        final DerivationController _derivation,source,target) {
+        final DerivationController _derivation) {
         
         _derivation.log($property,DerivationController.BEAN_PROPERTY);
         
          final java.util.Iterator<$targettype> iterator =  source.$accessor ().iterator();
          while (iterator.hasNext()) {
-         	if (target.equals(iterator.next()) {
+         	if (target.equals(iterator.next())) {
          	    $resulttype result = new $resulttype ();
         		result. $slot1 = source;
         		result. $slot2 = target;
