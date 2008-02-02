@@ -27,9 +27,9 @@ public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 	public static final String TEMPLATE_O11 = "PropertyPredicateONE2ONE_11.vm";
 	public static final String TEMPLATE_O10 = "PropertyPredicateONE2ONE_10.vm";
 	public static final String TEMPLATE_M10 = "PropertyPredicateONE2MANY_10.vm";
-	public static final String TEMPLATE_M11 = "PropertyPredicateONE2MANY_10.vm";
+	public static final String TEMPLATE_M11 = "PropertyPredicateONE2MANY_11.vm";
 	public static final String TEMPLATE_O11N = "PropertyPredicateONE2ONE_11_neg.vm";
-	public static final String TEMPLATE_M11N = "PropertyPredicateONE2MANY_10_neg.vm";
+	public static final String TEMPLATE_M11N = "PropertyPredicateONE2MANY_11_neg.vm";
 	public static final String TEMPLATE_M10N = "PropertyPredicateONE2MANY_10_neg.vm";
 	public static final String TEMPLATE_O10N = "PropertyPredicateONE2ONE_10_neg.vm";
 	
