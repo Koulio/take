@@ -60,6 +60,7 @@ public class Parser extends ParserSupport {
 	public static final Pattern TYPE_NAME = Pattern.compile(_NAME1+"(\\."+_NAME1+")*");
 	public static final Pattern NAME = Pattern.compile(_NAME2);
 	public static final Pattern LIST_OF_NAMES = Pattern.compile(_NAME2+"([\\s]*\\,[\\s]*"+_NAME2+")*");
+	public static final Pattern IMPORT = Pattern.compile("import[\\s]+"+_NAME2+"(\\."+_NAME2+")*(\\.\\*)*[\\s]*[;]?[\\s]*");
 	public static final Pattern COMMENT = Pattern.compile("//(.)*");
 	public static final Pattern GLOBAL_ANNOTATION = Pattern.compile("@@(.)+=(.)+");
 	public static final Pattern LOCAL_ANNOTATION = Pattern.compile("@[^@](.)*=(.)+");	
@@ -79,11 +80,19 @@ public class Parser extends ParserSupport {
 	private List<QuerySpec> querySpecs = new ArrayList<QuerySpec>();	
 	private Map<String,Predicate> predicatesByName = new HashMap<String,Predicate>();
 	private Map<SimplePredicate,SimplePredicate> predicates = new HashMap<SimplePredicate,SimplePredicate>(); // use map for simple lookup with get
-	List<ScriptException> issues = null;
+	private List<String> importedClasses = new ArrayList<String>();
+	private List<String> importedPackages = new ArrayList<String>();
+	private List<ScriptException> issues = null;
 	private Collection<String> ids = new HashSet<String>();
 	boolean verificationMode = false;	
 	private JSPELParser elParser = new JSPELParser(variables,constants,aggregationFunctions);
 	private AnnotationPropagationPolicy annotationPolicy = AnnotationPropagationPolicy.ALL;
+	
+	public Parser() {
+		super();
+		this.importedPackages.add("java.lang");
+	}
+	
 	public List<ScriptException> check (Reader reader)  throws ScriptException {
 		verificationMode = true;
 		this.issues = new ArrayList<ScriptException>();
@@ -109,6 +118,10 @@ public class Parser extends ParserSupport {
 				else if (line.startsWith("@")) {
 					debug("parse line "," as local annotation: ",line);
 					parseLocalAnnotation(line,no);
+				}
+				else if (line.startsWith("import")) {
+					debug("parse line "," as import: ",line);
+					parseImport(line,no);
 				}
 				else if (line.startsWith("var ")) {
 					debug("parse line "," as var declaration: ",line);
@@ -382,7 +395,23 @@ public class Parser extends ParserSupport {
 
 	}
 	
-	
+	private void parseImport(String line, int no) throws ScriptException {
+		check(no,line,IMPORT,"this is not a valid import statement");
+		line = line.substring(7).trim();
+		
+		// for convenience, accept ; at the end of the line
+		if (line.endsWith(";")) {
+			line = line.substring(0,line.length()-1).trim();
+		}
+		// for import, last import wins
+		if (line.endsWith(".*")) {
+			importedPackages.add(0,line.substring(0,line.length()-2));
+		}
+		else {
+			importedClasses.add(0,line);
+		}
+		
+	}
 	
 	private void parseGlobalAnnotation(String line, int no) throws ScriptException {
 		check(no,line,GLOBAL_ANNOTATION,"this is not a valid global annotation");
@@ -441,28 +470,49 @@ public class Parser extends ParserSupport {
 	}
 
 	private Class classForName(String type,int line) throws ScriptException {
+		
+		if ("char".equals(type))
+			return Character.TYPE;
+		if ("byte".equals(type))
+			return Byte.TYPE;
+		if ("int".equals(type))
+			return Integer.TYPE;
+		if ("short".equals(type))
+			return Short.TYPE;
+		if ("long".equals(type))
+			return Long.TYPE;
+		if ("double".equals(type))
+			return Double.TYPE;
+		if ("float".equals(type))
+			return Float.TYPE;
+		if ("boolean".equals(type))
+			return Boolean.TYPE;
+		
+		// try whether this is a class name
 		try {
-			if ("char".equals(type))
-				return Character.TYPE;
-			if ("byte".equals(type))
-				return Byte.TYPE;
-			if ("int".equals(type))
-				return Integer.TYPE;
-			if ("short".equals(type))
-				return Short.TYPE;
-			if ("long".equals(type))
-				return Long.TYPE;
-			if ("double".equals(type))
-				return Double.TYPE;
-			if ("float".equals(type))
-				return Float.TYPE;
-			if ("boolean".equals(type))
-				return Boolean.TYPE;
-			return  this.classLoader.loadClass(type);
+			return this.classLoader.loadClass(type);
 		}
-		catch (ClassNotFoundException x) {
-			throw new ScriptException("Can not load the type " + type + " referenced in line " + line,x);
-		}	
+		catch (ClassNotFoundException x){}
+		// try whether there is a matching imported class
+		String xtype = "."+type;
+		for (String c:this.importedClasses) {
+			if (c.endsWith(xtype)) {
+				try {
+					return this.classLoader.loadClass(c);
+				}
+				catch (Exception x){}	
+			}
+		}
+		// try whether there is a matching imported package
+		for (String p:this.importedPackages) {
+			try {
+				return this.classLoader.loadClass(p+'.'+type);
+			}
+			catch (Exception x){}	
+		}
+		this.error(line, "Cannot load the type ",type);
+		return null;
+	
 	}
 	
 	private Fact parseCondition (String s,int no, boolean isPrerequisite,boolean isNegated) throws ScriptException {

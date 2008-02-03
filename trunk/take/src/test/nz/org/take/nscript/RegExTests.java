@@ -144,4 +144,19 @@ public class RegExTests extends TestCase {
 	public void testExternalFactStore6() throws Exception {
 		shouldNotMatch(Parser.EXTERNAL,"external factstore_1 cond[int]");
 	}
+	public void testImport1() throws Exception {
+		shouldMatch(Parser.IMPORT,"import Person");
+	}
+	public void testImport2() throws Exception {
+		shouldMatch(Parser.IMPORT,"import com.example.Person");
+	}
+	public void testImport3() throws Exception {
+		shouldMatch(Parser.IMPORT,"import com.example.* ");
+	}
+	public void testImport4() throws Exception {
+		shouldMatch(Parser.IMPORT,"import com.example.* ; ");
+	}
+	public void testImport5() throws Exception {
+		shouldNotMatch(Parser.IMPORT,"import com.example.* , ");
+	}
 }

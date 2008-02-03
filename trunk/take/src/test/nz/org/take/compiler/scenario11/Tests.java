@@ -14,8 +14,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import nz.org.take.deployment.KnowledgeBaseManager;
-import nz.org.take.rt.DerivationController;
-import nz.org.take.rt.ResultSet;
 import nz.org.take.nscript.ScriptKnowledgeSource;
 import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.scenario11.generated.HasCategory;
