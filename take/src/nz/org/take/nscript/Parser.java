@@ -108,54 +108,12 @@ public class Parser extends ParserSupport {
 			while ((line=bufReader.readLine())!=null) {
 				int no = bufReader.getLineNumber();
 				line = line.trim();
-				if (line.startsWith("//")) {
-					// comment, don't parse
+				try {
+					parseLine(line,no);	
 				}
-				else if (line.startsWith("@@")) {
-					debug("parse line "," as global annotation: ",line);
-					parseGlobalAnnotation(line,no);
+				catch (RuntimeException x) {
+					this.error(no,x,"Exception parsing line");
 				}
-				else if (line.startsWith("@")) {
-					debug("parse line "," as local annotation: ",line);
-					parseLocalAnnotation(line,no);
-				}
-				else if (line.startsWith("import")) {
-					debug("parse line "," as import: ",line);
-					parseImport(line,no);
-				}
-				else if (line.startsWith("var ")) {
-					debug("parse line "," as var declaration: ",line);
-					parseVarDeclaration(line,no);
-				}
-				else if (line.startsWith("ref ")) {
-					debug("parse line "," as ref declaration: ",line);
-					parseRefDeclaration(line,no);
-				}
-				else if (line.startsWith("query ")) {
-					debug("parse line "," as query: ",line);
-					parseQuery(line,no);
-				}
-				else if (line.startsWith("external ")) {
-					debug("parse line "," as external fact store: ",line);
-					parseExternalFactStore(line,no);
-				}
-				else if (line.startsWith("aggregation ")) {
-					debug("parse line "," as external fact store: ",line);
-					parseAggregation(line,no);
-				}
-				else if (RULE.matcher(line).matches()) {
-					debug("parse line "," as rule: ",line);
-					parseRule(line,no);
-				}
-				else if (FACT.matcher(line).matches()) {
-					debug("parse line "," as fact: ",line);
-					parseFact(line,no);
-				}
-
-				else {
-					error(no,"Unable to parse this line (unknown syntax type): ",line);
-				}
-				
 			}
 			
 			// build queries
@@ -167,6 +125,57 @@ public class Parser extends ParserSupport {
 		return kb;
 	}
 	
+	private void parseLine(String line,int no) throws ScriptException {
+
+		if (line.startsWith("//")) {
+			// comment, don't parse
+		}
+		else if (line.startsWith("@@")) {
+			debug("parse line "," as global annotation: ",line);
+			parseGlobalAnnotation(line,no);
+		}
+		else if (line.startsWith("@")) {
+			debug("parse line "," as local annotation: ",line);
+			parseLocalAnnotation(line,no);
+		}
+		else if (line.startsWith("import")) {
+			debug("parse line "," as import: ",line);
+			parseImport(line,no);
+		}
+		else if (line.startsWith("var ")) {
+			debug("parse line "," as var declaration: ",line);
+			parseVarDeclaration(line,no);
+		}
+		else if (line.startsWith("ref ")) {
+			debug("parse line "," as ref declaration: ",line);
+			parseRefDeclaration(line,no);
+		}
+		else if (line.startsWith("query ")) {
+			debug("parse line "," as query: ",line);
+			parseQuery(line,no);
+		}
+		else if (line.startsWith("external ")) {
+			debug("parse line "," as external fact store: ",line);
+			parseExternalFactStore(line,no);
+		}
+		else if (line.startsWith("aggregation ")) {
+			debug("parse line "," as external fact store: ",line);
+			parseAggregation(line,no);
+		}
+		else if (RULE.matcher(line).matches()) {
+			debug("parse line "," as rule: ",line);
+			parseRule(line,no);
+		}
+		else if (FACT.matcher(line).matches()) {
+			debug("parse line "," as fact: ",line);
+			parseFact(line,no);
+		}
+
+		else {
+			error(no,"Unable to parse this line (unknown syntax type): ",line);
+		}
+		
+	}
 	private void parseAggregation(String line, int no) throws ScriptException {
 		check(no,line,AGGREGATION,"this is not a valid aggregation declaration");
 		line = line.substring(12).trim(); // take off aggregation
@@ -717,6 +726,15 @@ public class Parser extends ParserSupport {
 		}
 		else {
 			super.error(no, message);
+		}
+	}
+	
+	protected void error(int no, Exception x, String message) throws ScriptException {
+		if (this.verificationMode) {
+			this.issues.add(new ScriptException(message,x,no));
+		}
+		else {
+			super.error(no, x, message);
 		}
 	}
 
