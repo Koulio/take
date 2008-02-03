@@ -213,6 +213,7 @@ public class TakeEditor extends TextEditor {
 
 			ResourceMarkerAnnotationModel annotationModel = (ResourceMarkerAnnotationModel) getDocumentProvider()
 					.getAnnotationModel(getEditorInput());
+			
 			for (Annotation a : this.anno.keySet()) {
 				annotationModel.removeAnnotation(a);
 				
@@ -228,8 +229,8 @@ public class TakeEditor extends TextEditor {
 			Reader script;
 			script = new StringReader(this.getDocumentProvider() .getDocument(this.getEditorInput()).get());
 
-			List<ScriptException> check = p
-					.check(script);
+			List<ScriptException> check = p.check(script);
+			
 			for (ScriptException se : check) {
 				
 				IMarker marker = file.createMarker(IMarker.PROBLEM);
