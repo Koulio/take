@@ -34,11 +34,27 @@ public class ParserSupport {
 			buf.append(t);
 		error(no,buf.toString());
 	}
+	
+	protected void error(int no, Exception x,Object... description) throws ScriptException {
+		StringBuffer buf = new StringBuffer();
+		buf.append("Parser exception at line ");
+		buf.append(no);
+		buf.append(' ');
+		for (Object t:description)
+			buf.append(t);
+		error(no,buf.toString(),x);
+	}
+	
 
 	protected void error(int no, String message) throws ScriptException {
 		throw new ScriptException(message,no);
 	}
 
+	protected void error(int no, Exception x,String message) throws ScriptException {
+		throw new ScriptException(message,x,no);
+	}
+	
+	
 	protected void debug(Object ...strings) {
 		if (LOGGER.isDebugEnabled()) {
 			StringBuffer b = new StringBuffer();
