@@ -65,7 +65,7 @@ public class TakeSourceViewerConfiguration extends SourceViewerConfiguration {
 	class BodyScanner extends RuleBasedScanner {
 		private String[] keyWords = { "var", "not", "ref", "and", "if", "then",
 				"query", "external", "in", "out", "aggregation", "sum", "max",
-				"min", "avg", "count" };
+				"min", "avg", "count","import" };
 
 		public BodyScanner() {
 			WordRule rule = new WordRule(new IWordDetector() {
@@ -144,7 +144,9 @@ public class TakeSourceViewerConfiguration extends SourceViewerConfiguration {
 				TAKE_PARTITIONS.TAKE_VAR.name());
 		setKeywordHighlightingPartition(reconciler, bodyDR,
 				TAKE_PARTITIONS.TAKE_AGGREGATION.name());
-
+		setKeywordHighlightingPartition(reconciler, bodyDR,
+				TAKE_PARTITIONS.TAKE_IMPORT.name());
+		
 		return reconciler;
 	}
 

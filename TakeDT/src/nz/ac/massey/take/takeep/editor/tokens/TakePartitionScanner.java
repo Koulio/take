@@ -13,7 +13,7 @@ import org.eclipse.jface.text.rules.EndOfLineRule;
 public class TakePartitionScanner extends RuleBasedPartitionScanner {
 
 	public enum TAKE_PARTITIONS {
-		TAKE_COMMENT, TAKE_GLOBAL_ANNOTATION, TAKE_LOCAL_ANNOTATION, TAKE_RULE_OR_FACT, TAKE_VAR, TAKE_QUERY, TAKE_EXTERNAL, TAKE_REF, TAKE_AGGREGATION
+		TAKE_COMMENT, TAKE_GLOBAL_ANNOTATION, TAKE_LOCAL_ANNOTATION, TAKE_RULE_OR_FACT, TAKE_VAR, TAKE_QUERY, TAKE_EXTERNAL, TAKE_REF, TAKE_AGGREGATION, TAKE_IMPORT
 	}
 
 	class CompleteLine extends EndOfLineRule {
@@ -133,7 +133,8 @@ public class TakePartitionScanner extends RuleBasedPartitionScanner {
 		IToken var = new Token(TAKE_PARTITIONS.TAKE_VAR.name());
 		IToken ref = new Token(TAKE_PARTITIONS.TAKE_REF.name());
 		IToken aggregation = new Token(TAKE_PARTITIONS.TAKE_AGGREGATION.name());
-
+		IToken importt = new Token(TAKE_PARTITIONS.TAKE_IMPORT.name());
+		
 		IToken statement = new Token(TAKE_PARTITIONS.TAKE_RULE_OR_FACT.name());
 
 		LinkedList<IPredicateRule> rules = new LinkedList<IPredicateRule>();
@@ -149,8 +150,10 @@ public class TakePartitionScanner extends RuleBasedPartitionScanner {
 		rules.add(new CompleteLine("var ", var));
 		rules.add(new CompleteLine("ref ", ref));
 		rules.add(new CompleteLine("aggregation ", aggregation));
-
+		rules.add(new CompleteLine("import ", importt));
+		
 		rules.add(new StatementRule("bih", statement));
+		
 		setPredicateRules(rules.toArray(new IPredicateRule[rules.size()]));
 
 	}

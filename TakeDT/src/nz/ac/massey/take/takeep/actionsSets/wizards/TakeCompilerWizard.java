@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
 
+import javax.script.ScriptException;
+
 import nz.ac.massey.take.takeep.actionsSets.panels.TakeCompileWizardPanel;
 import nz.ac.massey.take.takeep.editor.TakeEditor;
 import nz.org.take.TakeException;
@@ -111,15 +113,19 @@ public class TakeCompilerWizard extends Wizard {
 				project.refreshLocal(IResource.DEPTH_INFINITE,
 						new NullProgressMonitor());
 			} catch (CompilerException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
+				return false;
 			} catch (TakeException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
+				return false;
 			} catch (CoreException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return false;
 			}
+
 		} else {
 			return false;
 		}

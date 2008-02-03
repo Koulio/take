@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="lib" path="lib/take-1.4.jar" sourcepath="/takeProject"/>
+	<classpathentry exported="true" kind="lib" path="lib/take-1.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/log4j-1.2.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/take-javac1.5-1.4.build3101081151.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/take-javac1.6-1.4.build3101081151.jar"/>

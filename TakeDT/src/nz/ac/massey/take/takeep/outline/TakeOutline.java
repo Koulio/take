@@ -137,8 +137,7 @@ public class TakeOutline extends ContentOutlinePage {
 
 					String processedLine = null;
 
-					if (region.getType() == TAKE_PARTITIONS.TAKE_AGGREGATION
-							.name()) {
+					if (region.getType() == TAKE_PARTITIONS.TAKE_AGGREGATION.name() || region.getType() == TAKE_PARTITIONS.TAKE_IMPORT.name()) {
 						// TAKE 2nd item
 						StringTokenizer st = new StringTokenizer(line, " ");
 						st.nextToken();
@@ -182,7 +181,7 @@ public class TakeOutline extends ContentOutlinePage {
 
 						processedLine = st.nextToken();
 					}
-
+		
 					if (processedLine == null) {
 						processedLine = line;
 					}
