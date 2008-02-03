@@ -1,9 +1,12 @@
 // script for test scenario 5 - uses constants
 @@dc:creator=jens dietrich
 @@dc:date=14/05/2007
-var test.nz.org.take.compiler.scenario5.Customer customer
-ref test.nz.org.take.compiler.scenario5.Discount goldCustomerDiscount
-ref test.nz.org.take.compiler.scenario5.CustomerCategory goldCustomer
+import test.nz.org.take.compiler.scenario5.Customer
+import test.nz.org.take.compiler.scenario5.Discount
+import test.nz.org.take.compiler.scenario5.CustomerCategory
+var Customer customer
+ref Discount goldCustomerDiscount
+ref CustomerCategory goldCustomer
 @take.compilerhint.class=discount
 @take.compilerhint.slots=customer,discount
 @take.compilerhint.method=getDiscount

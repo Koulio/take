@@ -4,9 +4,10 @@
 @@dc:creator=Jens Dietrich
 @@dc:date=2007-09-12
 @@special=true
-var example.nz.org.take.compiler.userv.domainmodel.Car car
-var example.nz.org.take.compiler.userv.domainmodel.Driver driver,client
-var example.nz.org.take.compiler.userv.domainmodel.Policy policy
+import example.nz.org.take.compiler.userv.domainmodel.*
+var Car car
+var Driver driver,client
+var Policy policy
 var java.lang.String category 
 var int x
 ref java.util.Collection HighTheftProbabilityAutoList
