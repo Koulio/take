@@ -22,6 +22,4 @@ Bundle-ClassPath: .,
  lib/juel-2.1.0.jar,
  lib/log4j-1.2.7.jar,
  lib/velocity-dep-1.5.jar,
- lib/take-javac1.5-1.4.build3101081151.jar,
- lib/take-javac1.6-1.4.build3101081151.jar,
  lib/take-1.4.jar
