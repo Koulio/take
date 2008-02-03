@@ -57,26 +57,8 @@
 	<mkdir dir="${report.junit}"/>
 	<mkdir dir="${report.jdepend}"/>
 </target>
-<!-- Generate the parser using JavaCC -->
-<target name="generateparser" depends="generateBNF" description="Generate the parser">
-	<javacc
-	    target="grammar/take.jj"
-	    outputdirectory="src/nz/org/take/script/parser"
-	    javacchome="tools/javacc-4.0"
-	    static="true"
-	/>
-</target>	
-<!-- Document the grammar - convert to BNF  -->
-<target name="generateBNF" description="Generate the BNF grammar">
-	<jjdoc
-	    target="grammar/take.jj"
-	    outputfile="grammar/take.bnf.txt"
-	    javacchome="tools/javacc-4.0"
-	    text="true"
-	/>
-</target>	
 <!-- Compiles the classes -->	
-<target name="compile" depends="prepare,generateparser" description="Compile the whole project">
+<target name="compile" depends="prepare" description="Compile the whole project">
 	<javac destdir="${build.classes}" 
         debug="${debug}" 
         deprecation="on"
@@ -118,6 +100,7 @@
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario8.Tests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario9.Tests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario10.Tests"/>
+		<test todir="${report.junit}" name="test.nz.org.take.compiler.scenario11.Tests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.compiler.annotations.Tests"/>
 		<test todir="${report.junit}" name="example.nz.org.take.compiler.userv.testcases.UservTestCases"/>
 	</junit>
