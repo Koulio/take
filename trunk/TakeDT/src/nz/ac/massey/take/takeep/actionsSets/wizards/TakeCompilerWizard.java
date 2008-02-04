@@ -17,6 +17,12 @@ import nz.org.take.compiler.util.DefaultNameGenerator;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
 import nz.org.take.nscript.ScriptKnowledgeSource;
 
+import org.apache.log4j.Appender;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Layout;
+import org.apache.log4j.spi.ErrorHandler;
+import org.apache.log4j.spi.Filter;
+import org.apache.log4j.spi.LoggingEvent;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -144,13 +150,14 @@ public class TakeCompilerWizard extends Wizard {
 			return false;
 		}
 
+
 		out.println("Successfully compiled " + editorInput.getName() + " to " + wp.getSourceOutputLocation() + "/" + wp.getPackageName());
 		mc.activate();
 		return true;
 	}
 
 	
-	  private MessageConsole findConsole(String name) {
+	  public static MessageConsole findConsole(String name) {
 		  
 	      ConsolePlugin plugin = ConsolePlugin.getDefault();
 	      IConsoleManager conMan = plugin.getConsoleManager();

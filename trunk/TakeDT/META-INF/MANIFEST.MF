@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Take Development Toolkit
 Bundle-SymbolicName: TakeDT;singleton:=true
-Bundle-Version: 1.0.1
+Bundle-Version: 1.0.2
 Bundle-Activator: nz.ac.massey.take.takeep.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -24,3 +24,4 @@ Bundle-ClassPath: .,
  lib/log4j-1.2.7.jar,
  lib/velocity-dep-1.5.jar,
  lib/take-1.4.jar
+Bundle-Vendor: nz.ac.massey

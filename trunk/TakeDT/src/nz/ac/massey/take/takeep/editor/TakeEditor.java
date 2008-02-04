@@ -12,6 +12,7 @@ import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import org.eclipse.jface.text.ITextHover;
 
 import nz.ac.massey.take.takeep.actionsSets.compileActions.TakeCompileToClasses;
 import nz.ac.massey.take.takeep.actionsSets.compileActions.TakeCompileToInterfaces;
@@ -89,7 +90,7 @@ public class TakeEditor extends TextEditor {
 		this.setContentDescription("Take Editor");
 		this
 				.setSourceViewerConfiguration(new TakeSourceViewerConfiguration(
-						cm));
+						this,cm));
 		this.setDocumentProvider(new TakeDocumentProvider());
 
 		getPreferenceStore()
@@ -210,14 +211,12 @@ public class TakeEditor extends TextEditor {
 			IProject project = TakeCompileWizardPanel
 					.getProjectFromWorkbench(workbench);
 			ClassLoader cl = getProjectClassLoader(JavaCore.create(project));
-
+			
 			ResourceMarkerAnnotationModel annotationModel = (ResourceMarkerAnnotationModel) getDocumentProvider()
 					.getAnnotationModel(getEditorInput());
 			
 			for (Annotation a : this.anno.keySet()) {
 				annotationModel.removeAnnotation(a);
-				
-
 			}
 			IFile file = ((FileEditorInput) this.getEditorInput())
 			.getFile();
@@ -235,7 +234,8 @@ public class TakeEditor extends TextEditor {
 				
 				IMarker marker = file.createMarker(IMarker.PROBLEM);
 				marker.setAttribute(IMarker.MESSAGE, se.getMessage());
-				marker.setAttribute(IMarker.LOCATION,""+ se.getLine());
+				marker.setAttribute(IMarker.LOCATION, se.getLine());
+				
 				Annotation annotation = new Annotation(
 						"org.eclipse.ui.workbench.texteditor.error", false, se
 								.getMessage());
