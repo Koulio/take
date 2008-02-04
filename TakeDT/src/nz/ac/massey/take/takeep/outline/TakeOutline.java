@@ -246,9 +246,6 @@ public class TakeOutline extends ContentOutlinePage {
 		private void parse(IDocument document) {
 			this.regions.clear();
 			try {
-				IAnnotationModel annotationModel = TakeOutline.this.editor
-						.getDocumentProvider().getAnnotationModel(
-								TakeOutline.this.editor.getEditorInput());
 
 				ITypedRegion[] re = document.computePartitioning(0, document
 						.getLength());

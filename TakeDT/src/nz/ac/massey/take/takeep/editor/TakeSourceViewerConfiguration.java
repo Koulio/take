@@ -1,10 +1,19 @@
 package nz.ac.massey.take.takeep.editor;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import nz.ac.massey.take.takeep.editor.tokens.TakePartitionScanner.TAKE_PARTITIONS;
+import nz.ac.massey.take.takeep.outline.TakeOutline;
 
+import org.eclipse.jdt.core.util.IAnnotation;
+import org.eclipse.jface.text.source.IAnnotationHover;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.ITextHover;
+import org.eclipse.jface.text.ITextViewer;
+import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
@@ -17,11 +26,123 @@ import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.WordRule;
+import org.eclipse.jface.text.source.Annotation;
+import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.ui.texteditor.ResourceMarkerAnnotationModel;
+
 
 public class TakeSourceViewerConfiguration extends SourceViewerConfiguration {
+
+	private TakeEditor editor;
+
+	@Override
+	public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer) {
+
+		IAnnotationHover ihover = new IAnnotationHover(){
+
+			@Override
+			public String getHoverInfo(ISourceViewer sourceViewer,
+					int lineNumber) {
+				IDocument document= sourceViewer.getDocument();
+				ResourceMarkerAnnotationModel annotationModel = (ResourceMarkerAnnotationModel)editor.getDocumentProvider().getAnnotationModel(editor.getEditorInput());
+
+				Iterator<Annotation> iter = annotationModel.getAnnotationIterator();
+				String message = null;
+				while(iter.hasNext())
+				{
+					Annotation a = iter.next();
+					Position p = annotationModel.getPosition(a);
+					IRegion i;
+					try {
+						i = document.getLineInformation(lineNumber);
+
+						if(p.overlapsWith(i.getOffset(), i.getLength()))
+						{
+
+							if(message == null)
+							{
+								message = a.getText();
+							}
+							else
+							{
+								message += "\n" + a.getText();
+							}
+						}
+					} catch (BadLocationException e) {
+						return null;
+					}
+					return message;
+				}
+				return null;
+
+			}};
+			return ihover;
+	}
+
+
+	@Override
+	public ITextHover getTextHover(ISourceViewer sourceViewer,
+			String contentType, int stateMask) {
+		// TODO Auto-generated method stub
+		return this.getTextHover(sourceViewer, contentType);
+	}
+
+
+	@Override
+	public ITextHover getTextHover(ISourceViewer sourceViewer,
+			String contentType) {
+		
+		return new ITextHover(){
+
+			@Override
+			public String getHoverInfo(ITextViewer textViewer,
+					IRegion hoverRegion) {
+				IDocument document= textViewer.getDocument();
+				ResourceMarkerAnnotationModel annotationModel = (ResourceMarkerAnnotationModel)editor.getDocumentProvider().getAnnotationModel(editor.getEditorInput());
+
+				Iterator<Annotation> iter = annotationModel.getAnnotationIterator();
+				String message = null;
+				while(iter.hasNext())
+				{
+					Annotation a = iter.next();
+					Position p = annotationModel.getPosition(a);
+
+
+
+					if(p.overlapsWith(hoverRegion.getOffset(), hoverRegion.getLength()))
+					{
+
+						if(message == null)
+						{
+							message = a.getText();
+						}
+						else
+						{
+							message += "\n" + a.getText();
+						}
+					}
+
+					return message;
+				}
+				return null;
+			}
+
+			@Override
+			public IRegion getHoverRegion(ITextViewer textViewer, int offset) {
+				
+				try {
+					return textViewer.getDocument().getLineInformationOfOffset(offset);
+				} catch (BadLocationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return null;
+				}
+				
+			}};
+	}
 
 	private DesignManager designManager;
 
@@ -30,7 +151,8 @@ public class TakeSourceViewerConfiguration extends SourceViewerConfiguration {
 
 	}
 
-	public TakeSourceViewerConfiguration(DesignManager colorManager) {
+	public TakeSourceViewerConfiguration(TakeEditor takeEditor, DesignManager colorManager) {
+		this.editor = takeEditor;
 		this.designManager = colorManager;
 	}
 
@@ -93,9 +215,9 @@ public class TakeSourceViewerConfiguration extends SourceViewerConfiguration {
 
 			Token keyword = buildTextAttributeToken(
 					TakeSourceViewerConfiguration.this.designManager
-							.getColor(TAKE_TOKENS.TAKE_KEYWORD.name()),
+					.getColor(TAKE_TOKENS.TAKE_KEYWORD.name()),
 					TakeSourceViewerConfiguration.this.designManager
-							.getStyle(TAKE_TOKENS.TAKE_KEYWORD.name()));
+					.getStyle(TAKE_TOKENS.TAKE_KEYWORD.name()));
 
 			for (String s : this.keyWords) {
 				rule.addWord(s, keyword);
@@ -103,9 +225,9 @@ public class TakeSourceViewerConfiguration extends SourceViewerConfiguration {
 
 			Token stringLiteral = buildTextAttributeToken(
 					TakeSourceViewerConfiguration.this.designManager
-							.getColor(TAKE_TOKENS.TAKE_STRING_LITERAL.name()),
+					.getColor(TAKE_TOKENS.TAKE_STRING_LITERAL.name()),
 					TakeSourceViewerConfiguration.this.designManager
-							.getStyle(TAKE_TOKENS.TAKE_STRING_LITERAL.name()));
+					.getStyle(TAKE_TOKENS.TAKE_STRING_LITERAL.name()));
 			SingleLineRule stringLiteralRule = new SingleLineRule("\"", "\"",
 					stringLiteral, (char) 0);
 
@@ -146,7 +268,7 @@ public class TakeSourceViewerConfiguration extends SourceViewerConfiguration {
 				TAKE_PARTITIONS.TAKE_AGGREGATION.name());
 		setKeywordHighlightingPartition(reconciler, bodyDR,
 				TAKE_PARTITIONS.TAKE_IMPORT.name());
-		
+
 		return reconciler;
 	}
 

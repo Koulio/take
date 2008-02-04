@@ -1,5 +1,17 @@
 package nz.ac.massey.take.takeep;
 
+import java.io.PrintWriter;
+import java.io.Writer;
+
+import nz.ac.massey.take.takeep.actionsSets.wizards.TakeCompilerWizard;
+
+import org.apache.log4j.Appender;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
+import org.apache.log4j.WriterAppender;
+import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -28,6 +40,11 @@ public class Activator extends AbstractUIPlugin {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		
+		MessageConsole mc = TakeCompilerWizard.findConsole("Take Log");
+		WriterAppender ac = new  WriterAppender(new PatternLayout(),new PrintWriter(mc.newMessageStream()));
+		BasicConfigurator.configure(ac);
+		
 		plugin = this;
 	}
 
