@@ -4,7 +4,7 @@
 @@dc:creator=Jens Dietrich
 @@dc:date=2007-09-12
 @@special=true
-import example.nz.org.take.compiler.userv.domainmodel.*
+import example.nz.org.take.compiler.userv.domainmodel.*;
 var Car car
 var Driver driver,client
 var Policy policy
@@ -74,7 +74,7 @@ aggregation eligibilityScore = sum x policyEligibilityScore[car,driver,x]
 // Auto Eligibility Rule Set
 @category=Auto Eligibility Rule Set
 @description=If the car is a convertible, then the car's potential theft rating is high.
-AE_PTC01: if isConvertible[car] then potentialTheftRating[car,"high"]
+AE_PTC01: if car.isConvertible then potentialTheftRating[car,"high"]
 @category=Auto Eligibility Rule Set
 @description=If the car's price is greater than $45,000, then the car's potential theft rating is high.
 AE_PTC02: if car.price>45000 then potentialTheftRating[car,"high"]
@@ -89,19 +89,19 @@ AE_PTC04: if car.price>20000 and car.price<45000 and not contains[HighTheftProba
 AE_PTC05: if car.price<20000 and not contains[HighTheftProbabilityAutoList,car.type] then potentialTheftRating[car,"low"]
 @category=Auto Eligibility Rule Set
 @description=If the car has no airbags, then the car's potential occupant injury rating is extremely high.
-AE_POIC01: if not hasAirbags[car] then potentialOccupantInjuryRating[car,"extremely high"]
+AE_POIC01: if not car.hasAirbags then potentialOccupantInjuryRating[car,"extremely high"]
 @category=Auto Eligibility Rule Set
 @description=If the car only has driver's air bag, then the car's potential occupant injury rating is high.
-AE_POIC02: if hasDriversAirbag[car] and not hasFrontPassengerAirbag[car] and not hasSidePanelAirbags[car] then potentialOccupantInjuryRating[car,"high"]
+AE_POIC02: if car.hasDriversAirbag and not car.hasFrontPassengerAirbag and not car.hasSidePanelAirbags then potentialOccupantInjuryRating[car,"high"]
 @category=Auto Eligibility Rule Set
 @description=If the car has driver's and front passenger air bags, then the car's potential occupant injury rating is moderate.
-AE_POIC03: if hasDriversAirbag[car] and hasFrontPassengerAirbag[car] and not hasSidePanelAirbags[car] then potentialOccupantInjuryRating[car,"moderate"]
+AE_POIC03: if car.hasDriversAirbag and car.hasFrontPassengerAirbag and not car.hasSidePanelAirbags then potentialOccupantInjuryRating[car,"moderate"]
 @category=Auto Eligibility Rule Set
 @description=If the car has driver's front passenger and side panel air bags, then the car's potential occupant injury is low.
-AE_POIC04: if hasDriversAirbag[car] and hasFrontPassengerAirbag[car] and hasSidePanelAirbags[car] then potentialOccupantInjuryRating[car,"low"]
+AE_POIC04: if car.hasDriversAirbag and car.hasFrontPassengerAirbag and car.hasSidePanelAirbags then potentialOccupantInjuryRating[car,"low"]
 @category=Auto Eligibility Rule Set
 @description=If the car is a convertible and has no roll bar, then the potential occupant injury is extremely high.
-AE_POIC05: if isConvertible[car] and not hasRollBar[car] then potentialOccupantInjuryRating[car,"extremely high"]
+AE_POIC05: if car.isConvertible and not car.hasRollBar then potentialOccupantInjuryRating[car,"extremely high"]
 @category=Auto Eligibility Rule Set
 @description=If the Potential Occupant Injury Rating is extremely high, then the auto eligibility is 'not eligible'.
 AE_01: if potentialOccupantInjuryRating[car,"extremely high"] then autoEligibility[car,"not eligible"]
@@ -120,7 +120,7 @@ AE_04: autoEligibility[car,"eligible"]
 DE_DAC01: if isMale[driver] and driver.age<25 then driverCategory[driver,"young driver"]
 @category=Driver Eligibility Rule Set
 @description=If the driver is female and is under the age of 20, then young driver.
-DE_DAC02: if not isMale[driver] and driver.age<20 then driverCategory[driver,"young driver"]
+DE_DAC02: if not driver.isMale and driver.age<20 then driverCategory[driver,"young driver"]
 @category=Driver Eligibility Rule Set
 @description=If young driver and driver has training certification, then eligible driver.
 DE_DAC03: if driverCategory[driver,"young driver"] and hasTrainingCertification[driver] then isEligible[driver]
@@ -135,16 +135,16 @@ DE_DAC05: if driverCategory[driver,"senior driver"] and hasTrainingCertification
 DE_DAC06: if not driverCategory[driver,"senior driver"] and not driverCategory[driver,"young driver"] then isEligible[driver]
 @category=Driver Eligibility Rule Set
 @description=If driver has taken driver's training from school then driver has training certification.
-DE_DAC07: if hasDriversTrainingFromSchool[driver] then hasTrainingCertification[driver]
+DE_DAC07: if driver.hasDriversTrainingFromSchool then hasTrainingCertification[driver]
 @category=Driver Eligibility Rule Set
 @description=If driver has taken driver's training from a licensed driver training company, then driver has training certification.
-DE_DAC08: if hasDriversTrainingFromLicensedDriverTrainingCompany[driver] then hasTrainingCertification[driver]
+DE_DAC08: if driver.hasDriversTrainingFromLicensedDriverTrainingCompany then hasTrainingCertification[driver]
 @category=Driver Eligibility Rule Set
 @description=If driver had taken a senior citizen driver's refresher course, then driver has training certification.
-DE_DAC09: if hasTakenASeniorCitizenDriversRefresherCourse[driver] then hasTrainingCertification[driver]
+DE_DAC09: if driver.hasTakenASeniorCitizenDriversRefresherCourse then hasTrainingCertification[driver]
 @category=Driver Eligibility Rule Set
 @description=If the driver has been convicted of a DUI, then the driver qualifies as a High Risk Driver.
-DE_DRC01: if hasBeenConvictedOfaDUI[driver] then isHighRiskDriver[driver]
+DE_DRC01: if driver.hasBeenConvictedOfaDUI then isHighRiskDriver[driver]
 @category=Driver Eligibility Rule Set
 @description=If the number of accidents the applicant has been involved in is greater than 2, then the driver is a High Risk Driver.
 DE_DRC02: if driver.numberOfAccidentsInvolvedIn>2 then isHighRiskDriver[driver]
@@ -191,13 +191,13 @@ ES_08: if client.numberOfYearsWithUServ>=15 then isLongTermClient[client]
 // Auto Premiums Rule Set
 @category=Auto Premiums Rule Set
 @description=If compact car, then base premium is $250.
-AP_01: if isCompact[car] then basePremium[car,250]
+AP_01: if car.isCompact then basePremium[car,250]
 @category=Auto Premiums Rule Set
 @description=If sedan, then base premium is $400.
-AP_02: if isSedan[car] then basePremium[car,400]
+AP_02: if car.isSedan then basePremium[car,400]
 @category=Auto Premiums Rule Set
 @description=If luxury car, then base premium is $500.
-AP_03: if isLuxury[car] then basePremium[car,500]
+AP_03: if car.isLuxury then basePremium[car,500]
 @category=Auto Premiums Rule Set
 @description=If car is new, then increase premium by $400.
 AP_04: if isNew[car] then additionalPremium[policy,car,400]
@@ -215,10 +215,10 @@ AP_07: if car.age<5 and not isNew[car] then additionalPremium[policy,car,300]
 AP_08: if car.age>=5 and car.age<=10 then additionalPremium[policy,car,250]
 @category=Auto Premiums Rule Set
 @description=If uninsured motorist coverage is included, then increase premium by $300.
-AP_09: if includesUninsuredMotoristCoverage[policy] then additionalPremium[policy,car,300]
+AP_09: if policy.includesUninsuredMotoristCoverage then additionalPremium[policy,car,300]
 @category=Auto Premiums Rule Set
 @description=If medical coverage is included, then increase premium by $600.
-AP_10: if includesMedicalCoverage[policy] then additionalPremium[policy,car,600]
+AP_10: if policy.includesMedicalCoverage then additionalPremium[policy,car,600]
 @category=Auto Premiums Rule Set
 @description=If Potential Occupant Injury is Extremely High, then increase premium by $1,000.
 AP_11: if potentialOccupantInjuryRating[car,"extremely high"] then additionalPremium[policy,car,1000]
@@ -231,26 +231,26 @@ AP_13: if potentialTheftRating[car,"high"] then additionalPremium[policy,car,500
 // Auto Discounts Rule Set
 @category=Auto Discounts Rule Set
 @description=If the car only has Driver airbags then lower the premium by 12%.
-AD_01: if hasAirbags[car] and not hasFrontPassengerAirbag[car] and not hasSidePanelAirbags[car] then premiumDiscount[car,12]
+AD_01: if car.hasAirbags and not car.hasFrontPassengerAirbag and not car.hasSidePanelAirbags then premiumDiscount[car,12]
 @category=Auto Discounts Rule Set
 @description=If the car has Driver and Passenger airbags then lower the premium by 15%.
-AD_02: if hasAirbags[car] and hasFrontPassengerAirbag[car] and not hasSidePanelAirbags[car] then premiumDiscount[car,15]
+AD_02: if car.hasAirbags and car.hasFrontPassengerAirbag and not car.hasSidePanelAirbags then premiumDiscount[car,15]
 @category=Auto Discounts Rule Set
 @description=If the car has Driver, Passenger and Side airbags then lower the premium by 18%.
-AD_03: if hasAirbags[car] and hasFrontPassengerAirbag[car] and hasSidePanelAirbags[car] then premiumDiscount[car,18]
+AD_03: if car.hasAirbags and car.hasFrontPassengerAirbag and car.hasSidePanelAirbags then premiumDiscount[car,18]
 @category=Auto Discounts Rule Set
 @description=If the car's potential theft rating is high and the car is equipped with an alarm system, then lower the premium by 10%.
-AD_04: if potentialTheftRating[car,"high"] and hasAlarm[car] then premiumDiscount[car,10]
+AD_04: if potentialTheftRating[car,"high"] and car.hasAlarm then premiumDiscount[car,10]
 // Driver Premiums Rule Set
 @category=Driver Premiums Rule Set
 @description=CA is special location.
-DP_00a: if equals[driver.location,"CA"] then specialLocation[driver]
+DP_00a: if driver.location=="CA" then specialLocation[driver]
 @category=Driver Premiums Rule Set
 @description=NY is special location.
-DP_00b: if equals[driver.location,"NY"] then specialLocation[driver]
+DP_00b: if driver.location=="NY" then specialLocation[driver]
 @category=Driver Premiums Rule Set
 @description=VA is special location.
-DP_00c: if equals[driver.location,"VA"] then specialLocation[driver]
+DP_00c: if driver.location=="VA" then specialLocation[driver]
 @category=Driver Premiums Rule Set
 @description=If young driver and married and located in CA, NY or VA, then increase premium by $700.
 DP_01: if driverCategory[driver,"young driver"] and isMarried[driver] and specialLocation[driver] then additionalDriverPremium[driver,700]

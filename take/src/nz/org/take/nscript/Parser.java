@@ -555,7 +555,7 @@ public class Parser extends ParserSupport {
 			}
 			else {
 				// parse with JUEL
-				return elParser.parseCondition(s,no);
+				return elParser.parseCondition(s,no,isNegated);
 			}
 		}
 	}
