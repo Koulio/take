@@ -74,7 +74,7 @@ public class JSPELParser extends ParserSupport {
 		super();
 	}
 	
-	public Prerequisite parseCondition(String s,int line) throws ScriptException {
+	public Prerequisite parseCondition(String s,int line,boolean isNegated) throws ScriptException {
 		s = "${" + s + "}"; // EL parser expects this
 		Tree tree = builder.build(s);
 		ExpressionNode root = tree.getRoot();
@@ -92,7 +92,7 @@ public class JSPELParser extends ParserSupport {
 				
 				Term t1 = this.parseTerm(binN.getChild(0),line); // left
 				Term t2 = this.parseTerm(binN.getChild(1),line); // right
-				Predicate p = getPredicate(op,t1.getType(),t2.getType(),line);
+				Predicate p = getPredicate(op,t1.getType(),t2.getType(),isNegated,line);
 				Prerequisite prereq = new Prerequisite();
 				prereq.setPredicate(p);
 				prereq.setTerms(new Term[]{t1,t2});
@@ -122,7 +122,7 @@ public class JSPELParser extends ParserSupport {
 						m = property.getReadMethod();
 					}
 				}
-				else {
+				if (m==null) {
 					// try to find a method with this name
 					// the advantage is that we can use  expressions like person.isMale 
 					// by only using properties we would have to use person.male
@@ -132,16 +132,16 @@ public class JSPELParser extends ParserSupport {
 							m = m2;
 						}
 					}
-					catch (Exception x) {
-						error(line,x);
-					}
+					catch (Exception x) {}
 				}
+
 				if (m==null) {
-					this.error(line,"Cannot build predicate for ",p," - it represents neither a boolean property nor a getter for such a property in ",t.getType() );
+					this.error(line,"Cannot build predicate for ",p," - it represents neither a boolean property nor a getter for such a property in ",t.getType()," if this property is defined by rules, use the following syntax: aProperty[anObject]");
 				}
 				else {
 					JPredicate predicate = new JPredicate();
 					predicate.setMethod(m);
+					predicate.setNegated(isNegated);
 					Prerequisite prereq = new Prerequisite();
 					prereq.setPredicate(predicate);
 					prereq.setTerms(new Term[]{t});
@@ -174,11 +174,11 @@ public class JSPELParser extends ParserSupport {
 		return null;
 	}
 
-	private Predicate getPredicate(Operator op, Class type1, Class type2,int line) throws ScriptException  {
+	private Predicate getPredicate(Operator op, Class type1, Class type2,boolean isNegated, int line) throws ScriptException  {
 		
 		if (op == AstBinary.EQ && isNumeric(type1) &&  isNumeric(type2)) {
 			try {
-				return new Comparison("==");
+				return isNegated?new Comparison("!="):new Comparison("==");
 			} catch (TakeException e) {
 				error(line,e.getMessage());
 			}
@@ -187,6 +187,7 @@ public class JSPELParser extends ParserSupport {
 			try {
 				Method m = type1.getMethod("equals",new Class[]{Object.class});
 				JPredicate p = new JPredicate();
+				p.setNegated(isNegated);
 				p.setMethod(m);
 				return p;
 			} catch (Exception e) {
@@ -195,7 +196,7 @@ public class JSPELParser extends ParserSupport {
 		} 
 		else if (op == AstBinary.NE && isNumeric(type1) &&  isNumeric(type2)) {
 			try {
-				return new Comparison("!=");
+				return isNegated?new Comparison("=="):new Comparison("!=");
 			} catch (TakeException e) {
 				error(line,e.getMessage());
 			}
@@ -204,7 +205,7 @@ public class JSPELParser extends ParserSupport {
 			try {
 				Method m = type1.getMethod("equals",new Class[]{Object.class});
 				JPredicate p = new JPredicate();
-				p.setNegated(true);
+				p.setNegated(!isNegated);
 				p.setMethod(m);
 				return p;
 			} catch (Exception e) {
@@ -215,13 +216,13 @@ public class JSPELParser extends ParserSupport {
 			// all other operators are numeric
 			try {
 				if (op == AstBinary.GE)
-					return new Comparison(">=");
+					return isNegated?new Comparison("<"):new Comparison(">=");
 				else if (op == AstBinary.GT)
-					return new Comparison(">");
+					return isNegated?new Comparison("<="):new Comparison(">");
 				else if (op == AstBinary.LE)
-					return new Comparison("<=");
+					return isNegated?new Comparison(">"):new Comparison("<=");
 				else if (op == AstBinary.LT)
-					return new Comparison("<");
+					return isNegated?new Comparison(">="):new Comparison("<");
 			} catch (TakeException e) {
 				error(line,e.getMessage());
 			}
