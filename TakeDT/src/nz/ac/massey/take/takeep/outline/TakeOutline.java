@@ -101,13 +101,53 @@ public class TakeOutline extends ContentOutlinePage {
 					} else if (region.getType() == TAKE_PARTITIONS.TAKE_GLOBAL_ANNOTATION
 							.name()) {
 						url = Activator.getDefault().getBundle().getEntry(
-								"/icons/partitions/statement.gif");
+								"/icons/partitions/globalannotation.gif");
 					}
-
+					else if (region.getType() == TAKE_PARTITIONS.TAKE_COMMENT
+								.name()) {
+							url = Activator.getDefault().getBundle().getEntry(
+									"/icons/partitions/comment.gif");
+						}
+					else if (region.getType() == TAKE_PARTITIONS.TAKE_RULE_OR_FACT
+							.name()) {
+						url = Activator.getDefault().getBundle().getEntry(
+								"/icons/partitions/rule.gif");
+					}
+					else if (region.getType() == TAKE_PARTITIONS.TAKE_VAR
+							.name()) {
+						url = Activator.getDefault().getBundle().getEntry(
+								"/icons/partitions/var.gif");
+					}
+					else if (region.getType() == TAKE_PARTITIONS.TAKE_QUERY
+							.name()) {
+						url = Activator.getDefault().getBundle().getEntry(
+								"/icons/partitions/query.gif");
+					}
+					else if (region.getType() == TAKE_PARTITIONS.TAKE_EXTERNAL
+							.name()) {
+						url = Activator.getDefault().getBundle().getEntry(
+								"/icons/partitions/external.gif");
+					}
+					else if (region.getType() == TAKE_PARTITIONS.TAKE_REF
+							.name()) {
+						url = Activator.getDefault().getBundle().getEntry(
+								"/icons/partitions/reference.gif");
+					}
+					else if (region.getType() == TAKE_PARTITIONS.TAKE_AGGREGATION
+							.name()) {
+						url = Activator.getDefault().getBundle().getEntry(
+								"/icons/partitions/agg.gif");
+					}
+					else if (region.getType() == TAKE_PARTITIONS.TAKE_IMPORT
+							.name()) {
+						url = Activator.getDefault().getBundle().getEntry(
+								"/icons/partitions/import.gif");
+					}
 					if (url != null) {
 						img = ImageDescriptor.createFromURL(url).createImage();
 						this.images.put(region.getType(), img);
 					} else {
+						System.out.println("No image for " + region.getType());
 						this.images.put(region.getType(), null);
 					}
 				}
