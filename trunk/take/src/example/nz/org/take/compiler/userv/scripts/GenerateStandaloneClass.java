@@ -35,16 +35,14 @@ public class GenerateStandaloneClass {
 	 */
 	public static void main(String[] args) throws Exception {
 		BasicConfigurator.configure();
-		DefaultLocation location = new DefaultLocation();
-		NameGenerator nameGenerator = new DefaultNameGenerator();
 		nz.org.take.compiler.Compiler compiler = new DefaultCompiler();
 		compiler.add(new JalopyCodeFormatter());
-		compiler.setNameGenerator(nameGenerator);
-		BasicConfigurator.configure();			
+		compiler.setNameGenerator(new DefaultNameGenerator());
+		compiler.setLocation(new DefaultLocation());
 		// generate kb
 		InputStream script = GenerateStandaloneClass.class.getResourceAsStream("/example/nz/org/take/compiler/userv/rules/userv.take");
 		ScriptKnowledgeSource ksource = new ScriptKnowledgeSource(script);
-		compiler.setLocation(location);
+		
 		compiler.setPackageName("example.nz.org.take.compiler.userv.generated");
 		compiler.setClassName("UservRules");
 		
