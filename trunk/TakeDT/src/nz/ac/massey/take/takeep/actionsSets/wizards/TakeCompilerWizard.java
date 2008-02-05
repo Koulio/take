@@ -143,8 +143,6 @@ public class TakeCompilerWizard extends Wizard {
 					} else {
 						compiler.compileInterface(ksource.getKnowledgeBase());
 					}
-
-					//Copy TakeRT to a location in the project
 					if(wp.isIncludeTakeLibrary())
 					{
 						URL url  = Activator.getDefault().getBundle().getEntry("take-rt-1.4.jar");
