@@ -117,7 +117,7 @@ AE_04: autoEligibility[car,"eligible"]
 // Driver Eligibility Rule Set
 @category=Driver Eligibility Rule Set
 @description=If the driver is male and is under the age of 25, then young driver.
-DE_DAC01: if isMale[driver] and driver.age<25 then driverCategory[driver,"young driver"]
+DE_DAC01: if driver.isMale and driver.age<25 then driverCategory[driver,"young driver"]
 @category=Driver Eligibility Rule Set
 @description=If the driver is female and is under the age of 20, then young driver.
 DE_DAC02: if not driver.isMale and driver.age<20 then driverCategory[driver,"young driver"]
