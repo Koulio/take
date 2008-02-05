@@ -1,9 +1,6 @@
 package nz.ac.massey.take.takeep.editor;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.MalformedURLException;
@@ -12,7 +9,6 @@ import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import org.eclipse.jface.text.ITextHover;
 
 import nz.ac.massey.take.takeep.actionsSets.compileActions.TakeCompileToClasses;
 import nz.ac.massey.take.takeep.actionsSets.compileActions.TakeCompileToInterfaces;
@@ -31,6 +27,11 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
@@ -38,6 +39,8 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.DocumentEvent;
+import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.source.Annotation;
@@ -46,6 +49,7 @@ import org.eclipse.jface.text.source.CompositeRuler;
 import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.part.FileEditorInput;
@@ -75,8 +79,7 @@ public class TakeEditor extends TextEditor {
 		DesignManager cm = new DesignManager();
 		cm.addColor(TAKE_PARTITIONS.TAKE_COMMENT.name(), new RGB(63, 127, 95));
 
-		cm.addColor(TAKE_PARTITIONS.TAKE_GLOBAL_ANNOTATION.name(), new RGB(128,
-				128, 128));
+		cm.addColor(TAKE_PARTITIONS.TAKE_GLOBAL_ANNOTATION.name(), new RGB(128,128, 128));
 		cm.addStyle(TAKE_PARTITIONS.TAKE_GLOBAL_ANNOTATION.name(), SWT.ITALIC);
 
 		cm.addColor(TAKE_TOKENS.TAKE_STRING_LITERAL.name(), new RGB(0, 0, 192));
@@ -84,19 +87,17 @@ public class TakeEditor extends TextEditor {
 		cm.addColor(TAKE_TOKENS.TAKE_KEYWORD.name(), new RGB(127, 0, 85));
 		cm.addStyle(TAKE_TOKENS.TAKE_KEYWORD.name(), SWT.BOLD);
 
-		cm.addColor(TAKE_PARTITIONS.TAKE_LOCAL_ANNOTATION.name(), new RGB(0, 0,
-				192));
+		cm.addColor(TAKE_PARTITIONS.TAKE_LOCAL_ANNOTATION.name(), new RGB(0, 0,192));
 
 		this.setContentDescription("Take Editor");
-		this
-				.setSourceViewerConfiguration(new TakeSourceViewerConfiguration(
-						this,cm));
+		this.setSourceViewerConfiguration(new TakeSourceViewerConfiguration(
+				this,cm));
 		this.setDocumentProvider(new TakeDocumentProvider());
 
 		getPreferenceStore()
-				.setValue(
-						AbstractDecoratedTextEditorPreferenceConstants.EDITOR_LINE_NUMBER_RULER,
-						true);
+		.setValue(
+				AbstractDecoratedTextEditorPreferenceConstants.EDITOR_LINE_NUMBER_RULER,
+				true);
 
 		this.getDocumentProvider().addElementStateListener(
 				new IElementStateListener() {
@@ -128,6 +129,8 @@ public class TakeEditor extends TextEditor {
 					}
 				});
 
+
+
 	}
 
 	public static URLClassLoader getProjectClassLoader(IJavaProject project) {
@@ -138,14 +141,14 @@ public class TakeEditor extends TextEditor {
 	}
 
 	private static URL getRawLocationURL(IPath simplePath)
-			throws MalformedURLException {
+	throws MalformedURLException {
 		File file = getRawLocationFile(simplePath);
 		return file.toURI().toURL();
 	}
 
 	private static File getRawLocationFile(IPath simplePath) {
 		org.eclipse.core.resources.IResource resource = ResourcesPlugin
-				.getWorkspace().getRoot().findMember(simplePath);
+		.getWorkspace().getRoot().findMember(simplePath);
 		File file = null;
 		if (resource != null) {
 			file = resource.getRawLocation().toFile();
@@ -179,11 +182,11 @@ public class TakeEditor extends TextEditor {
 			for (int i = 0; i < names.length; i++) {
 				String projectName = names[i];
 				IProject reqProject = project.getProject().getWorkspace()
-						.getRoot().getProject(projectName);
+				.getRoot().getProject(projectName);
 				if (reqProject != null) {
 					IJavaProject reqJavaProject = JavaCore.create(reqProject);
 					pathElements
-							.addAll(getProjectClassPathURLs(reqJavaProject));
+					.addAll(getProjectClassPathURLs(reqJavaProject));
 				}
 			}
 		} catch (JavaModelException e) {
@@ -206,60 +209,67 @@ public class TakeEditor extends TextEditor {
 
 	public void runVerifier() {
 
+
+		IWorkbenchPage workbench = TakeCompileWizardPanel.getWorkbench();
+		IProject project = TakeCompileWizardPanel
+		.getProjectFromWorkbench(workbench);
+		ClassLoader cl = getProjectClassLoader(JavaCore.create(project));
+
+		final ResourceMarkerAnnotationModel annotationModel = (ResourceMarkerAnnotationModel) getDocumentProvider()
+		.getAnnotationModel(getEditorInput());
+
+		for (Annotation a : this.anno.keySet()) {
+			annotationModel.removeAnnotation(a);
+		}
+		final IFile file = ((FileEditorInput) this.getEditorInput())
+		.getFile();
 		try {
-			IWorkbenchPage workbench = TakeCompileWizardPanel.getWorkbench();
-			IProject project = TakeCompileWizardPanel
-					.getProjectFromWorkbench(workbench);
-			ClassLoader cl = getProjectClassLoader(JavaCore.create(project));
-			
-			ResourceMarkerAnnotationModel annotationModel = (ResourceMarkerAnnotationModel) getDocumentProvider()
-					.getAnnotationModel(getEditorInput());
-			
-			for (Annotation a : this.anno.keySet()) {
-				annotationModel.removeAnnotation(a);
-			}
-			IFile file = ((FileEditorInput) this.getEditorInput())
-			.getFile();
 			file.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
-			this.anno.clear();
+		} catch (CoreException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return;
+		}
+		this.anno.clear();
 
-			Parser p = new Parser();
-			p.setClassLoader(cl);
-			Reader script;
-			script = new StringReader(this.getDocumentProvider() .getDocument(this.getEditorInput()).get());
+		final Parser p = new Parser();
+		p.setClassLoader(cl);
+		final Reader script;
+		script = new StringReader(this.getDocumentProvider() .getDocument(this.getEditorInput()).get());
 
+		try {
 			List<ScriptException> check = p.check(script);
-			
+
 			for (ScriptException se : check) {
-				
-				IMarker marker = file.createMarker(IMarker.PROBLEM);
+
+				IMarker marker;
+
+				marker = file.createMarker(IMarker.PROBLEM);
+
 				marker.setAttribute(IMarker.MESSAGE, se.getMessage());
 				marker.setAttribute(IMarker.LOCATION, se.getLine());
-				
+
 				Annotation annotation = new Annotation(
 						"org.eclipse.ui.workbench.texteditor.error", false, se
-								.getMessage());
-				this.anno.put(annotation, marker);
-				IRegion lineInformation = this.getSourceViewer().getDocument()
-						.getLineInformation(se.getLine() - 1);
+						.getMessage());
+				anno.put(annotation, marker);
+				IRegion lineInformation = getSourceViewer().getDocument()
+				.getLineInformation(se.getLine() - 1);
 				annotationModel.addAnnotation(annotation, new Position(
 						lineInformation.getOffset(), lineInformation
-								.getLength()));
+						.getLength()));
 
 			}
-
-		} catch (CoreException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ScriptException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+		}
 
 	}
+
+
+
+
 
 	@Override
 	protected IVerticalRuler createVerticalRuler() {
@@ -281,12 +291,6 @@ public class TakeEditor extends TextEditor {
 	protected void createActions() {
 		// TODO Auto-generated method stub
 		super.createActions();
-		// this.setAction(TakeCompileToClasses.class.toString(),new
-		// TakeCompileToClasses());
-		// this.setAction(TakeCompileToInterfaces.class.toString(),new
-		// TakeCompileToInterfaces());
-		// this.setAction(TakeRunVerifiers.class.toString(),new
-		// TakeRunVerifiers());
 
 	}
 
@@ -296,10 +300,6 @@ public class TakeEditor extends TextEditor {
 		super.editorContextMenuAboutToShow(menu);
 
 		this.addGroup(menu, ITextEditorActionConstants.GROUP_EDIT, "Take");
-		// this.addAction(menu, "Take", TakeCompileToClasses.class.toString());
-		// this.addAction(menu, "Take",
-		// TakeCompileToInterfaces.class.toString());
-		// this.addAction(menu, "Take", TakeRunVerifiers.class.toString());
 
 		MenuManager compileMenu = new MenuManager("Take Compile");
 		compileMenu.add(new TakeCompileToClasses());
@@ -310,7 +310,30 @@ public class TakeEditor extends TextEditor {
 		verifyMenu.add(new TakeRunVerifiers());
 		menu.appendToGroup("Take", verifyMenu);
 
+	}
 
+
+	@Override
+	protected void doSetInput(final IEditorInput input) throws CoreException {
+		super.doSetInput(input);
+
+		this.getDocumentProvider ().getDocument(input).addDocumentListener(new IDocumentListener(){
+
+			private long lastRun = 0;
+			@Override
+			public void documentAboutToBeChanged(DocumentEvent event) {
+
+			}
+
+			@Override
+			public void documentChanged(DocumentEvent event) {
+				long i = System.currentTimeMillis();
+				if(i > lastRun+1000)
+				{
+					lastRun = i;
+					runVerifier();
+				}
+			}});
 	}
 
 }

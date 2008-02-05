@@ -110,7 +110,7 @@ public class TakeSourceViewerConfiguration extends SourceViewerConfiguration {
 					Annotation a = iter.next();
 					Position p = annotationModel.getPosition(a);
 
-
+					
 
 					if(p.overlapsWith(hoverRegion.getOffset(), hoverRegion.getLength()))
 					{

@@ -2,6 +2,9 @@ package nz.ac.massey.take.takeep.actionsSets.panels;
 
 import java.util.LinkedList;
 
+import nz.ac.massey.take.takeep.actionsSets.wizards.TakeCompilerWizard;
+import nz.ac.massey.take.takeep.editor.TakeEditor;
+
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -60,6 +63,9 @@ public class TakeCompileWizardPanel extends WizardPage {
 
 	private String sourceOutputLocation = "src";
 
+	private boolean includeTakeLibrary = false;
+	private String includeTakeLibraryLocation = "lib";
+	
 	private LinkedList<String> importStatements = new LinkedList<String>();
 
 	private LinkedList<String> additionalInterfaces = new LinkedList<String>();
@@ -229,25 +235,82 @@ public class TakeCompileWizardPanel extends WizardPage {
 							.getProjectRelativePath().toString();
 					lTB
 							.setText(TakeCompileWizardPanel.this.sourceOutputLocation);
-					// if (dialog.open() == IDialogConstants.CANCEL_ID)
-					// return;
-					// ElementTreeSelectionDialog
-					// Object[] types= dialog.getResult();
-					// if (types == null || types.length == 0)
-					// return ;
-					//			        
-					// for(Object o : types)
-					// {
-					//
-					// }
+
 
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
 			}
 		});
+		
+		try {
+		TakeEditor.getProjectClassLoader(JavaCore.create(project)).loadClass("nz.org.take.rt.AbstractIterator");
+		} catch (ClassNotFoundException e1) {
+			
+			includeTakeLibrary = true;
+			final Button ilcbtn = new Button(topLevel, SWT.CHECK);
+			ilcbtn.setText("Install Take Runtime Library");
+			ilcbtn.setSelection(includeTakeLibrary);
+			
+			final Text ilTB = new Text(topLevel, SWT.SINGLE);
+			ilTB.setText(this.includeTakeLibraryLocation);
+			ilTB.setLayoutData(new GridData(GridData.FILL, GridData.CENTER, true,
+					false));
+
+			ilTB.addListener(SWT.Modify, new Listener() {
+
+				@Override
+				public void handleEvent(Event event) {
+					TakeCompileWizardPanel.this.includeTakeLibraryLocation = ilTB.getText();
+
+				}
+			});
+			
+			
+			final Button ilbtn = new Button(topLevel, SWT.PUSH);
+			ilbtn.setText("Browse");
+			
+			ilbtn.addSelectionListener(new SelectionListener() {
+
+				@Override
+				public void widgetDefaultSelected(SelectionEvent e) {
+				}
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					try {
+
+						IFolder chooseFolder = chooseFolder(project, "Title",
+								"message", project.getLocation());
+						if (chooseFolder == null)
+							return;
+						TakeCompileWizardPanel.this.includeTakeLibraryLocation = chooseFolder
+								.getProjectRelativePath().toString();
+						ilTB
+								.setText(TakeCompileWizardPanel.this.includeTakeLibraryLocation);
+
+
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+
+				}
+			});
+			
+			ilcbtn.addSelectionListener(new SelectionListener(){
+
+				@Override
+				public void widgetDefaultSelected(SelectionEvent e) {}
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					includeTakeLibrary = ilcbtn.getSelection();
+					ilbtn.setEnabled(includeTakeLibrary);
+					ilTB.setEnabled(includeTakeLibrary);
+				}});
+		}
+
 
 	}
 
@@ -513,13 +576,34 @@ public class TakeCompileWizardPanel extends WizardPage {
 		topLevel.setLayoutData(new GridData(GridData.FILL, GridData.CENTER,
 				true, false, numcols, 1));
 
-		Button aabtn = new Button(topLevel, SWT.CHECK);
+		final Button aabtn = new Button(topLevel, SWT.CHECK);
 		aabtn.setText("Auto Annotate");
 		aabtn.setSelection(this.isAutoAnotate());
+		
+        aabtn.addSelectionListener(new SelectionListener(){
 
-		Button ppbtn = new Button(topLevel, SWT.CHECK);
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {}
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				autoAnotate = aabtn.getSelection();
+			}});
+        
+		final Button ppbtn = new Button(topLevel, SWT.CHECK);
 		ppbtn.setText("Pretty Print Source");
 		ppbtn.setSelection(this.isSourceTransform());
+		
+		ppbtn.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {}
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				sourceTransform = ppbtn.getSelection();
+			}});
+		
 	}
 
 	public String getPackageName() {
@@ -582,5 +666,13 @@ public class TakeCompileWizardPanel extends WizardPage {
 		if (!(input instanceof IFileEditorInput))
 			return null;
 		return ((IFileEditorInput) input).getFile();
+	}
+
+	public boolean isIncludeTakeLibrary() {
+		return includeTakeLibrary;
+	}
+
+	public String getIncludeTakeLibraryLocation() {
+		return includeTakeLibraryLocation;
 	}
 }
