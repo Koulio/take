@@ -25,7 +25,7 @@ import junit.framework.TestCase;
 
 public class JSPELParserTests extends TestCase {
 	public void _testCond1() throws Exception {
-		Fact f = new JSPELParser().parseCondition("42==48",42);
+		Fact f = new JSPELParser().parseCondition("42==48",42,false);
 		Predicate p = f.getPredicate();
 		Term[] terms = f.getTerms();
 	}
@@ -237,7 +237,7 @@ public class JSPELParserTests extends TestCase {
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
-		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.name==\'Max\'",42);
+		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.name==\'Max\'",42,false);
 		Predicate p = c.getPredicate();
 		assertTrue(p instanceof JPredicate);
 		Method m = ((JPredicate)p).getMethod();
@@ -260,7 +260,7 @@ public class JSPELParserTests extends TestCase {
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
-		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("\'Max\'==bean1.name",42);
+		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("\'Max\'==bean1.name",42,false);
 		Predicate p = c.getPredicate();
 		assertTrue(p instanceof JPredicate);
 		Method m = ((JPredicate)p).getMethod();
@@ -283,7 +283,7 @@ public class JSPELParserTests extends TestCase {
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
-		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.id==42",42);
+		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.id==42",42,false);
 		Predicate p = c.getPredicate();
 		assertTrue(p instanceof Comparison);
 		assertEquals(new Comparison("=="),p);
@@ -304,7 +304,7 @@ public class JSPELParserTests extends TestCase {
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
 		try{
-			new JSPELParser(vars,consts,aggs).parseCondition("bean1.name==\'Max\' || bean1.name==\'Bender\'",42);
+			new JSPELParser(vars,consts,aggs).parseCondition("bean1.name==\'Max\' || bean1.name==\'Bender\'",42,false);
 			assertTrue(false);
 		}
 		catch (ScriptException x) {
@@ -321,7 +321,7 @@ public class JSPELParserTests extends TestCase {
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
-		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.cool",42);
+		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.cool",42,false);
 		Predicate p = c.getPredicate();
 		assertTrue(p instanceof JPredicate);
 		Method m = ((JPredicate)p).getMethod();
@@ -344,7 +344,7 @@ public class JSPELParserTests extends TestCase {
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
 		// alternative syntax using getter names instead of properties
-		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.isCool",42);
+		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.isCool",42,false);
 		Predicate p = c.getPredicate();
 		assertTrue(p instanceof JPredicate);
 		Method m = ((JPredicate)p).getMethod();
@@ -366,7 +366,7 @@ public class JSPELParserTests extends TestCase {
 		var.setName("bean1");
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
-		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.property.tested",42);
+		Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.property.tested",42,false);
 		Predicate p = c.getPredicate();
 		assertTrue(p instanceof JPredicate);
 		Method m = ((JPredicate)p).getMethod();
@@ -389,7 +389,7 @@ public class JSPELParserTests extends TestCase {
 		var.setType(TestBean.class);
 		vars.put("bean1",var);
 		try {
-			Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.isNotSoCool",42);
+			Prerequisite c = new JSPELParser(vars,consts,aggs).parseCondition("bean1.isNotSoCool",42,false);
 			assertTrue(false);
 		}
 		catch (ScriptException x) {
