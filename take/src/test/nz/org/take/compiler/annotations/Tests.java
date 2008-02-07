@@ -14,6 +14,7 @@ import java.util.Map;
 import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.annotations.generated.KB;
 import nz.org.take.deployment.KnowledgeBaseManager;
+import nz.org.take.nscript.AnnotationPropagationPolicy;
 import nz.org.take.nscript.ScriptKnowledgeSource;
 import junit.framework.TestCase;
 
@@ -27,8 +28,6 @@ import junit.framework.TestCase;
 
 public class Tests extends TakeTestCase
 {
-
-	private KB kb= null;
 	
 	/**
 	 * Construct new test instance
@@ -40,51 +39,50 @@ public class Tests extends TakeTestCase
 		super(name);
 	}
 
+
+	
 	/**
-	 * Perform pre-test initialization
-	 *
-	 * @throws Exception
-	 *
-	 * @see TestCase#setUp()
+	 * Get the kb.
 	 */
-	protected void setUp() throws Exception
-	{
-		super.setUp();
+	protected KB getKB(AnnotationPropagationPolicy ap) throws Exception {
+		ScriptKnowledgeSource source = new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/annotations/rules.take"));
+		source.setAnnotationPolicy(ap);
 		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
-		kb = kbm.getKnowledgeBase(
+		return kbm.getKnowledgeBase(
 				KB.class, 
-				new ScriptKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/compiler/annotations/rules.take"))
+				source
 		); 
-
 	}
 
-	/**
-	 * Perform post-test clean up
-	 *
-	 * @throws Exception
-	 *
-	 * @see TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception
-	{
-		super.tearDown();
-		// Add additional tear down code here
-	}
+
 
 	/**
 	 * Test 1.
+	 * @throws Exception 
 	 */
-	public void testLocalAnnotations(){
-		Map<String,String> annotations = kb.getAnnotations("rule1");
-		assertEquals(2,annotations.size());
-		assertEquals("a description",annotations.get("description"));
+	public void testLocalAnnotations1() throws Exception{
+		Map<String,String> annotations = getKB(AnnotationPropagationPolicy.ALL).getAnnotations("rule1");
+		assertEquals(3,annotations.size());
+		assertEquals("a description",annotations.get("description")); // overridden global annotation
 		assertEquals("2007-09-19",annotations.get("date"));
+		assertEquals("jens dietrich",annotations.get("author"));
 	}
 	/**
 	 * Test 2.
+	 * @throws Exception 
 	 */
-	public void testGlobalAnnotations(){
-		Map<String,String> annotations = kb.getAnnotations();
+	public void testLocalAnnotations2() throws Exception{
+		Map<String,String> annotations = getKB(AnnotationPropagationPolicy.NONE).getAnnotations("rule1");
+		assertEquals(2,annotations.size());
+		assertEquals("a description",annotations.get("description")); // overridden global annotation
+		assertEquals("2007-09-19",annotations.get("date"));
+	}
+	/**
+	 * Test 3.
+	 * @throws Exception 
+	 */
+	public void testGlobalAnnotations() throws Exception{
+		Map<String,String> annotations = getKB(AnnotationPropagationPolicy.ALL).getAnnotations();
 		assertEquals(2,annotations.size());
 		assertEquals("test knowledge base",annotations.get("description"));
 		assertEquals("jens dietrich",annotations.get("author"));
