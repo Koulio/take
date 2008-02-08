@@ -45,4 +45,28 @@ public class TokenizerTests extends TestCase {
 		);
 	}
 
+	public void test3() throws Exception {
+		check(
+				"cond1 and cond2[' \\'and then '] then cond3",
+				new String[]{" and "," then "},
+				new String[]{"cond1","cond2[' 'and then ']","cond3"}
+		);
+	}
+	
+	public void test4() throws Exception {
+		check(
+				"cond1 and cond2[\" and then \"] then cond3",
+				new String[]{" and "," then "},
+				new String[]{"cond1","cond2[\" and then \"]","cond3"}
+		);
+	}
+	
+	public void test5() throws Exception {
+		check(
+				"cond1 and cond2[\" and ' then \"] then cond3",
+				new String[]{" and "," then "},
+				new String[]{"cond1","cond2[\" and ' then \"]","cond3"}
+		);
+	}
+
 }

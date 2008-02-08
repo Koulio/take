@@ -48,22 +48,45 @@ public class Tokenizer {
 			counter=0;
 		}
 	}
+	static class LiteralMode {
+		char start = '\'';
+		char end = '\'';
+		public LiteralMode(char start, char end) {
+			super();
+			this.start = start;
+			this.end = end;
+		}
+		public boolean starts(char c) {return c==start;}
+		public boolean ends(char c) {return c==end;}
+	}
+	static LiteralMode[] literalModes = {new LiteralMode('\'','\''),new LiteralMode('\"','\"')};
 	
 	public static List<String> tokenize(String s,String... separators) {
 		List<String> tokens = new ArrayList<String>();
-		boolean literalMode = false;
+		boolean escapeMode = false,append = false;
+		LiteralMode literalMode = null;
 		StringBuffer b = new StringBuffer();
-		boolean append = false;
 		Recognizer[] regs = new Recognizer[separators.length];
 		for (int i=0;i<separators.length;i++)
 			regs[i] = new Recognizer(separators[i]);
 		for (int i=0;i<s.length();i++) {
 			char c = s.charAt(i);
 			append=true;
-			if (c=='\'') {
-				literalMode = !literalMode;
+			if (c=='\\') {
+				escapeMode = !escapeMode;
+				append = !escapeMode;
 			}
-			else if (!literalMode) {
+			if (!escapeMode) {
+				if (literalMode!=null && literalMode.ends(c)) 
+					literalMode = null;
+				else if (literalMode==null) {
+					for (LiteralMode l:literalModes) {
+						if (l.starts(c))
+							literalMode = l;
+					}
+				}
+			}
+			if (literalMode==null) {
 				boolean t = false;
 				for (Recognizer r:regs) {					
 					if (r.push(c)) {
@@ -79,8 +102,11 @@ public class Tokenizer {
 				}
 				
 			} 
-			if (append) 
+			if (append ) {
 				b.append(c);
+				escapeMode = false;
+			}
+				
 		}
 		tokens.add(b.toString().trim());
 		
