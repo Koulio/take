@@ -14,7 +14,6 @@ package example.nz.org.take.compiler.userv.scripts;
 
 import java.io.InputStream;
 import org.apache.log4j.BasicConfigurator;
-import nz.org.take.compiler.NameGenerator;
 import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.DefaultNameGenerator;
