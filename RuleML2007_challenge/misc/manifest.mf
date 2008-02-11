@@ -1,8 +1,0 @@
-Manifest-version: 1.0
-Implementation-Title: @TITLE@
-Implementation-Vendor: @VENDOR@
-Implementation-Version: @VERSION@
-Implementation-URL: http://code.google.com/p/take/
-Main-Class: @MAINCLASS@
-Class-Path: @CLASSPATH@
-
