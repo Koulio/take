@@ -52,6 +52,8 @@ import org.eclipse.ui.part.FileEditorInput;
 
 public class TakeCompilerWizard extends Wizard {
 
+	private static final String TAKE_RT_1_5_JAR = "take-rt-1.5.jar";
+
 	private TakeCompileWizardPanel wp;
 
 	private boolean interfaces = false;
@@ -145,8 +147,8 @@ public class TakeCompilerWizard extends Wizard {
 					}
 					if(wp.isIncludeTakeLibrary())
 					{
-						URL url  = Activator.getDefault().getBundle().getEntry("take-rt-1.4.jar");
-						File newLib = new File((((FileEditorInput) editorInput).getFile().getProject().getFolder(wp.getIncludeTakeLibraryLocation()).getLocation().toString()),"take-rt-1.4.jar");
+						URL url  = Activator.getDefault().getBundle().getEntry(TAKE_RT_1_5_JAR);
+						File newLib = new File((((FileEditorInput) editorInput).getFile().getProject().getFolder(wp.getIncludeTakeLibraryLocation()).getLocation().toString()),TAKE_RT_1_5_JAR);
 					    newLib.createNewFile();
 					    
 						InputStream in = url.openStream();
