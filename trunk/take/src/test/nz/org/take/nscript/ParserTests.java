@@ -108,4 +108,10 @@ public class ParserTests extends TestCase {
 		assertTrue(Arrays.equals(new Class[]{java.util.Date.class,long.class},x.getPredicate().getSlotTypes()));
 	}
 
+	public void testEmptyLine() throws Exception {
+		String script =  "// test3\n   \nrule1: if cond1['a'] then cond2['b']";
+		KnowledgeBase kb = new Parser().parse(new StringReader(script));
+		assertEquals(1,kb.getElements().size());
+		DerivationRule r = (DerivationRule)kb.getElement("rule1");
+	}
 }

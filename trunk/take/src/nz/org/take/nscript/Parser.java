@@ -108,11 +108,13 @@ public class Parser extends ParserSupport {
 			while ((line=bufReader.readLine())!=null) {
 				int no = bufReader.getLineNumber();
 				line = line.trim();
-				try {
-					parseLine(line,no);	
-				}
-				catch (RuntimeException x) {
-					this.error(no,x,"Exception parsing line");
+				if (line.length()>0) {
+					try {
+						parseLine(line,no);	
+					}
+					catch (RuntimeException x) {
+						this.error(no,x,"Exception parsing line");
+					}
 				}
 			}
 			
