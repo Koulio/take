@@ -1,0 +1,1 @@
+this folder contains some figures used in the online (google doc) manual

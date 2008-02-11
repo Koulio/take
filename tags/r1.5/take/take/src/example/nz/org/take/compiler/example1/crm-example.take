@@ -1,0 +1,12 @@
+// example 
+@@dc:creator=jens dietrich
+@@dc:date=27/05/2007
+var example.nz.org.take.compiler.example1.Customer customer
+ref example.nz.org.take.compiler.example1.Discount goldCustomerDiscount
+@take.compilerhint.class=CustomerDiscount
+@take.compilerhint.slots=customer,discount
+@take.compilerhint.method=getDiscount
+query discount[in,out]
+// rules
+rule1: if category[customer,'gold'] then discount[customer,goldCustomerDiscount] 
+rule2: if 500<customer.turnover then category[customer,'gold']
