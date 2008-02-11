@@ -3,7 +3,6 @@
 // see also http://www.businessrulesforum.com/2005_Product_Derby.pdf
 @@dc:creator=Jens Dietrich
 @@dc:date=2007-09-12
-@@special=true
 import example.nz.org.take.compiler.userv.domainmodel.*;
 var Car car
 var Driver driver,client
