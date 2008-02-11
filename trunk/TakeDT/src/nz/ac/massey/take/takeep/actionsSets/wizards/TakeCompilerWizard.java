@@ -30,6 +30,7 @@ import org.apache.log4j.Layout;
 import org.apache.log4j.spi.ErrorHandler;
 import org.apache.log4j.spi.Filter;
 import org.apache.log4j.spi.LoggingEvent;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -148,7 +149,10 @@ public class TakeCompilerWizard extends Wizard {
 					if(wp.isIncludeTakeLibrary())
 					{
 						URL url  = Activator.getDefault().getBundle().getEntry(TAKE_RT_1_5_JAR);
-						File newLib = new File((((FileEditorInput) editorInput).getFile().getProject().getFolder(wp.getIncludeTakeLibraryLocation()).getLocation().toString()),TAKE_RT_1_5_JAR);
+						IFolder folder = ((FileEditorInput) editorInput).getFile().getProject().getFolder(wp.getIncludeTakeLibraryLocation());
+						if(!folder.exists())
+							folder.create(false, true, new NullProgressMonitor());
+						File newLib = new File((folder.getLocation().toString()),TAKE_RT_1_5_JAR);
 					    newLib.createNewFile();
 					    
 						InputStream in = url.openStream();

@@ -271,6 +271,9 @@ public class TakeCompileWizardPanel extends WizardPage {
 			final Button ilbtn = new Button(topLevel, SWT.PUSH);
 			ilbtn.setText("Browse");
 			
+			Label note = new Label(topLevel,SWT.LEFT);
+			note.setText("Note: manual addition to classpath needed");
+			
 			ilbtn.addSelectionListener(new SelectionListener() {
 
 				@Override
