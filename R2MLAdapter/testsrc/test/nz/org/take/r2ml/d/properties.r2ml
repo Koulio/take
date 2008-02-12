@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<r2ml:RuleBase xmlns:r2ml="http://www.rewerse.net/I1/2006/R2ML"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.rewerse.net/I1/2006/R2ML file:/home/schenke/data/eclipse/workspace/R2MLAdapter/resources/schemas/R2ML.xsd">
+    <r2ml:DerivationRuleSet>
+        <!--        <r2ml:DerivationRule r2ml:ruleID="rule01">
+            <r2ml:conditions>
+                <r2ml:AttributionAtom r2ml:attributeID="constant">
+                    <r2ml:subject>
+                        <r2ml:ObjectVariable r2ml:name="i" r2ml:classID="Thing" />
+                    </r2ml:subject>
+                    <r2ml:dataValue>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:integer" r2ml:lexicalValue="15" />
+                    </r2ml:dataValue>
+                </r2ml:AttributionAtom>
+            </r2ml:conditions>
+            <r2ml:conclusion>
+                <r2ml:AttributionAtom r2ml:attributeID="var">
+                    <r2ml:subject>
+                        <r2ml:ObjectVariable r2ml:name="i" r2ml:classID="Thing" />
+                    </r2ml:subject>
+                    <r2ml:dataValue>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:integer" r2ml:lexicalValue="25" />
+                    </r2ml:dataValue>
+                </r2ml:AttributionAtom>
+            </r2ml:conclusion>
+        </r2ml:DerivationRule>
+-->
+        <!--        <r2ml:DerivationRule r2ml:ruleID="rule01">
+            <r2ml:conditions>
+                <r2ml:DatatypePredicateAtom r2ml:datatypePredicateID="swrlb:notEqual">
+                    <r2ml:dataArguments>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:integer" r2ml:lexicalValue="15" />
+                        <r2ml:AttributeFunctionTerm r2ml:attributeID="var">
+                            <r2ml:contextArgument>
+                                <r2ml:ObjectVariable r2ml:name="i" r2ml:classID="Thing" />
+                            </r2ml:contextArgument>
+                        </r2ml:AttributeFunctionTerm>
+                    </r2ml:dataArguments>
+                </r2ml:DatatypePredicateAtom>
+            </r2ml:conditions>
+            <r2ml:conclusion>
+                <r2ml:GenericAtom r2ml:predicateID="valid">
+                    <r2ml:arguments>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="valid" />
+                    </r2ml:arguments>
+                </r2ml:GenericAtom>
+            </r2ml:conclusion>
+        </r2ml:DerivationRule>
+-->
+        <r2ml:DerivationRule>
+            <r2ml:conditions>
+                <r2ml:AttributionAtom r2ml:attributeID="constant1">
+                    <r2ml:subject>
+                        <r2ml:ObjectVariable r2ml:name="test" />
+                    </r2ml:subject>
+                    <r2ml:dataValue>
+                        <r2ml:AttributeFunctionTerm r2ml:attributeID="constant2">
+                            <r2ml:contextArgument>
+                                <r2ml:ObjectVariable r2ml:name="xyz" />
+                            </r2ml:contextArgument>
+                        </r2ml:AttributeFunctionTerm>
+                    </r2ml:dataValue>
+                </r2ml:AttributionAtom>
+            </r2ml:conditions>
+            <r2ml:conclusion>
+                <r2ml:GenericAtom r2ml:predicateID="alrigth">
+                    <r2ml:arguments />
+                </r2ml:GenericAtom>
+            </r2ml:conclusion>
+        </r2ml:DerivationRule>
+    </r2ml:DerivationRuleSet>
+</r2ml:RuleBase>

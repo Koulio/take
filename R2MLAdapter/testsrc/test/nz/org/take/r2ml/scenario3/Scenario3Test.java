@@ -27,6 +27,7 @@ import test.nz.org.take.r2ml.scenario3.generated.isGrandfather;
 
 import nz.org.take.deployment.KnowledgeBaseManager;
 import nz.org.take.r2ml.R2MLKnowledgeSource;
+import nz.org.take.r2ml.reference.DefaultDatatypeMapper;
 import nz.org.take.r2ml.reference.DefaultNameMapper;
 import nz.org.take.rt.DerivationController;
 import nz.org.take.rt.ResultSet;
@@ -65,6 +66,7 @@ public class Scenario3Test extends TestCase {
 		Log4jConfigurator.configure();
 		KnowledgeBaseManager<FamilyKB> kbm = new KnowledgeBaseManager<FamilyKB>();
 		R2MLKnowledgeSource ksrc = new R2MLKnowledgeSource(Scenario3Test.class.getResourceAsStream("/test/nz/org/take/r2ml/scenario3/rules3.xml"));
+		//ksrc.setDatatypeMapper(new DefaultDatatypeMapper());
 		ksrc.setSlotNameGenerator(new MyNameMapper());
 		KBUtil.addQuerries(ksrc);
 		KBUtil.addKnowledge(ksrc);

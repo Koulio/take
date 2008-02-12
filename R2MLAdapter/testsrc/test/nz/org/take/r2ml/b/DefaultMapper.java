@@ -24,31 +24,15 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 import nz.org.take.r2ml.DatatypeMapper;
+import nz.org.take.r2ml.reference.DefaultDatatypeMapper;
 
-public class DefaultMapper implements DatatypeMapper {
+public class DefaultMapper extends DefaultDatatypeMapper {
 	
-	static Map<QName, Class> types = new HashMap<QName, Class>();
-
 	public DefaultMapper () {
 		super();
 		setType("Person", Person.class);
-		setType(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI, String.class);
+		setType(new QName(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI, "string"), String.class);
 	}
 	
-	public Class getType (QName name) {
-		return types.get(name);
-	}
-	
-	public void setType (QName name, Class type) {
-		types.put(name, type);
-	}
-
-	public Class getType(String localName) {
-		return getType(new QName("", localName));
-	}
-
-	public void setType(String localName, Class type) {
-		setType(new QName("", localName), type);
-	}
 	
 }

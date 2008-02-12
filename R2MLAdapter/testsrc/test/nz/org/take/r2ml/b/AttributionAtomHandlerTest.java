@@ -24,6 +24,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Unmarshaller;
 
+import de.tu_cottbus.r2ml.RuleBase;
+
 import test.nz.org.take.r2ml.Log4jConfigurator;
 
 import nz.org.take.KnowledgeBase;
@@ -44,12 +46,14 @@ public class AttributionAtomHandlerTest extends TestCase {
 		super.setUp();
 		Log4jConfigurator.configure();
 		driver = R2MLDriver.get();
+		driver.setDatatypeMapper(new DefaultMapper());
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
 		Log4jConfigurator.shutdown();
+		driver.setDatatypeMapper(null);
 		driver = null;
 	}
 
@@ -63,11 +67,12 @@ public class AttributionAtomHandlerTest extends TestCase {
 					.getValue();
 			XmlTypeHandler handler = driver
 					.getHandlerByXmlType(root.getClass());
-			KnowledgeBase kb = (KnowledgeBase) handler.importObject(root);
-			assertEquals(1, kb.getElements().size());
+			KnowledgeBase kb = driver.importKB((RuleBase)root);//(KnowledgeBase) handler.importObject(root);
+			assertEquals(2, kb.getElements().size());
 			assertNotNull("Rule id \"DR000\" not found", kb.getElement("DR000"));
-			assertEquals("Wron predicate identifier in head of rule", "surname", kb.getElement("DR000").getPredicate().getName());
+			assertEquals("Wrong predicate identifier in head of rule", "surname", kb.getElement("DR000").getPredicate().getName());
 		} catch (Exception e) {
+			e.printStackTrace();
 			fail("Exception occured :" + e.toString());
 		}
 	}
