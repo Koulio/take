@@ -18,85 +18,140 @@
  */
 package nz.org.take.r2ml;
 
-import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
-import org.apache.log4j.Logger;
 
 import nz.org.take.KnowledgeBase;
 import nz.org.take.r2ml.reference.AssociationAsReferenceResolvPolicy;
 import nz.org.take.r2ml.reference.CheckOnlyNormalizer;
-import nz.org.take.r2ml.reference.SimpleAssociationResolvPolicy;
 import nz.org.take.r2ml.reference.DefaultDatatypeMapper;
 import nz.org.take.r2ml.reference.DefaultNameMapper;
+import nz.org.take.r2ml.util.ReplacePropertyFunctionTermFilter;
+import nz.org.take.r2ml.util.RuleBaseFilter;
+import nz.org.take.r2ml.util.TypeVariablesFilter;
 
-import de.tu_cottbus.r2ml.*;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
+import de.tu_cottbus.r2ml.AssociationAtom;
+import de.tu_cottbus.r2ml.AttributeFunctionTerm;
+import de.tu_cottbus.r2ml.AttributionAtom;
+import de.tu_cottbus.r2ml.Conclusion;
+import de.tu_cottbus.r2ml.Condition;
+import de.tu_cottbus.r2ml.Conjunction;
+import de.tu_cottbus.r2ml.DataClassificationAtom;
+import de.tu_cottbus.r2ml.DataValue;
+import de.tu_cottbus.r2ml.DataVariable;
+import de.tu_cottbus.r2ml.DatatypeFunctionTerm;
+import de.tu_cottbus.r2ml.DatatypePredicateAtom;
+import de.tu_cottbus.r2ml.DerivationRule;
+import de.tu_cottbus.r2ml.DerivationRuleSet;
+import de.tu_cottbus.r2ml.Disjunction;
+import de.tu_cottbus.r2ml.Documentation;
+import de.tu_cottbus.r2ml.EqualityAtom;
+import de.tu_cottbus.r2ml.GenericAtom;
+import de.tu_cottbus.r2ml.InequalityAtom;
+import de.tu_cottbus.r2ml.IntegrityRuleSet;
+import de.tu_cottbus.r2ml.Negation;
+import de.tu_cottbus.r2ml.NegationAsFailure;
+import de.tu_cottbus.r2ml.ObjectClassificationAtom;
+import de.tu_cottbus.r2ml.ObjectDescriptionAtom;
+import de.tu_cottbus.r2ml.ObjectVariable;
+import de.tu_cottbus.r2ml.PlainLiteral;
+import de.tu_cottbus.r2ml.ProductionRuleSet;
+import de.tu_cottbus.r2ml.PropertyAtom;
+import de.tu_cottbus.r2ml.QfConjunction;
+import de.tu_cottbus.r2ml.QfDisjunction;
+import de.tu_cottbus.r2ml.ReactionRuleSet;
+import de.tu_cottbus.r2ml.ReferencePropertyAtom;
+import de.tu_cottbus.r2ml.ReferencePropertyFunctionTerm;
+import de.tu_cottbus.r2ml.RuleBase;
+import de.tu_cottbus.r2ml.RuleText;
+import de.tu_cottbus.r2ml.StrongNegation;
+import de.tu_cottbus.r2ml.Subject;
+import de.tu_cottbus.r2ml.TypedLiteral;
 
 /**
  * @author Bastian Schenke (bastian.schenke@googlemail.com)
  * 
  */
 public class R2MLDriver {
-	
+
 	public static final String ID = "R2MLAdapter v0.1";
 
 	public static final String R2ML_NS = "http://www.rewerse.net/I1/2006/R2ML";
 
 	public static final String R2ML_VOCABULARY_NS = "http://www.rewerse.net/I1/2006/R2ML/R2MLV";
-	
+
 	private static R2MLDriver singletonDriver = null;
-
-	private JAXBContext jc = null;
-
-	private Unmarshaller um = null;
 
 	private Map<Class, XmlTypeHandler> typeHandler = new HashMap<Class, XmlTypeHandler>();
 
 	private boolean initialized = false;
 
 	private Normalizer normy = null;
+
 	private NameMapper nameMapper = null;
+
 	private DatatypeMapper datty = null;
 
-	public Logger logger = Logger.getLogger("nz.org.take.r2ml");
+	public Logger logger = Logger.getLogger("r2mlAdapter");
 
 	private AssociationResolvPolicy associationResolvPolicy = new AssociationAsReferenceResolvPolicy();
 
 	private RuleBase ruleBase;
-	
-	private R2MLDriver () {
+
+	private RuleBaseHandler rbHandler;
+
+	private List<RuleBaseFilter> ruleBaseFilter = new ArrayList<RuleBaseFilter>();
+
+	private R2MLDriver() {
 		super();
 	}
-	
+
 	public static R2MLDriver get() {
 		if (singletonDriver == null) {
 			singletonDriver = new R2MLDriver();
 			singletonDriver.addHandlers();
+			singletonDriver.addFilter();
+			singletonDriver.logger.setLevel(Level.ALL);
 		}
+
 		return singletonDriver;
 	}
-	
+
 	/**
-	 * @param ruleBase a RuleBase unmarshalled out of a R2ML/XML file
+	 * @param ruleBase
+	 *            a RuleBase unmarshalled out of a R2ML/XML file
 	 * @return a KnowledgeBase representing the input RuleBase
 	 * @throws R2MLException
 	 */
 	public KnowledgeBase importKB(RuleBase ruleBase) throws R2MLException {
+		MappingContext.reset();
+		if (logger.isDebugEnabled())
+			logger.debug("entering RuleBaseHandler");
 		this.ruleBase = ruleBase;
-		XmlTypeHandler rbHandler = getHandlerByXmlType(ruleBase.getClass());
-		
-		MappingContext context = new MappingContext();
+		for (RuleBaseFilter filter : ruleBaseFilter) {
+			filter.repair(ruleBase);
+		}
+		rbHandler = (RuleBaseHandler) getHandlerByXmlType(ruleBase.getClass());
+
 		KnowledgeBase kb = (KnowledgeBase) rbHandler.importObject(ruleBase);
-		
-		assert context.isClean();
+
+		assert MappingContext.get().isClean();
 		return kb;
-		
+
+	}
+
+	void addRuleToRuleBase(nz.org.take.DerivationRule rule)
+			throws R2MLException {
+		if (rbHandler == null) {
+			throw new R2MLException(
+					"Unable to add rule to non-existing rulebase.");
+		}
+		rbHandler.addRuleToKB(rule);
 	}
 
 	/**
@@ -104,12 +159,12 @@ public class R2MLDriver {
 	 * @return
 	 * @throws R2MLException
 	 */
-	public XmlTypeHandler getHandlerByXmlType(Class<? extends java.lang.Object> key) {
+	public XmlTypeHandler getHandlerByXmlType(
+			Class<? extends java.lang.Object> key) {
 
 		XmlTypeHandler handler = typeHandler.get(key);
 		if (logger.isDebugEnabled() && (handler == null)) {
-			logger.warn("XmlTypeHandler not found for "
-					+ key.toString());
+			logger.warn("XmlTypeHandler not found for " + key.toString());
 		}
 		return handler;
 
@@ -130,11 +185,11 @@ public class R2MLDriver {
 			datty = new DefaultDatatypeMapper();
 		return datty;
 	}
-	
+
 	public void setDatatypeMapper(DatatypeMapper newDatty) {
 		this.datty = newDatty;
 	}
-	
+
 	private void add(Class clazz, XmlTypeHandler handler) {
 		typeHandler.put(clazz, handler);
 	}
@@ -154,6 +209,7 @@ public class R2MLDriver {
 		add(AssociationAtom.class, new AssociationAtomHandler());
 		add(AttributionAtom.class, new AttributionAtomHandler());
 		add(AttributeFunctionTerm.class, new AttributeFunctionTermHandler());
+		add(Conclusion.class, new ConclusionHandler());
 		add(Condition.class, new ConditionHandler());
 		add(Conjunction.class, new ConjunctionHandler());
 		add(DataClassificationAtom.class, new DataClassificationAtomHandler());
@@ -182,6 +238,8 @@ public class R2MLDriver {
 		add(QfDisjunction.class, new QfDisjunctionHandler());
 		add(ReactionRuleSet.class, new ReactionRuleSetHandler());
 		add(ReferencePropertyAtom.class, new ReferencePropertyAtomHandler());
+		add(ReferencePropertyFunctionTerm.class,
+				new ReferencePropertyFunctionTermHandler());
 		add(RuleBase.class, new RuleBaseHandler());
 		add(RuleText.class, new RuleTextHandler());
 		add(StrongNegation.class, new StrongNegationHandler());
@@ -190,9 +248,15 @@ public class R2MLDriver {
 
 	}
 
-	public void setAssociationResolvPolicy(AssociationResolvPolicy policy) {
-		this.associationResolvPolicy =  policy;
+	private void addFilter() {
+		ruleBaseFilter.add(new TypeVariablesFilter());
+		ruleBaseFilter.add(new ReplacePropertyFunctionTermFilter());
 	}
+
+	public void setAssociationResolvPolicy(AssociationResolvPolicy policy) {
+		this.associationResolvPolicy = policy;
+	}
+
 	public AssociationResolvPolicy getAssociationResolvPolicy() {
 		return associationResolvPolicy;
 	}

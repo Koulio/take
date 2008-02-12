@@ -5,6 +5,8 @@ package nz.org.take.r2ml;
 
 import javax.xml.bind.JAXBElement;
 
+import org.apache.log4j.Logger;
+
 import nz.org.take.BinaryArithmeticFunction;
 import nz.org.take.ComplexTerm;
 import nz.org.take.Term;
@@ -25,6 +27,7 @@ public class DatatypeFunctionTermHandler implements XmlTypeHandler {
 	 * @see nz.org.take.r2ml.XmlTypeHandler#importObject(java.lang.Object)
 	 */
 	public Object importObject(Object obj) throws R2MLException {
+		Logger logger = R2MLDriver.get().logger;
 		DatatypeFunctionTerm r2mlTerm = (DatatypeFunctionTerm) obj;
 		R2MLDriver driver = R2MLDriver.get();
 		ComplexTerm term = new ComplexTerm();
@@ -42,14 +45,24 @@ public class DatatypeFunctionTermHandler implements XmlTypeHandler {
 		if (r2mlTerm.getDataArguments().getDataTerm().size() == 2) {
 			
 			String name = Functions.getArithmeticFunctionName(r2mlTerm.getDatatypeFunctionID());
-			BinaryArithmeticFunction f = BinaryArithmeticFunction.getInstance(name, args[0].getType(), args[1].getType());
-			term.setFunction(f);
+			
+			if (logger.isDebugEnabled())
+				logger.debug("function symbol for " + r2mlTerm.getDatatypeFunctionID().getLocalPart() +" is " + name);
+			
 
+			BinaryArithmeticFunction f = BinaryArithmeticFunction.getInstance(name, args[0].getType(), args[1].getType());
+			if (f == null || f.getName() == null || f.getName().isEmpty()) {
+					throw new R2MLException("Unknown function-type: " + r2mlTerm.getDatatypeFunctionID() + "!");
+			}
+			term.setFunction(f);
+			
+			
 		} else {
 			throw new R2MLException("DatatypeFuntionTerms are supported only with 2 or more arguments ().", R2MLException.FEATURE_NOT_SUPPORTED);
 		}
 
-		
+		driver.logger.debug("BinaryArithmeticFunction created: " + term.getFunction().toString());
+
 		
 		return term;
 	}

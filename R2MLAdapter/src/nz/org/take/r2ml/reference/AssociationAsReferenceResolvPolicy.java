@@ -27,7 +27,7 @@ import nz.org.take.r2ml.util.R2MLUtil;
  * 
  * @author schenke
  */
-public class AssociationAsReferenceResolvPolicy implements
+public class AssociationAsReferenceResolvPolicy extends AbstractPropertyHandler implements
 		AssociationResolvPolicy {
 
 	/*
@@ -62,22 +62,7 @@ public class AssociationAsReferenceResolvPolicy implements
 				.isNegated(atom), slotNames);
 
 		// no beanproperties exist
-		if (predicate == null) {
-			// TODO is this neccessary???
-			driver.logger
-					.warn("Unable to map associations to beanproperties. Fall back to SimpleAssociationResolvPolicy and use simple predicates instead.");
-			AssociationResolvPolicy simplePolicy = new SimpleAssociationResolvPolicy();
-			return simplePolicy.resolv(atom);
-		}
-
-		Fact fact = null;
-
-		// create Prerequisites for
-		if (context.isInsideCondition()) {
-			fact = new Prerequisite();
-		} else {
-			fact = new Fact();
-		}
+		Fact fact = R2MLUtil.newFact();
 
 		if (predicate != null) {
 			fact.setPredicate(predicate);
@@ -94,12 +79,17 @@ public class AssociationAsReferenceResolvPolicy implements
 		Term range = arg1;
 		Predicate predicate = null;
 		try {
-			predicate = AbstractPropertyHandler.buildPredicate(associationName,
+			predicate = buildPredicate(associationName,
 					domain, range, negated, slotNames);
 		} catch (ClassCastException cce) {
-
+			System.out.println("ClassCastException in AssociationAsReferenceResolvPolicy");
 		}
 		return predicate;
+	}
+
+	public Object importObject(Object obj) throws R2MLException {
+		throw new UnsupportedOperationException("This Methodcall is not allowed!");
+		//return null;
 	}
 
 }

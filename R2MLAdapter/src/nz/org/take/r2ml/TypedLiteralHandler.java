@@ -46,10 +46,20 @@ class TypedLiteralHandler implements XmlTypeHandler {
 	public Object importObject(Object obj) throws R2MLException {
 		Constant constant = new Constant();
 		TypedLiteral tl = (TypedLiteral) obj;
+//		System.out.println("TypedLiteral with type " + tl.getDatatypeID());
 		R2MLDriver driver = R2MLDriver.get();
-		constant
-				.setType(driver.getDatatypeMapper().getType(tl.getDatatypeID()));
+		try {
+			constant
+					.setType(driver.getDatatypeMapper().getType(tl.getDatatypeID()));
+		} catch (RuntimeException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
+		if (constant.getType() == String.class) {
+			constant.setRef("\"" + tl.getLexicalValue() + "\"");
+			constant.setObject(constant.getRef());
+		}
 		Object value = null;
 		try {
 			Constructor constructor = constant.getType().getConstructor(

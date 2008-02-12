@@ -21,12 +21,14 @@ package nz.org.take.r2ml;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.util.Collection;
 
 import nz.org.take.Fact;
 import nz.org.take.Predicate;
 import nz.org.take.PropertyPredicate;
 import nz.org.take.SimplePredicate;
 import nz.org.take.Term;
+import nz.org.take.r2ml.util.R2MLUtil;
 import de.tu_cottbus.r2ml.AttributionAtom;
 import de.tu_cottbus.r2ml.PropertyAtom;
 
@@ -50,8 +52,8 @@ class PropertyAtomHandler implements XmlTypeHandler {
 		PropertyAtom atom = (PropertyAtom) obj;
 		R2MLDriver driver = R2MLDriver.get();
 		MappingContext context = MappingContext.get();
-		
-		Fact fact = new Fact();
+
+		Fact fact = R2MLUtil.newFact();
 		String propertyName = atom.getPropertyID().getLocalPart();
 		// domain
 		XmlTypeHandler subjectHandler = driver.getHandlerByXmlType(atom
@@ -87,16 +89,19 @@ class PropertyAtomHandler implements XmlTypeHandler {
 		}
 		PropertyDescriptor property = buildProperty(propertyName, domain
 				.getType());
+		Predicate returnPredicate = null;
 		// if attribute is beanproperty use it
 		if (property != null) {
 			PropertyPredicate propPredicate = new PropertyPredicate();
 			propPredicate.setNegated(negated);
-			propPredicate.setOne2One(true);
 			propPredicate.setOwnerType(domain.getType());
 			propPredicate.setProperty(property);
 			propPredicate.setSlotNames(slotNames);
+			// this method does some initialization stuff (setOne2One)
+			// is this really neccessary here?
+			propPredicate.getSlotTypes();
 			context.addPredicate(propPredicate);
-			return propPredicate;
+			returnPredicate = propPredicate;
 		} else {
 			SimplePredicate simplePredicate = new SimplePredicate();
 			simplePredicate.setName(propertyName);
@@ -105,8 +110,9 @@ class PropertyAtomHandler implements XmlTypeHandler {
 					range.getType() });
 			simplePredicate.setSlotNames(slotNames);
 			context.addPredicate(simplePredicate);
-			return simplePredicate;
+			returnPredicate = simplePredicate;
 		}
+		return returnPredicate;
 	}
 
 	private PropertyDescriptor buildProperty(String name, Class clazz) {

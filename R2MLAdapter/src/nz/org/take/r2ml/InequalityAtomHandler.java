@@ -83,7 +83,7 @@ class InequalityAtomHandler implements XmlTypeHandler {
 				.getClass());
 		Term term1 = (Term) handler1.importObject(pair.obj1);
 		Term term2 = (Term) handler2.importObject(pair.obj2);
-		Fact fact = new Fact();
+		Fact fact = R2MLUtil.newFact();
 		fact.setTerms(new Term[] { term1, term2 });
 		fact.setPredicate(buildInEqualsPredicate(term1, term2, driver));
 		return fact;

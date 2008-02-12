@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import example.nz.org.take.r2ml.eurent.domain.Branch;
+import example.nz.org.take.r2ml.eurent.domain.Rental;
 import example.nz.org.take.r2ml.eurent.domain.RentalCar;
 import example.nz.org.take.r2ml.eurent.generated.EURentKB;
 import example.nz.org.take.r2ml.eurent.generated.availableAt;
@@ -45,8 +46,7 @@ public class Sample {
 		c.setPlateNumber("No42");
 		Branch b = new Branch();
 		b.setName("Palmerston North");
-		// Rental r = new Rental();
-		// r.setId("rental1");
+		Rental r = new Rental();
 		c.setRentalCarScheduledForService(false);
 		c.setStoredAt(b);
 		c.setAssignedTo(null);

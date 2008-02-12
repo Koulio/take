@@ -18,6 +18,7 @@ import de.tu_cottbus.r2ml.QfConjunction;
 import nz.org.take.Fact;
 import nz.org.take.Prerequisite;
 import nz.org.take.Term;
+import nz.org.take.r2ml.MappingContext;
 import nz.org.take.r2ml.R2MLException;
 
 /**
@@ -25,6 +26,12 @@ import nz.org.take.r2ml.R2MLException;
  * 
  */
 public class R2MLUtil {
+
+	public static Fact newFact() {
+		return MappingContext.get().isInsideCondition() ? new Prerequisite()
+				: new Fact();
+
+	}
 
 	public static Prerequisite factAsPrerequisite(Fact fact) {
 
@@ -39,7 +46,8 @@ public class R2MLUtil {
 
 	}
 
-	public static Fact PrerequisiteAsFact(Prerequisite prereq) throws R2MLException {
+	public static Fact PrerequisiteAsFact(Prerequisite prereq)
+			throws R2MLException {
 		Fact fact = new Fact();
 		fact.setId(prereq.getId());
 		fact.setPredicate(prereq.getPredicate());
@@ -112,14 +120,15 @@ public class R2MLUtil {
 		else
 			return false;
 	}
-	
+
 	public static boolean returnsFact(Object formula) {
 		if (formula instanceof GenericAtom)
 			return true;
 		return false;
 	}
-	
-	public static PropertyDescriptor buildProperty(String name, Class clazz) {
+
+	public static PropertyDescriptor buildProperty(String name, Class clazz)
+			throws R2MLException {
 		try {
 			BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
 			PropertyDescriptor[] properties = beanInfo.getPropertyDescriptors();
@@ -131,12 +140,12 @@ public class R2MLUtil {
 			}
 		} catch (Exception e) {
 		}
-		// no property found or exception occured
-		return null;
+		throw new R2MLException("No java property found for property " + name
+				+ " in class " + clazz.getCanonicalName());
 	}
 
 	public static boolean isNegated(Atom atom) {
-		return atom.isIsNegated()==null?false:atom.isIsNegated();
+		return atom.isIsNegated() == null ? false : atom.isIsNegated();
 	}
 
 }

@@ -1,58 +1,57 @@
 <?xml version="1.0"?>
 	
-<project name="r2ml4take" default="build-all" basedir=".">
-	
+<project basedir="." default="build-all" name="r2ml4take">
+
 	<property name="location.build" value="build" />
 	<property name="location.bin" value="bin" />
 	<property name="location.bin.examples" value="bin.examples" />
-	
-	<property name="jar" value="r2ml4take" />
+
+	<property name="jar.r2ml" value="r2ml4take" />
 	<property name="jar.eurent" value="eurent4take" />
 	<property name="jar.userv" value="userv4take" />
-	
-	<fileset id="classes.r2ml" dir="${location.bin}">
+
+	<fileset dir="${location.bin}" id="classes.r2ml">
 		<patternset>
 			<include name="**/*.class" />
 		</patternset>
 	</fileset>
-	
-	<fileset id="classes.eurent" dir="${location.bin.examples}">
+
+	<fileset dir="${location.bin.examples}" id="classes.eurent">
 		<patternset>
 			<include name="**/eurent/domain/**/*.class" />
 		</patternset>
 	</fileset>
-	
-	<fileset id="classes.userv" dir="${location.bin.examples}">
+
+	<fileset dir="${location.bin.examples}" id="classes.userv">
 		<patternset>
 			<include name="**/userv/domain/**/*.class" />
 		</patternset>
 	</fileset>
-	
+
 	<target name="build-all" depends="r2ml-build, examples"
 		description="Building the whole project with all examples." />
-	
-	<target name="examples" depends="eurent-build, userv-build"
-		description="Building all examples." />
-	
-	<target name="r2ml-build" >
+
+	<target name="examples" depends="eurent-build, userv-build" description="Building all examples." />
+
+	<target name="r2ml-build">
 		<echo message="Rebuild the main r2ml-adapter library." />
-		<jar destfile="${location.build}/${jar}.jar">
+		<jar destfile="${location.build}/${jar.r2ml}.jar">
 			<fileset refid="classes.r2ml" />
 		</jar>
 	</target>
-	
+
 	<target name="eurent-build">
 		<echo message="Rebuild jar-file for the eurent-example." />
 		<jar destfile="${location.build}/${jar.eurent}.jar">
 			<fileset refid="classes.eurent" />
 		</jar>
 	</target>
-	
+
 	<target name="userv-build">
 		<echo message="Building jar file for the userv-example." />
 		<jar destfile="${location.build}/${jar.userv}.jar">
 			<fileset refid="classes.userv" />
 		</jar>
 	</target>
-	
+
 </project>

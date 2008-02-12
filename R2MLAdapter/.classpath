@@ -3,6 +3,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" output="bin.tests" path="testsrc"/>
 	<classpathentry kind="src" output="bin.examples" path="examplesrc"/>
+	<classpathentry kind="src" path="generatedByStrelka"/>
+	<classpathentry kind="src" path="takeWorkingDir/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3.8.1"/>
 	<classpathentry kind="lib" path="lib/jaxb-api.jar"/>
@@ -13,6 +15,8 @@
 	<classpathentry kind="lib" path="lib/r2ml.jar" sourcepath="C:/Documents and Settings/bsschenk/My Documents/Programs/r2ml/src"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.7.jar"/>
 	<classpathentry kind="lib" path="lib/activation.jar"/>
+	<classpathentry kind="lib" path="lib/commons-jxpath-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/take"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

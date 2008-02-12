@@ -19,6 +19,7 @@
 package nz.org.take.r2ml;
 
 import nz.org.take.Fact;
+import nz.org.take.SimplePredicate;
 import nz.org.take.Term;
 import nz.org.take.r2ml.util.R2MLUtil;
 import de.tu_cottbus.r2ml.AttributionAtom;
@@ -42,7 +43,7 @@ class AttributionAtomHandler extends AbstractPropertyHandler {
 	public Object importObject(Object obj) throws R2MLException {
 		AttributionAtom atom = (AttributionAtom) obj;
 
-		Fact fact = new Fact();
+		Fact fact = R2MLUtil.newFact();
 		String attributeName = atom.getAttributeID().getLocalPart();
 		R2MLDriver driver = R2MLDriver.get();
 		// domain
@@ -59,8 +60,18 @@ class AttributionAtomHandler extends AbstractPropertyHandler {
 
 		String[] slotNames = driver.getNameMapper().getSlotNames(
 				atom.getAttributeID());
-		
-		fact.setPredicate(buildPredicate(attributeName, domain, range, R2MLUtil.isNegated(atom), slotNames));
+
+		//if (!MappingContext.get().isInsideCondition()) {
+		//	SimplePredicate predicate = new SimplePredicate();
+		//	predicate.setName(attributeName);
+		//	predicate.setNegated(R2MLUtil.isNegated(atom));
+		//	predicate.setSlotNames(driver.getNameMapper().getSlotNames(atom.getAttributeID()));
+		//	predicate.setSlotTypes(new Class[] {domain.getType(), range.getType()});
+		//	fact.setPredicate(predicate);
+		//} else {
+			fact.setPredicate(buildPredicate(attributeName, domain, range,
+					R2MLUtil.isNegated(atom), slotNames));
+		//}
 
 		fact.setId(attributeName);
 

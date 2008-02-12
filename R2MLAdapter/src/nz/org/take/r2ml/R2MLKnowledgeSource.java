@@ -11,10 +11,7 @@ import java.util.List;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.UnmarshallerHandler;
-
 import org.apache.log4j.Logger;
 
 import de.tu_cottbus.r2ml.RuleBase;
@@ -24,11 +21,9 @@ import nz.org.take.KnowledgeElement;
 import nz.org.take.KnowledgeSource;
 import nz.org.take.Query;
 import nz.org.take.TakeException;
-import nz.org.take.r2ml.util.GenerateQueries;
+import nz.org.take.r2ml.util.QueryGenerator;
 
 public class R2MLKnowledgeSource implements KnowledgeSource {
-
-	public Logger LOGGER = Logger.getLogger(R2MLKnowledgeSource.class);
 
 	private Reader reader = null;
 
@@ -38,9 +33,9 @@ public class R2MLKnowledgeSource implements KnowledgeSource {
 
 	private RuleBase rb = null;
 
-	private boolean generateQuerries = false;
+	private QueryGenerator queryGenerator = null;
 
-	public R2MLKnowledgeSource() {
+	private R2MLKnowledgeSource() {
 		super();
 		this.driver = R2MLDriver.get();
 	}
@@ -78,14 +73,22 @@ public class R2MLKnowledgeSource implements KnowledgeSource {
 	 * @return a knowledge base
 	 */
 	public KnowledgeBase getKnowledgeBase() throws TakeException {
+		if (driver.logger.isDebugEnabled())
+			driver.logger.debug("starting mapping process");
 		if (kb == null) {
 			if (rb == null) {
+				if (driver.logger.isDebugEnabled())
+					driver.logger.debug("loading rule base");
 				unmarshallRuleBase();
 			}
 			kb = driver.importKB(rb);
-			if (generateQuerries )
-				GenerateQueries.generateQueries(kb);
+			if(driver.logger.isDebugEnabled())
+				driver.logger.debug("KnowledgeBase imported.");
+			if (queryGenerator != null )
+				queryGenerator.generateQueries(kb);
 		}
+		if (driver.logger.isDebugEnabled())
+			driver.logger.debug("knowledge base created was " + kb!=null?"successful!":"not succesful!");
 		return kb;
 	}
 
@@ -111,8 +114,6 @@ public class R2MLKnowledgeSource implements KnowledgeSource {
 	}
 
 	public void setDatatypeMapper(DatatypeMapper datatypeMapper) {
-		if (driver == null)
-			throw new NullPointerException("Hier stimmt was nicht...");
 		driver.setDatatypeMapper(datatypeMapper);
 	}
 
@@ -156,12 +157,9 @@ public class R2MLKnowledgeSource implements KnowledgeSource {
 		return ret;
 	}
 
-	public boolean isGenerateQuerries() {
-		return generateQuerries;
-	}
-
-	public void setGenerateQuerries(boolean generateQuerries) {
-		this.generateQuerries = generateQuerries;
+	public void setQueryGenerator(QueryGenerator queryGenerator) {
+		this.queryGenerator = queryGenerator;
+		
 	}
 
 }

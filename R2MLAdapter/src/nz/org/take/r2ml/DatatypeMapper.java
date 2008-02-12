@@ -36,8 +36,9 @@ public interface DatatypeMapper {
 	 *            a qualified name
 	 * @return the java type associated with the qualified name
 	 *         <code>classID</code> or <code>null</code>
+	 * @throws R2MLException if there is no datatype for the class-id
 	 */
-	public Class getType(QName classID);
+	public Class getType(QName classID) throws R2MLException;
 
 	/**
 	 * Get the Class that is associated to the provided local name.
@@ -47,8 +48,9 @@ public interface DatatypeMapper {
 	 * @return the java type associated with the local name
 	 *         <code>loacalName</code> or <code>null</code> if there is no
 	 *         type associated.
+	 * @throws R2MLException if there is no datatype for the class-id
 	 */
-	public Class getType(String localName);
+	public Class getType(String localName) throws R2MLException;
 
 	/**
 	 * @param classID

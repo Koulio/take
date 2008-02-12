@@ -24,6 +24,7 @@ import org.apache.log4j.BasicConfigurator;
 
 import example.nz.org.take.r2ml.eurent.domain.EURentDatatypeMapper;
 import example.nz.org.take.r2ml.eurent.domain.EURentNameMapper;
+import example.nz.org.take.r2ml.eurent.domain.EURentQueryGenerator;
 
 import nz.org.take.KnowledgeBase;
 import nz.org.take.compiler.NameGenerator;
@@ -32,7 +33,7 @@ import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.DefaultNameGenerator;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
 import nz.org.take.r2ml.R2MLKnowledgeSource;
-import nz.org.take.script.ScriptKnowledgeSource;
+import nz.org.take.r2ml.util.AbstractQueryGenerator;
 
 
 /**
@@ -54,7 +55,7 @@ public class GenerateClasses {
 		// generate kb
 		InputStream r2ml = GenerateClasses.class.getResourceAsStream("/example/nz/org/take/r2ml/eurent/DR_car_availability.xml");
 		R2MLKnowledgeSource ksource = new R2MLKnowledgeSource(r2ml);
-		ksource.setGenerateQuerries(true);
+		ksource.setQueryGenerator(new EURentQueryGenerator());
 		
 		ksource.setDatatypeMapper(new EURentDatatypeMapper());
 		ksource.setSlotNameGenerator(new EURentNameMapper());

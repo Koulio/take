@@ -20,6 +20,7 @@ public class Functions {
 
 	static {
 		arithmeticFunctionNames.put("numeric-add", "+");
+		arithmeticFunctionNames.put("numeric-substract", "-");
 		arithmeticFunctionNames.put("numeric-subtract", "-");
 		arithmeticFunctionNames.put("numeric-multiply", "*");
 		arithmeticFunctionNames.put("numeric-divide", "/");
@@ -31,7 +32,13 @@ public class Functions {
 //		if (!"op".equals(datatypeFunctionID.getPrefix())) {
 //			throw new R2MLException("");
 //		}
-		return arithmeticFunctionNames.get(datatypeFunctionID.getLocalPart());
+		if (datatypeFunctionID == null) {
+			throw new R2MLException("Undefined datatype-function-id.");
+		}
+		String func =arithmeticFunctionNames.get(datatypeFunctionID.getLocalPart());
+		if (func == null)
+			throw new R2MLException("Unable to resolve function symbol " + datatypeFunctionID.getLocalPart());
+		return func;
 	}
 
 }
