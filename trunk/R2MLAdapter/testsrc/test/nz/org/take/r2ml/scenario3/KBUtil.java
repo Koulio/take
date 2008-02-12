@@ -6,8 +6,8 @@ import nz.org.take.KnowledgeElement;
 import nz.org.take.Query;
 import nz.org.take.SimplePredicate;
 import nz.org.take.TakeException;
+import nz.org.take.nscript.ScriptKnowledgeSource;
 import nz.org.take.r2ml.R2MLKnowledgeSource;
-import nz.org.take.script.ScriptKnowledgeSource;
 
 public class KBUtil {
 
