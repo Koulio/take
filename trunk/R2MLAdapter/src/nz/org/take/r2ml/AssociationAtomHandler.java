@@ -18,6 +18,7 @@
  */
 package nz.org.take.r2ml;
 
+import nz.org.take.r2ml.reference.SimpleAssociationResolvPolicy;
 import de.tu_cottbus.r2ml.AssociationAtom;
 
 /**
@@ -40,8 +41,13 @@ class AssociationAtomHandler implements XmlTypeHandler {
 
 		R2MLDriver driver = R2MLDriver.get();
 		AssociationAtom atom = (AssociationAtom) obj;
-		AssociationResolvPolicy policy = driver.getAssociationResolvPolicy();
-		return policy.resolv(atom);
+		if (MappingContext.get().isConclusion()) {
+			return new SimpleAssociationResolvPolicy().resolv(atom);
+		} else {
+			AssociationResolvPolicy policy = driver
+					.getAssociationResolvPolicy();
+			return policy.resolv(atom);
+		}
 	}
 
 }

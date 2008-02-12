@@ -18,6 +18,8 @@
  */
 package nz.org.take.r2ml;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -25,6 +27,7 @@ import java.util.Stack;
 import javax.xml.namespace.QName;
 
 import nz.org.take.Predicate;
+import nz.org.take.SimplePredicate;
 import nz.org.take.Variable;
 
 /**
@@ -42,6 +45,8 @@ public class MappingContext {
 	private Stack<XmlTypeHandler> ancestors = new Stack<XmlTypeHandler>();
 
 	private boolean insideCondition = false;
+
+	private Collection<String> propertyPredicateNames = new ArrayList<String>();
 
 	/**
 	 * Return the singleton instance of this MappingContext.
@@ -63,12 +68,9 @@ public class MappingContext {
 	public boolean isClean() {
 		return (ancestors.size() == 0);
 	}
-
-	/**
-	 * 
-	 */
-	void cleanContext() {
-		variables = new HashMap<QName, Variable>();
+	
+	public static void reset() {
+		singletonContext = null;
 	}
 
 	/**
@@ -115,7 +117,12 @@ public class MappingContext {
 	}
 
 	public Predicate getPredicate(QName fullName) {
-		return predicates.get(fullName);
+		Predicate predicate = predicates.get(fullName);
+		if (predicate == null)
+			return null;
+		if (isConclusion() && !(predicate instanceof SimplePredicate))
+			return null;
+		return predicate;
 	}
 
 	/**
@@ -146,8 +153,10 @@ public class MappingContext {
 	 */
 	void leave(XmlTypeHandler handler) throws R2MLException {
 		XmlTypeHandler current = ancestors.pop();
-		if (!current.equals(handler))
-			throw new R2MLException("Error while resolving recursion.");
+		if (!current.equals(handler)) {
+			R2MLDriver.get().logger.debug("Recursion error! Last handler entering handler was \"" + current.getClass().getSimpleName() + "\" actual leavung handler is \"" + handler.getClass().getSimpleName() + "\"!");
+			throw new R2MLException("Error while resolving recursion." + "Last handler entering handler was \"" + current.getClass().getSimpleName() + "\" actual leavung handler is \"" + handler.getClass().getSimpleName() + "\"!");
+		}
 		if (handler instanceof ConditionHandler) {
 			insideCondition = false;
 		}
@@ -156,6 +165,29 @@ public class MappingContext {
 
 	public boolean isInsideCondition() {
 		return insideCondition;
+	}
+	
+	public boolean isCondition() {
+		return ancestors.peek() instanceof ConditionHandler;
+	}
+
+	public boolean isConclusion() {
+		return ancestors.peek() instanceof ConclusionHandler;
+	}
+
+	public void cleanUpToHandler(XmlTypeHandler handler) throws R2MLException {
+		while (!ancestors.peek().equals(handler)) {
+			leave(ancestors.peek());
+		}
+		leave(handler);
+	}
+
+	public Collection<String> getPropertyPredicateNames() {
+		return propertyPredicateNames;
+	}
+	
+	void addPredicatePropertyName(String name) {
+		propertyPredicateNames.add(name);
 	}
 
 }

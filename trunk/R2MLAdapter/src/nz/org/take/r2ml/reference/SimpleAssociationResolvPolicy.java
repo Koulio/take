@@ -15,6 +15,7 @@ import nz.org.take.r2ml.MappingContext;
 import nz.org.take.r2ml.R2MLDriver;
 import nz.org.take.r2ml.R2MLException;
 import nz.org.take.r2ml.XmlTypeHandler;
+import nz.org.take.r2ml.util.R2MLUtil;
 
 /**
  * 
@@ -29,7 +30,7 @@ public class SimpleAssociationResolvPolicy implements AssociationResolvPolicy {
 		MappingContext context = MappingContext.get();
 		
 		context.getPredicate(atom.getAssociationPredicateID().getLocalPart());
-		Fact result = new Fact();
+		Fact result = R2MLUtil.newFact();
 		result.setId(atom.getAssociationPredicateID().getLocalPart());
 		// build fact for association
 		List<Term> terms = new ArrayList<Term>();

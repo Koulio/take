@@ -18,18 +18,12 @@
  */
 package nz.org.take.r2ml;
 
-import java.beans.BeanInfo;
-import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.util.List;
 
 import nz.org.take.Fact;
 import nz.org.take.JPredicate;
 import nz.org.take.Predicate;
-import nz.org.take.Prerequisite;
-import nz.org.take.PropertyPredicate;
 import nz.org.take.Term;
-import nz.org.take.Variable;
 import nz.org.take.r2ml.util.R2MLUtil;
 import de.tu_cottbus.r2ml.ObjectClassificationAtom;
 import de.tu_cottbus.r2ml.ObjectTerm;
@@ -89,7 +83,7 @@ class ObjectClassificationAtomHandler extends AbstractPropertyHandler {
 			context.addPredicate(jp);
 			p = jp;
 		}
-		Fact fact = new Fact();
+		Fact fact = R2MLUtil.newFact();
 		fact.setId(p.getName());
 		fact.setPredicate(p);
 		fact.setTerms(new Term[]{ tTerm });

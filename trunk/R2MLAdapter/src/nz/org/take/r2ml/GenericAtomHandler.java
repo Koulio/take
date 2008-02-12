@@ -24,7 +24,9 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 
 
+import nz.org.take.Fact;
 import nz.org.take.SimplePredicate;
+import nz.org.take.r2ml.util.R2MLUtil;
 
 import de.tu_cottbus.r2ml.GenericAtom;
 
@@ -52,7 +54,7 @@ class GenericAtomHandler implements XmlTypeHandler {
 		MappingContext context = MappingContext.get();
 		List<JAXBElement<? extends de.tu_cottbus.r2ml.Term>> r2mlArgs = genAtom
 				.getArguments().getTerm();
-		nz.org.take.Fact takeFact = new nz.org.take.Fact();
+		Fact takeFact = R2MLUtil.newFact();
 		if (context.getPredicate(genAtom.getPredicateID().toString()) == null) {
 			SimplePredicate takePredicate = new SimplePredicate();
 			takePredicate.setName(genAtom.getPredicateID().toString());

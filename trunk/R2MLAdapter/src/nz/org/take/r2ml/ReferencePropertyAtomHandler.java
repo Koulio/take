@@ -20,6 +20,7 @@ package nz.org.take.r2ml;
 
 import nz.org.take.Fact;
 import nz.org.take.Term;
+import nz.org.take.r2ml.util.R2MLUtil;
 import de.tu_cottbus.r2ml.ReferencePropertyAtom;
 
 /**
@@ -42,7 +43,7 @@ class ReferencePropertyAtomHandler extends AbstractPropertyHandler {
 		R2MLDriver driver = R2MLDriver.get();
 		
 		ReferencePropertyAtom atom = (ReferencePropertyAtom)obj;
-		Fact fact = new Fact();
+		Fact fact = R2MLUtil.newFact();
 		String referenceName = atom.getReferencePropertyID().getLocalPart();
 		// domain
 		XmlTypeHandler subjectHandler = driver.getHandlerByXmlType(atom

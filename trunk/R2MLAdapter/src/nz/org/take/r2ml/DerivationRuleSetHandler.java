@@ -47,6 +47,7 @@ class DerivationRuleSetHandler implements XmlTypeHandler {
 			throws R2MLException {
 		
 		R2MLDriver driver = R2MLDriver.get();
+		MappingContext.get().enter(this);
 		
 		List<KnowledgeElement> ret = new ArrayList<KnowledgeElement>();
 
@@ -71,12 +72,13 @@ class DerivationRuleSetHandler implements XmlTypeHandler {
 			} catch (R2MLException e) {
 				driver.logger.info(e.getMessage());
 				driver.logger.warn("Error while importing DerivationRuleSet "
-						+ id + ".");
+						+ id + "." + e.getLocalizedMessage());
 			} catch (ClassCastException cce) {
+				MappingContext.get().cleanUpToHandler(this);
 				throw new R2MLException("Error while processing DerivationRuleSet " + id + "", cce, R2MLException.CLASS_CAST_ERROR);
 			} // try-catch
 		}
-		
+		MappingContext.get().leave(this);
 		return ret;
 	}
 

@@ -24,13 +24,14 @@ import nz.org.take.Variable;
 class ObjectVariableHandler implements XmlTypeHandler {
 
 	public Object importObject(Object obj) throws R2MLException {
-		ObjectVariable oVar = (ObjectVariable)obj;
+		ObjectVariable oVar = (ObjectVariable) obj;
 		R2MLDriver driver = R2MLDriver.get();
 		MappingContext context = MappingContext.get();
 		Variable var = context.getVariable(oVar.getName());
-		Class type = driver.getDatatypeMapper().getType(oVar.getClassID());
 		if (var != null) {
 			if (var.getType() == null) {
+				Class type = driver.getDatatypeMapper().getType(
+						oVar.getClassID());
 				var.setType(type);
 			}
 			return var;
@@ -38,15 +39,17 @@ class ObjectVariableHandler implements XmlTypeHandler {
 		try {
 			var = new Variable();
 			var.setName(oVar.getName());
+			Class type = driver.getDatatypeMapper().getType(
+					oVar.getClassID());
 			var.setType(type);
 			if (driver.logger.isInfoEnabled()) {
-				driver.logger.info("Create new Variable ("
-						+ var.getName() + ":"
-						+ var.getType() + ").");
+				driver.logger.info("Create new Variable (" + var.getName()
+						+ ":" + var.getType() + ").");
 			}
 		} catch (NullPointerException e) {
-			String msg = "No Class specified for " + oVar.getClassID().toString() + ".";
-			throw new R2MLException(msg, e);			
+			String msg = "No Class specified for "
+					+ oVar.getClassID().toString() + ".";
+			throw new R2MLException(msg, e);
 		}
 		context.addVariable(oVar.getName(), var);
 		return var;

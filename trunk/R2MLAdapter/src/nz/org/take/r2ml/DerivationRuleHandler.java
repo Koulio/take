@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.tu_cottbus.r2ml.Atom;
+import de.tu_cottbus.r2ml.Conclusion;
 import nz.org.take.DerivationRule;
 import nz.org.take.Fact;
 import nz.org.take.Prerequisite;
@@ -40,9 +41,6 @@ class DerivationRuleHandler implements XmlTypeHandler {
 	 * it is splitted into two or more separated rules (take does not supprt
 	 * disjunctions in the body).
 	 * 
-	 * FIXME disjunction in conditions of r2ml rules means more than one rule in
-	 * take
-	 * 
 	 * @param obj
 	 *            a r2ml.DerivationRule object
 	 * @return List<nz.ac.take.DerivationRule> one rule for each disjunct in the condition
@@ -55,6 +53,7 @@ class DerivationRuleHandler implements XmlTypeHandler {
 
 		R2MLDriver driver = R2MLDriver.get();
 		MappingContext context = MappingContext.get();
+		context.enter(this);
 		
 		// R2ML DerivationRule
 		de.tu_cottbus.r2ml.DerivationRule xDRule = (de.tu_cottbus.r2ml.DerivationRule) obj;
@@ -75,19 +74,31 @@ class DerivationRuleHandler implements XmlTypeHandler {
 				dRule.setBody(condition);
 				// Conclusion
 				dRule.setHead(conclusion);
-				// copy RuleID
-				if (body.size() > 1)
-					dRule.setId(xDRule.getRuleID() + '_' + i++);
-				else
-					dRule.setId(xDRule.getRuleID());
+				// set RuleID
+				
+				if (xDRule.getRuleID() != null) {
+					if (body.size() > 1)
+						dRule.setId(xDRule.getRuleID() + '_' + i++);
+					else
+						dRule.setId(xDRule.getRuleID());
+				} else {
+					if (body.size() > 1)
+						dRule.setId(dRule.getHead().getPredicate().getName() + "_" + i++);
+					else
+						dRule.setId(dRule.getHead().getPredicate().getName());
+				}
+				System.out.println(xDRule.getRuleID());
+				System.out.println(dRule.getId());
 				// add documentation
 				dRule.addAnnotations(documentation);
 				dRules.add(dRule);
 			} // for
 		} catch (R2MLException e) {
-			throw new R2MLException("Error in rule \"" + xDRule.getRuleID() + "\": " + e.getMessage());
+			context.cleanUpToHandler(this);
+			throw new R2MLException("Error in rule \"" + xDRule.getRuleID() + "\": " + e.getMessage(), e);
 		} // try catch
 
+		context.leave(this);
 		return dRules;
 	}
 
@@ -115,9 +126,9 @@ class DerivationRuleHandler implements XmlTypeHandler {
 	private Fact extractHead(de.tu_cottbus.r2ml.DerivationRule rule, MappingContext context,
 			R2MLDriver driver) throws R2MLException {
 		Fact head = null;
-		Atom atom = rule.getConclusion().getAtom().getValue();
-		XmlTypeHandler handler = driver.getHandlerByXmlType(atom.getClass());
-		head = (Fact) handler.importObject(atom);
+		Conclusion conclusion = rule.getConclusion();
+		XmlTypeHandler handler = driver.getHandlerByXmlType(conclusion.getClass());
+		head = (Fact) handler.importObject(conclusion);
 		return head;
 	}
 
