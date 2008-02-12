@@ -172,10 +172,16 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 //				handle(t);
 		} else if (AssociationAtom.class.isAssignableFrom(type)) {
 			AssociationAtom aAtom = (AssociationAtom) atom;
-			List<JAXBElement<? extends ObjectTerm>> objects = aAtom.getObjectArguments().getObjectTerm();
-			handleObjectArgs(objects);
-			List<JAXBElement<? extends DataTerm>> datas = aAtom.getDataArguments().getDataTerm();
-			handleDataArgs(datas);
+			try {
+				List<JAXBElement<? extends ObjectTerm>> objects = aAtom.getObjectArguments().getObjectTerm();
+				handleObjectArgs(objects);
+			} catch (NullPointerException e1) {
+			}
+			try {
+				List<JAXBElement<? extends DataTerm>> datas = aAtom.getDataArguments().getDataTerm();
+				handleDataArgs(datas);
+			} catch (NullPointerException e) {
+			}
 		} else if (AttributionAtom.class.isAssignableFrom(type)) {
 			AttributionAtom pAtom = (AttributionAtom) atom;
 			JAXBElement<? extends ObjectTerm> subt = (JAXBElement<? extends ObjectTerm>) handle(pAtom.getSubject().getObjectTerm());
