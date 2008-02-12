@@ -25,6 +25,7 @@ public class EURentQueryGenerator extends AbstractQueryGenerator {
 	 */
 	public void generateQueries(KnowledgeBase kb) {
 		for (Query q : buildAllQueries(kb.getSupportedPredicates()))
+			if (q.getInputParams()[0] && !q.getInputParams()[1])	
 				kb.add(q);
 	}
 
