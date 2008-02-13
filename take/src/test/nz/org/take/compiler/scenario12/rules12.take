@@ -1,0 +1,12 @@
+// script for test scenario 11 - check how minus works
+@@dc:creator=jens dietrich
+@@dc:date=14/02/2008
+var test.nz.org.take.compiler.scenario12.Bean bean
+// queries - annotations are optional and are used to generate code
+@take.compilerhint.class=HasCategory
+@take.compilerhint.slots=bean,name
+@take.compilerhint.method=hasCategory
+query hasCategory[in,out]
+// rules
+rule1: if bean.ranking==42 then hasCategory[bean,'high']
+rule2: hasCategory[bean,'normal']
