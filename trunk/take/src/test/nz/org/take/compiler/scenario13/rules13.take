@@ -1,0 +1,16 @@
+// script for test scenario 13
+// check PropertyPredicates for primitive datatypes
+// this scenario is the counterpart for scenario 12 where
+// the PropertyPredicate is expressed as a Comparison
+@@dc:creator=bastian schenke
+@@dc:date=16/02/2008
+var test.nz.org.take.compiler.scenario13.Bean bean
+// queries - annotations are optional and are used to generate code
+@take.compilerhint.class=HasCategory
+@take.compilerhint.slots=bean,name
+@take.compilerhint.method=hasCategory
+query hasCategory[in,out]
+query ranking[in,in]
+// rules
+rule1: if ranking[bean,42] then hasCategory[bean,'high']
+rule2: hasCategory[bean,'normal']

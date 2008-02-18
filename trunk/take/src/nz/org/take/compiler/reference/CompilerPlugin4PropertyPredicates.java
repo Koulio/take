@@ -25,9 +25,11 @@ import nz.org.take.compiler.CompilerException;
 public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 	
 	public static final String TEMPLATE_O11 = "PropertyPredicateONE2ONE_11.vm";
+	public static final String TEMPLATE_O11P = "PropertyPredicateONE2ONE_11_primitive.vm";
 	public static final String TEMPLATE_O10 = "PropertyPredicateONE2ONE_10.vm";
 	public static final String TEMPLATE_M10 = "PropertyPredicateONE2MANY_10.vm";
 	public static final String TEMPLATE_M11 = "PropertyPredicateONE2MANY_11.vm";
+	public static final String TEMPLATE_O11NP = "PropertyPredicateONE2ONE_11_neg_primitive.vm";
 	public static final String TEMPLATE_O11N = "PropertyPredicateONE2ONE_11_neg.vm";
 	public static final String TEMPLATE_M11N = "PropertyPredicateONE2MANY_11_neg.vm";
 	public static final String TEMPLATE_M10N = "PropertyPredicateONE2MANY_10_neg.vm";
@@ -55,7 +57,7 @@ public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 		PropertyPredicate p = (PropertyPredicate)q.getPredicate();
 		boolean param2known = q.getInputParams()[1]; // true - both slots known
 			
-		String templateName = this.getTemplateName(param2known, p.isOne2One(),p.isNegated());
+		String templateName = this.getTemplateName(param2known, p.isOne2One(),p.isNegated(), p.getSlotTypes()[1].isPrimitive());
 		Template template = TemplateManager.getInstance().getTemplate(templateName);
 		
 		// bind template variables
@@ -96,17 +98,21 @@ public class CompilerPlugin4PropertyPredicates extends CompilerPlugin {
 		return q.getPredicate() instanceof PropertyPredicate;
 	}
 	
-	private String getTemplateName(boolean param2known, boolean isOne2One,boolean isNegated) {
-		if (param2known&&isOne2One&&!isNegated)
+	private String getTemplateName(boolean param2known, boolean isOne2One,boolean isNegated, boolean isPrimitive) {
+		if (param2known && isOne2One && !isNegated && !isPrimitive)
 			return TEMPLATE_O11;
+		else if (param2known && isOne2One && !isNegated && isPrimitive)
+			return TEMPLATE_O11P;
 		else if (param2known&&!isOne2One&&!isNegated)
 			return TEMPLATE_M11;		
 		else if (!param2known&&isOne2One&&!isNegated)
 			return TEMPLATE_O10;
 		else if (!param2known&&!isOne2One&&!isNegated)
 			return TEMPLATE_M10;
-		else if (param2known&&isOne2One&&isNegated)
+		else if (param2known && isOne2One && isNegated && !isPrimitive)
 			return TEMPLATE_O11N;
+		else if (param2known && isOne2One && isNegated && isPrimitive)
+			return TEMPLATE_O11NP;
 		else if (param2known&&!isOne2One&&isNegated)
 			return TEMPLATE_M11N;	
 		else if (!param2known&&isOne2One&&isNegated)
