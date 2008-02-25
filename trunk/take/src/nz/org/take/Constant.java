@@ -68,7 +68,7 @@ public class Constant extends AbstractAnnotatable implements Term {
 	public boolean isLiteral() {
 		Class type = getType();
 		if (this.object==null) return false; // proxy
-		else return (type==String.class)  || type.isPrimitive() || java.lang.Number.class.isAssignableFrom(type);
+		else return (type==String.class)  || type.isPrimitive() || java.lang.Number.class.isAssignableFrom(type) || type == Boolean.class;
 	}
 	public String toString() {
 		StringBuffer b = new StringBuffer();
@@ -83,7 +83,7 @@ public class Constant extends AbstractAnnotatable implements Term {
 		visitor.visit(this);
 		visitor.endVisit(this);
 	}
-	// return a Java literal prepresenting thsi object, or null if this isn't possible
+	// return a Java literal prepresenting this object, or null if this isn't possible
 	public String getLiteral() {
 		if (object!=null) {
 			if (object instanceof String)
