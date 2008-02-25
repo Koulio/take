@@ -79,7 +79,7 @@ public class Comparison extends AbstractPredicate {
 		if ((c == Boolean.class || c == String.class) && (symbol.equals("==") || symbol.equals("!=")))
 			return;
 		if (!Number.class.isAssignableFrom(c))
-			throw new IllegalArgumentException("Comparisons are for numeric data types only. It is also be used for Strings and Boolean, if the symbol is == or !=.");
+			throw new IllegalArgumentException("Comparisons are for numeric data types only and in case of String and Boolean, if the symbol is == or !=.");
 			
 	}
 
