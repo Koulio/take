@@ -19,59 +19,70 @@ import nz.org.take.compiler.Location;
 import nz.org.take.compiler.NameGenerator;
 import nz.org.take.compiler.SourceTransformation;
 
-
 /**
  * Abstract class with utilities used for code generation.
+ * 
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
 public abstract class CompilerUtils {
 	protected Logger logger = null;
-	
-	 public CompilerUtils() {
+
+	public CompilerUtils() {
 		super();
 		logger = Logger.getLogger(this.getClass());
 	}
+
 	/**
-	  * Get the name of the variable for the derivayion controller.
-	  * @return a string
-	  */
-	public abstract String getVarName4DerivationController() ;
+	 * Get the name of the variable for the derivayion controller.
+	 * 
+	 * @return a string
+	 */
+	public abstract String getVarName4DerivationController();
+
 	/**
-	  * Get the knowledge base for which code is to be generated.
-	  * @return a kb
-	  */
-	public abstract KnowledgeBase getKB() ;
+	 * Get the knowledge base for which code is to be generated.
+	 * 
+	 * @return a kb
+	 */
+	public abstract KnowledgeBase getKB();
+
 	/**
 	 * Get the name generator.
+	 * 
 	 * @return Returns the nameGenerator.
 	 */
-	public abstract NameGenerator getNameGenerator() ;
+	public abstract NameGenerator getNameGenerator();
+
 	/**
 	 * Get a logger.
+	 * 
 	 * @return a logger.
 	 */
-	public  Logger getLogger()  {
+	public Logger getLogger() {
 		return logger;
 	}
-	
+
 	/**
 	 * Get a list of source transformers installed.
+	 * 
 	 * @return a list of transformations
 	 */
-	public abstract List<SourceTransformation> getSourceTransformers() ;
+	public abstract List<SourceTransformation> getSourceTransformers();
 
 	/**
 	 * Create the list of predicates referenced in the kb.
-	 * @param kb a knowledge base
+	 * 
+	 * @param kb
+	 *            a knowledge base
 	 * @return a list of predicates
 	 */
 	protected Collection<Predicate> findPredicates(KnowledgeBase kb) {
 		Collection<Predicate> predicates = new HashSet<Predicate>();
-		for (KnowledgeElement e: kb.getElements()) {
+		for (KnowledgeElement e : kb.getElements()) {
 			if (e instanceof DerivationRule) {
-				DerivationRule r = (DerivationRule)e;
-				for (Prerequisite p:r.getBody()) {
+				DerivationRule r = (DerivationRule) e;
+				for (Prerequisite p : r.getBody()) {
 					predicates.add(p.getPredicate());
 				}
 			}
@@ -83,21 +94,25 @@ public abstract class CompilerUtils {
 	protected Slot buildSlot(Predicate p, int i) {
 		Slot s = new Slot();
 		s.position = i;
+		try{
 		s.name = p.getSlotNames()[i];
+		} catch (ArrayIndexOutOfBoundsException x) {
+			System.out.println(p);
+		}
 		s.type = getTypeName(p.getSlotTypes()[i]);
 		s.accessor = this.getNameGenerator().getAccessorNameForSlot(p, i);
 		s.mutator = this.getNameGenerator().getMutatorNameForSlot(p, i);
 		s.var = this.getNameGenerator().getVariableNameForSlot(p, i);
 		return s;
 	}
-	
+
 	/**
 	 * Get the type name for a class.
 	 * 
 	 */
 	protected String getTypeName(Class clazz) {
 		Class type = PrimitiveTypeUtils.getType(clazz);
-		if (type==null)
+		if (type == null)
 			return clazz.getName();
 		else
 			return type.getName();
@@ -105,6 +120,7 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Build the input slots for a query.
+	 * 
 	 * @param q
 	 * @return an array of slots
 	 */
@@ -115,8 +131,11 @@ public abstract class CompilerUtils {
 	/**
 	 * Create an array consisting of slots that are the input params for calling
 	 * a method associated by a fact.
-	 * @param f  a fact
-	 * @param bindings  bindings
+	 * 
+	 * @param f
+	 *            a fact
+	 * @param bindings
+	 *            bindings
 	 * @return an array of slots
 	 */
 	protected QueryRef buildQuery(Fact f, Bindings bindings) {
@@ -130,7 +149,7 @@ public abstract class CompilerUtils {
 				params.add(ref);
 		}
 		QueryRef q = new QueryRef((Predicate) f.getPredicate(), io, params);
-		q.setPublic(false);	
+		q.setPublic(false);
 		return q;
 	}
 
@@ -188,12 +207,13 @@ public abstract class CompilerUtils {
 		return cs.getId();
 	}
 
-
-
 	/**
 	 * Print a one line comment.
-	 * @param out a print writer
-	 * @param tokens (will be converted to strings using toString)
+	 * 
+	 * @param out
+	 *            a print writer
+	 * @param tokens
+	 *            (will be converted to strings using toString)
 	 */
 	protected void printOneLineComment(PrintWriter out, Object... tokens) {
 		out.print("// ");
@@ -201,35 +221,52 @@ public abstract class CompilerUtils {
 			out.print(t);
 		out.println();
 	}
-	
+
 	/**
-	 * Print a comparison between objects.
-	 * Note: for primitives we can use equals as well, autoboxing will be used
-	 * TODO compare using == for primitives it to make code more efficient 
-	 * @param out  a print writer
-	 * @param v1 value1
-	 * @param v2 value2
-	 * @param negated whether to check for equal or non equal 
-	 * @param type the object type
+	 * Print a comparison between objects. Note: for primitives we can use
+	 * equals as well, autoboxing will be used 
+	 * TODO done by BaSche compare using == for primitives it to make code more efficient
+	 * 
+	 * @param out
+	 *            a print writer
+	 * @param v1
+	 *            value1
+	 * @param v2
+	 *            value2
+	 * @param negated
+	 *            whether to check for equal or non equal
+	 * @param type
+	 *            the object type
 	 */
-	protected void printComparison(PrintWriter out, String v1,String v2,boolean negated,Class type) {
+	protected void printComparison(PrintWriter out, String v1, String v2,
+			boolean negated, Class type) {
 		if (negated)
 			out.print('!');
 		out.print(v1);
-		out.print(".equals(");
-		out.print(v2);
-		out.print(")");
+		if (type.isPrimitive()) {
+			out.print(" == ");
+			out.print(v2);
+		} else {
+			out.print(".equals(");
+			out.print(v2);
+			out.print(")");
+		}
 
 	}
-	
 
 	/**
 	 * Print a parameter list generated from an array of input slots.
-	 * @param out  a print writer
-	 * @param islots an array of slots
-	 * @param isDeclaration whether to include the type declarations
+	 * 
+	 * @param out
+	 *            a print writer
+	 * @param islots
+	 *            an array of slots
+	 * @param isDeclaration
+	 *            whether to include the type declarations
 	 */
-	protected void printParameters(PrintWriter out, Slot[] islots, boolean isDeclaration, boolean includeExplanation, boolean resetDerivationLevel) {
+	protected void printParameters(PrintWriter out, Slot[] islots,
+			boolean isDeclaration, boolean includeExplanation,
+			boolean resetDerivationLevel) {
 		out.print("(");
 		boolean f = true;
 		for (Slot slot : islots) {
@@ -250,12 +287,11 @@ public abstract class CompilerUtils {
 				f = false;
 			else
 				out.print(",");
-			
-			if (isDeclaration) {	
+
+			if (isDeclaration) {
 				out.print("final DerivationController ");
 				out.print(this.getVarName4DerivationController());
-			}
-			else {
+			} else {
 				out.print(this.getVarName4DerivationController());
 				if (resetDerivationLevel) {
 					out.print(".reset(");
@@ -271,12 +307,18 @@ public abstract class CompilerUtils {
 	/**
 	 * Print a Method comment with javadoc tags generated from an array of
 	 * slots.
-	 * @param outa print writer
-	 * @param comment the Methodcomment
-	 * @param islots  the input/param slots
-	 * @param returnComment  comment for the return tag
+	 * 
+	 * @param outa
+	 *            print writer
+	 * @param comment
+	 *            the Methodcomment
+	 * @param islots
+	 *            the input/param slots
+	 * @param returnComment
+	 *            comment for the return tag
 	 */
-	protected void printMethodComment(PrintWriter out, String comment, Slot[] islots, String returnComment) {
+	protected void printMethodComment(PrintWriter out, String comment,
+			Slot[] islots, String returnComment) {
 		out.println("/**");
 		out.print(" * ");
 		out.println(comment);
@@ -294,9 +336,13 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Print a generic type followed by a white space.
-	 * @param out a print writer
-	 * @param type the type name
-	 * @param param the parameter type
+	 * 
+	 * @param out
+	 *            a print writer
+	 * @param type
+	 *            the type name
+	 * @param param
+	 *            the parameter type
 	 */
 	protected void printGenericType(PrintWriter out, String type, String param) {
 		out.print(type);
@@ -307,12 +353,18 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Print a constructor.
-	 * @param out a print writer
-	 * @param type  the type name
-	 * @param genTypeParam the generic type parameter
-	 * @param params the parameters
+	 * 
+	 * @param out
+	 *            a print writer
+	 * @param type
+	 *            the type name
+	 * @param genTypeParam
+	 *            the generic type parameter
+	 * @param params
+	 *            the parameters
 	 */
-	protected void printContructorInvocation(PrintWriter out, String type, String genTypeParam, String... params) {
+	protected void printContructorInvocation(PrintWriter out, String type,
+			String genTypeParam, String... params) {
 		out.print("new ");
 		out.print(type);
 		if (genTypeParam != null) {
@@ -334,13 +386,20 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Print a constructor invocation for a class with two generic types.
-	 * @param out a print writer
-	 * @param type   the type name
-	 * @param genType1 the generic type parameter1
-	 * @param genType2   the generic type parameter2
-	 * @param params the parameters
+	 * 
+	 * @param out
+	 *            a print writer
+	 * @param type
+	 *            the type name
+	 * @param genType1
+	 *            the generic type parameter1
+	 * @param genType2
+	 *            the generic type parameter2
+	 * @param params
+	 *            the parameters
 	 */
-	protected void printContructorInvocation2(PrintWriter out, String type, String genTypeParam1, String genTypeParam2, String... params) {
+	protected void printContructorInvocation2(PrintWriter out, String type,
+			String genTypeParam1, String genTypeParam2, String... params) {
 		out.print("new ");
 		out.print(type);
 		out.print('<');
@@ -362,8 +421,11 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Print the code used to invoke the constructor.
-	 * @param out a print writer
-	 * @param queryRef the query + the parameters used
+	 * 
+	 * @param out
+	 *            a print writer
+	 * @param queryRef
+	 *            the query + the parameters used
 	 */
 	protected void printConstructorInvocation(PrintWriter out, QueryRef queryRef) {
 		out.print("new ");
@@ -382,8 +444,11 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Print a constructor invocation for a class with two generic types.
-	 * @param out  a print writer
-	 * @param type  the type name
+	 * 
+	 * @param out
+	 *            a print writer
+	 * @param type
+	 *            the type name
 	 */
 	protected void printContructorInvocation(PrintWriter out, String type) {
 		out.print("new ");
@@ -393,12 +458,18 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Print a constructor.
-	 * @param out a print writer
-	 * @param name  the method name
-	 * @param target the target object ref
-	 * @param params  the parameters
+	 * 
+	 * @param out
+	 *            a print writer
+	 * @param name
+	 *            the method name
+	 * @param target
+	 *            the target object ref
+	 * @param params
+	 *            the parameters
 	 */
-	protected void printMethodInvocation(PrintWriter out, String name, String target, String... params) {
+	protected void printMethodInvocation(PrintWriter out, String name,
+			String target, String... params) {
 		out.print(target);
 		out.print('.');
 		out.print(name);
@@ -416,21 +487,29 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Print a variable assignment.
-	 * @param out   a print writer
-	 * @param obj    the object reference
-	 * @param attr  the attribute (optional)
-	 * @param value  the value
-	 * @param valueAttr the value attribute (optional)
-	 *  @param cast cast value to this type, don't cast if null
+	 * 
+	 * @param out
+	 *            a print writer
+	 * @param obj
+	 *            the object reference
+	 * @param attr
+	 *            the attribute (optional)
+	 * @param value
+	 *            the value
+	 * @param valueAttr
+	 *            the value attribute (optional)
+	 * @param cast
+	 *            cast value to this type, don't cast if null
 	 */
-	protected void printVariableAssignment(PrintWriter out, String obj, String attr, String value, String valueAttr, String cast) {
+	protected void printVariableAssignment(PrintWriter out, String obj,
+			String attr, String value, String valueAttr, String cast) {
 		out.print(obj);
 		if (attr != null) {
 			out.print('.');
 			out.print(attr);
 		}
 		out.print('=');
-		if (cast!=null) {
+		if (cast != null) {
 			out.print('(');
 			out.print(cast);
 			out.print(')');
@@ -445,36 +524,56 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Print a variable assignment.
-	 * @param out   a print writer
-	 * @param obj    the object reference
-	 * @param attr  the attribute (optional)
-	 * @param value  the value
-	 * @param valueAttr the value attribute (optional)
+	 * 
+	 * @param out
+	 *            a print writer
+	 * @param obj
+	 *            the object reference
+	 * @param attr
+	 *            the attribute (optional)
+	 * @param value
+	 *            the value
+	 * @param valueAttr
+	 *            the value attribute (optional)
 	 */
-	protected void printVariableAssignment(PrintWriter out, String obj, String attr, String value, String valueAttr) {
-		printVariableAssignment( out,  obj, attr,  value,  valueAttr,null);
+	protected void printVariableAssignment(PrintWriter out, String obj,
+			String attr, String value, String valueAttr) {
+		printVariableAssignment(out, obj, attr, value, valueAttr, null);
 	}
 
 	/**
 	 * Print a variable assignment.
-	 * @param out   a print writer
-	 * @param obj    the object reference
-	 * @param attr  the attribute (optional)
-	 * @param value  the value
+	 * 
+	 * @param out
+	 *            a print writer
+	 * @param obj
+	 *            the object reference
+	 * @param attr
+	 *            the attribute (optional)
+	 * @param value
+	 *            the value
 	 */
-	protected void printVariableAssignment(PrintWriter out, String obj, String attr, String value) {
-		printVariableAssignment( out,  obj, attr,  value,  null,null);
+	protected void printVariableAssignment(PrintWriter out, String obj,
+			String attr, String value) {
+		printVariableAssignment(out, obj, attr, value, null, null);
 	}
 
 	/**
-	 * Print a variable declaration. 
-	 * @param out  a print writer
-	 * @param type the type
-	 * @param name  the name
-	 * @param defaultValue  the default value (optional)
-	 * @param modifiers  modifiers like final and static (optional)
+	 * Print a variable declaration.
+	 * 
+	 * @param out
+	 *            a print writer
+	 * @param type
+	 *            the type
+	 * @param name
+	 *            the name
+	 * @param defaultValue
+	 *            the default value (optional)
+	 * @param modifiers
+	 *            modifiers like final and static (optional)
 	 */
-	protected void printVariableDeclaration(PrintWriter out, String modifiers, String type, String name, String defaultValue) {
+	protected void printVariableDeclaration(PrintWriter out, String modifiers,
+			String type, String name, String defaultValue) {
 		if (modifiers != null) {
 			out.print(modifiers);
 			out.print(" ");
@@ -490,19 +589,27 @@ public abstract class CompilerUtils {
 	}
 
 	/**
-	 * Print a variable declaration. 
-	 * @param out a print writer
-	 * @param type the type
-	 * @param name   the name
-	 * @param modifiers modifiers like final and static (optional)
+	 * Print a variable declaration.
+	 * 
+	 * @param out
+	 *            a print writer
+	 * @param type
+	 *            the type
+	 * @param name
+	 *            the name
+	 * @param modifiers
+	 *            modifiers like final and static (optional)
 	 */
-	protected void printVariableDeclaration(PrintWriter out, String modifiers, String type, String name) {
+	protected void printVariableDeclaration(PrintWriter out, String modifiers,
+			String type, String name) {
 		printVariableDeclaration(out, modifiers, type, name, null);
 	}
 
 	/**
 	 * Get the method name associated with a query.
-	 * @param q a query
+	 * 
+	 * @param q
+	 *            a query
 	 * @return a method name
 	 */
 	protected String getMethodName(Query q) {
@@ -511,38 +618,42 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Get the method name associated with a aggregation function.
-	 * @param f an aggregation function
+	 * 
+	 * @param f
+	 *            an aggregation function
 	 * @return a method name
 	 */
 	protected String getMethodName(AggregationFunction f) {
 		return this.getNameGenerator().getMethodName(f);
 	}
-	
+
 	/**
 	 * Get the method name associated with a query.
-	 * @param q  a query
-	 * @param i  an index
+	 * 
+	 * @param q
+	 *            a query
+	 * @param i
+	 *            an index
 	 * @return a method name
 	 */
 	protected String getMethodName(Query q, int i) {
 		return this.getMethodName(q) + "_" + i;
 	}
-	
-
 
 	/**
-	 * Get the code that is used to reference a constant.	
+	 * Get the code that is used to reference a constant.
+	 * 
 	 * @param constantClassName
 	 * @param t
 	 * @return
 	 */
-	protected String getRef(String constantClassName, Constant t) throws CompilerException {
+	protected String getRef(String constantClassName, Constant t)
+			throws CompilerException {
 		if (t.isProxy()) {
-			return constantClassName+'.'+t.getRef();
-		}
-		else {
+			return constantClassName + '.' + t.getRef();
+		} else {
 			String lit = t.getLiteral();
-			if (lit!=null)
+			if (lit != null)
 				return lit;
 			else
 				throw new CompilerException(
@@ -552,7 +663,9 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Get the name of the class for a predicate.
-	 * @param p a predicate
+	 * 
+	 * @param p
+	 *            a predicate
 	 * @return a class name
 	 */
 	protected String getClassName(Predicate p) {
@@ -561,24 +674,29 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Get the name of the class for a fact.
-	 * @param f a fact
+	 * 
+	 * @param f
+	 *            a fact
 	 * @return a class name
 	 */
 	protected String getClassName(Fact f) {
 		return this.getNameGenerator().getClassName(f.getPredicate());
 	}
 
-
 	/**
 	 * Print the code used to invoke the method representing a query.
-	 * @param out a print writer
-	 * @param queryRef the query + the parameters used
+	 * 
+	 * @param out
+	 *            a print writer
+	 * @param queryRef
+	 *            the query + the parameters used
 	 */
-	protected void printInvocation(PrintWriter out, QueryRef queryRef, boolean includeExplanation, boolean  increaseLevel) {
+	protected void printInvocation(PrintWriter out, QueryRef queryRef,
+			boolean includeExplanation, boolean increaseLevel) {
 		// references to static methods (in main kb class or in fragments)
 		out.print(this.getNameGenerator().getKBFragementName(queryRef));
 		out.print('.');
-		
+
 		out.print(this.getMethodName(queryRef));
 		out.print("(");
 		boolean f = true;
@@ -602,7 +720,9 @@ public abstract class CompilerUtils {
 		}
 		out.print(")");
 	}
-	protected void printLogStatement(PrintWriter out, KnowledgeElement cs,boolean[] io,Slot[] islots) {
+
+	protected void printLogStatement(PrintWriter out, KnowledgeElement cs,
+			boolean[] io, Slot[] islots) {
 		String kind = null;
 		if (cs instanceof DerivationRule)
 			kind = "DerivationController.RULE";
@@ -610,9 +730,9 @@ public abstract class CompilerUtils {
 			kind = "DerivationController.FACT";
 		else if (cs instanceof ExternalFactStore)
 			kind = "DerivationController.EXTERNAL_FACT_SET";
-		else 
+		else
 			kind = "DerivationController.ANY";
-		
+
 		out.print(this.getVarName4DerivationController());
 		out.print(".log(\"");
 		out.print(this.getRuleRef(cs));
@@ -620,50 +740,63 @@ public abstract class CompilerUtils {
 		out.print(kind);
 		// args
 		String[] args = new String[io.length];
-		for (int i=0;i<args.length;i++) 
-			args[i]="DerivationController.NIL"; // unknown param
-		for (int i=0;i<islots.length;i++) 
-			args[islots[i].position]=islots[i].var; // known param
-		for (String arg:args){
+		for (int i = 0; i < args.length; i++)
+			args[i] = "DerivationController.NIL"; // unknown param
+		for (int i = 0; i < islots.length; i++)
+			args[islots[i].position] = islots[i].var; // known param
+		for (String arg : args) {
 			out.print(',');
 			out.print(arg);
 		}
 		out.println(");");
 	}
+
 	/**
 	 * Collect all terms.
-	 * @param list the list used to collect the terms
-	 * @param c the term container
+	 * 
+	 * @param list
+	 *            the list used to collect the terms
+	 * @param c
+	 *            the term container
 	 */
 	private void collectTerms(Collection<Term> terms, ComplexTerm c) {
-		for (Term t:c.getTerms()) {
+		for (Term t : c.getTerms()) {
 			// avoid duplication!
 			if (!terms.contains(t))
 				terms.add(t);
 			if (t instanceof ComplexTerm)
-				collectTerms(terms,(ComplexTerm)t);
+				collectTerms(terms, (ComplexTerm) t);
 		}
 	}
+
 	/**
 	 * Collect all terms.
-	 * @param list the list used to collect the terms
-	 * @param c the term container
+	 * 
+	 * @param list
+	 *            the list used to collect the terms
+	 * @param c
+	 *            the term container
 	 */
 	protected void collectTerms(Collection<Term> terms, Fact c) {
-		for (Term t:c.getTerms()) {
+		for (Term t : c.getTerms()) {
 			// avoid duplication!
 			if (!terms.contains(t))
 				terms.add(t);
 			if (t instanceof ComplexTerm)
-				collectTerms(terms,(ComplexTerm)t);
+				collectTerms(terms, (ComplexTerm) t);
 		}
 	}
+
 	/**
 	 * Log the creation of a class.
-	 * @param loc the location
-	 * @param qName the full class name
+	 * 
+	 * @param loc
+	 *            the location
+	 * @param qName
+	 *            the full class name
 	 */
-	protected void endorseClazz(Location loc, String fullClassName) throws CompilerException {
+	protected void endorseClazz(Location loc, String fullClassName)
+			throws CompilerException {
 		if (getLogger().isInfoEnabled()) {
 			getLogger().info("Class created: " + fullClassName);
 		}
@@ -671,87 +804,104 @@ public abstract class CompilerUtils {
 			t.transform(loc, fullClassName);
 		}
 	}
+
 	/**
 	 * Log the creation of a method.
-	 * @param className the class name
-	 * @param methodName the method name
+	 * 
+	 * @param className
+	 *            the class name
+	 * @param methodName
+	 *            the method name
 	 */
-	protected void endorseMethod(String className, String methodName) throws CompilerException {
+	protected void endorseMethod(String className, String methodName)
+			throws CompilerException {
 		if (getLogger().isInfoEnabled()) {
-			getLogger().info("Method created: " + className + '#'+methodName);
+			getLogger().info("Method created: " + className + '#' + methodName);
 		}
 	}
 
 	/**
 	 * Get all terms (recursive) occurring in a rule.
-	 * @param r a rule
-	 * @return a set of terms 
+	 * 
+	 * @param r
+	 *            a rule
+	 * @return a set of terms
 	 */
 	protected Collection<Term> getAllTerms(DerivationRule r) {
 		// use a set - duplicates should be removed
 		Collection<Term> terms = new HashSet<Term>();
-		List<Prerequisite>body = r.getBody();
-		for (Prerequisite p:body) {
-			collectTerms(terms,p);
+		List<Prerequisite> body = r.getBody();
+		for (Prerequisite p : body) {
+			collectTerms(terms, p);
 		}
-		collectTerms(terms,r.getHead());
+		collectTerms(terms, r.getHead());
 		return terms;
 	}
+
 	/**
 	 * Print a comma separated list.
+	 * 
 	 * @param out
-	 * @param list an iterable
+	 * @param list
+	 *            an iterable
 	 */
-	protected void printCommaSeparatedList(PrintWriter out,Iterable<String> list) {
+	protected void printCommaSeparatedList(PrintWriter out,
+			Iterable<String> list) {
 		boolean f = true;
-		for (String s:list) {
+		for (String s : list) {
 			if (f)
 				f = false;
-			else 
+			else
 				out.print(',');
 			out.print(s);
 		}
 	}
+
 	/**
-	 * Print a knowledge element in a comment. 
+	 * Print a knowledge element in a comment.
 	 */
-	protected void printComment(PrintWriter out,KnowledgeElement e) {
+	protected void printComment(PrintWriter out, KnowledgeElement e) {
 		out.print("// ");
 		out.print(e.getId());
 		out.print(" ");
 		out.println(e);
 	}
-	
+
 	/**
 	 * Print a comma separated list.
+	 * 
 	 * @param out
-	 * @param list an array
+	 * @param list
+	 *            an array
 	 */
-	protected void printCommaSeparatedList(PrintWriter out,String[] list) {
+	protected void printCommaSeparatedList(PrintWriter out, String[] list) {
 		boolean f = true;
-		for (String s:list) {
+		for (String s : list) {
 			if (f)
 				f = false;
-			else 
+			else
 				out.print(',');
 			out.print(s);
 		}
 	}
+
 	/**
-	 * Get the package name of a class. The class is given as a name.
-	 * If the class cannot be loaded, return null.
-	 * @param clazz a class
-	 * @return a package name 
+	 * Get the package name of a class. The class is given as a name. If the
+	 * class cannot be loaded, return null.
+	 * 
+	 * @param clazz
+	 *            a class
+	 * @return a package name
 	 */
 	protected String getPackageName(String className) {
 		try {
 			Class clazz = Class.forName(className);
 			return clazz.getPackage().getName();
-		}
-		catch (Throwable t) {
+		} catch (Throwable t) {
 			return null;
 		}
 	}
+
 	protected String getKBFragementClassName(Query query) {
 		return this.getNameGenerator().getKBFragementName(query);
 	}
