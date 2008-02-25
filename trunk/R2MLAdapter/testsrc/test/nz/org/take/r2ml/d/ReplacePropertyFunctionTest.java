@@ -7,6 +7,7 @@ import org.apache.log4j.BasicConfigurator;
 
 import junit.framework.TestCase;
 import nz.org.take.deployment.KnowledgeBaseManager;
+import nz.org.take.r2ml.R2MLDriver;
 import nz.org.take.r2ml.R2MLException;
 import nz.org.take.r2ml.R2MLKnowledgeSource;
 import nz.org.take.rt.ResultSet;
@@ -36,6 +37,7 @@ public class ReplacePropertyFunctionTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		R2MLKnowledgeSource kSrc = new R2MLKnowledgeSource(GenerateKbIf.class.getResourceAsStream("/test/nz/org/take/r2ml/d/properties2.r2ml"));
+		kSrc.setPropertyMode(R2MLDriver.INFER_PROPERTIES_MODE);
 		kSrc.setDatatypeMapper(new ThingMapper());
 		kSrc.setQueryGenerator(new ThingQueryGenerator());
 		KnowledgeBaseManager<ThingKB> kbM = new KnowledgeBaseManager<ThingKB>();

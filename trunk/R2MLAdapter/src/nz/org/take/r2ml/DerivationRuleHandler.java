@@ -50,56 +50,68 @@ class DerivationRuleHandler implements XmlTypeHandler {
 	 */
 	public List<DerivationRule> importObject(Object obj)
 			throws R2MLException {
-
 		R2MLDriver driver = R2MLDriver.get();
 		MappingContext context = MappingContext.get();
-		context.enter(this);
+
 		
 		// R2ML DerivationRule
 		de.tu_cottbus.r2ml.DerivationRule xDRule = (de.tu_cottbus.r2ml.DerivationRule) obj;
-		
-		// take DerivationRule
-		List<DerivationRule> dRules = new ArrayList<DerivationRule>();
 
-		// Documentation
-		Map<String, String> documentation = extractDocumentation(xDRule, context, driver);
-		Fact conclusion = extractHead(xDRule, context, driver);
+		context.enter(this, xDRule.getRuleID());
 		
 		try {
-			int i = 0;
-			List<List<Prerequisite>> body = extractBody(xDRule, context, driver);
-			for (List<Prerequisite> condition : body) {
-				DerivationRule dRule = new DerivationRule();
-				// Condition
-				dRule.setBody(condition);
-				// Conclusion
-				dRule.setHead(conclusion);
-				// set RuleID
-				
-				if (xDRule.getRuleID() != null) {
-					if (body.size() > 1)
-						dRule.setId(xDRule.getRuleID() + '_' + i++);
-					else
-						dRule.setId(xDRule.getRuleID());
-				} else {
-					if (body.size() > 1)
-						dRule.setId(dRule.getHead().getPredicate().getName() + "_" + i++);
-					else
-						dRule.setId(dRule.getHead().getPredicate().getName());
-				}
-				System.out.println(xDRule.getRuleID());
-				System.out.println(dRule.getId());
-				// add documentation
-				dRule.addAnnotations(documentation);
-				dRules.add(dRule);
-			} // for
-		} catch (R2MLException e) {
-			context.cleanUpToHandler(this);
-			throw new R2MLException("Error in rule \"" + xDRule.getRuleID() + "\": " + e.getMessage(), e);
-		} // try catch
+			
+			if (driver.logger.isDebugEnabled())
+				driver.logger.debug("mapping rule " + xDRule.getRuleID()!=null?xDRule.getRuleID():xDRule.toString());
+			// take DerivationRule
+			List<DerivationRule> dRules = new ArrayList<DerivationRule>();
 
-		context.leave(this);
-		return dRules;
+			// Documentation
+			Map<String, String> documentation = extractDocumentation(xDRule, context, driver);
+			Fact conclusion = extractHead(xDRule, context, driver);
+			
+			try {
+				int i = 0;
+				List<List<Prerequisite>> body = extractBody(xDRule, context, driver);
+				for (List<Prerequisite> condition : body) {
+					DerivationRule dRule = new DerivationRule();
+					// Condition
+					dRule.setBody(condition);
+					// Conclusion
+					dRule.setHead(conclusion);
+					// set RuleID
+					
+					if (xDRule.getRuleID() != null) {
+						if (body.size() > 1)
+							dRule.setId(xDRule.getRuleID() + '_' + i++);
+						else
+							dRule.setId(xDRule.getRuleID());
+					} else {
+						if (body.size() > 1)
+							dRule.setId(dRule.getHead().getPredicate().getName() + "_" + i++);
+						else
+							dRule.setId(dRule.getHead().getPredicate().getName());
+					}
+					//System.out.println(xDRule.getRuleID());
+					//System.out.println(dRule.getId());
+					// add documentation
+					dRule.addAnnotations(documentation);
+					dRules.add(dRule);
+				} // for
+			} catch (R2MLException e) {
+				context.cleanUpToHandler(this);
+				throw new R2MLException("Error in rule \"" + xDRule.getRuleID() + "\": " + e.getMessage(), e);
+			} // try catch
+
+			context.leave(this, xDRule.getRuleID());
+//			System.out.println("leaving rule " + xDRule.getRuleID());
+			return dRules;
+		} catch (RuntimeException e) {
+			R2MLDriver.get().logger.warn("Exception occured while handling rule " + xDRule.getRuleID());
+			e.printStackTrace();
+			MappingContext.get().leave(this, xDRule.getRuleID());
+			return new ArrayList<DerivationRule>();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -126,6 +138,7 @@ class DerivationRuleHandler implements XmlTypeHandler {
 	private Fact extractHead(de.tu_cottbus.r2ml.DerivationRule rule, MappingContext context,
 			R2MLDriver driver) throws R2MLException {
 		Fact head = null;
+		
 		Conclusion conclusion = rule.getConclusion();
 		XmlTypeHandler handler = driver.getHandlerByXmlType(conclusion.getClass());
 		head = (Fact) handler.importObject(conclusion);

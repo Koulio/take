@@ -66,13 +66,16 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 	}
 
 	public void repair(RuleBase ruleBase) throws R2MLException {
-
+		if (R2MLDriver.get().logger.isDebugEnabled())
+			R2MLDriver.get().logger.debug("replace property function terms");
 		for (JAXBElement<? extends RuleSet> ruleSet : ruleBase.getRuleSet()) {
 			if (!(ruleSet.getValue() instanceof DerivationRuleSet))
 				// skip all non DerivationRuleSets
 				continue;
 			DerivationRuleSet dRuleSet = (DerivationRuleSet) ruleSet.getValue();
 			for (DerivationRule rule : dRuleSet.getDerivationRule()) {
+				if (R2MLDriver.get().logger.isDebugEnabled())
+					R2MLDriver.get().logger.debug("replace property function terms in rule " + rule.getRuleID());
 				fixFormula(rule.getConditions().getQfAndOrNafNegFormula());
 			}
 		}
@@ -88,11 +91,11 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 	private void fixFormula(
 			List<JAXBElement<? extends QfAndOrNafNegFormula>> qfAndOrNafNegFormula)
 			throws R2MLException {
-		List<Atom> bindings = new ArrayList<Atom>();
+		//List<Atom> bindings = new ArrayList<Atom>();
 		
 		int i = 0;
 		for (Object f : qfAndOrNafNegFormula.toArray()) {
-			varBindings.push(bindings);
+			varBindings.push(new ArrayList<Atom>());
 			JAXBElement formula = ((JAXBElement)f);
 			Class<? extends QfAndOrNafNegFormula> type = formula.getDeclaredType();
 			if (Atom.class.isAssignableFrom(type)) {
@@ -128,20 +131,37 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 	 * 
 	 * @param qfAndOrNafNegFormula
 	 * @param i
+	 * @throws R2MLException 
 	 */
 	@SuppressWarnings("unchecked")
 	private void addVarBindings(
 			List<JAXBElement<? extends QfAndOrNafNegFormula>> qfAndOrNafNegFormula,
-			int i) {
+			int i) throws R2MLException {
+		System.out.println("add " + varBindings.peek().size() + "varbindings");
 		for (Atom binding : varBindings.pop()) {
 			XmlType type = binding.getClass().getAnnotation(XmlType.class);
 
 			if (type == null)
 				throw new IllegalStateException();
-			JAXBElement e = new JAXBElement(new QName(type.namespace(), type
-					.name()), binding.getClass(), binding);
+			JAXBElement e = createJAXBElement(binding);
 			qfAndOrNafNegFormula.add(i++, e);
 		}
+	}
+
+	/**
+	 * @param binding
+	 * @return
+	 * @throws R2MLException 
+	 */
+	private JAXBElement createJAXBElement(Atom binding) throws R2MLException {
+//		JAXBElement e = new JAXBElement(new QName(type.namespace(), type
+//				.name()), binding.getClass(), binding);
+		if (binding instanceof AttributionAtom) {
+			return of.createAttributionAtom((AttributionAtom)binding);
+		} else if (binding instanceof ReferencePropertyAtom) {
+			return of.createReferencePropertyAtom((ReferencePropertyAtom) binding);
+		} else
+			throw new R2MLException("illegal argument binding. must be Attribution- or ReferencePropertyAtom but is " + binding.getClass().getSimpleName());
 	}
 
 	/**
@@ -339,7 +359,8 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 			JAXBElement<? extends Term> newTerm = (JAXBElement<? extends Term>) handle(nextT);
 			if (newTerm != null) {
 				int indexOf = args.indexOf(nextT);
-				args.remove(indexOf);
+				System.out.println("replace " + nextT.getValue().getClass().getSimpleName() + " with " + newTerm.getValue().getClass().getSimpleName());
+								args.remove(indexOf);
 				args.add(indexOf, newTerm);
 				
 //				i.remove();
@@ -359,6 +380,7 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 			JAXBElement<? extends ObjectTerm> objT = (JAXBElement<? extends ObjectTerm>) handle(nextT);
 			if (objT != null) {
 				int indexOf = objects.indexOf(nextT);
+				System.out.println("replace " + nextT.getValue().getClass().getSimpleName() + " with " + objT.getValue().getClass().getSimpleName());
 				objects.remove(indexOf);
 				objects.add(indexOf, objT);
 			}
@@ -371,12 +393,14 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 	 */
 	private void handleDataArgs(List<JAXBElement<? extends DataTerm>> datas) throws R2MLException {
 		Iterator<JAXBElement<? extends DataTerm>> i = new ArrayIterator(datas.toArray());
+		
 		//Iterator<JAXBElement<? extends DataTerm>> i2 = datas.listIterator();
 		while (i.hasNext()) {
 			JAXBElement<? extends DataTerm> nextT = i.next();
 			JAXBElement<? extends DataTerm> datT = (JAXBElement<? extends DataTerm>) handle(nextT);
 			if (datT != null) {
 				int indexOf = datas.indexOf(nextT);
+				System.out.println("replace " + nextT.getValue().getClass().getSimpleName() + " with variable " + ((DataVariable)(datT.getValue())).getName() );
 				datas.remove(indexOf);
 				datas.add(indexOf, datT);
 			}
@@ -418,7 +442,7 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 		if (i==null) {
 			i=0;
 		}
-		propertyNames.put(propertyName, (i==null?0:i++));
+		propertyNames.put(propertyName, i++);
 		return propertyName.getLocalPart() + i;
 	}
 

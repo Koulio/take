@@ -73,6 +73,7 @@ class DerivationRuleSetHandler implements XmlTypeHandler {
 				driver.logger.info(e.getMessage());
 				driver.logger.warn("Error while importing DerivationRuleSet "
 						+ id + "." + e.getLocalizedMessage());
+				e.printStackTrace();
 			} catch (ClassCastException cce) {
 				MappingContext.get().cleanUpToHandler(this);
 				throw new R2MLException("Error while processing DerivationRuleSet " + id + "", cce, R2MLException.CLASS_CAST_ERROR);

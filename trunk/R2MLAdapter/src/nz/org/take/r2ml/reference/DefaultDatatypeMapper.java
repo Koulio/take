@@ -35,12 +35,20 @@ public class DefaultDatatypeMapper implements DatatypeMapper {
 	public DefaultDatatypeMapper () {
 		super();
 		setType(new QName(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI, "boolean"), Boolean.class);
-		setType(new QName(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI, "integer"), Integer.class);
+		setType(new QName(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI, "integer"), Long.class);
 		setType(new QName(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI, "float"), Double.class);
 		setType(new QName(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI, "double"), Double.class);
 		setType(new QName(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI, "decimal"), BigDecimal.class);
 		setType(new QName(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI, "string"), String.class);
 		setType(new QName(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI, "QName"), QName.class);
+		
+		setType(new QName("", "xs:boolean"), Boolean.class);
+		setType(new QName("", "xs:integer"), Long.class);
+		setType(new QName("", "xs:float"), Double.class);
+		setType(new QName("", "xs:double"), Double.class);
+		setType(new QName("", "xs:decimal"), BigDecimal.class);
+		setType(new QName("", "xs:string"), String.class);
+		setType(new QName("", "xs:QName"), QName.class);
 		
 //		setType(new QName(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI, "date"), Date.class);
 //		setType(new QName(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI, "time"), Date.class);
@@ -52,9 +60,11 @@ public class DefaultDatatypeMapper implements DatatypeMapper {
 	 */
 	public Class getType (QName fullName) throws R2MLException {
 		Class type = types.get(fullName);
+//		System.out.println(fullName.toString() + " resolved to " + type==null?"nothing":type.getCanonicalName());
 		if (type == null)
 			throw new R2MLException("Type not found for class-id " + fullName);
-		return types.get(fullName);
+//		System.out.println(fullName.toString() + " resolved to " + type.getCanonicalName());
+		return type;
 	}
 	
 	/* (non-Javadoc)

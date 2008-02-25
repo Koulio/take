@@ -26,12 +26,12 @@ import javax.xml.namespace.QName;
 import nz.org.take.r2ml.DatatypeMapper;
 import nz.org.take.r2ml.reference.DefaultDatatypeMapper;
 
-public class DefaultMapper extends DefaultDatatypeMapper {
+public class MyMapper extends DefaultDatatypeMapper {
 	
-	public DefaultMapper () {
+	public MyMapper () {
 		super();
 		setType("Person", Person.class);
-		setType(new QName(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI, "string"), String.class);
+		//setType(new QName(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI, "string"), String.class);
 	}
 	
 	

@@ -28,6 +28,8 @@ class ObjectVariableHandler implements XmlTypeHandler {
 		R2MLDriver driver = R2MLDriver.get();
 		MappingContext context = MappingContext.get();
 		Variable var = context.getVariable(oVar.getName());
+		if (oVar.getClassID() == null && var == null)
+			throw new R2MLException("untyped object variable " + oVar.getName());
 		if (var != null) {
 			if (var.getType() == null) {
 				Class type = driver.getDatatypeMapper().getType(
@@ -39,8 +41,14 @@ class ObjectVariableHandler implements XmlTypeHandler {
 		try {
 			var = new Variable();
 			var.setName(oVar.getName());
-			Class type = driver.getDatatypeMapper().getType(
-					oVar.getClassID());
+			Class type;
+			try {
+				type = driver.getDatatypeMapper().getType(
+						oVar.getClassID());
+			} catch (R2MLException e) {
+				throw new R2MLException("unknown classid for variable " + oVar.getName() + ":" + oVar.getClassID()==null?"nothing":oVar.getClassID().toString(), e);
+			}
+			
 			var.setType(type);
 			if (driver.logger.isInfoEnabled()) {
 				driver.logger.info("Create new Variable (" + var.getName()

@@ -22,15 +22,16 @@ public class AttributeFunctionTermHandler implements XmlTypeHandler {
 	 * @see nz.org.take.r2ml.XmlTypeHandler#importObject(java.lang.Object)
 	 */
 	public Object importObject(Object obj) throws R2MLException {
-		if (true)
-			throw new R2MLException("AttributionFunctionTerm not replaced");
+		// AttributionFunctionTermHandler should be replaced before compiling the knowledge base
+		R2MLDriver driver = R2MLDriver.get();
+
+		if (driver.getPropertyMode() == R2MLDriver.INFER_PROPERTIES_MODE)
+			throw new R2MLException("AttributionFunctionTerm not replaced although INFER_PROPERTIES_MODE is enabled.");
 		AttributeFunctionTerm term = (AttributeFunctionTerm) obj;
 
 		Term takeTerm = null;
 
-		R2MLDriver driver = R2MLDriver.get();
-
-		// building objectTerm
+				// building objectTerm
 		Term contextArgument = null;
 		XmlTypeHandler contextHandler = driver.getHandlerByXmlType(term
 				.getContextArgument().getObjectTerm().getDeclaredType());
@@ -53,6 +54,7 @@ public class AttributeFunctionTermHandler implements XmlTypeHandler {
 			jFunction.setMethod(prop.getReadMethod());
 			tt.setFunction(jFunction);
 			tt.setTerms(new Term[] { contextArgument });
+			
 			takeTerm = tt;
 		}
 

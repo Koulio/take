@@ -28,8 +28,8 @@ import nz.org.take.r2ml.NameMapper;
 
 public class DefaultNameMapper implements NameMapper {
 
-	public Map<QName, String[]> slotNames = new HashMap<QName, String[]>();
-	Map<QName, String> attrPredNames = new HashMap<QName, String>();
+	private Map<QName, String[]> slotNames = new HashMap<QName, String[]>();
+	private Map<QName, String> attrPredNames = new HashMap<QName, String>();
 
 	public DefaultNameMapper() {
 	}

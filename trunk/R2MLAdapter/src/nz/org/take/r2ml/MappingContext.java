@@ -43,6 +43,7 @@ public class MappingContext {
 	private Map<QName, Predicate> predicates = new HashMap<QName, Predicate>();
 
 	private Stack<XmlTypeHandler> ancestors = new Stack<XmlTypeHandler>();
+	private Stack<String> ruleIDs = new Stack<String>();
 
 	private boolean insideCondition = false;
 
@@ -138,6 +139,14 @@ public class MappingContext {
 		if (handler instanceof ConditionHandler) {
 			this.insideCondition = true;
 		}
+		
+		ancestors.push(handler);
+	}
+	void enter(XmlTypeHandler handler, String ruleId) {
+		if (handler instanceof ConditionHandler) {
+			this.insideCondition = true;
+		}
+		ruleIDs.push(ruleId);
 		ancestors.push(handler);
 	}
 
@@ -154,8 +163,20 @@ public class MappingContext {
 	void leave(XmlTypeHandler handler) throws R2MLException {
 		XmlTypeHandler current = ancestors.pop();
 		if (!current.equals(handler)) {
+			R2MLDriver.get().logger.debug("Recursion error! Last handler entering handler was \"" + current.getClass().getSimpleName() + "\" actual leaving handler is \"" + handler.getClass().getSimpleName() + "\"!");
+			throw new R2MLException("Error while resolving recursion." + "Last handler entering handler was \"" + current.getClass().getSimpleName() + "\" actual leaving handler is \"" + handler.getClass().getSimpleName() + "\"!");
+		}
+		if (handler instanceof ConditionHandler) {
+			insideCondition = false;
+		}
+
+	}
+	void leave(XmlTypeHandler handler, String ruleId) throws R2MLException {
+		XmlTypeHandler current = ancestors.pop();
+		String currentRuleId = ruleIDs.pop();
+		if (!current.equals(handler)) {
 			R2MLDriver.get().logger.debug("Recursion error! Last handler entering handler was \"" + current.getClass().getSimpleName() + "\" actual leavung handler is \"" + handler.getClass().getSimpleName() + "\"!");
-			throw new R2MLException("Error while resolving recursion." + "Last handler entering handler was \"" + current.getClass().getSimpleName() + "\" actual leavung handler is \"" + handler.getClass().getSimpleName() + "\"!");
+			throw new R2MLException("Error while resolving recursion." + "Last handler entering handler was \"" + current.getClass().getSimpleName() + "\" actual leaving handler is \"" + handler.getClass().getSimpleName() + "\"!");
 		}
 		if (handler instanceof ConditionHandler) {
 			insideCondition = false;

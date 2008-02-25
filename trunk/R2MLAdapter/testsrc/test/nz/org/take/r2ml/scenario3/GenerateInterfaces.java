@@ -21,7 +21,6 @@ package test.nz.org.take.r2ml.scenario3;
 
 import org.apache.log4j.BasicConfigurator;
 
-import test.nz.org.take.compiler.scenario8.Tests;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
@@ -50,7 +49,7 @@ public class GenerateInterfaces {
 		// generate kb
 		KnowledgeBase kb = null;
 		try {
-			R2MLKnowledgeSource kSrc = new R2MLKnowledgeSource(Tests.class.getResourceAsStream("/test/nz/org/take/r2ml/scenario3/rules3.xml"));
+			R2MLKnowledgeSource kSrc = new R2MLKnowledgeSource(Scenario3Test.class.getResourceAsStream("/test/nz/org/take/r2ml/scenario3/rules3.xml"));
 			kSrc.setSlotNameGenerator(new MyNameMapper());
 			KBUtil.addQuerries(kSrc);
 			kb = kSrc.getKnowledgeBase();

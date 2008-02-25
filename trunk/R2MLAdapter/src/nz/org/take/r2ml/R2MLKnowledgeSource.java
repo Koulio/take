@@ -47,6 +47,8 @@ public class R2MLKnowledgeSource implements KnowledgeSource {
 
 	public R2MLKnowledgeSource(InputStream in) {
 		this();
+		if (in == null)
+			throw new NullPointerException("InputStream not found.");
 		this.reader = new InputStreamReader(in);
 	}
 
@@ -81,12 +83,15 @@ public class R2MLKnowledgeSource implements KnowledgeSource {
 					driver.logger.debug("loading rule base");
 				unmarshallRuleBase();
 			}
+			System.out.println("import rulebase");
 			kb = driver.importKB(rb);
+			System.out.println("rulebase imported");
 			if(driver.logger.isDebugEnabled())
 				driver.logger.debug("KnowledgeBase imported.");
 			if (queryGenerator != null )
 				queryGenerator.generateQueries(kb);
 		}
+		System.out.println("kb created");
 		if (driver.logger.isDebugEnabled())
 			driver.logger.debug("knowledge base created was " + kb!=null?"successful!":"not succesful!");
 		return kb;
@@ -96,9 +101,9 @@ public class R2MLKnowledgeSource implements KnowledgeSource {
 	private void unmarshallRuleBase() throws R2MLException {
 
 		try {
-			JAXBContext jc = JAXBContext
+			JAXBContext jc2 = JAXBContext
 					.newInstance("de.tu_cottbus.r2ml:de.tu_cottbus.r2ml.r2mlv:de.tu_cottbus.dc");
-			Unmarshaller um = jc.createUnmarshaller();
+			Unmarshaller um = jc2.createUnmarshaller();
 			rb = ((JAXBElement<RuleBase>) um.unmarshal(reader)).getValue();
 		} catch (JAXBException e) {
 			throw new R2MLException("XML parsing error", e);
@@ -160,6 +165,10 @@ public class R2MLKnowledgeSource implements KnowledgeSource {
 	public void setQueryGenerator(QueryGenerator queryGenerator) {
 		this.queryGenerator = queryGenerator;
 		
+	}
+
+	public void setPropertyMode(int propertyMode) {
+		driver.setPropertyMode(propertyMode);
 	}
 
 }
