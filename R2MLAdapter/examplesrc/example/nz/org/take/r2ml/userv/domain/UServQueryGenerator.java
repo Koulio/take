@@ -15,21 +15,17 @@ public class UServQueryGenerator extends AbstractQueryGenerator {
 
 	public void generateQueries(KnowledgeBase kb) {
 		Collection<Predicate> predicates = kb.getSupportedPredicates();
-		System.out
-				.println(kb.getElements().get(0).getPredicate().getName());
 		Collection<Query> queries = buildAllQueries(predicates);
 		// add queries
 		for (Query query : queries) {
-			if (query.getPredicate().getName().equals("premium")
-					&& !query.getInputParams()[0]) {
+			if (!query.getInputParams()[0] || (query.getInputParams().length > 1 && query.getInputParams()[1]) ) {
 				;// ommit this query
 			} else {
-//				System.out.println("Added query: " + query.toString());
 				kb.add(query);
 			}
 		}
-//		System.out.println("generated querries for " + predicates.size()
-//				+ " predicates");
+		System.out.println("generated querries for " + predicates.size()
+				+ " predicates");
 	}
 
 }

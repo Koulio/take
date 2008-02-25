@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<r2ml:RuleBase
+    xmlns:r2ml="http://www.rewerse.net/I1/2006/R2ML"
+    xmlns:r2mlv="http://www.rewerse.net/I1/2006/R2ML/R2MLV"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:soap="http://www.w3.org/2001/12/soap-envelope"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://oxygen.informatik.tu-cottbus.de/R2ML/0.4/R2ML.xsd">
+    <r2mlv:Vocabulary>
+        <r2mlv:Class r2mlv:ID="Driver">
+            <r2mlv:superClass>
+                <r2mlv:Class r2mlv:ID="ServiceParticipant"/>
+            </r2mlv:superClass>
+            <r2mlv:Attribute r2mlv:ID="age">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:integer"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="driverAgeCategory">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:string"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="dui">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:boolean"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="eligibleDriver">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:boolean"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="gender">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:string"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="highRiskDriver">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:boolean"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="numberOfAccidents">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:integer"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="numberOfMovingViolations">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:integer"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="trainingCertificate">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:boolean"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="trainingCertificateCategory">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:string"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+        </r2mlv:Class>
+    </r2mlv:Vocabulary>
+    <r2ml:DerivationRuleSet>
+        <r2ml:DerivationRule r2ml:ruleID="DE_DAC07">
+            <r2ml:conditions>
+                <r2ml:ObjectClassificationAtom r2ml:classID="Driver" r2ml:isNegated="false">
+                    <r2ml:ObjectVariable r2ml:name="driver"/>
+                </r2ml:ObjectClassificationAtom>
+                <r2ml:AttributionAtom r2ml:attributeID="trainingCertificateCategory">
+                    <r2ml:subject>
+                        <r2ml:ObjectVariable r2ml:name="driver"/>
+                    </r2ml:subject>
+                    <r2ml:dataValue>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="school certificate"/>
+                    </r2ml:dataValue>
+                </r2ml:AttributionAtom>
+            </r2ml:conditions>
+            <r2ml:conclusion>
+                <r2ml:AttributionAtom r2ml:attributeID="trainingCertificate">
+                    <r2ml:subject>
+                        <r2ml:ObjectVariable r2ml:name="driver"/>
+                    </r2ml:subject>
+                    <r2ml:dataValue>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:boolean" r2ml:lexicalValue="true"/>
+                    </r2ml:dataValue>
+                </r2ml:AttributionAtom>
+            </r2ml:conclusion>
+        </r2ml:DerivationRule>
+        <r2ml:DerivationRule r2ml:ruleID="DE_DAC08">
+            <r2ml:conditions>
+                <r2ml:ObjectClassificationAtom r2ml:classID="Driver" r2ml:isNegated="false">
+                    <r2ml:ObjectVariable r2ml:name="driver"/>
+                </r2ml:ObjectClassificationAtom>
+                <r2ml:AttributionAtom r2ml:attributeID="trainingCertificateCategory">
+                    <r2ml:subject>
+                        <r2ml:ObjectVariable r2ml:name="driver"/>
+                    </r2ml:subject>
+                    <r2ml:dataValue>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="licensed training company"/>
+                    </r2ml:dataValue>
+                </r2ml:AttributionAtom>
+            </r2ml:conditions>
+            <r2ml:conclusion>
+                <r2ml:AttributionAtom r2ml:attributeID="trainingCertificate">
+                    <r2ml:subject>
+                        <r2ml:ObjectVariable r2ml:name="driver"/>
+                    </r2ml:subject>
+                    <r2ml:dataValue>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:boolean" r2ml:lexicalValue="true"/>
+                    </r2ml:dataValue>
+                </r2ml:AttributionAtom>
+            </r2ml:conclusion>
+        </r2ml:DerivationRule>
+        <r2ml:DerivationRule r2ml:ruleID="DE_DAC09">
+            <r2ml:conditions>
+                <r2ml:ObjectClassificationAtom r2ml:classID="Driver" r2ml:isNegated="false">
+                    <r2ml:ObjectVariable r2ml:name="driver"/>
+                </r2ml:ObjectClassificationAtom>
+                <r2ml:AttributionAtom r2ml:attributeID="trainingCertificateCategory">
+                    <r2ml:subject>
+                        <r2ml:ObjectVariable r2ml:name="driver"/>
+                    </r2ml:subject>
+                    <r2ml:dataValue>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="senior citizen refresher course"/>
+                    </r2ml:dataValue>
+                </r2ml:AttributionAtom>
+            </r2ml:conditions>
+            <r2ml:conclusion>
+                <r2ml:AttributionAtom r2ml:attributeID="trainingCertificate">
+                    <r2ml:subject>
+                        <r2ml:ObjectVariable r2ml:name="driver"/>
+                    </r2ml:subject>
+                    <r2ml:dataValue>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:boolean" r2ml:lexicalValue="true"/>
+                    </r2ml:dataValue>
+                </r2ml:AttributionAtom>
+            </r2ml:conclusion>
+        </r2ml:DerivationRule>
+    </r2ml:DerivationRuleSet>
+</r2ml:RuleBase>

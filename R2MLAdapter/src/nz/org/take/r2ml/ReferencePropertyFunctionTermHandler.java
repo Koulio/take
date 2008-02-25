@@ -12,13 +12,13 @@ import de.tu_cottbus.r2ml.ReferencePropertyFunctionTerm;
 public class ReferencePropertyFunctionTermHandler implements XmlTypeHandler {
 
 	public Object importObject(Object obj) throws R2MLException {
-		if (true)
-			throw new R2MLException("ReferencePropertyFunctionTerm not replaced");
+		R2MLDriver driver = R2MLDriver.get();
+		
+		if (driver.getPropertyMode() == R2MLDriver.INFER_PROPERTIES_MODE)
+			throw new R2MLException("ReferencePropertyFunctionTerm not replaced although INFER_PROPERTIES_MODE is enabled.");
 		ReferencePropertyFunctionTerm term = (ReferencePropertyFunctionTerm) obj;
 		
 		ComplexTerm takeTerm = new ComplexTerm();
-		
-		R2MLDriver driver = R2MLDriver.get();
 		
 		// building objectTerm
 		XmlTypeHandler contextHandler = driver.getHandlerByXmlType(term.getContextArgument().getObjectTerm().getDeclaredType());

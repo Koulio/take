@@ -83,8 +83,8 @@ class ConditionHandler implements XmlTypeHandler {
 				} // for
 			} else
 				// if (R2MLUtil.returnsFact(item.getValue())) {
-				body.add(R2MLUtil.factAsPrerequisite((Fact) handler
-						.importObject(item.getValue())));
+				body.add((Prerequisite) handler
+						.importObject(item.getValue()));
 			// } else {
 			// driver.logger.warn("Condition dont know the return type of " +
 			// item.getName());

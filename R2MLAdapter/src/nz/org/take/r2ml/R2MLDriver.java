@@ -20,6 +20,7 @@ package nz.org.take.r2ml;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,7 @@ import nz.org.take.r2ml.util.ReplacePropertyFunctionTermFilter;
 import nz.org.take.r2ml.util.RuleBaseFilter;
 import nz.org.take.r2ml.util.TypeVariablesFilter;
 
+import org.apache.commons.jxpath.JXPathContext;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -78,6 +80,19 @@ import de.tu_cottbus.r2ml.TypedLiteral;
  * 
  */
 public class R2MLDriver {
+	
+	
+	/**
+	 * default mode 
+	 */
+	public static final int DEFAULT_PROPERTY_MODE = 0;
+	
+	/**
+	 * Properties can be infered even if there are properties in the domainclasses
+	 */
+	public static final int INFER_PROPERTIES_MODE = 1;
+
+	private int propertyMode = DEFAULT_PROPERTY_MODE; 
 
 	public static final String ID = "R2MLAdapter v0.1";
 
@@ -128,14 +143,18 @@ public class R2MLDriver {
 	 * @return a KnowledgeBase representing the input RuleBase
 	 * @throws R2MLException
 	 */
-	public KnowledgeBase importKB(RuleBase ruleBase) throws R2MLException {
+	public KnowledgeBase importKB(RuleBase rb) throws R2MLException {
 		MappingContext.reset();
 		if (logger.isDebugEnabled())
 			logger.debug("entering RuleBaseHandler");
-		this.ruleBase = ruleBase;
+		this.ruleBase = rb;
 		for (RuleBaseFilter filter : ruleBaseFilter) {
+			if (logger.isDebugEnabled()) {
+				logger.debug("applying filter " + filter.getName());
+			}
 			filter.repair(ruleBase);
 		}
+
 		rbHandler = (RuleBaseHandler) getHandlerByXmlType(ruleBase.getClass());
 
 		KnowledgeBase kb = (KnowledgeBase) rbHandler.importObject(ruleBase);
@@ -166,6 +185,8 @@ public class R2MLDriver {
 		if (logger.isDebugEnabled() && (handler == null)) {
 			logger.warn("XmlTypeHandler not found for " + key.toString());
 		}
+		if (handler == null)
+			throw new NullPointerException("There must be a handler for class " + key.getCanonicalName());
 		return handler;
 
 	}
@@ -206,6 +227,7 @@ public class R2MLDriver {
 
 	private void addHandlers() {
 
+		typeHandler = new HashMap<Class, XmlTypeHandler>();
 		add(AssociationAtom.class, new AssociationAtomHandler());
 		add(AttributionAtom.class, new AttributionAtomHandler());
 		add(AttributeFunctionTerm.class, new AttributeFunctionTermHandler());
@@ -249,8 +271,12 @@ public class R2MLDriver {
 	}
 
 	private void addFilter() {
+		ruleBaseFilter = new ArrayList<RuleBaseFilter>(); 
+
+		if (propertyMode == INFER_PROPERTIES_MODE) {
+			ruleBaseFilter.add(new ReplacePropertyFunctionTermFilter());
+		}
 		ruleBaseFilter.add(new TypeVariablesFilter());
-		ruleBaseFilter.add(new ReplacePropertyFunctionTermFilter());
 	}
 
 	public void setAssociationResolvPolicy(AssociationResolvPolicy policy) {
@@ -271,6 +297,15 @@ public class R2MLDriver {
 
 	public void setRuleBase(RuleBase ruleBase) {
 		this.ruleBase = ruleBase;
+	}
+
+	public int getPropertyMode() {
+		return propertyMode;
+	}
+
+	public void setPropertyMode(int newPropertyMode) {
+		this.propertyMode = newPropertyMode;
+		addFilter();
 	}
 
 }

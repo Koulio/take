@@ -20,9 +20,12 @@ package nz.org.take.r2ml;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
+
+import org.apache.commons.jxpath.JXPathContext;
 
 import nz.org.take.DefaultKnowledgeBase;
 import nz.org.take.DerivationRule;
@@ -30,6 +33,8 @@ import nz.org.take.KnowledgeBase;
 import nz.org.take.KnowledgeElement;
 import nz.org.take.r2ml.util.R2MLConstants;
 
+import de.tu_cottbus.r2ml.ObjectClassificationAtom;
+import de.tu_cottbus.r2ml.ObjectVariable;
 import de.tu_cottbus.r2ml.RuleBase;
 import de.tu_cottbus.r2ml.RuleSet;
 
@@ -59,6 +64,7 @@ class RuleBaseHandler implements XmlTypeHandler {
 		kb.addAnnotation(R2MLConstants.ANNOTATION_KEY_AUTHOR, System.getProperty("user.name"));
 		kb.addAnnotation(R2MLConstants.ANNOTATION_KEY_CREATOR, driver.ID);
 		kb.addAnnotation(R2MLConstants.ANNOTATION_KEY_DATE, new Date().toString());
+
 		for (JAXBElement<? extends RuleSet> ruleSet : ruleBase.getRuleSet()) {
 			XmlTypeHandler ruleSetHandler = null;
 			ruleSetHandler = driver.getHandlerByXmlType(ruleSet.getValue()

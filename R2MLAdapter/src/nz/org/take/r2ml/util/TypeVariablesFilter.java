@@ -11,9 +11,13 @@ import javax.xml.namespace.QName;
 
 
 
+import nz.org.take.r2ml.R2MLDriver;
+import nz.org.take.r2ml.R2MLException;
+
 import org.apache.commons.jxpath.JXPathContext;
 
 import de.tu_cottbus.r2ml.ObjectClassificationAtom;
+import de.tu_cottbus.r2ml.ObjectFactory;
 import de.tu_cottbus.r2ml.ObjectVariable;
 import de.tu_cottbus.r2ml.RuleBase;
 
@@ -28,10 +32,40 @@ public class TypeVariablesFilter implements RuleBaseFilter {
 	 * 
 	 * @see nz.org.take.strelka.RuleBaseFilter#repair(de.tu_cottbus.r2ml.RuleBase)
 	 */
-	public void repair(RuleBase ruleBase) {
+	public void repair(RuleBase ruleBase) throws R2MLException {
 
 		JXPathContext context = JXPathContext.newContext(ruleBase);
+		ObjectFactory of = new ObjectFactory();
 		
+		// search objectclassificationatoms that contain untyped variables
+		context = JXPathContext.newContext(ruleBase);
+		Iterator implicitTypedVars = context.iterate(
+				"//qfAndOrNafNegFormula" +
+				"[declaredType='class de.tu_cottbus.r2ml.ObjectClassificationAtom']" +
+				"[value/objectTerm/declaredType='class de.tu_cottbus.r2ml.ObjectVariable']" +
+				"[not(value/objectTerm/value/classID)]" +
+				"/value");
+		
+		while (implicitTypedVars.hasNext()) {
+			try {
+				ObjectClassificationAtom classification = (ObjectClassificationAtom) implicitTypedVars.next();
+				
+				ObjectVariable var = (ObjectVariable) classification.getObjectTerm().getValue();
+				ObjectVariable newVar = of.createObjectVariable();
+				newVar.setName(var.getName());
+				newVar.setTypeCategory(var.getTypeCategory());
+				newVar.setClassID(classification.getClassID());
+				//var.setClassID(classification.getClassID());
+				classification.setObjectTerm(of.createObjectVariable(newVar));
+//				System.out.println("typed variable " + newVar.getName() + " as type " + newVar.getClassID());
+			} catch (RuntimeException e) {
+				// TODO: handle exception
+				if (R2MLDriver.get().logger.isDebugEnabled())
+					R2MLDriver.get().logger.debug("Exception occured while typing all variables.", e);
+				throw new R2MLException("Unable to type variables in rule base, abort rule import.");
+			}
+		}
+
 		// search already typed variables and save them in a hash-map
 		Iterator typedVar = context
 				.iterate("//objectTerm[declaredType='class de.tu_cottbus.r2ml.ObjectVariable']/value[classID]");// ce.iterate(context);
@@ -53,26 +87,6 @@ public class TypeVariablesFilter implements RuleBaseFilter {
 			QName classID = classID4name.get(element.getName());
 			if (classID != null) {
 				element.setClassID(classID);
-			}
-		}
-
-		// search objectclassificationatoms that contain untyped variables
-		context = JXPathContext.newContext(ruleBase);
-		Iterator implicitTypedVars = context.iterate(
-				"//qfAndOrNafNegFormula" +
-				"[declaredType='class de.tu_cottbus.r2ml.ObjectClassificationAtom']" +
-				"[value/objectTerm/declaredType='class de.tu_cottbus.r2ml.ObjectVariable']" +
-				"[not(value/objectTerm/value/classID)]" +
-				"/value");
-		
-		while (implicitTypedVars.hasNext()) {
-			try {
-				ObjectClassificationAtom classification = (ObjectClassificationAtom) implicitTypedVars.next();
-				ObjectVariable var = (ObjectVariable) classification.getObjectTerm().getValue();
-				var.setClassID(classification.getClassID());
-			} catch (RuntimeException e) {
-				// TODO: handle exception
-				System.out.println("FEHLER_FEHLER");
 			}
 		}
 

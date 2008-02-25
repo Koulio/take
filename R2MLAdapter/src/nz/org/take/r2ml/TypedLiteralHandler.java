@@ -26,7 +26,6 @@ import de.tu_cottbus.r2ml.TypedLiteral;
 import nz.org.take.Constant;
 
 /**
- * TODO implement protected String typeCategory;
  * 
  * @author Bastian Schenke (bastian.schenke@googlemail.com)
  * 
@@ -46,41 +45,45 @@ class TypedLiteralHandler implements XmlTypeHandler {
 	public Object importObject(Object obj) throws R2MLException {
 		Constant constant = new Constant();
 		TypedLiteral tl = (TypedLiteral) obj;
-//		System.out.println("TypedLiteral with type " + tl.getDatatypeID());
+		// System.out.println("TypedLiteral with type " + tl.getDatatypeID());
 		R2MLDriver driver = R2MLDriver.get();
 		try {
-			constant
-					.setType(driver.getDatatypeMapper().getType(tl.getDatatypeID()));
+			constant.setType(driver.getDatatypeMapper().getType(
+					tl.getDatatypeID()));
 		} catch (RuntimeException e1) {
-			// TODO Auto-generated catch block
+			// System.out.println("TypedLiteral with type " +
+			// tl.getDatatypeID());
 			e1.printStackTrace();
 		}
-
 		if (constant.getType() == String.class) {
-			constant.setRef("\"" + tl.getLexicalValue() + "\"");
-			constant.setObject(constant.getRef());
-		}
-		Object value = null;
-		try {
-			Constructor constructor = constant.getType().getConstructor(
-					new Class[] { String.class });
-			value = constructor
-					.newInstance(new Object[] { tl.getLexicalValue() });
-			if (driver.logger.isInfoEnabled()) {
-				driver.logger.info("Create new Constant (" + constant.getType()
-						+ ":\"" + tl.getLexicalValue() + "\")");
+			constant.setObject(tl.getLexicalValue());
+			//return constant;
+		} else {
+			// constant.getType().isPrimitive() ||
+			// else if (Number.class.isAssignableFrom(constant.getType()) ||
+			// constant.getType() == Boolean.class) {
+			// constant.setObject(tl.getLexicalValue());
+			// return constant;
+			// }
+			// constant.setRef("_" + tl.getLexicalValue());
+			try {
+				Constructor constructor = constant.getType().getConstructor(
+						new Class[] { String.class });
+				Object value = constructor.newInstance(new Object[] { tl
+						.getLexicalValue() });
+				constant.setObject(value);
+				if (driver.logger.isInfoEnabled()) {
+					driver.logger.info("Create new Constant ("
+							+ constant.getType() + ":<" + tl.getLexicalValue()
+							+ ">)");
+				}
+			} catch (Exception e) {
+				System.out.println("##################################");
+				constant.setRef("_" + tl.getLexicalValue());
+				System.out.println("##################################");
+				// return constant;
 			}
-		} catch (Exception e) {
-			if (driver.logger.isEnabledFor(Priority.WARN)) {
-				driver.logger.warn("Unable to parse lexical value \""
-						+ tl.getLexicalValue() + "\" to type \""
-						+ constant.getType()
-						+ "\". Creating String constant instead.", e);
-			}
-			constant.setType(String.class);
-			value = tl.getLexicalValue();
 		}
-		constant.setObject(value);
 		return constant;
 	}
 

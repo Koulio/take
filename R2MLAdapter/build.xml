@@ -13,6 +13,7 @@
 	<fileset dir="${location.bin}" id="classes.r2ml">
 		<patternset>
 			<include name="**/*.class" />
+			<exclude name="test/**" />
 		</patternset>
 	</fileset>
 

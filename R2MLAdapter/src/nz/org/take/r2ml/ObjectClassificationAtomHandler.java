@@ -74,7 +74,12 @@ class ObjectClassificationAtomHandler extends AbstractPropertyHandler {
 			JPredicate jp = new JPredicate();
 			StringBuffer name = new StringBuffer(localName.substring(0, 1).toLowerCase());
 			name.append(localName.substring(1));
-			PropertyDescriptor prop = AbstractPropertyHandler.buildProperty(name.toString(), R2MLDriver.get().getDatatypeMapper().getType(atom.getClassID()));
+			Class type = R2MLDriver.get().getDatatypeMapper().getType(atom.getClassID());
+			PropertyDescriptor prop = AbstractPropertyHandler.buildProperty(name.toString(), type);
+			if (prop == null) {
+				R2MLDriver.get().logger.warn("Error in domain model, missing classification predicate method is" + type.getSimpleName());
+				throw new R2MLException("Error in domain model, missing classification predicate method is" + type.getSimpleName());
+			}
 			jp.setMethod(prop.getReadMethod());
 			if (R2MLDriver.get().logger.isDebugEnabled())
 				R2MLDriver.get().logger.debug(name.toString() + " : " + tTerm.toString());

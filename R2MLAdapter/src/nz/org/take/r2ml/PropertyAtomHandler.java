@@ -51,6 +51,8 @@ class PropertyAtomHandler implements XmlTypeHandler {
 	public Object importObject(Object obj) throws R2MLException {
 		PropertyAtom atom = (PropertyAtom) obj;
 		R2MLDriver driver = R2MLDriver.get();
+		if (driver.getPropertyMode() == R2MLDriver.INFER_PROPERTIES_MODE)
+			throw new R2MLException("PropertyAtoms are not supported while using the infer-properties-mode!");
 		MappingContext context = MappingContext.get();
 
 		Fact fact = R2MLUtil.newFact();

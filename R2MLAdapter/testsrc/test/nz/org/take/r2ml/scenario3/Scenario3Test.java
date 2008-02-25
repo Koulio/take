@@ -70,6 +70,7 @@ public class Scenario3Test extends TestCase {
 		ksrc.setSlotNameGenerator(new MyNameMapper());
 		KBUtil.addQuerries(ksrc);
 		KBUtil.addKnowledge(ksrc);
+		kbm.setBinFolder("bin.tests");
 		kb = kbm.getKnowledgeBase(
 				FamilyKB.class,
 				ksrc

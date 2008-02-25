@@ -1,4 +1,4 @@
-package test.nz.org.take.r2ml.d;
+package test.nz.org.take.r2ml.f;
 
 import nz.org.take.KnowledgeBase;
 import nz.org.take.compiler.reference.DefaultCompiler;
@@ -10,6 +10,9 @@ import nz.org.take.r2ml.R2MLException;
 import nz.org.take.r2ml.R2MLKnowledgeSource;
 
 import org.apache.log4j.BasicConfigurator;
+
+import example.nz.org.take.r2ml.userv.domain.UServDatatypeMapper;
+import example.nz.org.take.r2ml.userv.domain.UServQueryGenerator;
 
 public class GenerateKbIf {
 
@@ -24,9 +27,9 @@ public class GenerateKbIf {
 		// generate kb
 		KnowledgeBase kb = null;
 		try {
-			R2MLKnowledgeSource kSrc = new R2MLKnowledgeSource(GenerateKbIf.class.getResourceAsStream("/test/nz/org/take/r2ml/d/properties2.r2ml"));
-			kSrc.setQueryGenerator(new ThingQueryGenerator());
-			kSrc.setDatatypeMapper(new ThingMapper());
+			R2MLKnowledgeSource kSrc = new R2MLKnowledgeSource(GenerateKbIf.class.getResourceAsStream("/test/nz/org/take/r2ml/f/rules.r2ml"));
+			kSrc.setQueryGenerator(new UServQueryGenerator());
+			kSrc.setDatatypeMapper(new UServDatatypeMapper());
 			kSrc.setPropertyMode(R2MLDriver.INFER_PROPERTIES_MODE);
 			kb = kSrc.getKnowledgeBase();
 		} catch (R2MLException e) {
@@ -35,8 +38,8 @@ public class GenerateKbIf {
 		compiler.add(new JalopyCodeFormatter());
 		compiler.setLocation(new DefaultLocation("testsrc"));
 		compiler.setNameGenerator(new DefaultNameGenerator());
-		compiler.setPackageName("test.nz.org.take.r2ml.d.generated");
-		compiler.setClassName("ThingKB");
+		compiler.setPackageName("test.nz.org.take.r2ml.f.generatedIf");
+		compiler.setClassName("UServKB");
 		compiler.compileInterface(kb);
 
 	}

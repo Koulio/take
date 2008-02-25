@@ -46,7 +46,7 @@ public class AttributionAtomHandlerTest extends TestCase {
 		super.setUp();
 		Log4jConfigurator.configure();
 		driver = R2MLDriver.get();
-		driver.setDatatypeMapper(new DefaultMapper());
+		driver.setDatatypeMapper(new MyMapper());
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class AttributionAtomHandlerTest extends TestCase {
 			XmlTypeHandler handler = driver
 					.getHandlerByXmlType(root.getClass());
 			KnowledgeBase kb = driver.importKB((RuleBase)root);//(KnowledgeBase) handler.importObject(root);
-			assertEquals(2, kb.getElements().size());
+			assertEquals(1, kb.getElements().size());
 			assertNotNull("Rule id \"DR000\" not found", kb.getElement("DR000"));
 			assertEquals("Wrong predicate identifier in head of rule", "surname", kb.getElement("DR000").getPredicate().getName());
 		} catch (Exception e) {
