@@ -1,0 +1,5 @@
+#summary a plugin for strelka to facilitate R2ML and the take compiler to implement a CASE like tool for rules
+
+= Strelka and take4strelka =
+
+You will need the strelka plugin version 0.2 to use this plugin. You can find it here: [http://oxygen.informatik.tu-cottbus.de/rewerse-i1/?q=Strelka Strelka].
