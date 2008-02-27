@@ -6,9 +6,9 @@
 [http://oxygen.informatik.tu-cottbus.de/rewerse-i1/?q=R2ML R2ML] is a *comprehensive* and *user-friendly* XML rule format that allows
   * interchanging rules between different systems and tools,
   * enriching ontologies by rules,
-  * connecting your rule system with (our) R2ML-based tools for visualization, verbalization, verification and validation.
+  * connecting rule system with R2ML-based tools for visualization, verbalization, verification and validation.
 
-The goal of the R2ML subproject is to provide an import module that is able to map R2ML derivation rules into take and vice versa. Hence the REWERSE Working Group I1 has developed several tools for transformation between different rule systems, it is straightforward to import many other rule formats into take.
+The goal of the R2ML subproject is to provide an import module that is able to map R2ML derivation rules into take. Hence the REWERSE Working Group I1 has developed several tools for transformation between different rule systems, it is straightforward to import many other rule formats into take.
 
 == So far its done... ==
 Currently supported are the basic rule concepts of derivation rules from R2ML version 0.4. Inbetween there is a new R2ML version (0.5) available. There has been no testing with R2ML 0.5. Features that are not supported are rules other than derivation rules. Hence take is a derivation rule system it is not able to handle other rule flavours.
