@@ -15,7 +15,7 @@ public class Car {
 	private boolean passengerAirbag = false;
 	private boolean sideAirbag = false;
 	private long price = 0;
-	private CarModel is = new CarModel();
+	private CarModel model = new CarModel();
 	
 	public boolean isVehicle() {
 		return true;
@@ -28,14 +28,14 @@ public class Car {
 	/**
 	 * @return the carModel
 	 */
-	public CarModel getIs() {
-		return is;
+	public CarModel getModel() {
+		return model;
 	}
 	/**
 	 * @param carModel the carModel to set
 	 */
-	public void setIs(CarModel carModel) {
-		this.is = carModel;
+	public void setModel(CarModel carModel) {
+		this.model = carModel;
 	}
 	/**
 	 * @return the convertible
@@ -108,5 +108,10 @@ public class Car {
 	 */
 	public void setSideAirbag(boolean sideAirbag) {
 		this.sideAirbag = sideAirbag;
+	}
+	
+	@Override
+	public String toString() {
+		return "Car[model=" + model + "]";
 	}
 }

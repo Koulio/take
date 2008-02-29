@@ -1,4 +1,4 @@
-package test.nz.org.take.r2ml.f;
+ package test.nz.org.take.r2ml.f;
 
 import test.nz.org.take.r2ml.f.generatedKb.*;
 import nz.org.take.rt.DerivationLogEntry;
@@ -13,18 +13,21 @@ public class AutoDriverEligiblityTests extends TestCase {
 
 	public void test001() {
 		System.out.println("### test01 ###");
-		Car car = new Car();
+		// carmodel wothout high theft probability model and a low price
 		CarModel carModel = new CarModel();
 		carModel.setModelType("myModel");
-		car.setIs(carModel);
-		ResultSet<is> x = uservkb.is_10(car);
+		Car car = new Car();
+		car.setModel(carModel);
+		car.setPrice(2000);
+
+		ResultSet<htp> y = uservkb.htp_1(car);
+		assertFalse(y.hasNext());
+		car.setModel(new CarModel(true, 20, "myModel"));
+		ResultSet<potentialTheftRating> x = uservkb.potentialTheftRating_10(car);
 		assertTrue(x.hasNext());
-		is is = x.next();
-		assertNotNull(is.slot2);
-		System.out.println(is.slot2.getModelType());
-		for (DerivationLogEntry log : x.getDerivationLog())
-			System.out.print(log.getName() + " ### ");
-		System.out.println();
+		potentialTheftRating ptr = x.next();
+		assertEquals("high", ptr.theftRating);
+		assertFalse(x.hasNext());
 	}
 
 	public void test002() {
@@ -33,17 +36,17 @@ public class AutoDriverEligiblityTests extends TestCase {
 		CarModel carModel = new CarModel();
 		carModel.setModelType("myModel");
 		carModel.setHighTheftProbability(true);
-		car.setIs(carModel);
+		car.setModel(carModel);
 		ResultSet<potentialTheftRating> x = uservkb
 				.potentialTheftRating_10(car);
 		assertTrue(x.hasNext());
 		while (x.hasNext()) {
 			potentialTheftRating ptr = x.next();
-			assertNotNull(ptr.slot2);
-			System.out.println(ptr.slot2);
+			assertNotNull(ptr.theftRating);
+			System.out.println(ptr.theftRating);
 		}
-		for (DerivationLogEntry log : x.getDerivationLog())
-			System.out.print(log.getName() + " ### ");
+//		for (DerivationLogEntry log : x.getDerivationLog())
+//			System.out.print(log.getName() + " ### ");
 		System.out.println();
 	}
 
@@ -52,7 +55,7 @@ public class AutoDriverEligiblityTests extends TestCase {
 		System.out.println("### test01 ###");
 		assertNotNull(uservkb);
 		Car car = new Car();
-		car.setIs(new CarModel(true, 200, "niceCar"));
+		car.setModel(new CarModel(true, 200, "niceCar"));
 
 		ResultSet<carEligibility> x = uservkb.carEligibility_10(car);
 		assertTrue(x.hasNext());
@@ -60,35 +63,30 @@ public class AutoDriverEligiblityTests extends TestCase {
 		while (x.hasNext()) {
 			System.out.print(x.getDerivationLog().get(0).getName() + " ### ");
 			carEligibility ce = x.next();
-			correct = ce.slot2.equals("provisional");
-			if (correct)
-				for (DerivationLogEntry log : x.getDerivationLog())
-					System.out.print(log.getName() + " ### ");
-			;
-			System.out.println(ce.slot2);
+			correct = ce.eligibility.equals("provisional");
+			System.out.println(ce.eligibility);
 		}
 		assertTrue(correct);
 
 	}
 
-	public void test02() {
-
-		System.out.println("### test02 ###");
-
-		Car car = new Car();
-		car.setIs(new CarModel());
-		ResultSet<carEligibility> x = uservkb.carEligibility_10(car);
-		assertTrue(x.hasNext());
-		boolean correct = false;
-		while (x.hasNext()) {
-			for (DerivationLogEntry log : x.getDerivationLog())
-				System.out.print(log.getName() + " ### ");
-			;
-			carEligibility ce = x.next();
-			correct = ce.slot2.equals("eligible");
-			System.out.println(ce.slot2);
-		}
-		assertTrue(correct);
-
-	}
+//	public void test02() {
+//
+//		System.out.println("### test02 ###");
+//
+//		Car car = new Car();
+//		car.setModel(new CarModel());
+//		ResultSet<carEligibility> x = uservkb.carEligibility_10(car);
+//		assertTrue(x.hasNext());
+//		boolean correct = false;
+//		while (x.hasNext()) {
+//			for (DerivationLogEntry log : x.getDerivationLog())
+//				System.out.print(log.getName() + " ### ");
+//			carEligibility ce = x.next();
+//			correct = ce.eligibility.equals("eligible");
+//			System.out.println(ce.eligibility);
+//		}
+//		assertTrue(correct);
+//
+//	}
 }

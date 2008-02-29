@@ -7,15 +7,36 @@
  * either express or implied. See the License for the specific language governing permissions 
  * and limitations under the License.
  */
-package nz.org.take.r2ml.util;
+package nz.org.take.r2ml.reference;
 
 import nz.org.take.KnowledgeBase;
+import nz.org.take.Query;
+import nz.org.take.r2ml.util.AbstractQueryGenerator;
 
 /**
+ * A Querygenerator generating all possible queries for all predicates
+ * supported by the knowledgebase.
+ * 
  * @author Bastian Schenke (bastian.schenke(at)googlemail.com)
  *
  */
-public interface QueryGenerator {
+public class DefaultQueryGenerator extends AbstractQueryGenerator {
 
-	public void generateQueries(KnowledgeBase kb);
+	/**
+	 * 
+	 */
+	public DefaultQueryGenerator() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/* (non-Javadoc)
+	 * @see nz.org.take.r2ml.util.QueryGenerator#generateQueries(nz.org.take.KnowledgeBase)
+	 */
+	public void generateQueries(KnowledgeBase kb) {
+		for (Query q : buildAllQueries(kb.getSupportedPredicates())) {
+			kb.add(q);
+		}
+
+	}
+
 }

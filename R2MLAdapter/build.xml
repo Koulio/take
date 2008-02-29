@@ -1,58 +1,93 @@
 <?xml version="1.0"?>
-	
+<!--
+Copyright 2007 Bastian Schenke Licensed under the Apache License, Version 2.0 (the "License"); 
+you may not use this file except in compliance with the License. 
+You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+Unless required by applicable law or agreed to in writing, software distributed under the 
+License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+either express or implied. See the License for the specific language governing permissions 
+and limitations under the License.
+-->
+
 <project basedir="." default="build-all" name="r2ml4take">
 
+	<property name="name" value="r2ml4take" />
+	<property name="version" value="0.1" />
 	<property name="location.build" value="build" />
+	<property name="location.build.tmp" value="${location.build}/tmp" />
+	<property name="location.src" value="src" />
+	<property name="location.src.example" value="examplesrc" />
 	<property name="location.bin" value="bin" />
 	<property name="location.bin.examples" value="bin.examples" />
+	<property name="location.lib" value="lib" />
+	<property name="location.release" value="release"/>
 
 	<property name="jar.r2ml" value="r2ml4take" />
 	<property name="jar.eurent" value="eurent4take" />
 	<property name="jar.userv" value="userv4take" />
 
-	<fileset dir="${location.bin}" id="classes.r2ml">
+	<fileset id="classes.r2ml" dir="${location.bin}">
 		<patternset>
 			<include name="**/*.class" />
 			<exclude name="test/**" />
 		</patternset>
 	</fileset>
 
-	<fileset dir="${location.bin.examples}" id="classes.eurent">
+	<fileset id="classes.eurent" dir="${location.bin.examples}">
 		<patternset>
 			<include name="**/eurent/domain/**/*.class" />
 		</patternset>
 	</fileset>
 
-	<fileset dir="${location.bin.examples}" id="classes.userv">
+	<fileset id="classes.userv" dir="${location.bin.examples}">
 		<patternset>
 			<include name="**/userv/domain/**/*.class" />
 		</patternset>
 	</fileset>
+	
+	<target name="clean">
+		<delete dir="${location.build}"/>
+		<delete dir="${location.release}" />
+	</target>
+	
+	<target name="prepare" depends="clean">
+		<mkdir dir="${location.build.tmp}" />
+		<mkdir dir="${location.release}"/>
+	</target>
 
-	<target name="build-all" depends="r2ml-build, examples"
+	<target name="build-all" depends="prepare, r2ml-build, examples"
 		description="Building the whole project with all examples." />
 
 	<target name="examples" depends="eurent-build, userv-build" description="Building all examples." />
 
 	<target name="r2ml-build">
 		<echo message="Rebuild the main r2ml-adapter library." />
-		<jar destfile="${location.build}/${jar.r2ml}.jar">
+		<jar destfile="${location.build.tmp}/${jar.r2ml}.jar">
 			<fileset refid="classes.r2ml" />
 		</jar>
 	</target>
 
 	<target name="eurent-build">
 		<echo message="Rebuild jar-file for the eurent-example." />
-		<jar destfile="${location.build}/${jar.eurent}.jar">
+		<jar destfile="${location.build.tmp}/${jar.eurent}.jar">
 			<fileset refid="classes.eurent" />
 		</jar>
 	</target>
 
 	<target name="userv-build">
 		<echo message="Building jar file for the userv-example." />
-		<jar destfile="${location.build}/${jar.userv}.jar">
+		<jar destfile="${location.build.tmp}/${jar.userv}.jar">
 			<fileset refid="classes.userv" />
 		</jar>
+	</target>
+	
+	<target name="release" depends="build-all">
+		<zip destfile="${location.release}/${name}-${version}.zip">
+			<zipfileset dir="${location.build.tmp}" prefix="lib" excludesfile="${location.build.tmp}/${jar.eurent}.jar"/>
+			<zipfileset dir="${location.lib}" prefix="lib-required" />
+			<zipfileset dir="${location.src}" prefix="src" />
+			<zipfileset dir="${location.src.example}" prefix="srcExample" excludes="**/eurent/**" />
+		</zip>
 	</target>
 
 </project>

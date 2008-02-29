@@ -1,4 +1,4 @@
-package test.nz.org.take.r2ml.f;
+package test.nz.org.take.r2ml.e;
 
 import nz.org.take.KnowledgeBase;
 import nz.org.take.compiler.reference.DefaultCompiler;
@@ -12,39 +12,35 @@ import nz.org.take.r2ml.R2MLKnowledgeSource;
 import org.apache.log4j.BasicConfigurator;
 
 import example.nz.org.take.r2ml.userv.domain.UServDatatypeMapper;
-import example.nz.org.take.r2ml.userv.domain.UServNameMapper;
 import example.nz.org.take.r2ml.userv.domain.UServQueryGenerator;
 
-public class GenerateKb {
+public class GenerateKbIf {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
 		BasicConfigurator.configure();
-		DefaultCompiler compiler = new DefaultCompiler();
+		nz.org.take.compiler.Compiler compiler = new DefaultCompiler();
 		compiler.add(new JalopyCodeFormatter());
 		
 		// generate kb
 		KnowledgeBase kb = null;
 		try {
-			R2MLKnowledgeSource kSrc = new R2MLKnowledgeSource(GenerateKb.class.getResourceAsStream("/test/nz/org/take/r2ml/f/rules4.r2ml"));
+			R2MLKnowledgeSource kSrc = new R2MLKnowledgeSource(GenerateKbIf.class.getResourceAsStream("/test/nz/org/take/r2ml/e/properties.r2ml"));
 			kSrc.setQueryGenerator(new UServQueryGenerator());
 			kSrc.setDatatypeMapper(new UServDatatypeMapper());
-			kSrc.setSlotNameGenerator(new UServNameMapper());
 			kSrc.setPropertyMode(R2MLDriver.INFER_PROPERTIES_MODE);
 			kb = kSrc.getKnowledgeBase();
 		} catch (R2MLException e) {
 			e.printStackTrace();
 		}
-		
-		//compiler.setDerivationControllerClass("DebugModeDerivationController");
 		compiler.add(new JalopyCodeFormatter());
 		compiler.setLocation(new DefaultLocation("testsrc"));
 		compiler.setNameGenerator(new DefaultNameGenerator());
-		compiler.setPackageName("test.nz.org.take.r2ml.f.generatedKb");
+		compiler.setPackageName("test.nz.org.take.r2ml.e.generated");
 		compiler.setClassName("UServKB");
-		compiler.compile(kb);
+		compiler.compileInterface(kb);
 
 	}
 }

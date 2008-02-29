@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<r2ml:RuleBase xmlns:r2ml="http://www.rewerse.net/I1/2006/R2ML"
+    xmlns:r2mlv="http://www.rewerse.net/I1/2006/R2ML/R2MLV"
+    xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:soap="http://www.w3.org/2001/12/soap-envelope"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:swrlb="http://www.w3.org/2003/11/swrlb"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://oxygen.informatik.tu-cottbus.de/R2ML/0.4/R2ML.xsd">
+    <r2ml:DerivationRuleSet>
+        <r2ml:DerivationRule r2ml:ruleID="testrule">
+            <r2ml:conditions>
+                <r2ml:DatatypePredicateAtom r2ml:datatypePredicateID="swrlb:greaterThan"
+                    r2ml:isNegated="false">
+                    <r2ml:dataArguments>
+                        <r2ml:DataVariable r2ml:name="var1" r2ml:datatypeID="xs:integer"/>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:integer" r2ml:lexicalValue="20" />
+                    </r2ml:dataArguments>
+                </r2ml:DatatypePredicateAtom>
+                <r2ml:DatatypePredicateAtom r2ml:datatypePredicateID="swrlb:equal"
+                    r2ml:isNegated="false">
+                    <r2ml:dataArguments>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="blub" />
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="blub" />
+                    </r2ml:dataArguments>
+                </r2ml:DatatypePredicateAtom>
+            </r2ml:conditions>
+            <r2ml:conclusion>
+                <r2ml:GenericAtom r2ml:predicateID="okay">
+                    <r2ml:arguments>
+                        <r2ml:DataVariable r2ml:name="var1" r2ml:datatypeID="xs:integer"/>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="yes" />
+                    </r2ml:arguments>
+                </r2ml:GenericAtom>
+            </r2ml:conclusion>
+        </r2ml:DerivationRule>
+    </r2ml:DerivationRuleSet>
+</r2ml:RuleBase>
