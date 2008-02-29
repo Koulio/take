@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<r2ml:RuleBase
+    xmlns:r2ml="http://www.rewerse.net/I1/2006/R2ML"
+    xmlns:r2mlv="http://www.rewerse.net/I1/2006/R2ML/R2MLV"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:soap="http://www.w3.org/2001/12/soap-envelope"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://oxygen.informatik.tu-cottbus.de/R2ML/0.4/R2ML.xsd">
+
+    <r2mlv:Vocabulary>
+        <r2mlv:Class r2mlv:ID="Car">
+            <r2mlv:superClass>
+                <r2mlv:Class r2mlv:ID="Vehicle"/>
+            </r2mlv:superClass>
+            <r2mlv:Attribute r2mlv:ID="alarmSystem">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:boolean"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="carEligibility">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:string"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="convertible">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:boolean"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="driverAirbag">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:boolean"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="fabricationYear">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:integer"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="modelYear">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:integer"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="newCar">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:boolean"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="passengerAirbag">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:boolean"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="potentialOccupantInjuryRating">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:string"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="potentialTheftRating">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:string"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="price">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="Double"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="rollBar">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:boolean"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+            <r2mlv:Attribute r2mlv:ID="sideAirbag">
+                <r2mlv:range>
+                    <r2mlv:Datatype r2mlv:ID="xs:boolean"/>
+                </r2mlv:range>
+            </r2mlv:Attribute>
+        </r2mlv:Class>
+    </r2mlv:Vocabulary>
+    <r2ml:DerivationRuleSet>
+        <r2ml:DerivationRule r2ml:ruleID="AE_01">
+            <r2ml:conditions>
+                <r2ml:ObjectClassificationAtom r2ml:classID="Car" r2ml:isNegated="false">
+                    <r2ml:ObjectVariable r2ml:name="car"/>
+                </r2ml:ObjectClassificationAtom>
+                <r2ml:AttributionAtom r2ml:attributeID="potentialOccupantInjuryRating">
+                    <r2ml:subject>
+                        <r2ml:ObjectVariable r2ml:name="car"/>
+                    </r2ml:subject>
+                    <r2ml:dataValue>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="extremely high"/>
+                    </r2ml:dataValue>
+                </r2ml:AttributionAtom>
+            </r2ml:conditions>
+            <r2ml:conclusion>
+                <r2ml:AttributionAtom r2ml:attributeID="carEligibility">
+                    <r2ml:subject>
+                        <r2ml:ObjectVariable r2ml:name="car"/>
+                    </r2ml:subject>
+                    <r2ml:dataValue>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="not eligible"/>
+                    </r2ml:dataValue>
+                </r2ml:AttributionAtom>
+            </r2ml:conclusion>
+        </r2ml:DerivationRule>
+        <r2ml:DerivationRule r2ml:ruleID="AE_02">
+            <r2ml:conditions>
+                <r2ml:ObjectClassificationAtom r2ml:classID="Car" r2ml:isNegated="false">
+                    <r2ml:ObjectVariable r2ml:name="car"/>
+                </r2ml:ObjectClassificationAtom>
+                <r2ml:AttributionAtom r2ml:attributeID="potentialOccupantInjuryRating">
+                    <r2ml:subject>
+                        <r2ml:ObjectVariable r2ml:name="car" r2ml:classID="Car"/>
+                    </r2ml:subject>
+                    <r2ml:dataValue>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="high"/>
+                    </r2ml:dataValue>
+                </r2ml:AttributionAtom>
+            </r2ml:conditions>
+            <r2ml:conclusion>
+                <r2ml:AttributionAtom r2ml:attributeID="carEligibility">
+                    <r2ml:subject>
+                        <r2ml:ObjectVariable r2ml:name="car"/>
+                    </r2ml:subject>
+                    <r2ml:dataValue>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="provisional"/>
+                    </r2ml:dataValue>
+                </r2ml:AttributionAtom>
+            </r2ml:conclusion>
+        </r2ml:DerivationRule>
+        <r2ml:DerivationRule r2ml:ruleID="AE_03">
+            <r2ml:conditions>
+                <r2ml:ObjectClassificationAtom r2ml:classID="Car" r2ml:isNegated="false">
+                    <r2ml:ObjectVariable r2ml:name="car"/>
+                </r2ml:ObjectClassificationAtom>
+                <r2ml:AttributionAtom r2ml:attributeID="potentialTheftRating">
+                    <r2ml:subject>
+                        <r2ml:ObjectVariable r2ml:name="car"/>
+                    </r2ml:subject>
+                    <r2ml:dataValue>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="high"/>
+                    </r2ml:dataValue>
+                </r2ml:AttributionAtom>
+            </r2ml:conditions>
+            <r2ml:conclusion>
+                <r2ml:AttributionAtom r2ml:attributeID="carEligibility">
+                    <r2ml:subject>
+                        <r2ml:ObjectVariable r2ml:name="car"/>
+                    </r2ml:subject>
+                    <r2ml:dataValue>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="provisional"/>
+                    </r2ml:dataValue>
+                </r2ml:AttributionAtom>
+            </r2ml:conclusion>
+        </r2ml:DerivationRule>
+        <r2ml:DerivationRule r2ml:ruleID="AE_04">
+            <r2ml:conditions>
+                <r2ml:ObjectClassificationAtom r2ml:classID="Car" r2ml:isNegated="false">
+                    <r2ml:ObjectVariable r2ml:name="car"/>
+                </r2ml:ObjectClassificationAtom>
+                <r2ml:qf.Conjunction>
+                    <r2ml:DatatypePredicateAtom r2ml:datatypePredicateID="swrlb:notEqual" r2ml:isNegated="false">
+                        <r2ml:dataArguments>
+                            <r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="not eligibile"/>
+                            <r2ml:AttributeFunctionTerm r2ml:attributeID="carEligibility">
+                                <r2ml:contextArgument>
+                                    <r2ml:ObjectVariable r2ml:name="car" r2ml:classID="Car"/>
+                                </r2ml:contextArgument>
+                            </r2ml:AttributeFunctionTerm>
+                        </r2ml:dataArguments>
+                    </r2ml:DatatypePredicateAtom>
+                    <r2ml:DatatypePredicateAtom r2ml:datatypePredicateID="swrlb:notEqual" r2ml:isNegated="false">
+                        <r2ml:dataArguments>
+                            <r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="provisional"/>
+                            <r2ml:AttributeFunctionTerm r2ml:attributeID="carEligibility">
+                                <r2ml:contextArgument>
+                                    <r2ml:ObjectVariable r2ml:name="car" r2ml:classID="Car"/>
+                                </r2ml:contextArgument>
+                            </r2ml:AttributeFunctionTerm>
+                        </r2ml:dataArguments>
+                    </r2ml:DatatypePredicateAtom>
+                </r2ml:qf.Conjunction>
+            </r2ml:conditions>
+            <r2ml:conclusion>
+                <r2ml:AttributionAtom r2ml:attributeID="carEligibility">
+                    <r2ml:subject>
+                        <r2ml:ObjectVariable r2ml:name="car"/>
+                    </r2ml:subject>
+                    <r2ml:dataValue>
+                        <r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="eligible"/>
+                    </r2ml:dataValue>
+                </r2ml:AttributionAtom>
+            </r2ml:conclusion>
+        </r2ml:DerivationRule>
+    </r2ml:DerivationRuleSet>
+</r2ml:RuleBase>

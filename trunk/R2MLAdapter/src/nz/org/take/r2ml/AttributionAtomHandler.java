@@ -1,20 +1,11 @@
 /*
- * Copyright (C) 2007 Bastian Schenke (bastian.schenke(at)gmail.com) and 
- * <a href="http://www-ist.massey.ac.nz/JBDietrich" target="_top">Jens Dietrich</a>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * Copyright 2007 Bastian Schenke Licensed under the Apache License, Version 2.0 (the "License"); 
+ * you may not use this file except in compliance with the License. 
+ * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+ * Unless required by applicable law or agreed to in writing, software distributed under the 
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * either express or implied. See the License for the specific language governing permissions 
+ * and limitations under the License.
  */
 package nz.org.take.r2ml;
 
@@ -66,7 +57,7 @@ class AttributionAtomHandler extends AbstractPropertyHandler {
 
 		// boolean properties are special see also PropertyPredicates.getTypes()
 		if (range.getType() == Boolean.class || range.getType() == Boolean.TYPE) {
-			Predicate jp = buildJPredciate(domain, range, atom);
+			Predicate jp = buildJPredciate(domain, atom.getAttributeID().getLocalPart(), R2MLUtil.isNegated(atom), slotNames);
 			fact.setPredicate(jp);
 			fact.setTerms(new Term[] { domain });
 			fact.setId(attributeName);
@@ -94,10 +85,9 @@ class AttributionAtomHandler extends AbstractPropertyHandler {
 
 	}
 
-	private Predicate buildJPredciate(Term domain, Term range,
-			AttributionAtom atom) {
+	static Predicate buildJPredciate(Term domain, String localName, boolean isNegated, String[] slotNames) {
 
-		String localName = atom.getAttributeID().getLocalPart();
+		//String localName = atom.getAttributeID().getLocalPart();
 		MappingContext context = MappingContext.get();
 		Predicate p = context.getPredicate(localName);
 		if (p == null) {
@@ -106,17 +96,19 @@ class AttributionAtomHandler extends AbstractPropertyHandler {
 			name.append(localName.substring(1));
 			PropertyDescriptor prop = AbstractPropertyHandler.buildProperty(
 					name.toString(), domain.getType());
+			// TODO build a mappingrule from JPredicte to simplePredicate and use only the simplePredicate in rules
 			if (prop != null) {
 				JPredicate jp = new JPredicate();
 				jp.setMethod(prop.getReadMethod());
-				jp.setNegated(R2MLUtil.isNegated(atom));
-				// jp.setSlotNames(R2MLDriver.get().getNameMapper().getSlotNames(atom.getAttributeID()));
+				jp.setNegated(isNegated);
+				jp.setSlotNames(slotNames);
 				context.addPredicate(jp);
 				p = jp;
 			} else {
 				SimplePredicate sp = new SimplePredicate();
 				sp.setName(name.toString());
-				sp.setNegated(R2MLUtil.isNegated(atom));
+				sp.setNegated(isNegated);
+				sp.setSlotNames(slotNames);
 				sp.setSlotTypes(new Class[] { domain.getType() });
 
 				p = sp;

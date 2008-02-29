@@ -1,3 +1,12 @@
+/*
+ * Copyright 2007 Bastian Schenke Licensed under the Apache License, Version 2.0 (the "License"); 
+ * you may not use this file except in compliance with the License. 
+ * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+ * Unless required by applicable law or agreed to in writing, software distributed under the 
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * either express or implied. See the License for the specific language governing permissions 
+ * and limitations under the License.
+ */
 package nz.org.take.r2ml.util;
 
 import java.util.ArrayList;
@@ -98,7 +107,13 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 			varBindings.push(new ArrayList<Atom>());
 			JAXBElement formula = ((JAXBElement)f);
 			Class<? extends QfAndOrNafNegFormula> type = formula.getDeclaredType();
-			if (Atom.class.isAssignableFrom(type)) {
+			if (DatatypePredicateAtom.class.isAssignableFrom(type)) {
+				if (R2MLUtil.isBooleanPredicate((DatatypePredicateAtom)formula.getValue())) {
+					;;// ignore this case The DatatypePredicateHandler will do the rest
+				} else {
+					handle((Atom)formula.getValue());
+				}
+			} else if (Atom.class.isAssignableFrom(type)) {
 				handle((Atom) formula.getValue());
 			} else if (QfConjunction.class.isAssignableFrom(type)) {
 				fixFormula(((QfConjunction) (formula.getValue()))
@@ -122,7 +137,6 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 			}
 			addVarBindings(qfAndOrNafNegFormula, i++);
 		}
-
 	}
 
 	/**
@@ -185,6 +199,10 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 			}
 		} else if (DatatypePredicateAtom.class.isAssignableFrom(type)) {
 			DatatypePredicateAtom datatypePredicateAtom = ((DatatypePredicateAtom) atom);
+			if (R2MLUtil.isBooleanPredicate(datatypePredicateAtom)) {
+				// do nothing the DatatypePredicateAtomHandler will care for this artefact
+				return;
+			}
 			List<JAXBElement<? extends DataTerm>> datas = datatypePredicateAtom.getDataArguments().getDataTerm();
 			handleDataArgs(datas);
 //			for (JAXBElement<? extends DataTerm> t : datatypePredicateAtom
@@ -271,6 +289,7 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 		// return nothing if this Term is not a PropertyTerm
 		JAXBElement<? extends Term> ret = null;
 		if (value.getDeclaredType().equals(AttributeFunctionTerm.class)) {
+//			 TODO check arguments of the FunctionTerm for nested FunctionTerms 
 			AttributeFunctionTerm t = (AttributeFunctionTerm) value.getValue();
 			DataVariable var = of.createDataVariable();
 			var.setDatatypeID(getDatatypeID(t));
@@ -296,6 +315,7 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 			ret = atom.getDataValue().getDataTerm();
 			
 		} else if (value.getDeclaredType().equals(ReferencePropertyFunctionTerm.class)) {
+//			 TODO check arguments of the FunctionTerm for more FunctionTerms 
 			ReferencePropertyFunctionTerm t = (ReferencePropertyFunctionTerm) value.getValue();
 			ObjectVariable var = of.createObjectVariable();
 			var.setClassID(getClassID(t));
