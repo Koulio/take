@@ -136,6 +136,6 @@ public class PropertyPredicate extends AbstractPredicate {
 		this.ownerType = ownerType;
 	}
 	public String toString() {
-		return property.getName();
+		return (negated?"!":"") + property.getName();
 	}
 }

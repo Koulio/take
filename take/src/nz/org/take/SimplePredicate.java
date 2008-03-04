@@ -66,7 +66,7 @@ public class SimplePredicate extends AbstractPredicate {
 	
 	public String toString() {
 		// use UML syntax for derivated properties
-		return "/"+name;
+		return (negated?"!":"") + "/"+name;
 	}
 	/**
 	 * Get a copy of this predicate.
