@@ -66,7 +66,7 @@ public class JPredicate extends AbstractPredicate {
 	}
 	
 	public String toString() {
-		return method.getName();
+		return (negated?"!":"") + method.getName();
 	}
 	
 

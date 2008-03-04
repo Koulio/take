@@ -53,7 +53,7 @@ public class Comparison extends AbstractPredicate {
 	}
 
 	public String toString() {
-		return getName();
+		return (negated?"!":"") + getName();
 	}
 
 	public String getSymbol() {
