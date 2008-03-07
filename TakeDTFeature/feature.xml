@@ -2,7 +2,7 @@
 <feature
       id="TakeDTFeature"
       label="TakeDTFeature Feature"
-      version="1.0.5"
+      version="1.0.6"
       provider-name="nz.ac.massey"
       plugin="TakeDT">
 
