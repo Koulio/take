@@ -63,9 +63,9 @@ class DatatypePredicateAtomHandler implements XmlTypeHandler {
 				atom.getDataArguments().getDataTerm().get(0).getDeclaredType());
 		XmlTypeHandler h1 = R2MLDriver.get().getHandlerByXmlType(
 				atom.getDataArguments().getDataTerm().get(1).getDeclaredType());
-		arg0 = (Term) h0.importObject(atom.getDataArguments().getDataTerm()
+		arg1 = (Term) h0.importObject(atom.getDataArguments().getDataTerm()
 				.get(0).getValue());
-		arg1 = (Term) h1.importObject(atom.getDataArguments().getDataTerm()
+		arg0 = (Term) h1.importObject(atom.getDataArguments().getDataTerm()
 				.get(1).getValue());
 
 		Comparison c;
@@ -103,7 +103,7 @@ class DatatypePredicateAtomHandler implements XmlTypeHandler {
 			throw new R2MLException("Unable to create Comparison.");
 		}
 
-		fact.setTerms(new Term[] { arg1, arg0 });
+		fact.setTerms(new Term[] { arg0, arg1 });
 		
 		return fact;
 	}

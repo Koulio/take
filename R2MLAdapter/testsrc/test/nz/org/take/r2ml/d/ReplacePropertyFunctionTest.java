@@ -53,16 +53,19 @@ public class ReplacePropertyFunctionTest extends TestCase {
 	}
 
 	public void test01 () throws R2MLException {
+		System.out.println("value>15");
 		assertNotNull(kb);
 		Thing thing1 = new Thing();
+		thing1.setValue(20);
 		ResultSet<result> result = kb.result_10(thing1);
 		assertTrue(result.hasNext());
+		System.out.println("20 is greater than 15");
 		result r1 = result.next();
 		assertFalse(result.hasNext());		
 		Thing thing2 = new Thing();
-		thing2.setValue(20);
+		thing2.setValue(10);
 		result = kb.result_10(thing2);
 		assertFalse(result.hasNext());
-		System.out.println("15 is not greater than 20");
+		System.out.println("10 is not greater than 15");
 	}
 }

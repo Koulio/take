@@ -20,21 +20,19 @@
     <r2ml:DerivationRuleSet>
         <r2ml:DerivationRule r2ml:ruleID="DE_DAC04">
             <r2ml:conditions>
-                <r2ml:qf.Conjunction>
-                <r2ml:ObjectClassificationAtom r2ml:classID="Thing" r2ml:isNegated="false">
-                    <r2ml:ObjectVariable r2ml:name="t" r2ml:classID="Thing"/>
-                </r2ml:ObjectClassificationAtom>
-                <r2ml:DatatypePredicateAtom r2ml:datatypePredicateID="swrlb:greaterThan" r2ml:isNegated="false">
-                    <r2ml:dataArguments>
-                        <r2ml:TypedLiteral r2ml:datatypeID="xs:integer" r2ml:lexicalValue="15"/>
-                        <r2ml:AttributeFunctionTerm r2ml:attributeID="value">
-                            <r2ml:contextArgument>
-                                <r2ml:ObjectVariable r2ml:name="t" r2ml:classID="Thing"/>
-                            </r2ml:contextArgument>
-                        </r2ml:AttributeFunctionTerm>
-                    </r2ml:dataArguments>
-                </r2ml:DatatypePredicateAtom>
-                </r2ml:qf.Conjunction>
+                    <r2ml:ObjectClassificationAtom r2ml:classID="Thing" r2ml:isNegated="false">
+                        <r2ml:ObjectVariable r2ml:name="t" r2ml:classID="Thing"/>
+                    </r2ml:ObjectClassificationAtom>
+                    <r2ml:DatatypePredicateAtom r2ml:datatypePredicateID="swrlb:greaterThan" r2ml:isNegated="false">
+                        <r2ml:dataArguments>
+                            <r2ml:TypedLiteral r2ml:datatypeID="xs:integer" r2ml:lexicalValue="15"/>
+                            <r2ml:AttributeFunctionTerm r2ml:attributeID="value">
+                                <r2ml:contextArgument>
+                                    <r2ml:ObjectVariable r2ml:name="t" r2ml:classID="Thing"/>
+                                </r2ml:contextArgument>
+                            </r2ml:AttributeFunctionTerm>
+                        </r2ml:dataArguments>
+                    </r2ml:DatatypePredicateAtom>
             </r2ml:conditions>
             <r2ml:conclusion>
                 <r2ml:AttributionAtom r2ml:attributeID="result">

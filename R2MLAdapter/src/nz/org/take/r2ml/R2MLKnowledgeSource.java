@@ -92,15 +92,15 @@ public class R2MLKnowledgeSource implements KnowledgeSource {
 					driver.logger.debug("loading rule base");
 				unmarshallRuleBase();
 			}
-			System.out.println("import rulebase");
+//			System.out.println("import rulebase");
 			kb = driver.importKB(rb);
-			System.out.println("rulebase imported");
+//			System.out.println("rulebase imported");
 			if(driver.logger.isDebugEnabled())
 				driver.logger.debug("KnowledgeBase imported.");
 			if (queryGenerator != null )
 				queryGenerator.generateQueries(kb);
 		}
-		System.out.println("kb created");
+//		System.out.println("kb created");
 		if (driver.logger.isDebugEnabled())
 			driver.logger.debug("knowledge base created was " + kb!=null?"successful!":"not succesful!");
 		return kb;

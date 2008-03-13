@@ -24,8 +24,8 @@ public class UServQueryGenerator extends AbstractQueryGenerator {
 				kb.add(query);
 			}
 		}
-		System.out.println("generated querries for " + predicates.size()
-				+ " predicates");
+//		System.out.println("generated querries for " + predicates.size()
+//				+ " predicates");
 	}
 
 }
