@@ -11,21 +11,15 @@ package nz.org.take.r2ml;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
-
-import org.apache.commons.jxpath.JXPathContext;
 
 import nz.org.take.DefaultKnowledgeBase;
 import nz.org.take.DerivationRule;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.KnowledgeElement;
 import nz.org.take.r2ml.util.R2MLConstants;
-
-import de.tu_cottbus.r2ml.ObjectClassificationAtom;
-import de.tu_cottbus.r2ml.ObjectVariable;
 import de.tu_cottbus.r2ml.RuleBase;
 import de.tu_cottbus.r2ml.RuleSet;
 
