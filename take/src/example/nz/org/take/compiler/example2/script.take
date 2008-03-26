@@ -1,0 +1,11 @@
+// example 
+@@dc:creator=jens dietrich
+@@dc:date=25/03/2008
+var int i
+var example.nz.org.take.compiler.example2.Customer c
+@take.compilerhint.class=CustomerCategory
+@take.compilerhint.slots=customer,category
+@take.compilerhint.method=getCategory
+query category[in,out]
+// rules
+rule1: if 100<turnover(c,12) then category[c,"gold"]
