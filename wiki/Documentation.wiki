@@ -3,6 +3,7 @@
 
 = Take Documentation =
 
-[http://docs.google.com/Doc?id=dgzzp6gn_23fx23xx take manual]
-[http://docs.google.com/Presentation?id=dgzzp6gn_886zjtj2pt take presentation]
-[http://groups.google.com/group/take-rule-compiler take google group]
+ * [http://docs.google.com/Doc?id=dgzzp6gn_23fx23xx take manual]
+ * [http://docs.google.com/Presentation?id=dgzzp6gn_886zjtj2pt take presentation]
+ * [http://docs.google.com/Presentation?id=dgzzp6gn_93c8k8gqhb take presentation at ASWEC2008]
+ * [http://groups.google.com/group/take-rule-compiler take google group]
