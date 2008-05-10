@@ -20,6 +20,8 @@
 package test.nz.org.take.r2ml.scenario4;
 
 import org.apache.log4j.BasicConfigurator;
+
+import example.nz.org.take.r2ml.userv.domain.UServQueryGenerator;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
@@ -27,6 +29,7 @@ import nz.org.take.compiler.util.DefaultNameGenerator;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
 import nz.org.take.r2ml.R2MLException;
 import nz.org.take.r2ml.R2MLKnowledgeSource;
+import nz.org.take.r2ml.reference.DefaultQueryGenerator;
 
 /**
  * Script to generate the interface for the test kb.
@@ -34,7 +37,7 @@ import nz.org.take.r2ml.R2MLKnowledgeSource;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class GenerateInterfaces {
+public class GenerateKb {
 
 	/**
 	 * Generate the interface for the example.
@@ -51,7 +54,8 @@ public class GenerateInterfaces {
 			R2MLKnowledgeSource kSrc = new R2MLKnowledgeSource(Scenario4Test.class.getResourceAsStream("/test/nz/org/take/r2ml/scenario4/rules.xml"));
 			kSrc.setDatatypeMapper(new MyDatatypeMapper());
 			kSrc.setSlotNameGenerator(new MyNameMapper());
-			KBUtil.addQuerries(kSrc);
+			kSrc.setQueryGenerator(new UServQueryGenerator());
+			//KBUtil.addQuerries(kSrc);
 			kb = kSrc.getKnowledgeBase();
 		} catch (R2MLException e) {
 			e.printStackTrace();
@@ -61,7 +65,7 @@ public class GenerateInterfaces {
 		compiler.setNameGenerator(new DefaultNameGenerator());
 		compiler.setPackageName("test.nz.org.take.r2ml.scenario4.generated");
 		compiler.setClassName("EnrollmentKB");
-		compiler.compileInterface(kb);
+		compiler.compile(kb);
 
 	}
 

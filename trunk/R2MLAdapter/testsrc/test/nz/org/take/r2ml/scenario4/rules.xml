@@ -40,30 +40,32 @@
 				</r2ml:RuleText>
             </r2ml:Documentation>
 			<r2ml:conditions>
-				<r2ml:PropertyAtom r2ml:propertyID="courses">
+				<r2ml:ReferencePropertyAtom r2ml:referencePropertyID="courses">
 					<r2ml:subject>
 						<r2ml:ObjectVariable r2ml:name="student"/>
 					</r2ml:subject>
-					<r2ml:value>
+					<r2ml:object>
 						<r2ml:ObjectVariable r2ml:name="course" />
-					</r2ml:value>
-				</r2ml:PropertyAtom>
-				<r2ml:PropertyAtom r2ml:propertyID="college">
+					</r2ml:object>
+				</r2ml:ReferencePropertyAtom>
+				<r2ml:ReferencePropertyAtom r2ml:referencePropertyID="college">
 					<r2ml:subject>
 						<r2ml:ObjectVariable r2ml:name="course"/>
 					</r2ml:subject>
-					<r2ml:value>
+					<r2ml:object>
 						<r2ml:ObjectVariable r2ml:name="college" />
-					</r2ml:value>
-				</r2ml:PropertyAtom>
+					</r2ml:object>
+				</r2ml:ReferencePropertyAtom>
 			</r2ml:conditions>
             <r2ml:conclusion>
-				<r2ml:GenericAtom r2ml:predicateID="isEnrolled">
-					<r2ml:arguments>
+				<r2ml:ReferencePropertyAtom r2ml:referencePropertyID="isEnrolled">
+					<r2ml:subject>
+						<r2ml:ObjectVariable r2ml:name="student" />						
+					</r2ml:subject>
+					<r2ml:object>
 						<r2ml:ObjectVariable r2ml:name="college" />
-						<r2ml:ObjectVariable r2ml:name="student" />
-					</r2ml:arguments>
-				</r2ml:GenericAtom>
+					</r2ml:object>
+				</r2ml:ReferencePropertyAtom>
             </r2ml:conclusion>
         </r2ml:DerivationRule>
 		
