@@ -698,7 +698,6 @@
         </r2mlv:Class>
     </r2mlv:Vocabulary>
     <r2ml:DerivationRuleSet>
-        <!--
         <r2ml:DerivationRule r2ml:ruleID="AE_PTC01">
             <r2ml:conditions>
                 <r2ml:ObjectClassificationAtom r2ml:classID="Car" r2ml:isNegated="false">
@@ -858,7 +857,9 @@
                 </r2ml:AttributionAtom>
             </r2ml:conclusion>
         </r2ml:DerivationRule>
- -->      <r2ml:DerivationRule r2ml:ruleID="AE_POIC05">
+
+      
+        <r2ml:DerivationRule r2ml:ruleID="AE_POIC05">
             <r2ml:conditions>
                 <r2ml:ObjectClassificationAtom r2ml:classID="Car" r2ml:isNegated="false">
                     <r2ml:ObjectVariable r2ml:name="car" />
@@ -901,7 +902,7 @@
                 </r2ml:AttributionAtom>
             </r2ml:conclusion>
         </r2ml:DerivationRule>
-<!--       <r2ml:DerivationRule r2ml:ruleID="AE_POIC01">
+       <r2ml:DerivationRule r2ml:ruleID="AE_POIC01">
             <r2ml:conditions>
                 <r2ml:ObjectClassificationAtom r2ml:classID="Car" r2ml:isNegated="false">
                     <r2ml:ObjectVariable r2ml:name="car" />
@@ -1192,26 +1193,6 @@
                     <r2ml:dataValue>
                         <r2ml:TypedLiteral r2ml:datatypeID="xs:string"
                             r2ml:lexicalValue="provisional" />
-                    </r2ml:dataValue>
-                </r2ml:AttributionAtom>
-            </r2ml:conclusion>
-        </r2ml:DerivationRule>
-        <r2ml:DerivationRule r2ml:ruleID="AE_04">
-            <r2ml:conditions>
-                <r2ml:ObjectClassificationAtom r2ml:classID="Car" r2ml:isNegated="false">
-                    <r2ml:ObjectVariable r2ml:name="car" />
-                </r2ml:ObjectClassificationAtom>
-                <r2ml:qf.Conjunction>
-                </r2ml:qf.Conjunction>
-            </r2ml:conditions>
-            <r2ml:conclusion>
-                <r2ml:AttributionAtom r2ml:attributeID="carEligibility">
-                    <r2ml:subject>
-                        <r2ml:ObjectVariable r2ml:name="car" />
-                    </r2ml:subject>
-                    <r2ml:dataValue>
-                        <r2ml:TypedLiteral r2ml:datatypeID="xs:string" r2ml:lexicalValue="eligible"
-                         />
                     </r2ml:dataValue>
                 </r2ml:AttributionAtom>
             </r2ml:conclusion>
@@ -1563,5 +1544,5 @@
                 </r2ml:AttributionAtom>
             </r2ml:conclusion>
         </r2ml:DerivationRule>
--->    </r2ml:DerivationRuleSet>
+    </r2ml:DerivationRuleSet>
 </r2ml:RuleBase>
