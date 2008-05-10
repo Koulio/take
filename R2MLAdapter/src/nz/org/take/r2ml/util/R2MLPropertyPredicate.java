@@ -17,28 +17,28 @@ import nz.org.take.PropertyPredicate;
  * @author Bastian Schenke (bastian.schenke(at)googlemail.com)
  *
  */
-public class StrelkaPropertyPredicate extends PropertyPredicate {
+public class R2MLPropertyPredicate extends PropertyPredicate {
 
 	/**
 	 * 
 	 */
-	public StrelkaPropertyPredicate() {
+	public R2MLPropertyPredicate() {
 		super();
 	}
 	
 	
 
-	/* (non-Javadoc)
-	 * @see nz.org.take.PropertyPredicate#getSlotTypes()
-	 */
-	@Override
-	public Class[] getSlotTypes() {
-		// TODO Auto-generated method stub
-		return super.getSlotTypes();
-	}
-
-
-
+//	/* (non-Javadoc)
+//	 * @see nz.org.take.PropertyPredicate#getSlotTypes()
+//	 */
+//	@Override
+//	public Class[] getSlotTypes() {
+//		// TODO Auto-generated method stub
+//		return super.getSlotTypes();
+//	}
+//
+//
+//
 	@Override
 	public String getName() {
 		return "p_" + super.getName();

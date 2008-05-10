@@ -31,6 +31,7 @@ import nz.org.take.KnowledgeSource;
 import nz.org.take.Query;
 import nz.org.take.TakeException;
 import nz.org.take.r2ml.util.QueryGenerator;
+import nz.org.take.r2ml.util.RuleBaseFilter;
 
 public class R2MLKnowledgeSource implements KnowledgeSource {
 

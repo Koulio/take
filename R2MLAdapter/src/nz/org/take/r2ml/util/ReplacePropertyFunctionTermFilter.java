@@ -59,8 +59,6 @@ import de.tu_cottbus.r2ml.RuleBase;
 import de.tu_cottbus.r2ml.RuleSet;
 import de.tu_cottbus.r2ml.Subject;
 import de.tu_cottbus.r2ml.Term;
-import de.tu_cottbus.r2ml.r2mlv.Property;
-import de.tu_cottbus.r2ml.r2mlv.VocabularyEntry;
 
 public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 	
@@ -86,6 +84,7 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 				if (R2MLDriver.get().logger.isDebugEnabled())
 					R2MLDriver.get().logger.debug("replace property function terms in rule " + rule.getRuleID());
 				fixFormula(rule.getConditions().getQfAndOrNafNegFormula());
+				//handle(rule.getConclusion().getAtom().getValue());
 			}
 		}
 	}
@@ -151,7 +150,7 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 	private void addVarBindings(
 			List<JAXBElement<? extends QfAndOrNafNegFormula>> qfAndOrNafNegFormula,
 			int i) throws R2MLException {
-		System.out.println("add " + varBindings.peek().size() + "varbindings");
+		//System.out.println("add " + varBindings.peek().size() + "varbindings");
 		for (Atom binding : varBindings.pop()) {
 			XmlType type = binding.getClass().getAnnotation(XmlType.class);
 
@@ -200,7 +199,7 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 		} else if (DatatypePredicateAtom.class.isAssignableFrom(type)) {
 			DatatypePredicateAtom datatypePredicateAtom = ((DatatypePredicateAtom) atom);
 			if (R2MLUtil.isBooleanPredicate(datatypePredicateAtom)) {
-				// do nothing the DatatypePredicateAtomHandler will care for this artefact
+				// do nothing the DatatypePredicateAtomHandler will handle this artefact
 				return;
 			}
 			List<JAXBElement<? extends DataTerm>> datas = datatypePredicateAtom.getDataArguments().getDataTerm();
@@ -379,8 +378,8 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 			JAXBElement<? extends Term> newTerm = (JAXBElement<? extends Term>) handle(nextT);
 			if (newTerm != null) {
 				int indexOf = args.indexOf(nextT);
-				System.out.println("replace " + nextT.getValue().getClass().getSimpleName() + " with " + newTerm.getValue().getClass().getSimpleName());
-								args.remove(indexOf);
+				//System.out.println("replace " + nextT.getValue().getClass().getSimpleName() + " with " + newTerm.getValue().getClass().getSimpleName());
+				args.remove(indexOf);
 				args.add(indexOf, newTerm);
 				
 //				i.remove();
@@ -400,7 +399,7 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 			JAXBElement<? extends ObjectTerm> objT = (JAXBElement<? extends ObjectTerm>) handle(nextT);
 			if (objT != null) {
 				int indexOf = objects.indexOf(nextT);
-				System.out.println("replace " + nextT.getValue().getClass().getSimpleName() + " with " + objT.getValue().getClass().getSimpleName());
+				//System.out.println("replace " + nextT.getValue().getClass().getSimpleName() + " with " + objT.getValue().getClass().getSimpleName());
 				objects.remove(indexOf);
 				objects.add(indexOf, objT);
 			}
@@ -420,7 +419,7 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 			JAXBElement<? extends DataTerm> datT = (JAXBElement<? extends DataTerm>) handle(nextT);
 			if (datT != null) {
 				int indexOf = datas.indexOf(nextT);
-				System.out.println("replace " + nextT.getValue().getClass().getSimpleName() + " with variable " + ((DataVariable)(datT.getValue())).getName() );
+				//System.out.println("replace " + nextT.getValue().getClass().getSimpleName() + " with variable " + ((DataVariable)(datT.getValue())).getName() );
 				datas.remove(indexOf);
 				datas.add(indexOf, datT);
 			}
@@ -430,31 +429,11 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 	private QName getClassID(ReferencePropertyFunctionTerm t) throws R2MLException {
 		//QName type = getClassId(t.getContextArgument().getObjectTerm().getValue());
 		QName propId = t.getReferencePropertyID();
-		return getPropertyType(propId);
+		return R2MLUtil.getPropertyType(propId);
 	}
 
 	private QName getDatatypeID(AttributeFunctionTerm t) throws R2MLException {		
-		return getPropertyType(t.getAttributeID());
-	}
-
-	/**
-	 * @param propId
-	 * @throws R2MLException 
-	 */
-	private QName getPropertyType(QName propId) throws R2MLException {
-		try {
-		for(JAXBElement<? extends VocabularyEntry> vocEntry : R2MLDriver.get().getRuleBase().getVocabulary().getVocabularyEntry()) {
-			if (vocEntry.getDeclaredType().equals(de.tu_cottbus.r2ml.r2mlv.Class.class))
-				for (Property prop : ((de.tu_cottbus.r2ml.r2mlv.Class)(vocEntry.getValue())).getAttributeOrReferenceProperty()) {
-					if (prop.getID().equals(propId)) {
-						return prop.getRange().getDatatype().getValue().getID();
-					}
-				}
-		}
-		} catch (NullPointerException e) {
-			throw new R2MLException("Unable to gather type for property " + propId.toString());
-		}
-		throw new R2MLException("Unable to gather type for property " + propId.toString());
+		return R2MLUtil.getPropertyType(t.getAttributeID());
 	}
 
 	private String generateVarName(QName propertyName) {
@@ -462,7 +441,7 @@ public class ReplacePropertyFunctionTermFilter implements RuleBaseFilter {
 		if (i==null) {
 			i=0;
 		}
-		propertyNames.put(propertyName, i++);
+		propertyNames.put(propertyName, ++i);
 		return propertyName.getLocalPart() + i;
 	}
 

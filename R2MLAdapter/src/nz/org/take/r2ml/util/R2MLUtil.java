@@ -16,6 +16,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
 
 import de.tu_cottbus.r2ml.Atom;
 import de.tu_cottbus.r2ml.AttributeFunctionTerm;
@@ -26,6 +27,8 @@ import de.tu_cottbus.r2ml.GenericAtom;
 import de.tu_cottbus.r2ml.InequalityAtom;
 import de.tu_cottbus.r2ml.QfConjunction;
 import de.tu_cottbus.r2ml.TypedLiteral;
+import de.tu_cottbus.r2ml.r2mlv.Property;
+import de.tu_cottbus.r2ml.r2mlv.VocabularyEntry;
 
 import nz.org.take.Fact;
 import nz.org.take.Prerequisite;
@@ -204,6 +207,26 @@ public class R2MLUtil {
 			return false;
 		}
 		return false;
+	}
+
+	/**
+	 * @param propId
+	 * @throws R2MLException 
+	 */
+	public static QName getPropertyType(QName propId) throws R2MLException {
+		try {
+		for(JAXBElement<? extends VocabularyEntry> vocEntry : R2MLDriver.get().getRuleBase().getVocabulary().getVocabularyEntry()) {
+			if (vocEntry.getDeclaredType().equals(de.tu_cottbus.r2ml.r2mlv.Class.class))
+				for (Property prop : ((de.tu_cottbus.r2ml.r2mlv.Class)(vocEntry.getValue())).getAttributeOrReferenceProperty()) {
+					if (prop.getID().equals(propId)) {
+						return prop.getRange().getDatatype().getValue().getID();
+					}
+				}
+		}
+		} catch (NullPointerException e) {
+			//throw new R2MLException("Unable to gather type for property " + propId.toString());
+		}
+		throw new R2MLException("Unable to gather type for property " + propId.toString());
 	}
 
 }

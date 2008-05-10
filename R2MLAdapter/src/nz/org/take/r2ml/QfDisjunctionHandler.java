@@ -25,7 +25,7 @@ import nz.org.take.r2ml.util.R2MLUtil;
 
 /**
  * Map a quantifier free disjunction from R2ML (QfDisjunction) to a list of take
- * prerequisites (List<Prerequisite>).
+ * prerequisite lists (List<List<Prerequisite>>).
  * 
  * @param obj
  *            a QfDisjunction object
@@ -47,12 +47,12 @@ public class QfDisjunctionHandler implements XmlTypeHandler {
 				.getQfAndOrNafNegFormula()) {
 			XmlTypeHandler handler = R2MLDriver.get().getHandlerByXmlType(disjunct
 					.getValue().getClass());
-			Object object = handler.importObject(disjunct.getValue());
+			Prerequisite object = (Prerequisite) handler.importObject(disjunct.getValue());
 			if (object instanceof List) {
 				bodies.add((List) object);
 			} else {
 				List<Prerequisite> list = new ArrayList<Prerequisite>();
-				list.add(R2MLUtil.factAsPrerequisite((Fact) object));
+				list.add(object);
 				bodies.add(list);
 			}
 		} // for

@@ -40,6 +40,7 @@ public class TypeVariablesFilter implements RuleBaseFilter {
 	 */
 	public void repair(RuleBase ruleBase) throws R2MLException {
 
+		
 		JXPathContext context = JXPathContext.newContext(ruleBase);
 		ObjectFactory of = new ObjectFactory();
 		
@@ -61,11 +62,8 @@ public class TypeVariablesFilter implements RuleBaseFilter {
 				newVar.setName(var.getName());
 				newVar.setTypeCategory(var.getTypeCategory());
 				newVar.setClassID(classification.getClassID());
-				//var.setClassID(classification.getClassID());
 				classification.setObjectTerm(of.createObjectVariable(newVar));
-//				System.out.println("typed variable " + newVar.getName() + " as type " + newVar.getClassID());
 			} catch (RuntimeException e) {
-				// TODO: handle exception
 				if (R2MLDriver.get().logger.isDebugEnabled())
 					R2MLDriver.get().logger.debug("Exception occured while typing all variables.", e);
 				throw new R2MLException("Unable to type variables in rule base, abort rule import.");
