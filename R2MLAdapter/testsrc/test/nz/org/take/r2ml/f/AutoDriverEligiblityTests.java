@@ -22,7 +22,7 @@ public class AutoDriverEligiblityTests extends TestCase {
 
 		ResultSet<htp> y = uservkb.htp_1(car);
 		assertFalse(y.hasNext());
-		car.setModel(new CarModel(true, 20, "myModel"));
+		car.setModel(new CarModel(true, "myModel"));
 		ResultSet<potentialTheftRating> x = uservkb.potentialTheftRating_10(car);
 		assertTrue(x.hasNext());
 		potentialTheftRating ptr = x.next();
@@ -50,31 +50,34 @@ public class AutoDriverEligiblityTests extends TestCase {
 		System.out.println();
 	}
 
-	public void test01() {
-
-		System.out.println("### test01 ###");
-		assertNotNull(uservkb);
-		Car car = new Car();
-		car.setModel(new CarModel(true, 200, "niceCar"));
-
-		ResultSet<carEligibility> x = uservkb.carEligibility_10(car);
-		assertTrue(x.hasNext());
-		boolean correct = false;
-		while (x.hasNext()) {
-			System.out.print(x.getDerivationLog().get(0).getName() + " ### ");
-			carEligibility ce = x.next();
-			correct = ce.eligibility.equals("provisional");
-			System.out.println(ce.eligibility);
-		}
-		assertTrue(correct);
-
-	}
+//	public void test01() {
+//
+//		System.out.println("### test01 ###");
+//		assertNotNull(uservkb);
+//		Car car = new Car();
+//		car.setModel(new CarModel(true, "niceCar"));
+//
+//		ResultSet<carEligibility> x = uservkb.carEligibility_10(car);
+//		assertTrue(x.hasNext());
+//		boolean correct = false;
+//		while (x.hasNext()) {
+//			System.out.print(x.getDerivationLog().get(0).getName() + " ### ");
+//			carEligibility ce = x.next();
+//			correct = ce.eligibility.equals("provisional");
+//			System.out.println(ce.eligibility);
+//		}
+//		assertTrue(correct);
+//
+//	}
 
 //	public void test02() {
 //
 //		System.out.println("### test02 ###");
 //
 //		Car car = new Car();
+//		car.setDriverAirbag(true);
+//		car.setPassengerAirbag(true);
+//		car.setSideAirbag(true);
 //		car.setModel(new CarModel());
 //		ResultSet<carEligibility> x = uservkb.carEligibility_10(car);
 //		assertTrue(x.hasNext());
