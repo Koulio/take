@@ -65,10 +65,11 @@ public class AttributionAtomHandlerTest extends TestCase {
 			Object root = ((JAXBElement) um.unmarshal(new FileInputStream(
 					"testsrc/test/nz/org/take/r2ml/b/attributionTest.xml")))
 					.getValue();
+			driver.setPropertyMode(driver.INFER_PROPERTIES_MODE);
 			XmlTypeHandler handler = driver
 					.getHandlerByXmlType(root.getClass());
 			KnowledgeBase kb = driver.importKB((RuleBase)root);//(KnowledgeBase) handler.importObject(root);
-			assertEquals(1, kb.getElements().size());
+			assertEquals(2, kb.getElements().size());
 			assertNotNull("Rule id \"DR000\" not found", kb.getElement("DR000"));
 			assertEquals("Wrong predicate identifier in head of rule", "surname", kb.getElement("DR000").getPredicate().getName());
 		} catch (Exception e) {
