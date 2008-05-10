@@ -8,7 +8,7 @@ public class MyNameMapper extends DefaultNameMapper {
 
 	public MyNameMapper() {
 		super();
-		addSlotNames(new QName("isEnrolled"), new String[] { "college", "student" });
+		addSlotNames(new QName("isEnrolled"), new String[] { "student", "college" });
 	}
 
 }
