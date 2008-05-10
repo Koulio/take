@@ -136,8 +136,6 @@ public class R2MLDriver {
 	 */
 	public KnowledgeBase importKB(RuleBase rb) throws R2MLException {
 		MappingContext.reset();
-		if (logger.isDebugEnabled())
-			logger.debug("entering RuleBaseHandler");
 		this.ruleBase = rb;
 		for (RuleBaseFilter filter : ruleBaseFilter) {
 			if (logger.isDebugEnabled()) {

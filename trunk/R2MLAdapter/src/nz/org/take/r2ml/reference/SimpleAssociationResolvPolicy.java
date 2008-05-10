@@ -15,6 +15,7 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 
 import de.tu_cottbus.r2ml.AssociationAtom;
+import de.tu_cottbus.r2ml.DataTerm;
 import de.tu_cottbus.r2ml.ObjectTerm;
 import nz.org.take.Fact;
 import nz.org.take.SimplePredicate;
@@ -54,6 +55,18 @@ public class SimpleAssociationResolvPolicy implements AssociationResolvPolicy {
 				termTypes.add(argument.getType());
 			} catch (ClassCastException e) {
 				throw new R2MLException("Error while handling ObjectTerms for Association " + atom.getAssociationPredicateID(), e);
+			}
+		}
+		
+		for (JAXBElement<? extends DataTerm> dataTermElement : atom.getDataArguments().getDataTerm()) {
+			XmlTypeHandler handler = driver.getHandlerByXmlType(dataTermElement.getDeclaredType());
+			Term argument = null;
+			try {
+				argument = (Term) handler.importObject(dataTermElement.getValue());
+				terms.add(argument);
+				termTypes.add(argument.getType());
+			} catch (ClassCastException e) {
+				throw new R2MLException("Error while handling DataTerms for Association " + atom.getAssociationPredicateID(), e);
 			}
 		}
 		// try to reuse predicate build earlier

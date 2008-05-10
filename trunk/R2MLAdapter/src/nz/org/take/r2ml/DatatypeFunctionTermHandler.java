@@ -35,6 +35,7 @@ public class DatatypeFunctionTermHandler implements XmlTypeHandler {
 	public Object importObject(Object obj) throws R2MLException {
 		Logger logger = R2MLDriver.get().logger;
 		DatatypeFunctionTerm r2mlTerm = (DatatypeFunctionTerm) obj;
+		
 		R2MLDriver driver = R2MLDriver.get();
 		ComplexTerm term = new ComplexTerm();
 		Term[] args = new Term[r2mlTerm.getDataArguments().getDataTerm().size()];

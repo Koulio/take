@@ -23,7 +23,7 @@ import nz.org.take.PropertyPredicate;
 import nz.org.take.SimplePredicate;
 import nz.org.take.Term;
 import nz.org.take.Variable;
-import nz.org.take.r2ml.util.StrelkaPropertyPredicate;
+import nz.org.take.r2ml.util.R2MLPropertyPredicate;
 
 /**
  * @author schenke
@@ -93,7 +93,7 @@ public abstract class AbstractPropertyHandler implements XmlTypeHandler {
 					.getType());
 			if (property != null
 					&& !existingPropertyPredicates.contains(property.getName())) {
-				StrelkaPropertyPredicate propPredicate = new StrelkaPropertyPredicate();
+				R2MLPropertyPredicate propPredicate = new R2MLPropertyPredicate();
 				propPredicate.setNegated(negated);
 				propPredicate.setOwnerType(domain.getType());
 				propPredicate.setProperty(property);
@@ -117,7 +117,7 @@ public abstract class AbstractPropertyHandler implements XmlTypeHandler {
 	 */
 	private void buildMappingRule(Term domain, Term range,
 			SimplePredicate simplePredicate,
-			StrelkaPropertyPredicate propPredicate) throws R2MLException {
+			R2MLPropertyPredicate propPredicate) throws R2MLException {
 		// setup mappingrule
 		if (MappingContext.get().getPropertyPredicateNames().contains(simplePredicate.getName())) {
 			return;

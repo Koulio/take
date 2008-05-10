@@ -31,10 +31,10 @@ public class AttributeFunctionTermHandler implements XmlTypeHandler {
 	 * @see nz.org.take.r2ml.XmlTypeHandler#importObject(java.lang.Object)
 	 */
 	public Object importObject(Object obj) throws R2MLException {
-		// AttributionFunctionTermHandler should be replaced before compiling the knowledge base
 		R2MLDriver driver = R2MLDriver.get();
 
-		if (driver.getPropertyMode() == R2MLDriver.INFER_PROPERTIES_MODE)
+		// AttributionFunctionTermHandler should be replaced before compiling the knowledge base
+		if (MappingContext.get().isCondition())
 			throw new R2MLException("AttributionFunctionTerm not replaced although INFER_PROPERTIES_MODE is enabled.");
 		AttributeFunctionTerm term = (AttributeFunctionTerm) obj;
 
@@ -68,23 +68,6 @@ public class AttributeFunctionTermHandler implements XmlTypeHandler {
 		}
 
 		return takeTerm;
-	}
-
-	// private Variable buildRuleForDerivedAttributes(String localName, Term
-	// contextArgument) throws R2MLException {
-	// Class type = R2MLDriver.get().lookUpType(localName, contextArgument);
-	// Variable var = new Variable();
-	// var.setName(localName);
-	// var.setType(type);
-	// buildRuleToResolvVariable(contextArgument);
-	// return var;
-	//
-	// }
-
-	private void buildRuleToResolvVariable(Term contextArgument)
-			throws R2MLException {
-		// TODO Auto-generated method stub
-		throw new R2MLException("alles scheisse");
 	}
 
 }

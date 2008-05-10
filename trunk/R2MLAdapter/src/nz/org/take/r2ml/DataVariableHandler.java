@@ -38,8 +38,7 @@ class DataVariableHandler implements XmlTypeHandler {
 								 + ").");
 			}
 		} catch (RuntimeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//throw new R2MLException("error while handling variable " + dVar.getName(), e);
 		}
 		var = new Variable();
 		var.setName(dVar.getName());

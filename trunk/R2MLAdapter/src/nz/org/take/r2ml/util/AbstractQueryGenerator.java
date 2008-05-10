@@ -37,12 +37,18 @@ public abstract class AbstractQueryGenerator implements QueryGenerator {
 		Collection<Query> queries = new ArrayList<Query>();
 		if (predicates == null || predicates.size() == 0)
 			System.out.println("No predicates in knowledgebase!");
-		Collection<String> propertyPredicateNames = MappingContext.get().getPropertyPredicateNames();
+		Collection<String> propertyPredicateNames;
+		try {
+			propertyPredicateNames = MappingContext.get()
+					.getPropertyPredicateNames();
+		} catch (NullPointerException npe) {
+			propertyPredicateNames = new ArrayList<String>();
+		}
 		for (Predicate predicate : predicates) {
 			boolean[][] signatures = generateInOutSignatures(predicate);
 			for (boolean[] signature : signatures) {
-				if (propertyPredicateNames.contains(predicate.getName()) && !signature[0]) {
-//					System.out.println("ommit query " + predicate.getName() + " " + Arrays.toString(signature));
+				if (propertyPredicateNames.contains(predicate.getName())
+						&& !signature[0]) {
 					continue;
 				}
 				Query q = new Query();
