@@ -25,21 +25,42 @@ public class Driver {
 	private long numberOfAccidents = 0;
 	private boolean dui = false;
 	private String trainingCertificateCategory = "";
+	private String usState = "";
 	
 	public Driver(String name, String gender, int age) {
 		this.name = name;
 		this.gender = gender;
 		this.age = age;
 	}
-	public boolean isPerson () {
-		return true;
+	
+	private boolean trainingCertificate = false;
+	/**
+	 * @return the trainingCertificate
+	 */
+	public boolean isTrainingCertificate() {
+		return trainingCertificate;
 	}
-	public boolean isBusinessParty () {
-		return true;
+	/**
+	 * @param trainingCertificate the trainingCertificate to set
+	 */
+	public void setTrainingCertificate(boolean trainingCertificate) {
+		this.trainingCertificate = trainingCertificate;
 	}
-	public boolean isServiceParticipant () {
-		return true;
+	private String driverAgeCategory;
+	/**
+	 * @return the driverAgeCategory
+	 */
+	public String getDriverAgeCategory() {
+		return driverAgeCategory;
 	}
+	/**
+	 * @param driverAgeCategory the driverAgeCategory to set
+	 */
+	public void setDriverAgeCategory(String driverAgeCategory) {
+		this.driverAgeCategory = driverAgeCategory;
+	}
+	
+
 	public boolean isDriver () {
 		return true;
 	}
@@ -139,4 +160,17 @@ public class Driver {
 	public void setTrainingCertificateCategory(String trainingCertificateCategory) {
 		this.trainingCertificateCategory = trainingCertificateCategory;
 	}
+	/**
+	 * @return the usState
+	 */
+	public String getUsState() {
+		return usState;
+	}
+	/**
+	 * @param usState the usState to set
+	 */
+	public void setUsState(String usState) {
+		this.usState = usState;
+	}
+
 }

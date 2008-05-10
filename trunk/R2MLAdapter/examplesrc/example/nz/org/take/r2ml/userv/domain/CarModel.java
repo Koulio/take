@@ -11,7 +11,6 @@ package example.nz.org.take.r2ml.userv.domain;
 
 public class CarModel {
 	private boolean highTheftProbability = false;
-	private double basePremium = 0.0;
 	private String modelType = "";
 	
 	/**
@@ -19,10 +18,9 @@ public class CarModel {
 	 * @param basePremium
 	 * @param modelType
 	 */
-	public CarModel(boolean highTheftProbability, double basePremium, String modelType) {
+	public CarModel(boolean highTheftProbability, String modelType) {
 		super();
 		this.highTheftProbability = highTheftProbability;
-		this.basePremium = basePremium;
 		this.modelType = modelType;
 	}
 	public CarModel() {
@@ -30,18 +28,6 @@ public class CarModel {
 	}
 	public boolean isCarModel () {
 		return true;
-	}
-	/**
-	 * @return the basePremium
-	 */
-	public double getBasePremium() {
-		return basePremium;
-	}
-	/**
-	 * @param basePremium the basePremium to set
-	 */
-	public void setBasePremium(double basePremium) {
-		this.basePremium = basePremium;
 	}
 	/**
 	 * @return the highTheftProbability

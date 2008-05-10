@@ -14,8 +14,50 @@ public class Car {
 	private boolean driverAirbag = false;
 	private boolean passengerAirbag = false;
 	private boolean sideAirbag = false;
+	private boolean alarmSystem = false;
 	private long price = 0;
 	private CarModel model = new CarModel();
+	
+//	private String potentialOccupantInjuryRating = "";
+//	private String potentialTheftRating = "";
+//	private String carEligibility = "";
+
+//	/**
+//	 * @return the potentialOccupantInjuryRating
+//	 */
+//	public String getPotentialOccupantInjuryRating() {
+//		return potentialOccupantInjuryRating;
+//	}
+//	/**
+//	 * @param potentialOccupantInjuryRating the potentialOccupantInjuryRating to set
+//	 */
+//	public void setPotentialOccupantInjuryRating(
+//			String potentialOccupantInjuryRating) {
+//		this.potentialOccupantInjuryRating = potentialOccupantInjuryRating;
+//	}
+//	/**
+//	 * @return the potentialTheftRating
+//	 */
+//	public String getPotentialTheftRating() {
+//		return potentialTheftRating;
+//	}
+//	/**
+//	 * @param potentialTheftRating the potentialTheftRating to set
+//	 */
+//	public void setPotentialTheftRating(String potentialTheftRating) {
+//		this.potentialTheftRating = potentialTheftRating;
+//	}	/**
+//	 * @return the carEligibility
+//	 */
+//	public String getCarEligibility() {
+//		return carEligibility;
+//	}
+//	/**
+//	 * @param carEligibility the carEligibility to set
+//	 */
+//	public void setCarEligibility(String carEligibility) {
+//		this.carEligibility = carEligibility;
+//	}
 	
 	public boolean isVehicle() {
 		return true;
@@ -114,4 +156,19 @@ public class Car {
 	public String toString() {
 		return "Car[model=" + model + "]";
 	}
+
+	/**
+	 * @return the alarmSystem
+	 */
+	public boolean isAlarmSystem() {
+		return alarmSystem;
+	}
+
+	/**
+	 * @param alarmSystem the alarmSystem to set
+	 */
+	public void setAlarmSystem(boolean alarmSystem) {
+		this.alarmSystem = alarmSystem;
+	}
+
 }

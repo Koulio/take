@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Policy {
 
-	Car covers = null;
+	Car covers = new Car();
 
 	Double premium = 0.0;
 
