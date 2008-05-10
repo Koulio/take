@@ -34,12 +34,12 @@ public class UServNameMapper extends DefaultNameMapper {
 		addSlotNames("passengerAirbag", new String[] {"car", "passengerAirbag"});
 		addSlotNames("price", new String[] {"car", "price"});
 		addSlotNames("CarModel", new String[] {"carModel"});
-		addSlotNames("", new String[] {""});
-		addSlotNames("", new String[] {""});
-		addSlotNames("", new String[] {""});
-		addSlotNames("", new String[] {""});
-		addSlotNames("", new String[] {""});
-		addSlotNames("", new String[] {""});
+		addSlotNames("driverPremium", new String[] {"driver", "premium"});
+		addSlotNames("premium", new String[] {"coveredObject", "premium"});
+//		addSlotNames("", new String[] {""});
+//		addSlotNames("", new String[] {""});
+//		addSlotNames("", new String[] {""});
+//		addSlotNames("", new String[] {""});
 		
 	}
 }
