@@ -294,8 +294,8 @@ public class TakePluginPreferencesPanel extends PreferencesPanel implements
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		JOptionPane.showMessageDialog(this, "Action occured: "
-				+ e.getActionCommand());
+//		JOptionPane.showMessageDialog(this, "Action occured: "
+//				+ e.getActionCommand());
 		if (CHOOSE_TEMP_FILE_ACTION.equals(e.getActionCommand())) {
 			chooseFileAction(tmpFileTfd);
 		} else if (CHOOSE_TARGET_DIRECTORY_ACTION.equals(e.getActionCommand())) {

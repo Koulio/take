@@ -46,41 +46,12 @@ public abstract class CompileRules extends AbstractAction {
 				return null;
 			}
 
-			/* just a bit debugging stuff */
-			// System.out.println("before [CompileRules]");
-			// DerivationRuleSet rs = (DerivationRuleSet)
-			// rb.getRuleSet().get(0).getValue();
-			// AttributionAtom atom = (AttributionAtom)
-			// rs.getDerivationRule().get(0).getConclusion().getAtom().getValue();
-			// DatatypeFunctionTerm dtft = (DatatypeFunctionTerm)
-			// atom.getDataValue().getDataTerm().getValue();
-			// System.out.println(dtft.getDatatypeFunctionID());
-			// TypedLiteral tl = (TypedLiteral)
-			// dtft.getDataArguments().getDataTerm().get(0).getValue();
-			// System.out.println(tl.getDatatypeID().getLocalPart() + " blub : "
-			// + tl.getLexicalValue());
-
 			for (RuleBaseFilter filter : TakePlugin.get().getRepairFilters()) {
 				if (TakePlugin.logger.isDebugEnabled())
 					TakePlugin.logger.debug("applying filter "
 							+ filter.getClass().getSimpleName());
 				filter.repair(rb);
 			}
-
-			// System.out.println("after [CompileRules]");
-			// DerivationRuleSet rs2 = (DerivationRuleSet)
-			// rb.getRuleSet().get(0).getValue();
-			// AttributionAtom atom2 = (AttributionAtom)
-			// rs2.getDerivationRule().get(0).getConclusion().getAtom().getValue();
-			// DatatypeFunctionTerm dtft2 = (DatatypeFunctionTerm)
-			// atom2.getDataValue().getDataTerm().getValue();
-			// System.out.println(dtft2.getDatatypeFunctionID());
-			// TypedLiteral tl2 = (TypedLiteral)
-			// dtft2.getDataArguments().getDataTerm().get(0).getValue();
-			// System.out.println(tl2.getDatatypeID() + " : " +
-			// tl2.getLexicalValue());
-			// if (true)
-			// return null;
 
 			if (TakePlugin.logger.isDebugEnabled()) {
 				StringBuffer msg = new StringBuffer("import RuleBase (");
@@ -214,8 +185,19 @@ public abstract class CompileRules extends AbstractAction {
 		}
 		annotateKB(kb);
 
-		TakePlugin.logger.debug("Compilation of the KnowledgeBase started!");
-		nz.org.take.compiler.Compiler compiler = new DefaultCompiler();
+		TakePlugin.logger.debug("Compilation of the RuleBase started!");
+		//System.out.println("and here it gets lost...");
+		nz.org.take.compiler.Compiler compiler = null;
+		try {
+			//System.out.println("gogogo");
+			compiler = new DefaultCompiler();
+			//System.out.println("finished");
+		} catch (Exception e) {
+			//System.out.println("fire in the hole");
+			e.printStackTrace();
+			return false;
+		}
+		//System.out.println("if this appears a miracle occured :D.");
 		compiler.add(new JalopyCodeFormatter());
 		compiler.setNameGenerator(new DefaultNameGenerator());
 		compiler.setLocation(new DefaultLocation(locationPath));

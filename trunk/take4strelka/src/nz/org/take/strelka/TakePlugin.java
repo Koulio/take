@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nz.org.take.r2ml.util.RuleBaseFilter;
-import nz.org.take.r2ml.util.TypeVariablesFilter;
 import nz.org.take.strelka.filter.CleanupOpNsFilter;
 import nz.org.take.strelka.filter.CleanupSwrlbNsFilter;
-import nz.org.take.strelka.filter.CleanupXsNsFilter;
 import nz.org.take.strelka.filter.StrelkaDisjunctionBugFilter;
 import nz.org.take.strelka.filter.SubstituteRealFilter;
 import nz.org.take.strelka.preferences.gui.TakePluginPreferencesPanel;
