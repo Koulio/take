@@ -8,16 +8,8 @@
  * and limitations under the License.
  */
 
-package test.nz.org.take.compiler.issue22;
+package test.nz.org.take.compiler.issue23;
 
-public class Child {
-	private String name = null;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+public interface Class2 extends Class1 {
+	//public String getName();
 }

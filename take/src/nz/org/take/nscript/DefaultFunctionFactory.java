@@ -51,18 +51,6 @@ public class DefaultFunctionFactory extends FunctionFactory {
 		return null;
 	}
 	private PropertyDescriptor findProperty(Class type, String p)  {
-		PropertyDescriptor[] properties = null;
-		try {
-			BeanInfo beanInfo = Introspector.getBeanInfo(type);
-			properties = beanInfo.getPropertyDescriptors();
-			for (PropertyDescriptor property:properties) {
-				if (property.getName().equals(p)) {
-					return property;
-				}
-			}
-		}
-		catch (IntrospectionException x) {}
-		
-		return null;
+		return PropertyFinder.findProperty(type,p);
 	}
 }

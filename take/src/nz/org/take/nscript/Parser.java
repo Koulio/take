@@ -703,17 +703,7 @@ public class Parser extends ParserSupport {
 	}
 	
 	private PropertyDescriptor getProperty(String name,Class clazz) throws ScriptException  {
-		try {
-			BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
-			PropertyDescriptor[] properties = beanInfo.getPropertyDescriptors();
-			for (PropertyDescriptor property:properties) {
-				if (name.equals(property.getName()) && property.getReadMethod()!=null) {
-					return property;
-				}
-			}
-		}
-		catch (Exception x) {}
-		return null;
+		return PropertyFinder.findProperty(clazz,name);
 	}
 	private String getId(Predicate p) {
 		return p.getName()+'_'+p.getSlotTypes().length+(p.isNegated()?"-":"+");

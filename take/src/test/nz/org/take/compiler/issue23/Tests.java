@@ -8,16 +8,21 @@
  * and limitations under the License.
  */
 
-package test.nz.org.take.compiler.issue22;
+package test.nz.org.take.compiler.issue23;
+/**
+ * Test(s).
+ * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
+ */
+import java.util.HashMap;
+import nz.org.take.AggregationFunction;
+import nz.org.take.Function;
+import nz.org.take.nscript.DefaultFunctionFactory;
+import junit.framework.TestCase;
 
-public class Child {
-	private String name = null;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+public class Tests extends TestCase {
+	public void test() {
+		DefaultFunctionFactory ff = new DefaultFunctionFactory();
+		Function f = ff.createFunction ("name",new HashMap<String,AggregationFunction>(),Class2.class);
+		assertNotNull(f);
 	}
 }
