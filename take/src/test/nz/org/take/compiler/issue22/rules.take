@@ -1,0 +1,8 @@
+var test.nz.org.take.compiler.issue22.Parent parent
+var test.nz.org.take.compiler.issue22.Child child
+
+@take.compilerhint.class=Record
+@take.compilerhint.slots=parent,child
+@take.compilerhint.method=getRecords
+query record[in,out]
+rule1: if parent.name=='a parent' and children[parent,child] and child.name=='a child' then record[parent,child]  
