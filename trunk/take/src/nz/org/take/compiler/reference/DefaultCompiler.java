@@ -1164,11 +1164,11 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			String var = bindings.getRef(refEntry.getKey());
 			if (var != null) {				
 				printVariableAssignment(out, "bindings",refEntry.getValue(),var);
+				bindings.assigned(refEntry.getKey());
 				//  replace bindings by references to fields in bindings - changed 19/09/07
 				if (refEntry.getKey() instanceof ComplexTerm) {
 					bindings.put(refEntry.getKey(), "bindings"+'.'+refEntry.getValue());
 				}
-				
 			}
 		}
 
@@ -1241,25 +1241,43 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 						Variable vt = (Variable) t;						
 						printVariableAssignment(out, "bindings",ref,"object", slot.var,cast);
 						bindings.put(vt, refs.get(vt));
+						bindings.assigned(vt);
 					} else if (t instanceof ComplexTerm) {
 						ComplexTerm vt = (ComplexTerm) t;						
 						printVariableAssignment(out, "bindings",ref,"object", slot.var,cast);
 						// bindings.put(vt, refs.get(vt));	// changed 19/09/07 - this avoids expensive method class
 						bindings.put(vt, "bindings"+'.'+ref);	
-
+						bindings.assigned(vt);
 					} else if (t instanceof Constant) {
 						Constant vt = (Constant) t;						
 						printVariableAssignment(out, "bindings",ref,getRef(this.getNameGenerator().getConstantRegistryClassName(),vt),null,cast);
-						bindings.put(vt, refs.get(vt));						
+						bindings.put(vt, refs.get(vt));			
+						bindings.assigned(vt);
 					}
 				}
+				
+				
+				// print bindings for complex terms that are based on existing terms 
+				// ===== code starts to fix issue 22 =====");
+				for (Map.Entry<Term, String> refEntry : refs.entrySet()) {
+					String var = bindings.getRef(refEntry.getKey());
+					if (var != null) {				
+						//  replace bindings by references to fields in bindings - changed 19/09/07
+						if (refEntry.getKey() instanceof ComplexTerm && !bindings.isAssigned(refEntry.getKey())) {
+							printVariableAssignment(out, "bindings",refEntry.getValue(),"bindings."+var);
+							bindings.assigned(refEntry.getKey());
+						}
+					}
+				}
+				//===== code ends to fix issue 22 =====
+
+				
 				// build method call
 				// here we call the method that supplies the next iterator
 				boolean[] sig = new boolean[prereq.getPredicate()	.getSlotTypes().length];
 				List<String> params = new ArrayList<String>(sig.length);
 				for (int j = 0; j < sig.length; j++) {
 					// bind known variables
-					// OLD TODO remove comments
 					// problem
 					//String expr = refs.get(prereq.getTerms()[j]);
 					// terms  that have been bound

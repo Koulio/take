@@ -10,11 +10,7 @@
 
 package nz.org.take.compiler.reference;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
+import java.util.*;
 import nz.org.take.AggregationFunction;
 import nz.org.take.BinaryArithmeticFunction;
 import nz.org.take.ComplexTerm;
@@ -33,6 +29,7 @@ public class Bindings  {
 	private List<Term> agenda = new ArrayList<Term>();
 	private HashMap<Term,String> delegate = new HashMap<Term,String>();
 	private NameGenerator naming = null; // needed to look up class name for generated functions
+	private Set<Term> assigned = new HashSet<Term>();
 	
 	public Bindings(Collection<Term> terms,NameGenerator naming) {
 		super();
@@ -156,5 +153,24 @@ public class Bindings  {
 	public boolean hasBinding(Term t) {
 		return this.delegate.containsKey(t);
 	}
+	
+	/**
+	 * Register a term as being assigned. 
+	 * This means that assignment has been printed.
+	 * @param t a term
+	 */
+	public void assigned(Term t) {
+		assigned.add(t);
+	}
+	
+	/**
+	 * Indicates whether the term has been assigned.
+	 * @param t a term
+	 * @return a boolean
+	 */
+	public boolean isAssigned(Term t) {
+		return assigned.contains(t);
+	}
+	
 
 }
