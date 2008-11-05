@@ -1,0 +1,7 @@
+var String x,y,z
+@take.compilerhint.class=Record
+@take.compilerhint.slots=slot1,slot2
+@take.compilerhint.method=getRecords
+query p[out,out]
+// parsing should fail - conjunction is head
+rule1: if p[x,y] then p[x,z] and p[z,y]  
