@@ -1,0 +1,15 @@
+// script for test issue 16 - tests the use of bean properties as predicates with null-values
+@@dc:creator=bastian schenke
+@@dc:date=08/11/2008
+import test.nz.org.take.compiler.issue16.*; 
+var Person person1
+var Person person2
+var Company company
+
+@take.compilerhint.class=IsCollegue
+@take.compilerhint.slots=person1,person2
+@take.compilerhint.method=isCollegue
+query isCollegue[in,in]
+
+// rules
+rule1: if equals[person1.company, person2.company] then isCollegue[person1,person2]
