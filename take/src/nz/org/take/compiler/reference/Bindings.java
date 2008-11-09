@@ -62,16 +62,29 @@ public class Bindings  {
 		Term[] terms = t.getTerms();
 		if (t.getFunction() instanceof JFunction) {
 			JFunction f = (JFunction)t.getFunction();
-			buf.append(this.getRef(terms[0]));
-			buf.append('.');
-			buf.append(f.getName());
-			buf.append('(');
-			for (int i=1;i<terms.length;i++) {
-				if (i>1)
-					buf.append(',');
-				buf.append(this.getRef(terms[i]));
-			}			
-			buf.append(')');
+			if (f.isStatic()) {
+				buf.append(f.getMethod().getDeclaringClass());
+				buf.append('.');
+				buf.append(f.getName());
+				for (int i=0;i<terms.length;i++) {
+					if (i>0)
+						buf.append(',');
+					buf.append(this.getRef(terms[i]));
+				}			
+				buf.append(')');
+			}
+			else {
+				buf.append(this.getRef(terms[0]));
+				buf.append('.');
+				buf.append(f.getName());
+				buf.append('(');
+				for (int i=1;i<terms.length;i++) {
+					if (i>1)
+						buf.append(',');
+					buf.append(this.getRef(terms[i]));
+				}			
+				buf.append(')');
+			}
 		}
 		else if (t.getFunction() instanceof AggregationFunction) {
 			AggregationFunction f = (AggregationFunction)t.getFunction();
