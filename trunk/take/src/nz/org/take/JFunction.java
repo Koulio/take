@@ -10,6 +10,8 @@
 
 package nz.org.take;
 
+import java.lang.reflect.Modifier;
+
 /**
  * Function backed by a Java method.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
@@ -64,6 +66,10 @@ public class JFunction implements Function {
 		} else if (!method.equals(other.method))
 			return false;
 		return true;
+	}
+	
+	public boolean isStatic() {
+		return method!=null && Modifier.isStatic(method.getModifiers());
 	}
 
 }
