@@ -351,8 +351,15 @@ public class Parser extends ParserSupport {
 		
 		StringBuffer b = new StringBuffer();
 		
-		List<String> tokens = Tokenizer.tokenize(line," and "," then ");
-		unparsedHead = tokens.remove(tokens.size()-1).trim();
+		List<String> mainTokens = Tokenizer.tokenize(line," then ");
+		if (mainTokens.size()!=2) {
+			error(no,line,null,"this is a malformed rule");
+		}
+		String bodyS = mainTokens.get(0);
+		unparsedHead = mainTokens.get(1);
+		
+		List<String> tokens = Tokenizer.tokenize(bodyS," and ");
+		
 		for (int i=0;i<tokens.size();i++) {
 			String token = tokens.get(i).trim();
 			if (token.startsWith("not ")) {
