@@ -10,6 +10,8 @@
 
 package nz.org.take;
 
+import java.lang.reflect.Modifier;
+
 /**
  * Predicate backed by a Java method returning a boolean.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
@@ -67,6 +69,10 @@ public class JPredicate extends AbstractPredicate {
 	
 	public String toString() {
 		return (negated?"!":"") + method.getName();
+	}
+
+	public boolean isStatic() {
+		return method!=null && Modifier.isStatic(method.getModifiers());
 	}
 	
 

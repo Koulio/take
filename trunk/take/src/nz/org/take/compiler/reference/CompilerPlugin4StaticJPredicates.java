@@ -11,6 +11,8 @@
 package nz.org.take.compiler.reference;
 
 import java.io.PrintWriter;
+import java.lang.reflect.Method;
+
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import nz.org.take.JPredicate;
@@ -22,16 +24,16 @@ import nz.org.take.compiler.CompilerException;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class CompilerPlugin4JPredicates extends CompilerPlugin {
+public class CompilerPlugin4StaticJPredicates extends CompilerPlugin {
 	
 	// unnegated
-	public static final String TEMPLATE1 = "JPredicate_11.vm";
+	public static final String TEMPLATE1 = "JPredicate_11_static.vm";
 	// negated
-	public static final String TEMPLATE2 = "JPredicate_11_neg.vm";
+	public static final String TEMPLATE2 = "JPredicate_11_static_neg.vm";
 	
 	
 
-	public CompilerPlugin4JPredicates(DefaultCompiler owner) {
+	public CompilerPlugin4StaticJPredicates(DefaultCompiler owner) {
 		super(owner);
 		
 	}
@@ -49,6 +51,7 @@ public class CompilerPlugin4JPredicates extends CompilerPlugin {
 	public String createMethod(PrintWriter out, Query q) throws CompilerException {
 
 		JPredicate p = (JPredicate)q.getPredicate();
+		Method m = p.getMethod();
 			
 		// load and (lazy) init templates
 		String templateName = p.isNegated()?TEMPLATE2:TEMPLATE1;
@@ -59,8 +62,8 @@ public class CompilerPlugin4JPredicates extends CompilerPlugin {
 		Slot[] slots = this.buildSlots(q.getPredicate());
 		
 		StringBuffer args = new StringBuffer();
-		for (int i=1;i<slots.length;i++) {
-			if (i>1)
+		for (int i=0;i<slots.length;i++) {
+			if (i>0)
 				args.append(',');
 			args.append(slots[i].getVar());
 		}
@@ -72,7 +75,7 @@ public class CompilerPlugin4JPredicates extends CompilerPlugin {
 		context.put("slots",slots);
 		context.put("resulttype", getClassName(p));
 		context.put("templatename",templateName);
-		context.put("target",slots[0].getVar());
+		context.put("declaringClass",m.getDeclaringClass().getName());
 		context.put("args",args.toString());
 		
 		try {
@@ -94,6 +97,6 @@ public class CompilerPlugin4JPredicates extends CompilerPlugin {
 			return false;
 		} 
 		// check predicate
-		return q.getPredicate() instanceof JPredicate && !((JPredicate)q.getPredicate()).isStatic();
+		return q.getPredicate() instanceof JPredicate && ((JPredicate)q.getPredicate()).isStatic();
 	}
 }
