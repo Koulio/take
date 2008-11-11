@@ -5,7 +5,7 @@
 
 Take is a (derivation) rule compiler and scripting engine for Java.
 Take consists of the following 4 parts:
-  # the take knowledge base API for animation rules that is very similar to [http://www.mandarax.org mandarax]
+  # the take knowledge base API for derivation rules that is very similar to [http://www.mandarax.org mandarax]
   # a simple scripting language for derivation rules that supports annotations
   # a compiler that can generate executable code from take knowledge bases
   # an interface to [http://en.wikipedia.org/wiki/R2ML R2ML] that can be used to generate code from (modified) UML models that use derivation rules in order to define the semantics of derived associations and properties
