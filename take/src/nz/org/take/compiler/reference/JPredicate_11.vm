@@ -11,6 +11,24 @@
    		#end
         final DerivationController _derivation) {
         
+        ## here we handle only the equals method - this handles cases
+        ## where the first argument is null, see issue16
+        #if ($isEquals) 
+            if ($target==null) {
+            	if ($args==null) {
+            		$resulttype result = new $resulttype();
+        			#foreach( $slot in $slots )
+        				result. $slot.getName() = $slot.getVar() ;
+   					#end
+   					return new SingletonIterator<$resulttype>(result);
+            	}
+            	else {
+            		return EmptyIterator.DEFAULT; 
+            	}
+            }
+        #end
+        ## special code for equals ends here
+        
         _derivation.log("$method",DerivationController.JAVA_METHOD);
         if ($target.$method.getName() ($args)) {        	
         	$resulttype result = new $resulttype();

@@ -64,8 +64,9 @@ public class CompilerPlugin4JPredicates extends CompilerPlugin {
 				args.append(',');
 			args.append(slots[i].getVar());
 		}
-		
 		VelocityContext context = new VelocityContext();
+		boolean isEquals = p.getMethod().getName().equals("equals") && p.getMethod().getParameterTypes().length==1;
+		context.put("isEquals", isEquals);
 		context.put("query", q);
 		context.put("methodname",methodName);
 		context.put("method",p.getMethod());
