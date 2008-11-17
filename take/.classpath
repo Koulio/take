@@ -11,7 +11,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry kind="lib" path="lib/ant-1.7.0.jar" sourcepath="D:/downloads/apache-ant-1.7.0-src/apache-ant-1.7.0/src/main"/>
 	<classpathentry kind="lib" path="lib/ant-launcher.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/Java/jdk1.6.0_01/lib/tools.jar"/>
 	<classpathentry kind="lib" path="lib/juel-2.1.0.jar" sourcepath="/juel"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
