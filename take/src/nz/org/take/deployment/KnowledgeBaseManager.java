@@ -46,7 +46,7 @@ public class KnowledgeBaseManager<I> implements Logging {
 	// data format used in generated class names
 	private DateFormat dateFormat = new SimpleDateFormat("yyMMdd_HHmmss");
 	// the folder where files are stored
-	private String workingDirRoot = "takeWorkingDir/";
+	private String workingDirRoot = null;
 	// the name of the kb class
 	private String className = "KBImpl";
 	// whether to check bindings 
@@ -57,11 +57,13 @@ public class KnowledgeBaseManager<I> implements Logging {
 	// the Java compiler is responsible for compiling the generated source code classes
 	private CompilerAdapter javaCompiler = new ANTCompilerAdapter();
 	// folders for src and bin
-	private String srcFolder = workingDirRoot+"src/";
-	private String binFolder = workingDirRoot+"bin/";
+	private String srcFolder = null;
+	private String binFolder = null;
 
 	public KnowledgeBaseManager() {
 		super();
+		this.setWorkingDirRoot("takeWorkingDir/");
+		
 		// init compiler adapter
 		String compilerAdapterName = this.getCompilerAdapterClassName();
 		try {
@@ -230,6 +232,8 @@ public class KnowledgeBaseManager<I> implements Logging {
 
 	public void setWorkingDirRoot(String workingDirRoot) {
 		this.workingDirRoot = workingDirRoot;
+		this.setSrcFolder(workingDirRoot+"src/");
+		this.setBinFolder(workingDirRoot+"bin/");
 	}
 	private void checkFolder(String folder) {
 		File f = new File(folder);
