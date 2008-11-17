@@ -1,0 +1,18 @@
+
+    /**
+     * Method that can be used to query global annotations at runtime.
+     * Global annotations are attached to the knowledge base, not to 
+     * a particular element (rule,..).
+     * @return a map of annotations (string-string mappings)
+     * code generated using velocity template $templatename
+    */
+    public java.util.Map<String,String> $methodName () 
+    
+    #if( $isInterface ) ;
+    #else
+
+    {
+    	return $methodName ("$globalAnnotationKey");
+    }
+    
+    #end

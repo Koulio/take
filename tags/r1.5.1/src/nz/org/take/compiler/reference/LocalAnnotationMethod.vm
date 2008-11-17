@@ -1,0 +1,29 @@
+    #if( $isInterface==false)
+    private static  java.util.Map<String,java.util.Map<String,String>> _annotations = null;
+    #end
+    /**
+     * Method that can be used to query annotations at runtime.
+     * @param id the id of the rule (or other knowledge element) 
+     * @return a map of annotations (string-string mappings)
+     * code generated using velocity template $templatename
+    */
+    public java.util.Map<String,String> $methodName (String id) 
+    
+    #if( $isInterface ) ;
+    #else
+
+    {
+		if (_annotations==null) {
+			synchronized ($class .class) {
+				if (_annotations==null) {
+					java.beans.XMLDecoder decoder = new java.beans.XMLDecoder(
+                          new java.io.BufferedInputStream($class .class.getResourceAsStream("$annotationStore")));
+       				_annotations = (java.util.Map<String,java.util.Map<String,String>>)decoder.readObject();
+      				decoder.close();
+				}
+			}
+		}
+		return _annotations.get(id);
+    }
+    
+    #end
