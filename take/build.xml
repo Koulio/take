@@ -32,6 +32,7 @@
 	<property name="build.script.jar" value="${build.lib}/${name}-script-${version}"/>
 	<property name="build.rt.jar" value="${build.lib}/${name}-rt-${version}"/>
 	<property name="build.test.jar" value="${build.lib}/${name}-tests-${version}"/>
+	<property name="grammar.dir" value="grammar"/>
 	<property name="qareports.dir" value="qa"/>
 	<property name="report.junit" value="${qareports.dir}/junit"/>
 	<property name="report.jdepend" value="${qareports.dir}/jdepend"/>
@@ -47,6 +48,27 @@
     </path>
 	<property name="build" value="./build"/>
 	<property name="classes" value="${build}/classes"/>
+	
+<!-- Import antcontrib lib -->
+<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+	
+<!-- Antlr grammar processing macro -->
+<macrodef name="antlr3">
+	<attribute name="grammar"/>
+	<attribute name="package"/>
+	<sequential>
+		<propertyregex
+			property="@{package}.dir"
+			input="@{package}"
+			regexp="\."
+		    replace="/"/>
+		<antlr:antlr3 xmlns:antlr="antlib:org/apache/tools/ant/antlr" 
+			target="${grammar.dir}/@{grammar}" 
+			outputdirectory="${src.dir}/${@{package}.dir}">
+		</antlr:antlr3>
+	</sequential>
+</macrodef>
+	
 <!-- Prepare the output directories-->	
 <target name="prepare" description="Prepare the build directories">
 	<mkdir dir="${build.dir}"/>
@@ -57,8 +79,14 @@
 	<mkdir dir="${report.junit}"/>
 	<mkdir dir="${report.jdepend}"/>
 </target>
+	
+<!-- Compiles the Take grammar into its respective Java parser classes -->
+<target name="compile-grammar" depends="prepare" description="Compliles the take grammar">
+	<antlr3 grammar="Take.g" package="nz.org.take.script.antlr" />
+</target>
+	
 <!-- Compiles the classes -->	
-<target name="compile" depends="prepare" description="Compile the whole project">
+<target name="compile" depends="prepare, compile-grammar" description="Compile the whole project">
 	<javac destdir="${build.classes}" 
         debug="${debug}" 
         deprecation="on"
@@ -74,7 +102,6 @@
 	    	<include name="**/*.xml"/>
 	    </fileset>
 	</copy>
-
 </target>
 
 <!-- Tests the project, using JUnit tests -->
@@ -88,6 +115,7 @@
 	        </fileset>						
 		</classpath>
 		<formatter type="xml"/>
+		<test todir="${report.junit}" name="test.nz.org.take.script.ParserTests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.nscript.ParserTests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.nscript.JSPELParserTests"/>
 		<test todir="${report.junit}" name="test.nz.org.take.nscript.RegExTests"/>
