@@ -17,9 +17,11 @@ package nz.org.take.script.antlr;
 
 import java.util.HashMap;
 import java.util.Map;
+import nz.org.take.Aggregations;
 import nz.org.take.Constant;
 import nz.org.take.DefaultKnowledgeBase;
 import nz.org.take.KnowledgeBase;
+import nz.org.take.Term;
 import nz.org.take.Variable;
 }
 
@@ -48,10 +50,10 @@ private Constant createReference(String id, Class type) {
 	
 	return reference;
 }
-
 }
 
-script
+script returns [KnowledgeBase knowledgeBase]
+@after { $knowledgeBase = knowledgeBase; }
 	:	(	globalAnnotation
 		|	declaration
 		|	comment
@@ -62,12 +64,13 @@ declaration
 scope { Map<String, String> annotations; }
 @init { $declaration::annotations = new HashMap<String, String>(); }
 	:	localAnnotation*
-		(	variable
-		|	reference
-		|	aggregation
-		|	query
-		|	factStore
-		|	rule
+		(	variableDeclaration
+		|	referenceDeclaration
+		|	aggregationDeclaration
+		|	queryDeclaration
+		|	factStoreDeclaration
+		|	factDeclaration
+		|	ruleDeclaration
 		)
 	;
 
@@ -79,29 +82,29 @@ localAnnotation
 	:	'@' key=ID '=' value=LINE_TEXT  { $declaration::annotations.put($key.text, $value.text); }
 	;
 
-variable
+variableDeclaration
 	:	'var' type ids+=ID (',' ids+=ID)* NEWLINE
 		{
-			for (String id : $ids) {
-				Variable variable = createVariable(id, $type.type);
+			for (Object id : $ids) {
+				Variable variable = createVariable((String)id, $type.type);
 				variable.addAnnotations(knowledgeBase.getAnnotations());
 				variable.addAnnotations($declaration::annotations);
 			}
 		}
 	;
 
-reference
+referenceDeclaration
 	:	'ref' type ids+=ID (',' ids+=ID)* NEWLINE
 		{
-			for (String id : $ids) {
-				Constant reference = createReference(id, $type.type);
+			for (Object id : $ids) {
+				Constant reference = createReference((String)id, $type.type);
 				reference.addAnnotations(knowledgeBase.getAnnotations());
 				reference.addAnnotations($declaration::annotations);
 			}
 		}
 	;
 
-aggregation
+aggregationDeclaration
 	:	'aggregation' ID '=' aggregateFunction ID aggregateCondition NEWLINE
 	;
 
@@ -117,19 +120,40 @@ aggregateCondition
 	:	predicate
 	;
 
-query
+queryDeclaration
 	:
 	;
 
-factStore
+factStoreDeclaration
 	:	'external'
 	;
 
-rule:	
+factDeclaration
+	:	ID ':' condition
+	;
+
+ruleDeclaration
+	:	ID ':' 'if' condition
+	;
+	
+condition
+	:	andCondition ('or' andCondition)*
+	;
+	
+andCondition
+	:	predicate ('and' predicate)*
 	;
 	
 predicate
-	:
+	:	ID '[' terms ']'
+	;
+	
+terms returns [List<Term> terms]
+	:	term (',' term)*
+	;
+	
+term returns [Term term]
+	:	
 	;
 
 type returns [Class type]
@@ -154,9 +178,18 @@ primitiveType returns [Class type]
 
 comment
 	:	LINE_COMMENT
+	|	BLOCK_COMMENT
+	;
+
+ID	:	('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'_'|'0'..'9')* ;
+
+BLOCK_COMMENT
+@init { $channel=HIDDEN; }
+	:	'/*' ( options { greedy=false; } : . )* '*/'
 	;
 
 LINE_COMMENT
+@init { $channel=HIDDEN; }
     :	'//' LINE_TEXT
     ;
 
@@ -168,9 +201,8 @@ LINE_TEXT
 NEWLINE
 	:	'\r'? '\n'
 	;
-	
-ID	:	('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'_'|'0'..'9')* ;
 
 WHITESPACE
-	:	(' '|'\t')+ { $channel=HIDDEN; }
+@init { $channel=HIDDEN; }
+	:	(' '|'\t')+
 	;
