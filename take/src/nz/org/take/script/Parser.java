@@ -11,18 +11,25 @@ package nz.org.take.script;
 
 import java.io.Reader;
 import nz.org.take.KnowledgeBase;
-//import nz.org.take.script.antlr.TakeLexer;
-//import nz.org.take.script.antlr.TakeParser;
+import org.antlr.runtime.ANTLRReaderStream;
+import org.antlr.runtime.CommonTokenStream;
+
+// Note: The Take parser and lexer classes are generated when the build script is run.
+import nz.org.take.script.antlr.TakeLexer;
+import nz.org.take.script.antlr.TakeParser;
 
 /**
- * Script parser. Stateful, instances should not be shared.
+ * Wrapper class for the ANTLR based Take parser.
  */
 public class Parser {
 	public Parser() {
 		super();
 	}
 	
-	public KnowledgeBase parse(Reader reader) throws Exception {
-		throw new Exception("Method not implemented.");
+	public KnowledgeBase parse(Reader reader) throws Exception {	
+		TakeLexer lexer = new TakeLexer(new ANTLRReaderStream(reader));
+		TakeParser parser = new TakeParser(new CommonTokenStream(lexer));
+		
+		return parser.script();
 	}
 }
