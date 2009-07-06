@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
+
+import nz.org.take.Predicate;
 import nz.org.take.Query;
 import nz.org.take.SimplePredicate;
 import nz.org.take.compiler.CompilerException;
@@ -49,7 +51,7 @@ public class CompilerPlugin4NAFNegatedSimplePredicates extends CompilerPlugin {
 
 		String templateName = "NAFNegatedSimplePredicate.vm";
 		Template template = TemplateManager.getInstance().getTemplate(templateName);
-		SimplePredicate p = (SimplePredicate)q.getPredicate();
+		Predicate p = (Predicate)q.getPredicate();
 		
 		// bind template variables
 		String methodName = getMethodName(q);

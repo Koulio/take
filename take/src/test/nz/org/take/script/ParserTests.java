@@ -13,6 +13,9 @@ package test.nz.org.take.script;
 import java.io.StringReader;
 import java.util.Arrays;
 import java.util.List;
+
+import nz.org.take.BodyExpression;
+import nz.org.take.BodyFact;
 import nz.org.take.Constant;
 import nz.org.take.DerivationRule;
 import nz.org.take.ExternalFactStore;
@@ -22,6 +25,7 @@ import nz.org.take.Predicate;
 import nz.org.take.Prerequisite;
 import nz.org.take.Term;
 import nz.org.take.Variable;
+import nz.org.take.mvel2.MVEL2ExpressionLanguage;
 import nz.org.take.script.Parser;
 import junit.framework.TestCase;
 
@@ -33,7 +37,7 @@ import junit.framework.TestCase;
 public class ParserTests extends TestCase {
 	
 	public void test1() throws Exception {
-		String script = "rule1: if cond1['aaa',42,55.3] then cond2[42,'bbb']";
+		String script = "rule1: if cond1|'aaa',42,55.3| then cond2|42,'bbb'|";
 		KnowledgeBase kb = new Parser().parse(new StringReader(script));
 		assertEquals(1,kb.getElements().size());
 		DerivationRule r = (DerivationRule)kb.getElement("rule1");
@@ -51,7 +55,9 @@ public class ParserTests extends TestCase {
 		List<Prerequisite> body = r.getBody();
 		assertEquals(1,body.size());
 		Prerequisite prereq = body.get(0);
-		p = prereq.getPredicate();
+		assertTrue (prereq instanceof BodyFact);
+		BodyFact bFact = (BodyFact)prereq;
+		p = bFact.getPredicate();
 		assertEquals("cond1",p.getName());
 		assertTrue(java.util.Arrays.equals(p.getSlotTypes(),new Class[]{String.class,Long.class,Double.class}));
 	}
@@ -59,7 +65,7 @@ public class ParserTests extends TestCase {
 	public void test2() throws Exception {
 		String script = "var java.util.Date v1,v2 \n" +
 			"ref java.util.Calendar c1,c2 \n" +
-			"rule1: if cond1[c1,v1] then cond2[c2,v2]";
+			"rule1: if cond1|c1,v1| then cond2|c2,v2]|";
 		KnowledgeBase kb = new Parser().parse(new StringReader(script));
 		assertEquals(1,kb.getElements().size());
 		DerivationRule r = (DerivationRule)kb.getElement("rule1");
@@ -75,7 +81,8 @@ public class ParserTests extends TestCase {
 		assertTrue(t instanceof Variable);
 		assertEquals(java.util.Date.class,t.getType());
 		assertEquals("v2",((Variable)t).getName());
-		Fact prereq = r.getBody().get(0);
+		assertTrue(r.getBody().get(0) instanceof BodyFact);
+		BodyFact prereq = (BodyFact)r.getBody().get(0);
 		t = prereq.getTerms()[0];
 		assertTrue(t instanceof Constant);
 		assertEquals(java.util.Calendar.class,t.getType());
@@ -87,19 +94,19 @@ public class ParserTests extends TestCase {
 	}
 	
 	public void test3() throws Exception {
-		String script =  "// test3\nrule1: if not cond1['a'] and cond2['b'] and not cond3['c'] then cond4['d']";
+		String script =  "// test3\nrule1: if not cond1|'a'| and cond2|'b'| and not cond3|'c'| then cond4|'d'|";
 		KnowledgeBase kb = new Parser().parse(new StringReader(script));
 		assertEquals(1,kb.getElements().size());
 		DerivationRule r = (DerivationRule)kb.getElement("rule1");
 		List<Prerequisite> body = r.getBody();
 		assertEquals(3,body.size());
-		assertTrue(body.get(0).getPredicate().isNegated());
-		assertFalse(body.get(1).getPredicate().isNegated());
-		assertTrue(body.get(2).getPredicate().isNegated());
+		assertTrue(((BodyFact)body.get(0)).getPredicate().isNegated());
+		assertFalse(((BodyFact)body.get(1)).getPredicate().isNegated());
+		assertTrue(((BodyFact)body.get(2)).getPredicate().isNegated());
 	}
 	
 	public void test4() throws Exception {
-		String script =  "// test3\nexternal factstore1: cond[java.util.Date,long]";
+		String script =  "// test3\nexternal factstore1: cond|java.util.Date,long|";
 		KnowledgeBase kb = new Parser().parse(new StringReader(script));
 		assertEquals(1,kb.getElements().size());
 		ExternalFactStore x = (ExternalFactStore)kb.getElement("factstore1");
@@ -109,9 +116,47 @@ public class ParserTests extends TestCase {
 	}
 
 	public void testEmptyLine() throws Exception {
-		String script =  "// test3\n   \nrule1: if cond1['a'] then cond2['b']";
+		String script =  "// test3\n   \nrule1: if cond1|'a'| then cond2|'b'|";
 		KnowledgeBase kb = new Parser().parse(new StringReader(script));
 		assertEquals(1,kb.getElements().size());
 		DerivationRule r = (DerivationRule)kb.getElement("rule1");
 	}
+	
+	public void test5() throws Exception {
+		String script = "var java.util.Date v1,v2 \n" +
+			"ref java.util.Calendar c1,c2 \n" +
+			"rule1: if cond1|c1,v1| and c1==c2 then cond2|c2,v2]|";
+		KnowledgeBase kb = new Parser().parse(new StringReader(script));
+		assertEquals(1,kb.getElements().size());
+		DerivationRule r = (DerivationRule)kb.getElement("rule1");
+		assertNotNull(r);
+		Fact head = r.getHead();
+		Predicate p = head.getPredicate();
+		assertTrue(java.util.Arrays.equals(p.getSlotTypes(),new Class[]{java.util.Calendar.class,java.util.Date.class}));
+		Term t = head.getTerms()[0];
+		assertTrue(t instanceof Constant);
+		assertEquals(java.util.Calendar.class,t.getType());
+		assertEquals("c2",((Constant)t).getRef());
+		t = head.getTerms()[1];
+		assertTrue(t instanceof Variable);
+		assertEquals(java.util.Date.class,t.getType());
+		assertEquals("v2",((Variable)t).getName());
+		
+		assertTrue(r.getBody().get(0) instanceof BodyFact);
+		BodyFact prereq1 = (BodyFact)r.getBody().get(0);
+		t = prereq1.getTerms()[0];
+		assertTrue(t instanceof Constant);
+		assertEquals(java.util.Calendar.class,t.getType());
+		assertEquals("c1",((Constant)t).getRef());
+		t = prereq1.getTerms()[1];
+		assertTrue(t instanceof Variable);
+		assertEquals(java.util.Date.class,t.getType());
+		assertEquals("v1",((Variable)t).getName());
+		
+		assertTrue(r.getBody().get(1) instanceof BodyExpression);
+		BodyExpression prereq2 = (BodyExpression)r.getBody().get(0);
+		prereq2.getExpression().equals("c1==c2");
+		assertTrue(prereq2.getLanguage() instanceof MVEL2ExpressionLanguage);
+	}
+	
 }

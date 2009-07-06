@@ -21,7 +21,7 @@ package nz.org.take;
 public class ExternalFactStore extends AbstractAnnotatable implements KnowledgeElement {
 
 	private String id = null;
-	private SimplePredicate predicate = null;
+	private Predicate predicate = null;
 
 	public void accept(KnowledgeBaseVisitor visitor) {
 		visitor.visit(this);
@@ -36,11 +36,11 @@ public class ExternalFactStore extends AbstractAnnotatable implements KnowledgeE
 		this.id = id;
 	}
 
-	public SimplePredicate getPredicate() {
+	public Predicate getPredicate() {
 		return predicate;
 	}
 
-	public void setPredicate(SimplePredicate predicate) {
+	public void setPredicate(Predicate predicate) {
 		this.predicate = predicate;
 	}
 

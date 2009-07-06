@@ -466,7 +466,7 @@ public class Parser extends ParserSupport {
 			Class clazz = this.classForName(typeName,no);
 			types.add(clazz);
 		}
-		SimplePredicate predicate = new SimplePredicate();
+		Predicate predicate = new SimplePredicate();
 		predicate.setName(name);
 		predicate.setSlotTypes(types.toArray(new Class[types.size()]));
 		String pid = this.getId(predicate);
@@ -475,7 +475,7 @@ public class Parser extends ParserSupport {
 			predicatesByName.put(pid,predicate);
 		}
 		else {
-			predicate = (SimplePredicate)existingPredicate;
+			predicate = (Predicate)existingPredicate;
 		}
 		ExternalFactStore exFacts = new ExternalFactStore();
 		exFacts.setId(id);
@@ -611,7 +611,7 @@ public class Parser extends ParserSupport {
 				else {
 					String[] arr = slots.toArray(new String[slots.size()]);
 					if (p instanceof AbstractPredicate) 
-						((AbstractPredicate)p).setSlotNames(arr);
+						((Predicate)p).setSlotNames(arr);
 					//else  TODO log warning
 				}
 			}

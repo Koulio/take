@@ -97,4 +97,8 @@ public class AbstractKnowledgeBaseVisitor implements KnowledgeBaseVisitor {
 		return true;
 	}
 
+	public boolean visit(BodyExpression q) {
+		return true;
+	}
+	public void endVisit(BodyExpression q) {}
 }
