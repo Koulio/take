@@ -1,5 +1,7 @@
 package nz.org.take;
 
+import java.util.Map;
+
 
 /**
  * A body expression is a prerequisite of a rule that can be evaluated
@@ -7,27 +9,24 @@ package nz.org.take;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 
-public class BodyExpression implements Prerequisite {
-	private ExpressionLanguage language = null;
-	private String expression = null;
-	
-	public BodyExpression() {
-		super();
-	}
-	public ExpressionLanguage getLanguage() {
-		return language;
-	}
-	public void setLanguage(ExpressionLanguage language) {
-		this.language = language;
-	}
-	public String getExpression() {
-		return expression;
-	}
-	public void setExpression(String expression) {
-		this.expression = expression;
+public class BodyExpression extends Expression implements Prerequisite {
+
+
+
+	public BodyExpression(String expression, Map<String, Class> typeInfo) {
+		super(expression, typeInfo);
 	}
 	public void accept(KnowledgeBaseVisitor visitor) {
 		visitor.visit(this);
 		visitor.endVisit(this);
+	}
+	public Class getType() {
+		return Boolean.class;
+	}
+	public void check (Map<String,Class> typeInfo) {
+		Class type = this.computeType(typeInfo);
+		if (type!=Boolean.class && type!=Boolean.TYPE) {
+			throw new IllegalStateException ();
+		} 
 	}
 }

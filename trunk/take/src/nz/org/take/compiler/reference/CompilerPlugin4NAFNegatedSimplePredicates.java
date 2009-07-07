@@ -16,10 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-
 import nz.org.take.Predicate;
 import nz.org.take.Query;
-import nz.org.take.SimplePredicate;
 import nz.org.take.compiler.CompilerException;
 
 /**
@@ -37,8 +35,7 @@ public class CompilerPlugin4NAFNegatedSimplePredicates extends CompilerPlugin {
 
 	@Override
 	public void checkPrerequisites(Query q) throws CompilerException {
-		boolean ok = q.getPredicate() instanceof SimplePredicate;
-		ok = ok && q.getPredicate().isNegated();
+		boolean ok = q.getPredicate().isNegated();
 		for (boolean b:q.getInputParams()) {
 			ok = ok && b; 	// only input parameters expected
 		}
@@ -84,7 +81,7 @@ public class CompilerPlugin4NAFNegatedSimplePredicates extends CompilerPlugin {
 		methodParameterDeclarations.append("DerivationController _derivation");
 		
 		// build unnegated query and add it to the agenda
-		SimplePredicate unnegatedPredicate = p.copy();
+		Predicate unnegatedPredicate = p.copy();
 		unnegatedPredicate.setNegated(false);		
 		QueryRef query = new QueryRef(unnegatedPredicate,q.getInputParams(),queryParams);
 		owner.addToAgenda(query);

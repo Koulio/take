@@ -35,12 +35,11 @@ public class DefaultTemplateManager extends TemplateManager{
 		VE.setProperty("class.resource.loader.class","org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
 		// logging		
 		VE.setProperty("runtime.log.logsystem.class","org.apache.velocity.runtime.log.SimpleLog4JLogSystem");
-		VE.setProperty("runtime.log.logsystem.log4j.category",CompilerPlugin4PropertyPredicates.class.getName());
 
 		try {
 			VE.init();
 		} catch (Exception e) {
-			Logger.getLogger(CompilerPlugin4Comparisons.class).error("Error initialising velocity");
+			Logger.getLogger(DefaultTemplateManager.class).error("Error initialising velocity");
 		}
 			
 	}

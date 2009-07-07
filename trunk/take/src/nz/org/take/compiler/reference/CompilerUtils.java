@@ -72,9 +72,7 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Create the list of predicates referenced in the kb.
-	 * 
-	 * @param kb
-	 *            a knowledge base
+	 * @param kb a knowledge base
 	 * @return a list of predicates
 	 */
 	protected Collection<Predicate> findPredicates(KnowledgeBase kb) {
