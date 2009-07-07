@@ -14,8 +14,8 @@ package nz.org.take;
  * Abstract interface for rules and facts. Like in Prolog.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-
-public interface Clause extends KnowledgeElement {
+public interface Clause extends KnowledgeElement, NamedElement {
+	
 	public String getId();
 	public void setId(String id);
 

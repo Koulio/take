@@ -14,23 +14,27 @@ package nz.org.take;
  * Typed variable.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-
-public class Variable extends AbstractAnnotatable implements Term {
+public class Variable extends AbstractAnnotatable implements NamedElement, Term {
 	
 	private String name = null;
 	private Class type = null;
+	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public Class getType() {
 		return type;
 	}
+	
 	public void setType(Class type) {
 		this.type = type;
 	}
+	
 	public String toString() {
 		StringBuffer b = new StringBuffer();
 		b.append('<');
@@ -38,10 +42,12 @@ public class Variable extends AbstractAnnotatable implements Term {
 		b.append('>');
 		return b.toString();
 	}
+	
 	public void accept(KnowledgeBaseVisitor visitor) {
 		visitor.visit(this);
 		visitor.endVisit(this);
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -50,6 +56,7 @@ public class Variable extends AbstractAnnotatable implements Term {
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

@@ -16,12 +16,12 @@ import java.util.Arrays;
  * Represents standalone facts and conditions that are part of a derivation rule.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-
 public class Fact extends AbstractAnnotatable implements Clause {
 	
 	private Predicate predicate = null;
 	private String id = null;
 	private Term[] terms = null;
+	
 	public Predicate getPredicate() {
 		return predicate;
 	}
@@ -72,6 +72,10 @@ public class Fact extends AbstractAnnotatable implements Clause {
 	public void setTerms(Term[] terms) {
 		this.terms = terms;
 	}
+	
+	public String getName() {
+		return id;
+	}
 
 	public String getId() {
 		return id;
@@ -96,6 +100,7 @@ public class Fact extends AbstractAnnotatable implements Clause {
 		b.append(')');
 		return b.toString();
 	}
+	
 	public void accept(KnowledgeBaseVisitor visitor) {
 		if (visitor.visit(this)) {
 			for (Term t:terms)
