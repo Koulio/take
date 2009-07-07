@@ -14,10 +14,9 @@ package nz.org.take;
  * Interface for terms.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-
-public interface Function {
+public interface Function extends NamedElement {
+	
 	public Class getReturnType();
 	public Class[] getParamTypes();
-	public String getName();
 	
 }

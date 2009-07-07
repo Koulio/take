@@ -14,8 +14,8 @@ package nz.org.take;
  * Predicate - associates terms of certain types.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-
-public class Predicate extends AbstractAnnotatable {
+public class Predicate extends AbstractAnnotatable implements NamedElement {
+	
 	private String name;
 	private Class[] slotTypes;
 	private boolean negated = false;
@@ -24,25 +24,32 @@ public class Predicate extends AbstractAnnotatable {
 	public boolean isNegated() {
 		return negated;
 	}
+	
 	public void setNegated(boolean negated) {
 		this.negated = negated;
 	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public Class[] getSlotTypes() {
 		return slotTypes;
 	}
+	
 	public void setSlotTypes(Class[] slotTypes) {
 		this.slotTypes = slotTypes;
 	}
+	
 	public String toString() {
 		// use UML syntax for derivated properties
 		return (negated?"!":"") + "/"+name;
 	}
+	
 	/**
 	 * Get a copy of this predicate.
 	 * @return
@@ -56,6 +63,7 @@ public class Predicate extends AbstractAnnotatable {
 		copy.negated = this.isNegated();
 		return copy;
 	}
+	
 	public String[] getSlotNames() {
 		if (slotNames==null && this.getSlotTypes()!=null) {
 			slotNames = new String[this.getSlotTypes().length];
@@ -65,9 +73,9 @@ public class Predicate extends AbstractAnnotatable {
 		}
 		return slotNames;
 	}
+	
 	public void setSlotNames(String[] slotNames) {
 		this.slotNames = slotNames;
 	}
-	
 
 }

@@ -15,8 +15,7 @@ package nz.org.take;
  * Constant terms. Basically those are just arbitrary (wrapped) objects.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-
-public class Constant extends AbstractAnnotatable implements Term {
+public class Constant extends AbstractAnnotatable implements NamedElement, Term {
 	
 	private Object object = null;
 	// the type can be overridden, by default the type of the object is used
@@ -27,10 +26,12 @@ public class Constant extends AbstractAnnotatable implements Term {
 	public Object getObject() {
 		return object;
 	}
+	
 	public void setObject(Object o) {
 		checkTypeConsistency(o,type);
 		this.object = o;
 	}
+	
 	public Class getType() {
 		if  (type==null) {
 			if (object==null)
@@ -40,20 +41,29 @@ public class Constant extends AbstractAnnotatable implements Term {
 		}
 		return type;
 	}
+	
 	public void setType(Class t) {
 		checkTypeConsistency(object,t);
 		this.type = t;
 	}
+	
 	private void checkTypeConsistency(Object o,Class t) {
 		if (o!=null && t!=null && !t.isAssignableFrom(o.getClass()))
 			throw new IllegalArgumentException("Object "+ o + " and type " + t + " are inconsistent, the type must be a supertype of the object type");
 	}
+	
 	public String getRef() {
 		return ref;
 	}
+	
 	public void setRef(String ref) {
 		this.ref = ref;
 	}
+	
+	public String getName() {
+		return ref;
+	}
+	
 	/**
 	 * Whether this is just a placeholder to access the object or a real object. 
 	 * @return
@@ -61,6 +71,7 @@ public class Constant extends AbstractAnnotatable implements Term {
 	public boolean isProxy() {
 		return this.object==null && this.ref!=null;
 	}
+	
 	/**
 	 * Whether this is a literal, in particular a string.
 	 * @return
@@ -70,6 +81,7 @@ public class Constant extends AbstractAnnotatable implements Term {
 		if (this.object==null) return false; // proxy
 		else return (type==String.class)  || type.isPrimitive() || java.lang.Number.class.isAssignableFrom(type) || type == Boolean.class;
 	}
+	
 	public String toString() {
 		StringBuffer b = new StringBuffer();
 		if (isProxy())
@@ -79,10 +91,12 @@ public class Constant extends AbstractAnnotatable implements Term {
 			b.append(']');
 		return b.toString();
 	}
+	
 	public void accept(KnowledgeBaseVisitor visitor) {
 		visitor.visit(this);
 		visitor.endVisit(this);
 	}
+	
 	// return a Java literal prepresenting this object, or null if this isn't possible
 	public String getLiteral() {
 		if (object!=null) {
@@ -93,6 +107,7 @@ public class Constant extends AbstractAnnotatable implements Term {
 		}
 		return null;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int PRIME = 31;
@@ -102,6 +117,7 @@ public class Constant extends AbstractAnnotatable implements Term {
 		result = PRIME * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -128,4 +144,5 @@ public class Constant extends AbstractAnnotatable implements Term {
 			return false;
 		return true;
 	}
+	
 }

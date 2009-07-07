@@ -17,8 +17,8 @@ import java.util.List;
  * Derivation rules, i.e., if .. then ..  constructs.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-
 public class DerivationRule extends AbstractAnnotatable implements Clause {
+	
 	private Fact head = null;
 	private String id = null;
 	private List<Prerequisite> body = new ArrayList<Prerequisite>();
@@ -48,6 +48,9 @@ public class DerivationRule extends AbstractAnnotatable implements Clause {
 		this.body = body;
 	}
 
+	public String getName() {
+		return id;
+	}
 
 	public String getId() {
 		return id;
@@ -73,6 +76,7 @@ public class DerivationRule extends AbstractAnnotatable implements Clause {
 		b.append(head);
 		return b.toString();
 	}
+	
 	public void accept(KnowledgeBaseVisitor visitor) {
 		if (visitor.visit(this)) {
 			head.accept(visitor);
@@ -81,4 +85,5 @@ public class DerivationRule extends AbstractAnnotatable implements Clause {
 		}		
 		visitor.endVisit(this);
 	}
+	
 }
