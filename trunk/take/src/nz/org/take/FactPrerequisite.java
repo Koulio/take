@@ -14,6 +14,6 @@ package nz.org.take;
  * Prerequisites in derivation rules.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-
-public class BodyFact extends Fact implements Prerequisite {
+public class FactPrerequisite extends Fact implements Prerequisite {
+	
 }
