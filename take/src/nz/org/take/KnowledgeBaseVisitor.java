@@ -31,7 +31,7 @@ public interface KnowledgeBaseVisitor {
 	public void endVisit(Variable t);
 	public boolean visit(Query q);
 	public void endVisit(Query q);
-	public boolean visit(BodyExpression q);
-	public void endVisit(BodyExpression q);
+	public boolean visit(ExpressionPrerequisite q);
+	public void endVisit(ExpressionPrerequisite q);
 	
 }
