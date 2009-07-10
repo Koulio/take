@@ -1,5 +1,5 @@
 /**
- * Copyright 2007 Jens Dietrich Licensed under the Apache License, Version 2.0 (the "License"); 
+ * Copyright 20072009 Jens Dietrich Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
  * Unless required by applicable law or agreed to in writing, software distributed under the 
@@ -10,7 +10,6 @@
 
 package nz.org.take;
 
-import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -20,11 +19,8 @@ import java.util.Map;
 
 public class ComplexTerm extends Expression implements Term {
 	
-	public ComplexTerm(String expression, Map<String, Class> typeInfo) {
-		super(expression, typeInfo);
-		if (type!=Boolean.class && type!=Boolean.TYPE) {
-			throw new IllegalArgumentException("The return type of the expression term " + expression + "  is " + type + " but should be boolean");
-		}
+	public ComplexTerm(String expression, String expressionLanguage, Map<String, Class> typeInfo) throws ExpressionException{
+		super(expression,expressionLanguage,typeInfo);
 	}
 
 	public void accept(KnowledgeBaseVisitor visitor) {
