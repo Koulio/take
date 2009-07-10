@@ -26,7 +26,21 @@ class MVEL2CompiledExpression implements CompiledExpression {
 	public MVEL2CompiledExpression(String expression,Map<String, Class> typeInfo) throws ExpressionException {
 		super();
 		
+		// we need to compile the expression twice - first to compute the input slots
 		ParserContext ctx = new ParserContext();
+		try {
+			ce = new ExpressionCompiler(expression).compile(ctx);
+			inputSlots = new ArrayList<String>();
+			inputSlots.addAll(ctx.getInputs().keySet());
+		}
+		catch (Exception x) {
+			throw new ExpressionException("Cannot parse expression "+expression,x);
+		}
+		
+		// second run to compute the return type - if we set the inputs first,
+		// ctx.getInputs() will return all inputs we added with addInput
+		// it is however important that we get only those actually used in the expression!!
+		ctx = new ParserContext();
 		ctx.setStrongTyping(true); 
 		for (Map.Entry<String,Class> mapping:typeInfo.entrySet()) {
 			ctx.addInput(mapping.getKey(),mapping.getValue());
@@ -34,13 +48,6 @@ class MVEL2CompiledExpression implements CompiledExpression {
 		try {
 			ce = new ExpressionCompiler(expression).compile(ctx);
 			type = ce.getKnownEgressType();
-			inputSlots = new ArrayList<String>();
-			// FIXME - we need to filter those in order to register only slots 
-			// actually used in the expression - it seems to be tricky to do this in MVEL
-			// as the MVEL AST API does not make this easy
-			// plan b: check whether names are in expression (substring) - but this is dodgy
-			// would work better if we could have a special variable syntax such as $x or ?x
-			inputSlots.addAll(ctx.getInputs().keySet());
 		}
 		catch (Exception x) {
 			throw new ExpressionException("Cannot parse expression "+expression,x);
