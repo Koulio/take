@@ -11,12 +11,11 @@
 package nz.org.take.compiler.reference;
 
 import java.util.*;
+
 import nz.org.take.AggregationFunction;
-import nz.org.take.BinaryArithmeticFunction;
 import nz.org.take.ComplexTerm;
-import nz.org.take.JFunction;
 import nz.org.take.Term;
-import nz.org.take.UnaryArithmeticFunction;
+import nz.org.take.Variable;
 import nz.org.take.compiler.CompilerException;
 import nz.org.take.compiler.NameGenerator;
 
@@ -58,34 +57,8 @@ public class Bindings  {
 		}
 	}
 	private String createRef(ComplexTerm t) throws CompilerException {
-		StringBuffer buf = new StringBuffer();
-		Term[] terms = t.getTerms();
-		if (t.getFunction() instanceof JFunction) {
-			JFunction f = (JFunction)t.getFunction();
-			if (f.isStatic()) {
-				buf.append(f.getMethod().getDeclaringClass());
-				buf.append('.');
-				buf.append(f.getName());
-				for (int i=0;i<terms.length;i++) {
-					if (i>0)
-						buf.append(',');
-					buf.append(this.getRef(terms[i]));
-				}			
-				buf.append(')');
-			}
-			else {
-				buf.append(this.getRef(terms[0]));
-				buf.append('.');
-				buf.append(f.getName());
-				buf.append('(');
-				for (int i=1;i<terms.length;i++) {
-					if (i>1)
-						buf.append(',');
-					buf.append(this.getRef(terms[i]));
-				}			
-				buf.append(')');
-			}
-		}
+		return t.getJavaCode();
+		/*
 		else if (t.getFunction() instanceof AggregationFunction) {
 			AggregationFunction f = (AggregationFunction)t.getFunction();
 			buf.append(this.naming.getAggregationFunctionsRegistryClassName());
@@ -99,20 +72,7 @@ public class Bindings  {
 			}			
 			buf.append(')');
 		}
-		else if (t.getFunction() instanceof BinaryArithmeticFunction) {
-			BinaryArithmeticFunction f = (BinaryArithmeticFunction)t.getFunction();
-			buf.append(this.getRef(terms[0]));
-			buf.append(f.getName());
-			buf.append(this.getRef(terms[1]));
-		}
-		else if (t.getFunction() instanceof UnaryArithmeticFunction) {
-			UnaryArithmeticFunction f = (UnaryArithmeticFunction)t.getFunction();
-			buf.append(f.getName());
-			buf.append(this.getRef(terms[0]));
-		}
-		else 
-			throw new CompilerException("ComplexTerms are only supported if the function is a JFunction or an AggregationFunction");
-		return buf.toString();
+		*/
 	}
 
 	/**
@@ -122,22 +82,25 @@ public class Bindings  {
 	 */
 	private boolean checkComplexTerm(ComplexTerm term) {
 		boolean result = true;
+		/* TODO
 		for (Term t:term.getTerms()) {
 			result = result && this.delegate.get(t)!=null;
 			if (t instanceof ComplexTerm)
 				result = result && checkComplexTerm((ComplexTerm)t);
 		}
+		*/
 		return result;
 	}
 
 	private ComplexTerm  isChild(Term parent,Term child) {
+		/*
 		if (parent instanceof ComplexTerm) {
 			Term[] children = ((ComplexTerm)parent).getTerms();
 			for (Term t:children) {
 				if (t.equals(child))
 					return (ComplexTerm)parent;
 			}
-		}
+		}*/
 		return null;
 	}
 	/**
@@ -165,6 +128,17 @@ public class Bindings  {
 	 */
 	public boolean hasBinding(Term t) {
 		return this.delegate.containsKey(t);
+	}
+	/**
+	 * Check whether the terms has a binding 
+	 * @param t a term
+	 * @return a boolean
+	 */
+	public boolean hasBindings(Collection<Variable> collection) {
+		for (Term t:collection) {
+			if (!hasBinding(t)) return false;
+		}
+		return true;
 	}
 	
 	/**

@@ -67,9 +67,6 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	 */
 	public DefaultCompiler()  {
 		super();
-		this.install(new CompilerPlugin4JPredicates(this));		
-		this.install(new CompilerPlugin4PropertyPredicates(this));
-		this.install(new CompilerPlugin4Comparisons(this));
 		this.install(new CompilerPlugin4NAFNegatedSimplePredicates(this));
 		this.install(new AggregationFunctionGeneratorSUM());
 		this.install(new AggregationFunctionGeneratorMIN());
@@ -267,7 +264,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	private void checkCompilerHints(Collection<Predicate> predicates) {
 		Collection<Predicate> nafNegatedPredicates = new ArrayList<Predicate>();
 		for (Predicate p:predicates) {
-			if (p instanceof SimplePredicate && p.isNegated()) {
+			if (p instanceof Predicate && p.isNegated()) {
 				for (Predicate p2:predicates) {
 					if (p!=p2 && p2.getName().equals(p.getName()) && Arrays.equals(p.getSlotTypes(),p2.getSlotTypes())) {
 						String ann = p2.getAnnotation(AnnotationKeys.TAKE_GENERATE_CLASS);
@@ -285,7 +282,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 								paramNames[i]=tok.nextToken();
 								i=i+1;
 							}
-							((SimplePredicate)p).setSlotNames(paramNames);
+							((Predicate)p).setSlotNames(paramNames);
 						}
 					}
 				}
@@ -731,13 +728,11 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	
 	/**
 	 * Define for which predicates (queries) not to define a public method. 
-	 * E.g., not public methods are generated for numerical comparisons. 
 	 * @param q
 	 * @return
 	 */
 	protected boolean mustCreatePublicMethod(Query q) {
-		Predicate p = q.getPredicate();
-		return !(p instanceof Comparison);
+		return true;
 	} 
 	
 	/**
@@ -860,6 +855,8 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		out.print(this.getVarName4DerivationController());
 		out.println(".getDepth();");
 		
+		
+		// these are the rules and facts supporting the predicate
 		List<KnowledgeElement> css = kb.getElements(p);
 
 		out.print("ResourceIterator<");
@@ -945,6 +942,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		out.print("{");
 
 		// generate method body
+	
 		if (cs instanceof Fact) {
 			createBody(out, q, islots, oslots, (Fact) cs);
 		} 
@@ -1173,15 +1171,20 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		}
 
 		List<Fact> literals = new ArrayList<Fact>();
+		List<ExpressionPrerequisite> expressions = new ArrayList<ExpressionPrerequisite>();
 		Fact previousFact = null;
-		literals.addAll(r.getBody());
+		literals.addAll(r.getFactPrerequisites());
 		literals.add(r.getHead());
+		expressions.addAll(r.getExpressionPrerequisites());
 	
 		TmpVarGenerator varGen = new TmpVarGenerator();
 		String iteratorName = null, className = null, previousIteratorName = null, previousClassName = null;
 		boolean first = true;
 		int counter = 1;
 		for (Fact prereq : literals) {
+
+			createExpressionInvocation(out,expressions,bindings);
+			
 			iteratorName = varGen.nextTmpVar("iterator");
 			className = getClassName(prereq);
 			this.printOneLineComment(out, "code for prereq ", prereq);
@@ -1308,12 +1311,36 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			previousIteratorName = iteratorName;
 			previousClassName = className;
 			previousFact = prereq;
+			
+			createExpressionInvocation(out,expressions,bindings);
 		}
+		
+		if (!expressions.isEmpty()) {
+			throw new CompilerException("There are " + expressions.size() + " unevaluated conditions left, for instance " + expressions.get(0));
+		}
+
 		out.print("return ");
 		out.print(iteratorName);
 		out.println(";");
 	}
-   /**
+   private void createExpressionInvocation(PrintWriter out,	List<ExpressionPrerequisite> expressions, Bindings bindings) {
+		// check whether we can evaluate expressions here
+		for (Iterator<ExpressionPrerequisite> iter =expressions.iterator();iter.hasNext();) {
+			ExpressionPrerequisite exprPrereq = iter.next();
+			if (bindings.hasBindings(exprPrereq.getVariables())) {
+				this.printOneLineComment(out, "evaluating expression " + exprPrereq);
+				List<String> refs = new ArrayList<String>(exprPrereq.getVariables().size());
+				for (Variable var:exprPrereq.getVariables()) {
+					refs.add(bindings.getRef(var));
+				}
+				this.printOneLineComment(out, "with parameters " + refs);
+				iter.remove();
+			}
+		}
+		
+	}
+
+/**
 	 * Indicates whether the publicAgenda is empty.
 	 * 
 	 * @return Returns a boolean.
@@ -1678,6 +1705,8 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	
 	private Collection<AggregationFunction> findAggregationFunctions() {
 		final Collection<AggregationFunction> functions = new HashSet<AggregationFunction>();
+		// aggregation functions are not yet supported
+		/**
 		AbstractKnowledgeBaseVisitor lookup = new AbstractKnowledgeBaseVisitor() {
 			public boolean visit(ComplexTerm t) {
 				super.visit(t);
@@ -1687,6 +1716,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			}			
 		};
 		kb.accept(lookup);
+		*/
 		return functions;
 	}
 	private Collection<ExternalFactStore> findExternalFactStores() {

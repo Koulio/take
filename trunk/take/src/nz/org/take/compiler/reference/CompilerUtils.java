@@ -80,7 +80,7 @@ public abstract class CompilerUtils {
 		for (KnowledgeElement e : kb.getElements()) {
 			if (e instanceof DerivationRule) {
 				DerivationRule r = (DerivationRule) e;
-				for (Prerequisite p : r.getBody()) {
+				for (FactPrerequisite p : r.getFactPrerequisites()) {
 					predicates.add(p.getPredicate());
 				}
 			}
@@ -751,20 +751,12 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Collect all terms.
-	 * 
-	 * @param list
-	 *            the list used to collect the terms
-	 * @param c
-	 *            the term container
+	 * @param list the list used to collect the terms
+	 * @param c the term container
 	 */
-	private void collectTerms(Collection<Term> terms, ComplexTerm c) {
-		for (Term t : c.getTerms()) {
-			// avoid duplication!
-			if (!terms.contains(t))
-				terms.add(t);
-			if (t instanceof ComplexTerm)
-				collectTerms(terms, (ComplexTerm) t);
-		}
+	private void collectTerms(Collection<Term> terms, Expression c) {
+		List varNames = c.getInputSlots();
+		System.out.println("TODO: implement collectTerms(Collection<Term> terms, Expression c) in " + this.getClass()  );
 	}
 
 	/**
@@ -820,16 +812,17 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Get all terms (recursive) occurring in a rule.
-	 * 
-	 * @param r
-	 *            a rule
+	 * @param r a rule
 	 * @return a set of terms
 	 */
 	protected Collection<Term> getAllTerms(DerivationRule r) {
 		// use a set - duplicates should be removed
 		Collection<Term> terms = new HashSet<Term>();
 		List<Prerequisite> body = r.getBody();
-		for (Prerequisite p : body) {
+		for (FactPrerequisite p : r.getFactPrerequisites()) {
+			collectTerms(terms, p);
+		}
+		for (ExpressionPrerequisite p : r.getExpressionPrerequisites()) {
 			collectTerms(terms, p);
 		}
 		collectTerms(terms, r.getHead());
