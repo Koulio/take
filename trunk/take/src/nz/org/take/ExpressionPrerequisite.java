@@ -33,4 +33,10 @@ public class ExpressionPrerequisite extends Expression implements Prerequisite {
 		visitor.endVisit(this);
 	}
 	
+	public String toString() {
+		StringBuffer b = new StringBuffer();
+		b.append(this.expression);
+		return b.toString();
+	}
+	
 }
