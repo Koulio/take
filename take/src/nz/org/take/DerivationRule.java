@@ -86,4 +86,24 @@ public class DerivationRule extends AbstractAnnotatable implements Clause {
 		visitor.endVisit(this);
 	}
 	
+	public List<FactPrerequisite> getFactPrerequisites() {
+		List<FactPrerequisite> list = new ArrayList<FactPrerequisite>(body.size());
+		for (Prerequisite p:body) {
+			if (p instanceof FactPrerequisite) {
+				list.add((FactPrerequisite)p);
+			}
+		}
+		return list;
+	}
+	
+	public List<ExpressionPrerequisite> getExpressionPrerequisites() {
+		List<ExpressionPrerequisite> list = new ArrayList<ExpressionPrerequisite>(body.size());
+		for (Prerequisite p:body) {
+			if (p instanceof ExpressionPrerequisite) {
+				list.add((ExpressionPrerequisite)p);
+			}
+		}
+		return list;
+	}
+	
 }

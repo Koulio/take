@@ -10,6 +10,8 @@
 
 package nz.org.take;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +26,7 @@ public abstract class Expression  {
 	protected ExpressionLanguage xLanguage = null;
 	protected String expression = null;
 	protected ExpressionLanguage.CompiledExpression compiledExpression = null;
+	protected Collection<Variable> variables = new HashSet<Variable>();
 	
 	public Expression(String expression,String language, Map<String,Class> typeInfo) throws ExpressionException  {
 		super();
@@ -32,6 +35,12 @@ public abstract class Expression  {
 			Class<ExpressionLanguage> LANG = (Class<ExpressionLanguage>) Class.forName(language);
 			xLanguage = LANG.newInstance();
 			compiledExpression = xLanguage.compile(expression,typeInfo);
+			for (Map.Entry<String,Class> i:typeInfo.entrySet()) {
+				Variable var = new Variable();
+				var.setName(i.getKey());
+				var.setType(i.getValue());
+				variables.add(var);
+			}
 		} catch (InstantiationException e) {
 			throw new ExpressionException("Cannot instantiate expression language "+language,e);
 		} catch (IllegalAccessException e) {
@@ -67,5 +76,16 @@ public abstract class Expression  {
 	 */
 	public Class getType() {
 		return compiledExpression.getType();
+	}
+	/**
+	 * Get the java source code that can be used to evaluate this expression.
+	 * @return
+	 */
+	public String getJavaCode() {
+		return "mvel.todo();";
+	}
+	
+	public Collection<Variable> getVariables() {
+		return variables;
 	}
 }
