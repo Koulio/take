@@ -22,7 +22,7 @@ public class KBFactory {
 		Fact f = new Fact();
 		f.setId("fact1");
 		f.setPredicate(father);
-		f.setTerms(new Term[]{max,jens});
+		f.setTerms(new Term[]{jens,max});
 		
 		Predicate son = new Predicate ();
 		son.setName("son");

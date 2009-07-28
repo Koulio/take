@@ -580,7 +580,7 @@ public abstract class CompilerUtils {
 		out.print(" ");
 		out.print(name);
 		if (defaultValue != null) {
-			out.print(" ");
+			out.print(" = ");
 			out.print(defaultValue);
 		}
 		out.println(';');

@@ -57,7 +57,8 @@ public class Bindings  {
 		}
 	}
 	private String createRef(ComplexTerm t) throws CompilerException {
-		return t.getJavaCode();
+		// TODO
+		return "//not yet supported";
 		/*
 		else if (t.getFunction() instanceof AggregationFunction) {
 			AggregationFunction f = (AggregationFunction)t.getFunction();

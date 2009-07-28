@@ -1183,7 +1183,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		int counter = 1;
 		for (Fact prereq : literals) {
 
-			createExpressionInvocation(out,expressions,bindings);
+			createExpressionInvocation(out,expressions,bindings,varGen);
 			
 			iteratorName = varGen.nextTmpVar("iterator");
 			className = getClassName(prereq);
@@ -1312,7 +1312,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			previousClassName = className;
 			previousFact = prereq;
 			
-			createExpressionInvocation(out,expressions,bindings);
+			createExpressionInvocation(out,expressions,bindings,varGen);
 		}
 		
 		if (!expressions.isEmpty()) {
@@ -1323,7 +1323,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		out.print(iteratorName);
 		out.println(";");
 	}
-   private void createExpressionInvocation(PrintWriter out,	List<ExpressionPrerequisite> expressions, Bindings bindings) {
+   private void createExpressionInvocation(PrintWriter out,	List<ExpressionPrerequisite> expressions, Bindings bindings,TmpVarGenerator varGen) {
 		// check whether we can evaluate expressions here
 		for (Iterator<ExpressionPrerequisite> iter =expressions.iterator();iter.hasNext();) {
 			ExpressionPrerequisite exprPrereq = iter.next();
@@ -1334,6 +1334,20 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 					refs.add(bindings.getRef(var));
 				}
 				this.printOneLineComment(out, "with parameters " + refs);
+				// boolean control variable
+				String var = varGen.nextTmpVar("chkExprResult");
+				this.printVariableDeclaration(out, null, "boolean", var, "false");
+				
+				exprPrereq.generateInvocationCode(out,var, varGen,refs);
+				
+				// check, and if it fails, return empty iterator
+				out.print("if (!");
+				out.print(var);
+				out.println(") {");
+				out.println("return EmptyIterator.DEFAULT;");
+				out.println("}");
+				
+				// remove from list - has been executed
 				iter.remove();
 			}
 		}
