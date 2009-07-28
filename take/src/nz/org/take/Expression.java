@@ -10,10 +10,12 @@
 
 package nz.org.take;
 
+import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import nz.org.take.compiler.util.TmpVarGenerator;
 
 
 /**
@@ -35,10 +37,10 @@ public abstract class Expression  {
 			Class<ExpressionLanguage> LANG = (Class<ExpressionLanguage>) Class.forName(language);
 			xLanguage = LANG.newInstance();
 			compiledExpression = xLanguage.compile(expression,typeInfo);
-			for (Map.Entry<String,Class> i:typeInfo.entrySet()) {
+			for (String slot:compiledExpression.getInputSlots()) {
 				Variable var = new Variable();
-				var.setName(i.getKey());
-				var.setType(i.getValue());
+				var.setName(slot);
+				var.setType(typeInfo.get(slot));
 				variables.add(var);
 			}
 		} catch (InstantiationException e) {
@@ -77,15 +79,19 @@ public abstract class Expression  {
 	public Class getType() {
 		return compiledExpression.getType();
 	}
-	/**
-	 * Get the java source code that can be used to evaluate this expression.
-	 * @return
-	 */
-	public String getJavaCode() {
-		return "mvel.todo();";
-	}
 	
 	public Collection<Variable> getVariables() {
 		return variables;
+	}
+	/**
+	 * Generate the code that can be used to invoke this expression, and assign the result to
+	 * a variable named target.
+	 * @param out
+	 * @param target
+	 * @param varNameGenerator
+	 * @param args
+	 */
+	public void generateInvocationCode(PrintWriter out,String target,TmpVarGenerator varNameGenerator,List<String> args){
+		this.xLanguage.generateInvocationCode(out,this,target,varNameGenerator,args);
 	}
 }
