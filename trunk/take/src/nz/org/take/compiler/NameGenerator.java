@@ -80,6 +80,11 @@ public interface NameGenerator {
 	 */
 	public String getAggregationFunctionsRegistryClassName();
 	/**
+	 * Get the (local, without package name) name of the registry class for the expressions.
+	 * @return
+	 */
+	public String getExpressionRegistryClassName();
+	/**
 	 * Get the (local, without package name) name of the registry class for the constants.
 	 * @return
 	 */
