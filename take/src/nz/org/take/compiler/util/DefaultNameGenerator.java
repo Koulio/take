@@ -140,6 +140,9 @@ public class DefaultNameGenerator implements NameGenerator {
 	public String getConstantRegistryClassName() {
 		return "Constants";
 	}
+	public String getExpressionRegistryClassName() {
+		return "Expressions";
+	}
 	
 	public String getAggregationFunctionsRegistryClassName() {
 		return "Aggregations";

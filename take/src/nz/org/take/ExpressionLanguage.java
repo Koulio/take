@@ -28,7 +28,7 @@ public interface ExpressionLanguage {
 		public Class getType() ;
 	};
 	CompiledExpression compile(String definition,Map<String,Class> typeInfo) throws ExpressionException;
-	void generateInvocationCode(PrintWriter out,Expression expression, String target,TmpVarGenerator varNameGenerator, List<String> args);
-
+	void generateInvocationCode(PrintWriter out, Expression expression,String target,String expressionClass,String expressionField, TmpVarGenerator varNameGenerator, List<String> args);
+	void generateDefinitionCode(PrintWriter out, Expression expression,String varName);
 
 }

@@ -84,14 +84,25 @@ public abstract class Expression  {
 		return variables;
 	}
 	/**
+	 * Generate the code that can be used to define a field representing this expression.
+	 * @param out
+	 * @param expressionField
+	 * @param args
+	 */
+	public void generateDefinitionCode(PrintWriter out,String expressionField){
+		this.xLanguage.generateDefinitionCode(out,this,expressionField);
+	}
+	/**
 	 * Generate the code that can be used to invoke this expression, and assign the result to
 	 * a variable named target.
 	 * @param out
-	 * @param target
+	 * @param target the result will be assigned to this variable
+	 * @param expressionClass the class where compiled expressions are defined as static fields
+	 * @param expressionField the static field name where the compiled expression is stored 
 	 * @param varNameGenerator
 	 * @param args
 	 */
-	public void generateInvocationCode(PrintWriter out,String target,TmpVarGenerator varNameGenerator,List<String> args){
-		this.xLanguage.generateInvocationCode(out,this,target,varNameGenerator,args);
+	public void generateInvocationCode(PrintWriter out,String target,String expressionClass,String expressionField, TmpVarGenerator varNameGenerator,List<String> args){
+		this.xLanguage.generateInvocationCode(out,this,target,expressionClass,expressionField,varNameGenerator,args);
 	}
 }

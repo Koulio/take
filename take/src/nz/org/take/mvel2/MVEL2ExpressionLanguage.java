@@ -30,12 +30,24 @@ public class MVEL2ExpressionLanguage implements ExpressionLanguage {
 	}
 
 	@Override
-	public void generateInvocationCode(PrintWriter out, Expression expression,String target, TmpVarGenerator varNameGenerator, List<String> args) {
+	public void generateDefinitionCode(PrintWriter out, Expression expression,String varName) {
+		
+		// compile expression
+		out.print("static Object ");
+		out.print(varName);
+		out.print(" = ");
+		out.print("org.mvel2.MVEL.compileExpression(\"");
+		out.print(expression.getExpression());
+		out.println("\");");
+
+	}
+	
+	@Override
+	public void generateInvocationCode(PrintWriter out, Expression expression,String target,String expressionClass,String expressionField, TmpVarGenerator varNameGenerator, List<String> args) {
 		if (args.size()!=expression.getInputSlots().size()) {
 			throw new IllegalArgumentException("Number of arguments does not match number of input slots in " + expression);
 		}
-		
-		String exprVar = varNameGenerator.nextTmpVar("expression");
+
 		String argVar = varNameGenerator.nextTmpVar("args");
 		out.print("java.util.Map ");
 		out.print(argVar);
@@ -53,19 +65,12 @@ public class MVEL2ExpressionLanguage implements ExpressionLanguage {
 			out.println(");");
 		}
 
-		// compile expression
-		out.print("Object ");
-		out.print(exprVar);
-		out.print(" = ");
-		out.print("org.mvel2.MVEL.compileExpression(\"");
-		out.print(expression.getExpression());
-		out.println("\");");
-		
 		// invoke expression
 		out.print(target);
-		out.print(" = ");
-		out.println("(Boolean)org.mvel2.MVEL.executeExpression(");
-		out.print(exprVar);
+		out.print(" = (Boolean)org.mvel2.MVEL.executeExpression(");
+		out.print(expressionClass);
+		out.print('.');
+		out.print(expressionField);
 		out.print(',');
 		out.print(argVar);
 		out.println(");");
