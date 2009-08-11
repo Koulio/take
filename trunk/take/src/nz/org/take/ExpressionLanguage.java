@@ -25,9 +25,9 @@ public interface ExpressionLanguage {
 		 * Get the type of evaluating this expression.
 		 * @return a class
 		 */
-		public Class getType() ;
+		public Class<?> getType() ;
 	};
-	CompiledExpression compile(String definition,Map<String,Class> typeInfo) throws ExpressionException;
+	CompiledExpression compile(String definition,Map<String,Class<?>> typeInfo) throws ExpressionException;
 	void generateInvocationCode(PrintWriter out, Expression expression,String target,String expressionClass,String expressionField, TmpVarGenerator varNameGenerator, List<String> args);
 	void generateDefinitionCode(PrintWriter out, Expression expression,String varName);
 
