@@ -8,8 +8,8 @@ public class AnnotationTests extends AbstractParserTests {
 	
 	public void testGlobalAnnotation() throws Exception {
 		KnowledgeBase kb = parse(
-				"@@test=123           \n" +
-				"fact: predicate[]    \n"
+				"@@test=123               \n" +
+				"fact: predicate| true |  \n"
 			);
 		KnowledgeElement fact = kb.getElement("fact");
 		assertAnnotatedWith(fact, "test", "123");
@@ -17,8 +17,8 @@ public class AnnotationTests extends AbstractParserTests {
 	
 	public void testLocalAnnotation() throws Exception {
 		KnowledgeBase kb = parse(
-				"@test=123            \n" +
-				"fact: predicate[]    \n"
+				"@test=123                \n" +
+				"fact: predicate| true |  \n"
 			);
 		KnowledgeElement fact = kb.getElement("fact");
 		assertAnnotatedWith(fact, "test", "123");
@@ -26,9 +26,9 @@ public class AnnotationTests extends AbstractParserTests {
 	
 	public void testAnnotationOverride() throws Exception {
 		KnowledgeBase kb = parse(
-				"@@scope=global       \n" +
-				"@scope=local         \n" +
-				"fact: predicate[]    \n"
+				"@@scope=global           \n" +
+				"@scope=local             \n" +
+				"fact: predicate| true |  \n"
 			);
 		KnowledgeElement fact = kb.getElement("fact");
 		assertAnnotatedWith(fact, "scope", "local");
