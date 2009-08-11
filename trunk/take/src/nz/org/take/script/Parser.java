@@ -10,9 +10,11 @@
 package nz.org.take.script;
 
 import java.io.Reader;
-import nz.org.take.KnowledgeBase;
+
 import org.antlr.runtime.ANTLRReaderStream;
 import org.antlr.runtime.CommonTokenStream;
+
+import nz.org.take.KnowledgeBase;
 
 // Note: The Take parser and lexer classes are generated when the build script is run.
 import nz.org.take.script.antlr.TakeLexer;
@@ -22,6 +24,9 @@ import nz.org.take.script.antlr.TakeParser;
  * Wrapper class for the ANTLR based Take parser.
  */
 public class Parser {
+	
+	private ClassLoader classLoader;
+	
 	public Parser() {
 		super();
 	}
