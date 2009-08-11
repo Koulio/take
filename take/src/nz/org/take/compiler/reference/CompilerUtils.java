@@ -80,7 +80,7 @@ public abstract class CompilerUtils {
 		for (KnowledgeElement e : kb.getElements()) {
 			if (e instanceof DerivationRule) {
 				DerivationRule r = (DerivationRule) e;
-				for (FactPrerequisite p : r.getFactPrerequisites()) {
+				for (PredicatePrerequisite p : r.getFactPrerequisites()) {
 					predicates.add(p.getPredicate());
 				}
 			}
@@ -819,7 +819,7 @@ public abstract class CompilerUtils {
 		// use a set - duplicates should be removed
 		Collection<Term> terms = new HashSet<Term>();
 		List<Prerequisite> body = r.getBody();
-		for (FactPrerequisite p : r.getFactPrerequisites()) {
+		for (PredicatePrerequisite p : r.getFactPrerequisites()) {
 			collectTerms(terms, p);
 		}
 		for (ExpressionPrerequisite p : r.getExpressionPrerequisites()) {

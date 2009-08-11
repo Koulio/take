@@ -28,12 +28,12 @@ import nz.org.take.ExpressionLanguage.CompiledExpression;
 class MVEL2CompiledExpression implements CompiledExpression {
 
 	private org.mvel2.compiler.CompiledExpression ce = null;
-	private Class type = null;
-	private Map<String, Class> typeInfo = null;
+	private Class<?> type = null;
+	private Map<String, Class<?>> typeInfo = null;
 	private List<String> inputSlots;
 	
 	
-	public MVEL2CompiledExpression(String expression,Map<String, Class> typeInfo) throws ExpressionException {
+	public MVEL2CompiledExpression(String expression,Map<String, Class<?>> typeInfo) throws ExpressionException {
 		super();
 		
 		// we need to compile the expression twice - first to compute the input slots
@@ -52,7 +52,7 @@ class MVEL2CompiledExpression implements CompiledExpression {
 		// it is however important that we get only those actually used in the expression!!
 		ctx = new ParserContext();
 		ctx.setStrongTyping(true); 
-		for (Map.Entry<String,Class> mapping:typeInfo.entrySet()) {
+		for (Map.Entry<String,Class<?>> mapping:typeInfo.entrySet()) {
 			ctx.addInput(mapping.getKey(),mapping.getValue());
 		}
 		try {
@@ -71,7 +71,7 @@ class MVEL2CompiledExpression implements CompiledExpression {
 	}
 
 	@Override
-	public Class getType() {
+	public Class<?> getType() {
 		return type;
 	}
 

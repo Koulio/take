@@ -15,6 +15,7 @@ package nz.org.take;
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
 public interface KnowledgeBaseVisitor {
+	
 	public boolean visit(KnowledgeBase kb);
 	public void endVisit(KnowledgeBase kb);
 	public boolean visit(DerivationRule r);
@@ -31,7 +32,9 @@ public interface KnowledgeBaseVisitor {
 	public void endVisit(Variable t);
 	public boolean visit(Query q);
 	public void endVisit(Query q);
-	public boolean visit(ExpressionPrerequisite q);
-	public void endVisit(ExpressionPrerequisite q);
+	public boolean visit(ExpressionPrerequisite p);
+	public void endVisit(ExpressionPrerequisite p);
+	public boolean visit(PredicatePrerequisite p);
+	public void endVisit(PredicatePrerequisite p);
 	
 }

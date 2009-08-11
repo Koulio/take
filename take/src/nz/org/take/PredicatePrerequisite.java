@@ -14,6 +14,22 @@ package nz.org.take;
  * Prerequisites in derivation rules.
  * @author <a href="http://www-ist.massey.ac.nz/JBDietrich/">Jens Dietrich</a>
  */
-public class FactPrerequisite extends Fact implements Prerequisite {
+public class PredicatePrerequisite extends Predicate implements Prerequisite {
+
+	public PredicatePrerequisite(Predicate predicate) {
+		super();
+		
+		this.setSlotTypes(predicate.getSlotTypes());
+		this.setSlotNames(predicate.getSlotNames());
+		this.setName(predicate.getName());
+		this.getAnnotations().putAll(predicate.getAnnotations());
+		this.setNegated(predicate.isNegated());
+	}
+	
+	@Override
+	public void accept(KnowledgeBaseVisitor visitor) {
+		visitor.visit(this);
+		visitor.endVisit(this);
+	}
 	
 }

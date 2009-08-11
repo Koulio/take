@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class ComplexTerm extends Expression implements Term {
 	
-	public ComplexTerm(String expression, String expressionLanguage, Map<String, Class> typeInfo) throws ExpressionException{
+	public ComplexTerm(String expression, String expressionLanguage, Map<String, Class<?>> typeInfo) throws ExpressionException{
 		super(expression,expressionLanguage,typeInfo);
 	}
 
