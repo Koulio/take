@@ -34,7 +34,7 @@ public interface KnowledgeBaseVisitor {
 	public void endVisit(Query q);
 	public boolean visit(ExpressionPrerequisite p);
 	public void endVisit(ExpressionPrerequisite p);
-	public boolean visit(PredicatePrerequisite p);
-	public void endVisit(PredicatePrerequisite p);
+	public boolean visit(FactPrerequisite p);
+	public void endVisit(FactPrerequisite p);
 	
 }

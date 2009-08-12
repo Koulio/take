@@ -105,11 +105,11 @@ public class AbstractKnowledgeBaseVisitor implements KnowledgeBaseVisitor {
 		
 	}
 	
-	public boolean visit(PredicatePrerequisite p) {
+	public boolean visit(FactPrerequisite p) {
 		return true;
 	}
 	
-	public void endVisit(PredicatePrerequisite p) {
+	public void endVisit(FactPrerequisite p) {
 		
 	}
 	
