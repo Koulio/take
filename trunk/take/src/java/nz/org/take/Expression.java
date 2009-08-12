@@ -55,15 +55,11 @@ public abstract class Expression  {
 	public ExpressionLanguage getLanguage() {
 		return xLanguage;
 	}
-	public void setLanguage(ExpressionLanguage language) {
-		this.xLanguage = language;
-	}
+
 	public String getExpression() {
 		return expression;
 	}
-	public void setExpression(String expression) {
-		this.expression = expression;
-	}
+
 
 	/**
 	 * Get the input slots used in the expression. This will be delegated to the
