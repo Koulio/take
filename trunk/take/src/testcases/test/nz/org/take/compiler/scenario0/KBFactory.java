@@ -67,6 +67,14 @@ public class KBFactory {
 		kb.add(f);
 		kb.add(findFather);
 		
+		System.out.println("Generating kb:");
+		for (KnowledgeElement e:kb.getElements()) {
+			System.out.println(e);
+		}
+		for (Query e:kb.getQueries()) {
+			System.out.println("? "+e);
+		}
+		
 		return kb;
 	}
 }
