@@ -594,7 +594,7 @@ AnnotationValue
 Expression
     :   '\'' ( EscapeSequence | ~('\\'|'\'') )+ '\''
         {
-            String expression = getText().substring(1, getText().length() - 1)); // strip braces
+            String expression = getText().substring(1, getText().length() - 1); // strip braces
             setText(expression.replaceAll("\\'", "'"));
         }
     ;
