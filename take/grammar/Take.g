@@ -62,7 +62,7 @@ import nz.org.take.ExternalFactStore;
 import nz.org.take.Fact;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.Predicate;
-import nz.org.take.PredicatePrerequisite;
+import nz.org.take.FactPrerequisite;
 import nz.org.take.Prerequisite;
 import nz.org.take.Query;
 import nz.org.take.Term;
@@ -86,6 +86,15 @@ private NamedElementTable<Clause> clauseTable = new NamedElementTable<Clause>();
 private NamedElementTable<Predicate> predicateTable = new NamedElementTable<Predicate>();
 private NamedElementTable<Variable> variableTable = new NamedElementTable<Variable>();
 private NamedElementTable<QueryDeclaration> queryTable = new NamedElementTable<QueryDeclaration>();
+
+
+public Iterable<Constant> getConstants() {
+	return constantTable.getValues();
+}
+
+public Iterable<Variable> getVariables() {
+	return variableTable.getValues();
+}
 
 private void annotate(Collection<? extends Annotatable> annotatables) {
     for (Annotatable annotatable : annotatables)
@@ -143,8 +152,8 @@ private String getActiveExpressionLanguage() {
     return "nz.org.take.mvel2.MVEL2ExpressionLanguage";
 }
 
-private Map<String, Class<?>> getDeclaredElementTypeMap() {
-    Map<String, Class<?>> typeMap = new HashMap<String, Class<?>>();
+private Map<String, Class> getDeclaredElementTypeMap() {
+    Map<String, Class> typeMap = new HashMap<String, Class>();
     
     for (Variable variable : variableTable.getValues()) {
         typeMap.put(variable.getName(), variable.getType());
@@ -223,7 +232,7 @@ private Predicate createPredicate(String name, TermList params) throws TakeGramm
     return predicate;
 }
 
-private Constant createConstant(String name, Class<?> type) throws TakeGrammarException {
+private Constant createConstant(String name, Class type) throws TakeGrammarException {
     checkElementNameIsUnique(name);
     
     Constant constant = new Constant();
@@ -239,7 +248,7 @@ private Constant createConstant(String name, Class<?> type) throws TakeGrammarEx
     return constant;
 }
 
-private Variable createVariable(String name, Class<?> type) throws TakeGrammarException {
+private Variable createVariable(String name, Class type) throws TakeGrammarException {
     checkElementNameIsUnique(name);
     
     Variable variable = new Variable();
@@ -270,7 +279,7 @@ private boolean isValidClass(String className) {
     }
 }
 
-private Class<?> createClass(String className) throws TakeGrammarException {
+private Class createClass(String className) throws TakeGrammarException {
     try {
         return Class.forName(className);
     } catch (ClassNotFoundException e) {
@@ -429,12 +438,12 @@ prerequisites returns [List<Prerequisite> values]
     ;
 
 prerequisite returns [Prerequisite value]
-    :   predicatePrerequisite { $value = $predicatePrerequisite.value; }
+    :   factPrerequisite { $value = $factPrerequisite.value; }
     |   expressionPrerequisite { $value = $expressionPrerequisite.value; }
     ;
 
-predicatePrerequisite returns [PredicatePrerequisite value]
-    :   negatablePredicate { $value = new PredicatePrerequisite($negatablePredicate.value); }
+factPrerequisite returns [FactPrerequisite value]
+    :   negatablePredicate { $value = new FactPrerequisite(); }
     ;
 
 expressionPrerequisite returns [ExpressionPrerequisite value]
@@ -487,12 +496,12 @@ complexTerm returns [ComplexTerm value]
         }
     ;
 
-type returns [Class<?> value]
+type returns [Class value]
     :   classOrInterfaceType  { $value = $classOrInterfaceType.value; }
     |   primitiveType         { $value = $primitiveType.value; }
     ;
 
-classOrInterfaceType returns [Class<?> value]
+classOrInterfaceType returns [Class value]
     :   qualifiedName { isValidClass($qualifiedName.text) }?
         {
             $value = createClass($qualifiedName.text);
@@ -503,7 +512,7 @@ qualifiedName
     :   Identifier ('.' Identifier)*
     ;
 
-primitiveType returns [Class<?> value]
+primitiveType returns [Class value]
     :   'boolean'  { $value = Boolean.TYPE; }
     |   'char'     { $value = Character.TYPE; }
     |   'byte'     { $value = Byte.TYPE; }
