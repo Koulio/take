@@ -443,7 +443,12 @@ prerequisite returns [Prerequisite value]
     ;
 
 factPrerequisite returns [FactPrerequisite value]
-    :   negatablePredicate { $value = new FactPrerequisite(); }
+    :   negatablePredicate 
+    	{
+    		$value = new FactPrerequisite();
+    		$value.setPredicate($negatablePredicate.value);
+    		$value.setTerms($negatablePredicate.terms.toArray());
+    	}
     ;
 
 expressionPrerequisite returns [ExpressionPrerequisite value]
