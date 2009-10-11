@@ -24,7 +24,7 @@ import nz.org.take.compiler.util.TmpVarGenerator;
 public class MVEL2ExpressionLanguage implements ExpressionLanguage {
 
 	@Override
-	public CompiledExpression compile(String definition,Map<String, Class<?>> typeInfo) throws ExpressionException {
+	public CompiledExpression compile(String definition,Map<String, Class> typeInfo) throws ExpressionException {
 
 		return new MVEL2CompiledExpression(definition,typeInfo);
 	}

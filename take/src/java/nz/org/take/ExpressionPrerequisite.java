@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public class ExpressionPrerequisite extends Expression implements Prerequisite {
 
-	public ExpressionPrerequisite(String expression, String expressionLanguage, Map<String, Class<?>> typeInfo) throws ExpressionException{
+	public ExpressionPrerequisite(String expression, String expressionLanguage, Map<String, Class> typeInfo) throws ExpressionException{
 		super(expression, expressionLanguage, typeInfo);
 		Class type = getType();
 		if (type!=Boolean.class && type!=Boolean.TYPE) {
