@@ -1,6 +1,9 @@
 package test.nz.org.take.script;
 
 import java.util.Arrays;
+
+import org.junit.Test;
+import static org.junit.Assert.*;
 import nz.org.take.Constant;
 import nz.org.take.Fact;
 import nz.org.take.KnowledgeBase;
@@ -8,7 +11,7 @@ import nz.org.take.Predicate;
 import nz.org.take.Variable;
 
 public class TermTests extends AbstractParserTests {
-	
+	@Test
 	public void testPrimativeVariableDeclaration() throws Exception {
 		KnowledgeBase kb = parse(
 				"var int anInteger               \n" +
@@ -19,7 +22,7 @@ public class TermTests extends AbstractParserTests {
 		Predicate predicate = fact.getPredicate();
 		assertEquals(new Class[] {int.class}, predicate.getSlotTypes());
 	}
-	
+	@Test
 	public void testClassVariableDeclaration() throws Exception {
 		KnowledgeBase kb = parse(
 				"var java.util.Date aDate        \n" +
@@ -30,7 +33,7 @@ public class TermTests extends AbstractParserTests {
 		Predicate predicate = fact.getPredicate();
 		assertEquals(new Class[] {java.util.Date.class}, predicate.getSlotTypes());
 	}
-	
+	@Test
 	public void testStringLiteralConstant() throws Exception {
 		KnowledgeBase kb = parse(
 				"fact: predicate| \"testLiteral\" | \n"
@@ -40,7 +43,7 @@ public class TermTests extends AbstractParserTests {
 		Predicate predicate = fact.getPredicate();
 		assertEquals(new Class[] {String.class}, predicate.getSlotTypes());
 	}
-	
+	@Test
 	public void testNumericalConstants() throws Exception {
 		KnowledgeBase kb = parse(
 				"fact: predicate| 10, 10L, 10.0 |  \n"

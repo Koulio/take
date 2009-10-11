@@ -201,5 +201,14 @@ public class ParserTests {
 		prereq2.getExpression().equals("c1==c2");
 		assertTrue(prereq2.getLanguage() instanceof MVEL2ExpressionLanguage);
 	}
+	@Test
+	public void testRules7() throws Exception {
+		String script = "@@dccreator=jensdietrich\n"+
+			"@@dcdate=26/04/2007"+
+			"var java.lang.String person1,person2,person3"+
+			"var java.lang.String grandchild,father,grandfather"+
+			"rule1: if cond1|person1,person2| then cond2|person1,person2|";
+		
+	}
 	
 }

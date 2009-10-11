@@ -10,11 +10,8 @@
 package nz.org.take.script;
 
 import java.io.Reader;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-
 import org.antlr.runtime.ANTLRReaderStream;
 import org.antlr.runtime.CommonTokenStream;
 import nz.org.take.AbstractKnowledgeBaseVisitor;
