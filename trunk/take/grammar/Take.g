@@ -21,7 +21,7 @@ import java.util.LinkedList;
 }
 
 @lexer::members {
-// Workaround untill getText(), and setText() work as exprected within lexer fragments
+// Workaround until getText(), and setText() work as expected within lexer fragments
 private String lastAnnotationValue = null;
 
 private List<Token> tokens = new LinkedList<Token>();
@@ -129,6 +129,15 @@ private ExpressionPrerequisite createExpressionPrerequisite(String expression) t
     } catch (ExpressionException e) {
         throw new TakeGrammarException(e);
     }
+}
+
+private FactPrerequisite createFactPrerequisite(Predicate predicate, TermList terms) {
+    FactPrerequisite prerequisite = new FactPrerequisite();
+    
+    prerequisite.setPredicate(predicate);
+    prerequisite.setTerms(terms.toArray());
+    
+    return prerequisite;
 }
 
 private boolean isValidComplexTermExpression(String expression) {
@@ -445,9 +454,7 @@ prerequisite returns [Prerequisite value]
 factPrerequisite returns [FactPrerequisite value]
     :   negatablePredicate 
     	{
-    		$value = new FactPrerequisite();
-    		$value.setPredicate($negatablePredicate.value);
-    		$value.setTerms($negatablePredicate.terms.toArray());
+            $value = createFactPrerequisite($negatablePredicate.value, $negatablePredicate.terms);
     	}
     ;
 
@@ -600,7 +607,7 @@ AnnotationValue
             int endIndex = getCharIndex() - 1;
             int whitespace = $Whitespace.text.length() + $Newline.text.length();
             
-            // Workaround untill getText(), and setText() work as exprected within lexer fragments
+            // Workaround until getText(), and setText() work as expected within lexer fragments
             lastAnnotationValue = input.substring(startIndex, endIndex - whitespace);
         }
     ;
@@ -608,7 +615,7 @@ AnnotationValue
 Expression
     :   '\'' ( EscapeSequence | ~('\\'|'\'') )+ '\''
         {
-            String expression = getText().substring(1, getText().length() - 1); // strip braces
+            String expression = getText().substring(1, getText().length() - 1); // strip single quotes
             setText(expression.replaceAll("\\'", "'"));
         }
     ;
