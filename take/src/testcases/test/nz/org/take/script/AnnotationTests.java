@@ -31,13 +31,23 @@ public class AnnotationTests extends AbstractParserTests {
 	}
 	
 	@Test
-	public void testNamespacesInAnnotationKey() throws Exception {
+	public void testColonNamespacesInAnnotationKey() throws Exception {
 		KnowledgeBase kb = parse(
 				"@dc:creator=jens         \n" +
 				"fact: predicate| true |  \n"
 			);
 		KnowledgeElement fact = kb.getElement("fact");
 		assertAnnotatedWith(fact, "dc:creator", "jens");
+	}
+	
+	@Test
+	public void testDotNamespacesInAnnotationKey() throws Exception {
+		KnowledgeBase kb = parse(
+                "@take.compilerhint.method=getGrandfather \n" +
+                "fact: predicate| true |  \n"
+        );
+		KnowledgeElement fact = kb.getElement("fact");
+		assertAnnotatedWith(fact, "take.compilerhint.method", "getGrandfather");
 	}
 	
 	@Test

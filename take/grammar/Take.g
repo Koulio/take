@@ -601,7 +601,12 @@ LocalAnnotation
 
 fragment
 AnnotationKey
-    :	Identifier (':' Identifier)*
+    :	Identifier (NamespaceDelimiter Identifier)*
+    ;
+
+fragment
+NamespaceDelimiter
+    : ':' | '.'
     ;
 
 fragment
