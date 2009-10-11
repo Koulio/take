@@ -584,7 +584,7 @@ UnicodeEscape
     ;
 
 GlobalAnnotation
-    :   '@@' key=AnnotationIdentifier '=' value=AnnotationValue
+    :   '@@' key=AnnotationKey '=' value=AnnotationValue
         {
             emit(new CommonToken(GlobalAnnotationKey, $key.text));
             emit(new CommonToken(AnnotationValue, lastAnnotationValue));
@@ -592,7 +592,7 @@ GlobalAnnotation
     ;
 
 LocalAnnotation
-    :   '@' key=AnnotationIdentifier '=' value=AnnotationValue
+    :   '@' key=AnnotationKey '=' value=AnnotationValue
         {
             emit(new CommonToken(LocalAnnotationKey, $key.text));
             emit(new CommonToken(AnnotationValue, lastAnnotationValue));
@@ -600,15 +600,20 @@ LocalAnnotation
     ;
 
 fragment
+AnnotationKey
+    :	Identifier (':' Identifier)*
+    ;
+
+fragment
 AnnotationValue
-    :   { int startIndex = getCharIndex(); }
-        ( options { greedy=false; } : . )+ Whitespace Newline
+@init { int startIndex = getCharIndex(); }
+    :   ( options { greedy=false; } : . )+ Newline
         {
             int endIndex = getCharIndex() - 1;
-            int whitespace = $Whitespace.text.length() + $Newline.text.length();
+            int whitespace = $Newline.text.length();
             
             // Workaround until getText(), and setText() work as expected within lexer fragments
-            lastAnnotationValue = input.substring(startIndex, endIndex - whitespace);
+            lastAnnotationValue = input.substring(startIndex, endIndex - whitespace).trim();
         }
     ;
 
@@ -622,11 +627,6 @@ Expression
 
 Identifier 
     :   Letter (Letter|IDDigit)*
-    ;
-    
-        
-AnnotationIdentifier 
-    :   Letter (Letter|IDDigit|'.')*
     ;
 
 fragment

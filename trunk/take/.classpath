@@ -10,7 +10,6 @@
 	<classpathentry kind="lib" path="lib/velocity-dep-1.5.jar"/>
 	<classpathentry kind="lib" path="lib/hsqldb.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.1.jar"/>
-	<classpathentry kind="lib" path="lib/mvel2-2.0.11.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/ant-1.7.0.jar" sourcepath="D:/downloads/apache-ant-1.7.0-src/apache-ant-1.7.0/src/main"/>
 	<classpathentry kind="lib" path="lib/ant-launcher.jar"/>

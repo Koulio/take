@@ -30,7 +30,7 @@ public abstract class Expression  {
 	protected ExpressionLanguage.CompiledExpression compiledExpression = null;
 	protected Collection<Variable> variables = new HashSet<Variable>();
 	
-	public Expression(String expression,String language, Map<String,Class<?>> typeInfo) throws ExpressionException  {
+	public Expression(String expression,String language, Map<String,Class> typeInfo) throws ExpressionException  {
 		super();
 		this.expression = expression;
 		try {
