@@ -20,7 +20,6 @@ import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.DefaultNameGenerator;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
-import nz.org.take.nscript.ScriptKnowledgeSource;
 
 
 /**
@@ -37,6 +36,7 @@ public class GenerateClasses {
 	public static void main(String[] args) throws Exception {
 		BasicConfigurator.configure();
 		nz.org.take.compiler.Compiler compiler = new DefaultCompiler();
+		compiler.setLocation(new DefaultLocation("src/testcases"));
 		compiler.add(new JalopyCodeFormatter());
 		
 		// generate kb

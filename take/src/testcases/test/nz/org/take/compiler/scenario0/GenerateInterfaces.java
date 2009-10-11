@@ -13,6 +13,7 @@ package test.nz.org.take.compiler.scenario0;
 
 import nz.org.take.KnowledgeBase;
 import nz.org.take.compiler.reference.DefaultCompiler;
+import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
 import org.apache.log4j.BasicConfigurator;
 
@@ -32,6 +33,7 @@ public class GenerateInterfaces {
 	public static void main(String[] args) throws Exception {
 		BasicConfigurator.configure();
 		nz.org.take.compiler.Compiler compiler = new DefaultCompiler();
+		compiler.setLocation(new DefaultLocation("src/testcases"));
 		compiler.add(new JalopyCodeFormatter());
 		
 		// generate kb
