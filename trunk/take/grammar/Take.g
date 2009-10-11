@@ -584,7 +584,7 @@ UnicodeEscape
     ;
 
 GlobalAnnotation
-    :   '@@' key=Identifier '=' value=AnnotationValue
+    :   '@@' key=AnnotationIdentifier '=' value=AnnotationValue
         {
             emit(new CommonToken(GlobalAnnotationKey, $key.text));
             emit(new CommonToken(AnnotationValue, lastAnnotationValue));
@@ -592,7 +592,7 @@ GlobalAnnotation
     ;
 
 LocalAnnotation
-    :   '@' key=Identifier '=' value=AnnotationValue
+    :   '@' key=AnnotationIdentifier '=' value=AnnotationValue
         {
             emit(new CommonToken(LocalAnnotationKey, $key.text));
             emit(new CommonToken(AnnotationValue, lastAnnotationValue));
@@ -622,6 +622,11 @@ Expression
 
 Identifier 
     :   Letter (Letter|IDDigit)*
+    ;
+    
+        
+AnnotationIdentifier 
+    :   Letter (Letter|IDDigit|'.')*
     ;
 
 fragment
