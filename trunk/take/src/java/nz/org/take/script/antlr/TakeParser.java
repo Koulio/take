@@ -1,4 +1,4 @@
-// $ANTLR 3.1.1 /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g 2009-10-12 11:28:47
+// $ANTLR 3.1.1 /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g 2009-10-12 16:08:41
 
 package nz.org.take.script.antlr;
 
@@ -45,18 +45,18 @@ import java.util.HashMap;
  */
 public class TakeParser extends Parser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "GlobalAnnotationKey", "LocalAnnotationKey", "AnnotationValue", "Identifier", "Newline", "Expression", "HexLiteral", "DecimalLiteral", "OctalLiteral", "FloatingPointLiteral", "StringLiteral", "HexDigit", "IntegerTypeSuffix", "Exponent", "FloatTypeSuffix", "EscapeSequence", "UnicodeEscape", "OctalEscape", "AnnotationKey", "GlobalAnnotation", "LocalAnnotation", "NamespaceDelimiter", "Letter", "IDDigit", "Whitespace", "BlockComment", "LineComment", "'var'", "','", "'ref'", "'aggregation'", "'='", "'avg'", "'min'", "'max'", "'sum'", "'count'", "'query'", "'|'", "'in'", "'out'", "'external'", "':'", "'if'", "'then'", "'and'", "'not'", "'.'", "'boolean'", "'char'", "'byte'", "'short'", "'int'", "'long'", "'float'", "'double'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "GlobalAnnotationKey", "LocalAnnotationKey", "Newline", "AnnotationValue", "Identifier", "Expression", "HexLiteral", "DecimalLiteral", "OctalLiteral", "FloatingPointLiteral", "StringLiteral", "HexDigit", "IntegerTypeSuffix", "Exponent", "FloatTypeSuffix", "EscapeSequence", "UnicodeEscape", "OctalEscape", "AnnotationKey", "GlobalAnnotation", "LocalAnnotation", "NamespaceDelimiter", "Letter", "IDDigit", "Whitespace", "BlockComment", "LineComment", "'var'", "','", "'ref'", "'aggregation'", "'='", "'avg'", "'min'", "'max'", "'sum'", "'count'", "'query'", "'|'", "'in'", "'out'", "'external'", "':'", "'if'", "'then'", "'and'", "'not'", "'.'", "'boolean'", "'char'", "'byte'", "'short'", "'int'", "'long'", "'float'", "'double'"
     };
     public static final int FloatTypeSuffix=18;
     public static final int OctalLiteral=12;
     public static final int LineComment=30;
     public static final int Exponent=17;
-    public static final int Newline=8;
-    public static final int AnnotationValue=6;
+    public static final int Newline=6;
+    public static final int AnnotationValue=7;
     public static final int AnnotationKey=22;
     public static final int EOF=-1;
     public static final int HexDigit=15;
-    public static final int Identifier=7;
+    public static final int Identifier=8;
     public static final int BlockComment=29;
     public static final int T__55=55;
     public static final int T__56=56;
@@ -114,7 +114,7 @@ public class TakeParser extends Parser {
         }
         public TakeParser(TokenStream input, RecognizerSharedState state) {
             super(input, state);
-            this.state.ruleMemo = new HashMap[67+1];
+            this.state.ruleMemo = new HashMap[68+1];
              
              
         }
@@ -459,7 +459,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "declaration"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:344:1: declaration : ( localAnnotation )* ( variableDeclarations | constantDeclarations | aggregationDeclaration | queryDeclaration | factStoreDeclaration | factDeclaration | ruleDeclaration ) ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:344:1: declaration : ( localAnnotation )* ( variableDeclarations | constantDeclarations | aggregationDeclaration | queryDeclaration | factStoreDeclaration | factDeclaration | ruleDeclaration ) ( Newline )* ;
     public final void declaration() throws RecognitionException {
         declaration_stack.push(new declaration_scope());
         int declaration_StartIndex = input.index();
@@ -479,8 +479,8 @@ public class TakeParser extends Parser {
          ((declaration_scope)declaration_stack.peek()).annotations = new HashMap<String, String>(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 2) ) { return ; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:347:5: ( ( localAnnotation )* ( variableDeclarations | constantDeclarations | aggregationDeclaration | queryDeclaration | factStoreDeclaration | factDeclaration | ruleDeclaration ) )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:347:9: ( localAnnotation )* ( variableDeclarations | constantDeclarations | aggregationDeclaration | queryDeclaration | factStoreDeclaration | factDeclaration | ruleDeclaration )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:347:5: ( ( localAnnotation )* ( variableDeclarations | constantDeclarations | aggregationDeclaration | queryDeclaration | factStoreDeclaration | factDeclaration | ruleDeclaration ) ( Newline )* )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:347:9: ( localAnnotation )* ( variableDeclarations | constantDeclarations | aggregationDeclaration | queryDeclaration | factStoreDeclaration | factDeclaration | ruleDeclaration ) ( Newline )*
             {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:347:9: ( localAnnotation )*
             loop2:
@@ -613,6 +613,31 @@ public class TakeParser extends Parser {
 
             }
 
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:355:11: ( Newline )*
+            loop4:
+            do {
+                int alt4=2;
+                int LA4_0 = input.LA(1);
+
+                if ( (LA4_0==Newline) ) {
+                    alt4=1;
+                }
+
+
+                switch (alt4) {
+            	case 1 :
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:0:0: Newline
+            	    {
+            	    match(input,Newline,FOLLOW_Newline_in_declaration305); if (state.failed) return ;
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop4;
+                }
+            } while (true);
+
 
             }
 
@@ -642,8 +667,8 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:359:5: ( GlobalAnnotationKey AnnotationValue )
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:359:9: GlobalAnnotationKey AnnotationValue
             {
-            GlobalAnnotationKey7=(Token)match(input,GlobalAnnotationKey,FOLLOW_GlobalAnnotationKey_in_globalAnnotation322); if (state.failed) return ;
-            AnnotationValue8=(Token)match(input,AnnotationValue,FOLLOW_AnnotationValue_in_globalAnnotation324); if (state.failed) return ;
+            GlobalAnnotationKey7=(Token)match(input,GlobalAnnotationKey,FOLLOW_GlobalAnnotationKey_in_globalAnnotation325); if (state.failed) return ;
+            AnnotationValue8=(Token)match(input,AnnotationValue,FOLLOW_AnnotationValue_in_globalAnnotation327); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                knowledgeBase.addAnnotation((GlobalAnnotationKey7!=null?GlobalAnnotationKey7.getText():null), (AnnotationValue8!=null?AnnotationValue8.getText():null)); 
             }
@@ -675,8 +700,8 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:363:5: ( LocalAnnotationKey AnnotationValue )
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:363:9: LocalAnnotationKey AnnotationValue
             {
-            LocalAnnotationKey9=(Token)match(input,LocalAnnotationKey,FOLLOW_LocalAnnotationKey_in_localAnnotation345); if (state.failed) return ;
-            AnnotationValue10=(Token)match(input,AnnotationValue,FOLLOW_AnnotationValue_in_localAnnotation347); if (state.failed) return ;
+            LocalAnnotationKey9=(Token)match(input,LocalAnnotationKey,FOLLOW_LocalAnnotationKey_in_localAnnotation348); if (state.failed) return ;
+            AnnotationValue10=(Token)match(input,AnnotationValue,FOLLOW_AnnotationValue_in_localAnnotation350); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                ((declaration_scope)declaration_stack.peek()).annotations.put((LocalAnnotationKey9!=null?LocalAnnotationKey9.getText():null), (AnnotationValue10!=null?AnnotationValue10.getText():null)); 
             }
@@ -697,7 +722,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "variableDeclarations"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:366:1: variableDeclarations returns [Collection<Variable> values] : 'var' type ids+= Identifier ( ',' ids+= Identifier )* Newline ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:366:1: variableDeclarations returns [Collection<Variable> values] : 'var' type ids+= Identifier ( ',' ids+= Identifier )* ;
     public final Collection<Variable> variableDeclarations() throws RecognitionException {
         Collection<Variable> values = null;
         int variableDeclarations_StartIndex = input.index();
@@ -709,36 +734,36 @@ public class TakeParser extends Parser {
          values = new ArrayList<Variable>(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 5) ) { return values; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:368:5: ( 'var' type ids+= Identifier ( ',' ids+= Identifier )* Newline )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:368:9: 'var' type ids+= Identifier ( ',' ids+= Identifier )* Newline
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:368:5: ( 'var' type ids+= Identifier ( ',' ids+= Identifier )* )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:368:9: 'var' type ids+= Identifier ( ',' ids+= Identifier )*
             {
-            match(input,31,FOLLOW_31_in_variableDeclarations377); if (state.failed) return values;
-            pushFollow(FOLLOW_type_in_variableDeclarations379);
+            match(input,31,FOLLOW_31_in_variableDeclarations380); if (state.failed) return values;
+            pushFollow(FOLLOW_type_in_variableDeclarations382);
             type11=type();
 
             state._fsp--;
             if (state.failed) return values;
-            ids=(Token)match(input,Identifier,FOLLOW_Identifier_in_variableDeclarations383); if (state.failed) return values;
+            ids=(Token)match(input,Identifier,FOLLOW_Identifier_in_variableDeclarations386); if (state.failed) return values;
             if (list_ids==null) list_ids=new ArrayList();
             list_ids.add(ids);
 
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:368:36: ( ',' ids+= Identifier )*
-            loop4:
+            loop5:
             do {
-                int alt4=2;
-                int LA4_0 = input.LA(1);
+                int alt5=2;
+                int LA5_0 = input.LA(1);
 
-                if ( (LA4_0==32) ) {
-                    alt4=1;
+                if ( (LA5_0==32) ) {
+                    alt5=1;
                 }
 
 
-                switch (alt4) {
+                switch (alt5) {
             	case 1 :
             	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:368:37: ',' ids+= Identifier
             	    {
-            	    match(input,32,FOLLOW_32_in_variableDeclarations386); if (state.failed) return values;
-            	    ids=(Token)match(input,Identifier,FOLLOW_Identifier_in_variableDeclarations390); if (state.failed) return values;
+            	    match(input,32,FOLLOW_32_in_variableDeclarations389); if (state.failed) return values;
+            	    ids=(Token)match(input,Identifier,FOLLOW_Identifier_in_variableDeclarations393); if (state.failed) return values;
             	    if (list_ids==null) list_ids=new ArrayList();
             	    list_ids.add(ids);
 
@@ -747,11 +772,10 @@ public class TakeParser extends Parser {
             	    break;
 
             	default :
-            	    break loop4;
+            	    break loop5;
                 }
             } while (true);
 
-            match(input,Newline,FOLLOW_Newline_in_variableDeclarations394); if (state.failed) return values;
             if ( state.backtracking==0 ) {
 
                           for (Token id : (List<Token>)list_ids) {
@@ -777,7 +801,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "constantDeclarations"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:377:1: constantDeclarations returns [Collection<Constant> values] : 'ref' type ids+= Identifier ( ',' ids+= Identifier )* Newline ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:377:1: constantDeclarations returns [Collection<Constant> values] : 'ref' type ids+= Identifier ( ',' ids+= Identifier )* ;
     public final Collection<Constant> constantDeclarations() throws RecognitionException {
         Collection<Constant> values = null;
         int constantDeclarations_StartIndex = input.index();
@@ -789,36 +813,36 @@ public class TakeParser extends Parser {
          values = new ArrayList<Constant>(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 6) ) { return values; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:379:5: ( 'ref' type ids+= Identifier ( ',' ids+= Identifier )* Newline )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:379:9: 'ref' type ids+= Identifier ( ',' ids+= Identifier )* Newline
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:379:5: ( 'ref' type ids+= Identifier ( ',' ids+= Identifier )* )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:379:9: 'ref' type ids+= Identifier ( ',' ids+= Identifier )*
             {
-            match(input,33,FOLLOW_33_in_constantDeclarations432); if (state.failed) return values;
-            pushFollow(FOLLOW_type_in_constantDeclarations434);
+            match(input,33,FOLLOW_33_in_constantDeclarations433); if (state.failed) return values;
+            pushFollow(FOLLOW_type_in_constantDeclarations435);
             type12=type();
 
             state._fsp--;
             if (state.failed) return values;
-            ids=(Token)match(input,Identifier,FOLLOW_Identifier_in_constantDeclarations438); if (state.failed) return values;
+            ids=(Token)match(input,Identifier,FOLLOW_Identifier_in_constantDeclarations439); if (state.failed) return values;
             if (list_ids==null) list_ids=new ArrayList();
             list_ids.add(ids);
 
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:379:36: ( ',' ids+= Identifier )*
-            loop5:
+            loop6:
             do {
-                int alt5=2;
-                int LA5_0 = input.LA(1);
+                int alt6=2;
+                int LA6_0 = input.LA(1);
 
-                if ( (LA5_0==32) ) {
-                    alt5=1;
+                if ( (LA6_0==32) ) {
+                    alt6=1;
                 }
 
 
-                switch (alt5) {
+                switch (alt6) {
             	case 1 :
             	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:379:37: ',' ids+= Identifier
             	    {
-            	    match(input,32,FOLLOW_32_in_constantDeclarations441); if (state.failed) return values;
-            	    ids=(Token)match(input,Identifier,FOLLOW_Identifier_in_constantDeclarations445); if (state.failed) return values;
+            	    match(input,32,FOLLOW_32_in_constantDeclarations442); if (state.failed) return values;
+            	    ids=(Token)match(input,Identifier,FOLLOW_Identifier_in_constantDeclarations446); if (state.failed) return values;
             	    if (list_ids==null) list_ids=new ArrayList();
             	    list_ids.add(ids);
 
@@ -827,11 +851,10 @@ public class TakeParser extends Parser {
             	    break;
 
             	default :
-            	    break loop5;
+            	    break loop6;
                 }
             } while (true);
 
-            match(input,Newline,FOLLOW_Newline_in_constantDeclarations449); if (state.failed) return values;
             if ( state.backtracking==0 ) {
 
                           for (Token id : (List<Token>)list_ids) {
@@ -857,7 +880,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "aggregationDeclaration"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:388:1: aggregationDeclaration returns [AggregationFunction value] : 'aggregation' Identifier '=' aggregateFunction variable predicate Newline ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:388:1: aggregationDeclaration returns [AggregationFunction value] : 'aggregation' Identifier '=' aggregateFunction variable predicate ;
     public final AggregationFunction aggregationDeclaration() throws RecognitionException {
         AggregationFunction value = null;
         int aggregationDeclaration_StartIndex = input.index();
@@ -871,28 +894,27 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 7) ) { return value; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:389:5: ( 'aggregation' Identifier '=' aggregateFunction variable predicate Newline )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:389:9: 'aggregation' Identifier '=' aggregateFunction variable predicate Newline
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:389:5: ( 'aggregation' Identifier '=' aggregateFunction variable predicate )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:389:9: 'aggregation' Identifier '=' aggregateFunction variable predicate
             {
-            match(input,34,FOLLOW_34_in_aggregationDeclaration486); if (state.failed) return value;
-            Identifier14=(Token)match(input,Identifier,FOLLOW_Identifier_in_aggregationDeclaration488); if (state.failed) return value;
-            match(input,35,FOLLOW_35_in_aggregationDeclaration490); if (state.failed) return value;
-            pushFollow(FOLLOW_aggregateFunction_in_aggregationDeclaration492);
+            match(input,34,FOLLOW_34_in_aggregationDeclaration485); if (state.failed) return value;
+            Identifier14=(Token)match(input,Identifier,FOLLOW_Identifier_in_aggregationDeclaration487); if (state.failed) return value;
+            match(input,35,FOLLOW_35_in_aggregationDeclaration489); if (state.failed) return value;
+            pushFollow(FOLLOW_aggregateFunction_in_aggregationDeclaration491);
             aggregateFunction15=aggregateFunction();
 
             state._fsp--;
             if (state.failed) return value;
-            pushFollow(FOLLOW_variable_in_aggregationDeclaration494);
+            pushFollow(FOLLOW_variable_in_aggregationDeclaration493);
             variable16=variable();
 
             state._fsp--;
             if (state.failed) return value;
-            pushFollow(FOLLOW_predicate_in_aggregationDeclaration496);
+            pushFollow(FOLLOW_predicate_in_aggregationDeclaration495);
             predicate13=predicate();
 
             state._fsp--;
             if (state.failed) return value;
-            match(input,Newline,FOLLOW_Newline_in_aggregationDeclaration498); if (state.failed) return value;
             if ( state.backtracking==0 ) {
 
                           Fact query = createAnonymousFact((predicate13!=null?predicate13.value:null), (predicate13!=null?predicate13.terms:null));
@@ -923,46 +945,46 @@ public class TakeParser extends Parser {
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 8) ) { return value; }
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:397:5: ( 'avg' | 'min' | 'max' | 'sum' | 'count' )
-            int alt6=5;
+            int alt7=5;
             switch ( input.LA(1) ) {
             case 36:
                 {
-                alt6=1;
+                alt7=1;
                 }
                 break;
             case 37:
                 {
-                alt6=2;
+                alt7=2;
                 }
                 break;
             case 38:
                 {
-                alt6=3;
+                alt7=3;
                 }
                 break;
             case 39:
                 {
-                alt6=4;
+                alt7=4;
                 }
                 break;
             case 40:
                 {
-                alt6=5;
+                alt7=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return value;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 6, 0, input);
+                    new NoViableAltException("", 7, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt6) {
+            switch (alt7) {
                 case 1 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:397:9: 'avg'
                     {
-                    match(input,36,FOLLOW_36_in_aggregateFunction531); if (state.failed) return value;
+                    match(input,36,FOLLOW_36_in_aggregateFunction528); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
                        value = Aggregations.AVG; 
                     }
@@ -972,7 +994,7 @@ public class TakeParser extends Parser {
                 case 2 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:398:9: 'min'
                     {
-                    match(input,37,FOLLOW_37_in_aggregateFunction545); if (state.failed) return value;
+                    match(input,37,FOLLOW_37_in_aggregateFunction542); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
                        value = Aggregations.MIN; 
                     }
@@ -982,7 +1004,7 @@ public class TakeParser extends Parser {
                 case 3 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:399:9: 'max'
                     {
-                    match(input,38,FOLLOW_38_in_aggregateFunction559); if (state.failed) return value;
+                    match(input,38,FOLLOW_38_in_aggregateFunction556); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
                        value = Aggregations.MAX; 
                     }
@@ -992,7 +1014,7 @@ public class TakeParser extends Parser {
                 case 4 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:400:9: 'sum'
                     {
-                    match(input,39,FOLLOW_39_in_aggregateFunction573); if (state.failed) return value;
+                    match(input,39,FOLLOW_39_in_aggregateFunction570); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
                        value = Aggregations.SUM; 
                     }
@@ -1002,7 +1024,7 @@ public class TakeParser extends Parser {
                 case 5 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:401:9: 'count'
                     {
-                    match(input,40,FOLLOW_40_in_aggregateFunction587); if (state.failed) return value;
+                    match(input,40,FOLLOW_40_in_aggregateFunction584); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
                        value = Aggregations.COUNT; 
                     }
@@ -1036,7 +1058,7 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:405:5: (variableName= Identifier {...}?)
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:405:9: variableName= Identifier {...}?
             {
-            variableName=(Token)match(input,Identifier,FOLLOW_Identifier_in_variable614); if (state.failed) return value;
+            variableName=(Token)match(input,Identifier,FOLLOW_Identifier_in_variable611); if (state.failed) return value;
             if ( !(( variableTable.containsName((variableName!=null?variableName.getText():null)) )) ) {
                 if (state.backtracking>0) {state.failed=true; return value;}
                 throw new FailedPredicateException(input, "variable", " variableTable.containsName($variableName.text) ");
@@ -1074,15 +1096,15 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:409:5: ( 'query' queryName= Identifier '|' ioStates '|' )
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:409:9: 'query' queryName= Identifier '|' ioStates '|'
             {
-            match(input,41,FOLLOW_41_in_queryDeclaration641); if (state.failed) return value;
-            queryName=(Token)match(input,Identifier,FOLLOW_Identifier_in_queryDeclaration645); if (state.failed) return value;
-            match(input,42,FOLLOW_42_in_queryDeclaration647); if (state.failed) return value;
-            pushFollow(FOLLOW_ioStates_in_queryDeclaration649);
+            match(input,41,FOLLOW_41_in_queryDeclaration638); if (state.failed) return value;
+            queryName=(Token)match(input,Identifier,FOLLOW_Identifier_in_queryDeclaration642); if (state.failed) return value;
+            match(input,42,FOLLOW_42_in_queryDeclaration644); if (state.failed) return value;
+            pushFollow(FOLLOW_ioStates_in_queryDeclaration646);
             ioStates17=ioStates();
 
             state._fsp--;
             if (state.failed) return value;
-            match(input,42,FOLLOW_42_in_queryDeclaration651); if (state.failed) return value;
+            match(input,42,FOLLOW_42_in_queryDeclaration648); if (state.failed) return value;
             if ( state.backtracking==0 ) {
 
                           value = createQueryDeclaration(queryName, ioStates17);
@@ -1120,7 +1142,7 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:417:5: (firstState= ioState ( ',' extraState= ioState )* )
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:417:9: firstState= ioState ( ',' extraState= ioState )*
             {
-            pushFollow(FOLLOW_ioState_in_ioStates691);
+            pushFollow(FOLLOW_ioState_in_ioStates688);
             firstState=ioState();
 
             state._fsp--;
@@ -1129,22 +1151,22 @@ public class TakeParser extends Parser {
                values.add(firstState); 
             }
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:417:64: ( ',' extraState= ioState )*
-            loop7:
+            loop8:
             do {
-                int alt7=2;
-                int LA7_0 = input.LA(1);
+                int alt8=2;
+                int LA8_0 = input.LA(1);
 
-                if ( (LA7_0==32) ) {
-                    alt7=1;
+                if ( (LA8_0==32) ) {
+                    alt8=1;
                 }
 
 
-                switch (alt7) {
+                switch (alt8) {
             	case 1 :
             	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:417:65: ',' extraState= ioState
             	    {
-            	    match(input,32,FOLLOW_32_in_ioStates696); if (state.failed) return values;
-            	    pushFollow(FOLLOW_ioState_in_ioStates700);
+            	    match(input,32,FOLLOW_32_in_ioStates693); if (state.failed) return values;
+            	    pushFollow(FOLLOW_ioState_in_ioStates697);
             	    extraState=ioState();
 
             	    state._fsp--;
@@ -1157,7 +1179,7 @@ public class TakeParser extends Parser {
             	    break;
 
             	default :
-            	    break loop7;
+            	    break loop8;
                 }
             } while (true);
 
@@ -1185,27 +1207,27 @@ public class TakeParser extends Parser {
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 12) ) { return value; }
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:421:5: ( 'in' | 'out' )
-            int alt8=2;
-            int LA8_0 = input.LA(1);
+            int alt9=2;
+            int LA9_0 = input.LA(1);
 
-            if ( (LA8_0==43) ) {
-                alt8=1;
+            if ( (LA9_0==43) ) {
+                alt9=1;
             }
-            else if ( (LA8_0==44) ) {
-                alt8=2;
+            else if ( (LA9_0==44) ) {
+                alt9=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return value;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 8, 0, input);
+                    new NoViableAltException("", 9, 0, input);
 
                 throw nvae;
             }
-            switch (alt8) {
+            switch (alt9) {
                 case 1 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:421:7: 'in'
                     {
-                    match(input,43,FOLLOW_43_in_ioState726); if (state.failed) return value;
+                    match(input,43,FOLLOW_43_in_ioState723); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
                        value = IOState.IN; 
                     }
@@ -1215,7 +1237,7 @@ public class TakeParser extends Parser {
                 case 2 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:422:9: 'out'
                     {
-                    match(input,44,FOLLOW_44_in_ioState740); if (state.failed) return value;
+                    match(input,44,FOLLOW_44_in_ioState737); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
                        value = IOState.OUT; 
                     }
@@ -1247,7 +1269,7 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:426:5: ( 'external' )
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:426:9: 'external'
             {
-            match(input,45,FOLLOW_45_in_factStoreDeclaration766); if (state.failed) return value;
+            match(input,45,FOLLOW_45_in_factStoreDeclaration763); if (state.failed) return value;
 
             }
 
@@ -1278,9 +1300,9 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:430:5: (factName= Identifier ':' predicate )
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:430:9: factName= Identifier ':' predicate
             {
-            factName=(Token)match(input,Identifier,FOLLOW_Identifier_in_factDeclaration791); if (state.failed) return value;
-            match(input,46,FOLLOW_46_in_factDeclaration793); if (state.failed) return value;
-            pushFollow(FOLLOW_predicate_in_factDeclaration795);
+            factName=(Token)match(input,Identifier,FOLLOW_Identifier_in_factDeclaration788); if (state.failed) return value;
+            match(input,46,FOLLOW_46_in_factDeclaration790); if (state.failed) return value;
+            pushFollow(FOLLOW_predicate_in_factDeclaration792);
             predicate18=predicate();
 
             state._fsp--;
@@ -1322,16 +1344,16 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:437:5: (ruleName= Identifier ':' 'if' body= prerequisites 'then' predicate )
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:437:9: ruleName= Identifier ':' 'if' body= prerequisites 'then' predicate
             {
-            ruleName=(Token)match(input,Identifier,FOLLOW_Identifier_in_ruleDeclaration830); if (state.failed) return value;
-            match(input,46,FOLLOW_46_in_ruleDeclaration832); if (state.failed) return value;
-            match(input,47,FOLLOW_47_in_ruleDeclaration834); if (state.failed) return value;
-            pushFollow(FOLLOW_prerequisites_in_ruleDeclaration838);
+            ruleName=(Token)match(input,Identifier,FOLLOW_Identifier_in_ruleDeclaration827); if (state.failed) return value;
+            match(input,46,FOLLOW_46_in_ruleDeclaration829); if (state.failed) return value;
+            match(input,47,FOLLOW_47_in_ruleDeclaration831); if (state.failed) return value;
+            pushFollow(FOLLOW_prerequisites_in_ruleDeclaration835);
             body=prerequisites();
 
             state._fsp--;
             if (state.failed) return value;
-            match(input,48,FOLLOW_48_in_ruleDeclaration840); if (state.failed) return value;
-            pushFollow(FOLLOW_predicate_in_ruleDeclaration842);
+            match(input,48,FOLLOW_48_in_ruleDeclaration837); if (state.failed) return value;
+            pushFollow(FOLLOW_predicate_in_ruleDeclaration839);
             predicate19=predicate();
 
             state._fsp--;
@@ -1374,7 +1396,7 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:446:5: (firstPrerequisite= prerequisite ( 'and' extraPrerequisite= prerequisite )* )
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:446:9: firstPrerequisite= prerequisite ( 'and' extraPrerequisite= prerequisite )*
             {
-            pushFollow(FOLLOW_prerequisite_in_prerequisites886);
+            pushFollow(FOLLOW_prerequisite_in_prerequisites883);
             firstPrerequisite=prerequisite();
 
             state._fsp--;
@@ -1383,22 +1405,22 @@ public class TakeParser extends Parser {
                values.add(firstPrerequisite); 
             }
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:446:83: ( 'and' extraPrerequisite= prerequisite )*
-            loop9:
+            loop10:
             do {
-                int alt9=2;
-                int LA9_0 = input.LA(1);
+                int alt10=2;
+                int LA10_0 = input.LA(1);
 
-                if ( (LA9_0==49) ) {
-                    alt9=1;
+                if ( (LA10_0==49) ) {
+                    alt10=1;
                 }
 
 
-                switch (alt9) {
+                switch (alt10) {
             	case 1 :
             	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:446:84: 'and' extraPrerequisite= prerequisite
             	    {
-            	    match(input,49,FOLLOW_49_in_prerequisites891); if (state.failed) return values;
-            	    pushFollow(FOLLOW_prerequisite_in_prerequisites895);
+            	    match(input,49,FOLLOW_49_in_prerequisites888); if (state.failed) return values;
+            	    pushFollow(FOLLOW_prerequisite_in_prerequisites892);
             	    extraPrerequisite=prerequisite();
 
             	    state._fsp--;
@@ -1411,7 +1433,7 @@ public class TakeParser extends Parser {
             	    break;
 
             	default :
-            	    break loop9;
+            	    break loop10;
                 }
             } while (true);
 
@@ -1444,27 +1466,27 @@ public class TakeParser extends Parser {
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 17) ) { return value; }
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:450:5: ( factPrerequisite | expressionPrerequisite )
-            int alt10=2;
-            int LA10_0 = input.LA(1);
+            int alt11=2;
+            int LA11_0 = input.LA(1);
 
-            if ( (LA10_0==Identifier||LA10_0==50) ) {
-                alt10=1;
+            if ( (LA11_0==Identifier||LA11_0==50) ) {
+                alt11=1;
             }
-            else if ( (LA10_0==Expression) ) {
-                alt10=2;
+            else if ( (LA11_0==Expression) ) {
+                alt11=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return value;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 10, 0, input);
+                    new NoViableAltException("", 11, 0, input);
 
                 throw nvae;
             }
-            switch (alt10) {
+            switch (alt11) {
                 case 1 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:450:9: factPrerequisite
                     {
-                    pushFollow(FOLLOW_factPrerequisite_in_prerequisite922);
+                    pushFollow(FOLLOW_factPrerequisite_in_prerequisite919);
                     factPrerequisite20=factPrerequisite();
 
                     state._fsp--;
@@ -1478,7 +1500,7 @@ public class TakeParser extends Parser {
                 case 2 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:451:9: expressionPrerequisite
                     {
-                    pushFollow(FOLLOW_expressionPrerequisite_in_prerequisite934);
+                    pushFollow(FOLLOW_expressionPrerequisite_in_prerequisite931);
                     expressionPrerequisite21=expressionPrerequisite();
 
                     state._fsp--;
@@ -1517,7 +1539,7 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:455:5: ( negatablePredicate )
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:455:9: negatablePredicate
             {
-            pushFollow(FOLLOW_negatablePredicate_in_factPrerequisite959);
+            pushFollow(FOLLOW_negatablePredicate_in_factPrerequisite956);
             negatablePredicate22=negatablePredicate();
 
             state._fsp--;
@@ -1555,7 +1577,7 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:462:5: ( Expression {...}?)
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:462:9: Expression {...}?
             {
-            Expression23=(Token)match(input,Expression,FOLLOW_Expression_in_expressionPrerequisite990); if (state.failed) return value;
+            Expression23=(Token)match(input,Expression,FOLLOW_Expression_in_expressionPrerequisite987); if (state.failed) return value;
             if ( !(( isValidPrerequisiteExpression((Expression23!=null?Expression23.getText():null)) )) ) {
                 if (state.backtracking>0) {state.failed=true; return value;}
                 throw new FailedPredicateException(input, "expressionPrerequisite", " isValidPrerequisiteExpression($Expression.text) ");
@@ -1599,28 +1621,28 @@ public class TakeParser extends Parser {
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 20) ) { return retval; }
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:469:2: ( 'not' predicate | predicate )
-            int alt11=2;
-            int LA11_0 = input.LA(1);
+            int alt12=2;
+            int LA12_0 = input.LA(1);
 
-            if ( (LA11_0==50) ) {
-                alt11=1;
+            if ( (LA12_0==50) ) {
+                alt12=1;
             }
-            else if ( (LA11_0==Identifier) ) {
-                alt11=2;
+            else if ( (LA12_0==Identifier) ) {
+                alt12=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return retval;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 11, 0, input);
+                    new NoViableAltException("", 12, 0, input);
 
                 throw nvae;
             }
-            switch (alt11) {
+            switch (alt12) {
                 case 1 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:469:6: 'not' predicate
                     {
-                    match(input,50,FOLLOW_50_in_negatablePredicate1022); if (state.failed) return retval;
-                    pushFollow(FOLLOW_predicate_in_negatablePredicate1024);
+                    match(input,50,FOLLOW_50_in_negatablePredicate1019); if (state.failed) return retval;
+                    pushFollow(FOLLOW_predicate_in_negatablePredicate1021);
                     predicate24=predicate();
 
                     state._fsp--;
@@ -1634,7 +1656,7 @@ public class TakeParser extends Parser {
                 case 2 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:470:6: predicate
                     {
-                    pushFollow(FOLLOW_predicate_in_negatablePredicate1033);
+                    pushFollow(FOLLOW_predicate_in_negatablePredicate1030);
                     predicate25=predicate();
 
                     state._fsp--;
@@ -1680,13 +1702,13 @@ public class TakeParser extends Parser {
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 21) ) { return retval; }
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:474:5: ( existingPredicate | newPredicate )
-            int alt12=2;
-            alt12 = dfa12.predict(input);
-            switch (alt12) {
+            int alt13=2;
+            alt13 = dfa13.predict(input);
+            switch (alt13) {
                 case 1 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:474:9: existingPredicate
                     {
-                    pushFollow(FOLLOW_existingPredicate_in_predicate1061);
+                    pushFollow(FOLLOW_existingPredicate_in_predicate1058);
                     existingPredicate26=existingPredicate();
 
                     state._fsp--;
@@ -1700,7 +1722,7 @@ public class TakeParser extends Parser {
                 case 2 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:475:9: newPredicate
                     {
-                    pushFollow(FOLLOW_newPredicate_in_predicate1074);
+                    pushFollow(FOLLOW_newPredicate_in_predicate1071);
                     newPredicate27=newPredicate();
 
                     state._fsp--;
@@ -1747,14 +1769,14 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:479:2: (predicateName= Identifier '|' params= terms '|' {...}?)
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:479:6: predicateName= Identifier '|' params= terms '|' {...}?
             {
-            predicateName=(Token)match(input,Identifier,FOLLOW_Identifier_in_existingPredicate1109); if (state.failed) return retval;
-            match(input,42,FOLLOW_42_in_existingPredicate1111); if (state.failed) return retval;
-            pushFollow(FOLLOW_terms_in_existingPredicate1115);
+            predicateName=(Token)match(input,Identifier,FOLLOW_Identifier_in_existingPredicate1101); if (state.failed) return retval;
+            match(input,42,FOLLOW_42_in_existingPredicate1103); if (state.failed) return retval;
+            pushFollow(FOLLOW_terms_in_existingPredicate1107);
             params=terms();
 
             state._fsp--;
             if (state.failed) return retval;
-            match(input,42,FOLLOW_42_in_existingPredicate1117); if (state.failed) return retval;
+            match(input,42,FOLLOW_42_in_existingPredicate1109); if (state.failed) return retval;
             if ( !(( predicateTable.containsName((predicateName!=null?predicateName.getText():null)) )) ) {
                 if (state.backtracking>0) {state.failed=true; return retval;}
                 throw new FailedPredicateException(input, "existingPredicate", " predicateTable.containsName($predicateName.text) ");
@@ -1802,14 +1824,14 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:487:5: (predicateName= Identifier '|' params= terms '|' )
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:487:9: predicateName= Identifier '|' params= terms '|'
             {
-            predicateName=(Token)match(input,Identifier,FOLLOW_Identifier_in_newPredicate1149); if (state.failed) return retval;
-            match(input,42,FOLLOW_42_in_newPredicate1151); if (state.failed) return retval;
-            pushFollow(FOLLOW_terms_in_newPredicate1155);
+            predicateName=(Token)match(input,Identifier,FOLLOW_Identifier_in_newPredicate1141); if (state.failed) return retval;
+            match(input,42,FOLLOW_42_in_newPredicate1143); if (state.failed) return retval;
+            pushFollow(FOLLOW_terms_in_newPredicate1147);
             params=terms();
 
             state._fsp--;
             if (state.failed) return retval;
-            match(input,42,FOLLOW_42_in_newPredicate1157); if (state.failed) return retval;
+            match(input,42,FOLLOW_42_in_newPredicate1149); if (state.failed) return retval;
             if ( state.backtracking==0 ) {
 
                           retval.value = createPredicate((predicateName!=null?predicateName.getText():null), params);
@@ -1850,7 +1872,7 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:496:5: (firstTerm= term ( ',' extraTerm= term )* )
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:496:9: firstTerm= term ( ',' extraTerm= term )*
             {
-            pushFollow(FOLLOW_term_in_terms1197);
+            pushFollow(FOLLOW_term_in_terms1189);
             firstTerm=term();
 
             state._fsp--;
@@ -1859,22 +1881,22 @@ public class TakeParser extends Parser {
                values.add(firstTerm); 
             }
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:496:59: ( ',' extraTerm= term )*
-            loop13:
+            loop14:
             do {
-                int alt13=2;
-                int LA13_0 = input.LA(1);
+                int alt14=2;
+                int LA14_0 = input.LA(1);
 
-                if ( (LA13_0==32) ) {
-                    alt13=1;
+                if ( (LA14_0==32) ) {
+                    alt14=1;
                 }
 
 
-                switch (alt13) {
+                switch (alt14) {
             	case 1 :
             	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:496:60: ',' extraTerm= term
             	    {
-            	    match(input,32,FOLLOW_32_in_terms1202); if (state.failed) return values;
-            	    pushFollow(FOLLOW_term_in_terms1206);
+            	    match(input,32,FOLLOW_32_in_terms1194); if (state.failed) return values;
+            	    pushFollow(FOLLOW_term_in_terms1198);
             	    extraTerm=term();
 
             	    state._fsp--;
@@ -1887,7 +1909,7 @@ public class TakeParser extends Parser {
             	    break;
 
             	default :
-            	    break loop13;
+            	    break loop14;
                 }
             } while (true);
 
@@ -1920,7 +1942,7 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:500:5: ( complexTerm )
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:500:9: complexTerm
             {
-            pushFollow(FOLLOW_complexTerm_in_term1237);
+            pushFollow(FOLLOW_complexTerm_in_term1229);
             complexTerm28=complexTerm();
 
             state._fsp--;
@@ -1957,7 +1979,7 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:504:9: t= ( Expression | Identifier | HexLiteral | DecimalLiteral | OctalLiteral | FloatingPointLiteral | StringLiteral ) {...}?
             {
             t=(Token)input.LT(1);
-            if ( input.LA(1)==Identifier||(input.LA(1)>=Expression && input.LA(1)<=StringLiteral) ) {
+            if ( (input.LA(1)>=Identifier && input.LA(1)<=StringLiteral) ) {
                 input.consume();
                 state.errorRecovery=false;state.failed=false;
             }
@@ -2005,27 +2027,27 @@ public class TakeParser extends Parser {
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 27) ) { return value; }
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:512:5: ( classOrInterfaceType | primitiveType )
-            int alt14=2;
-            int LA14_0 = input.LA(1);
+            int alt15=2;
+            int LA15_0 = input.LA(1);
 
-            if ( (LA14_0==Identifier) ) {
-                alt14=1;
+            if ( (LA15_0==Identifier) ) {
+                alt15=1;
             }
-            else if ( ((LA14_0>=52 && LA14_0<=59)) ) {
-                alt14=2;
+            else if ( ((LA15_0>=52 && LA15_0<=59)) ) {
+                alt15=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return value;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 14, 0, input);
+                    new NoViableAltException("", 15, 0, input);
 
                 throw nvae;
             }
-            switch (alt14) {
+            switch (alt15) {
                 case 1 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:512:9: classOrInterfaceType
                     {
-                    pushFollow(FOLLOW_classOrInterfaceType_in_type1338);
+                    pushFollow(FOLLOW_classOrInterfaceType_in_type1330);
                     classOrInterfaceType29=classOrInterfaceType();
 
                     state._fsp--;
@@ -2039,7 +2061,7 @@ public class TakeParser extends Parser {
                 case 2 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:513:9: primitiveType
                     {
-                    pushFollow(FOLLOW_primitiveType_in_type1351);
+                    pushFollow(FOLLOW_primitiveType_in_type1343);
                     primitiveType30=primitiveType();
 
                     state._fsp--;
@@ -2078,7 +2100,7 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:517:5: ( qualifiedName {...}?)
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:517:9: qualifiedName {...}?
             {
-            pushFollow(FOLLOW_qualifiedName_in_classOrInterfaceType1384);
+            pushFollow(FOLLOW_qualifiedName_in_classOrInterfaceType1376);
             qualifiedName31=qualifiedName();
 
             state._fsp--;
@@ -2121,30 +2143,30 @@ public class TakeParser extends Parser {
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:524:5: ( Identifier ( '.' Identifier )* )
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:524:9: Identifier ( '.' Identifier )*
             {
-            match(input,Identifier,FOLLOW_Identifier_in_qualifiedName1415); if (state.failed) return retval;
+            match(input,Identifier,FOLLOW_Identifier_in_qualifiedName1407); if (state.failed) return retval;
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:524:20: ( '.' Identifier )*
-            loop15:
+            loop16:
             do {
-                int alt15=2;
-                int LA15_0 = input.LA(1);
+                int alt16=2;
+                int LA16_0 = input.LA(1);
 
-                if ( (LA15_0==51) ) {
-                    alt15=1;
+                if ( (LA16_0==51) ) {
+                    alt16=1;
                 }
 
 
-                switch (alt15) {
+                switch (alt16) {
             	case 1 :
             	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:524:21: '.' Identifier
             	    {
-            	    match(input,51,FOLLOW_51_in_qualifiedName1418); if (state.failed) return retval;
-            	    match(input,Identifier,FOLLOW_Identifier_in_qualifiedName1420); if (state.failed) return retval;
+            	    match(input,51,FOLLOW_51_in_qualifiedName1410); if (state.failed) return retval;
+            	    match(input,Identifier,FOLLOW_Identifier_in_qualifiedName1412); if (state.failed) return retval;
 
             	    }
             	    break;
 
             	default :
-            	    break loop15;
+            	    break loop16;
                 }
             } while (true);
 
@@ -2174,61 +2196,61 @@ public class TakeParser extends Parser {
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 30) ) { return value; }
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:528:5: ( 'boolean' | 'char' | 'byte' | 'short' | 'int' | 'long' | 'float' | 'double' )
-            int alt16=8;
+            int alt17=8;
             switch ( input.LA(1) ) {
             case 52:
                 {
-                alt16=1;
+                alt17=1;
                 }
                 break;
             case 53:
                 {
-                alt16=2;
+                alt17=2;
                 }
                 break;
             case 54:
                 {
-                alt16=3;
+                alt17=3;
                 }
                 break;
             case 55:
                 {
-                alt16=4;
+                alt17=4;
                 }
                 break;
             case 56:
                 {
-                alt16=5;
+                alt17=5;
                 }
                 break;
             case 57:
                 {
-                alt16=6;
+                alt17=6;
                 }
                 break;
             case 58:
                 {
-                alt16=7;
+                alt17=7;
                 }
                 break;
             case 59:
                 {
-                alt16=8;
+                alt17=8;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return value;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 16, 0, input);
+                    new NoViableAltException("", 17, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt16) {
+            switch (alt17) {
                 case 1 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:528:9: 'boolean'
                     {
-                    match(input,52,FOLLOW_52_in_primitiveType1445); if (state.failed) return value;
+                    match(input,52,FOLLOW_52_in_primitiveType1437); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
                        value = Boolean.TYPE; 
                     }
@@ -2238,7 +2260,7 @@ public class TakeParser extends Parser {
                 case 2 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:529:9: 'char'
                     {
-                    match(input,53,FOLLOW_53_in_primitiveType1458); if (state.failed) return value;
+                    match(input,53,FOLLOW_53_in_primitiveType1450); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
                        value = Character.TYPE; 
                     }
@@ -2248,7 +2270,7 @@ public class TakeParser extends Parser {
                 case 3 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:530:9: 'byte'
                     {
-                    match(input,54,FOLLOW_54_in_primitiveType1474); if (state.failed) return value;
+                    match(input,54,FOLLOW_54_in_primitiveType1466); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
                        value = Byte.TYPE; 
                     }
@@ -2258,7 +2280,7 @@ public class TakeParser extends Parser {
                 case 4 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:531:9: 'short'
                     {
-                    match(input,55,FOLLOW_55_in_primitiveType1490); if (state.failed) return value;
+                    match(input,55,FOLLOW_55_in_primitiveType1482); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
                        value = Short.TYPE; 
                     }
@@ -2268,7 +2290,7 @@ public class TakeParser extends Parser {
                 case 5 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:532:9: 'int'
                     {
-                    match(input,56,FOLLOW_56_in_primitiveType1505); if (state.failed) return value;
+                    match(input,56,FOLLOW_56_in_primitiveType1497); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
                        value = Integer.TYPE; 
                     }
@@ -2278,7 +2300,7 @@ public class TakeParser extends Parser {
                 case 6 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:533:9: 'long'
                     {
-                    match(input,57,FOLLOW_57_in_primitiveType1522); if (state.failed) return value;
+                    match(input,57,FOLLOW_57_in_primitiveType1514); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
                        value = Long.TYPE; 
                     }
@@ -2288,7 +2310,7 @@ public class TakeParser extends Parser {
                 case 7 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:534:9: 'float'
                     {
-                    match(input,58,FOLLOW_58_in_primitiveType1538); if (state.failed) return value;
+                    match(input,58,FOLLOW_58_in_primitiveType1530); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
                        value = Float.TYPE; 
                     }
@@ -2298,7 +2320,7 @@ public class TakeParser extends Parser {
                 case 8 :
                     // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:535:9: 'double'
                     {
-                    match(input,59,FOLLOW_59_in_primitiveType1553); if (state.failed) return value;
+                    match(input,59,FOLLOW_59_in_primitiveType1545); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
                        value = Double.TYPE; 
                     }
@@ -2319,12 +2341,12 @@ public class TakeParser extends Parser {
     }
     // $ANTLR end "primitiveType"
 
-    // $ANTLR start synpred21_Take
-    public final void synpred21_Take_fragment() throws RecognitionException {   
+    // $ANTLR start synpred22_Take
+    public final void synpred22_Take_fragment() throws RecognitionException {   
         // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:474:9: ( existingPredicate )
         // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:474:9: existingPredicate
         {
-        pushFollow(FOLLOW_existingPredicate_in_synpred21_Take1061);
+        pushFollow(FOLLOW_existingPredicate_in_synpred22_Take1058);
         existingPredicate();
 
         state._fsp--;
@@ -2332,15 +2354,15 @@ public class TakeParser extends Parser {
 
         }
     }
-    // $ANTLR end synpred21_Take
+    // $ANTLR end synpred22_Take
 
     // Delegated rules
 
-    public final boolean synpred21_Take() {
+    public final boolean synpred22_Take() {
         state.backtracking++;
         int start = input.mark();
         try {
-            synpred21_Take_fragment(); // can never throw exception
+            synpred22_Take_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -2353,13 +2375,13 @@ public class TakeParser extends Parser {
 
 
     protected DFA3 dfa3 = new DFA3(this);
-    protected DFA12 dfa12 = new DFA12(this);
+    protected DFA13 dfa13 = new DFA13(this);
     static final String DFA3_eotS =
         "\12\uffff";
     static final String DFA3_eofS =
         "\12\uffff";
     static final String DFA3_minS =
-        "\1\7\5\uffff\1\56\1\7\2\uffff";
+        "\1\10\5\uffff\1\56\1\10\2\uffff";
     static final String DFA3_maxS =
         "\1\55\5\uffff\1\56\1\57\2\uffff";
     static final String DFA3_acceptS =
@@ -2367,14 +2389,14 @@ public class TakeParser extends Parser {
     static final String DFA3_specialS =
         "\12\uffff}>";
     static final String[] DFA3_transitionS = {
-            "\1\6\27\uffff\1\1\1\uffff\1\2\1\3\6\uffff\1\4\3\uffff\1\5",
+            "\1\6\26\uffff\1\1\1\uffff\1\2\1\3\6\uffff\1\4\3\uffff\1\5",
             "",
             "",
             "",
             "",
             "",
             "\1\7",
-            "\1\11\47\uffff\1\10",
+            "\1\11\46\uffff\1\10",
             "",
             ""
     };
@@ -2412,58 +2434,58 @@ public class TakeParser extends Parser {
             return "348:9: ( variableDeclarations | constantDeclarations | aggregationDeclaration | queryDeclaration | factStoreDeclaration | factDeclaration | ruleDeclaration )";
         }
     }
-    static final String DFA12_eotS =
+    static final String DFA13_eotS =
         "\11\uffff";
-    static final String DFA12_eofS =
+    static final String DFA13_eofS =
         "\11\uffff";
-    static final String DFA12_minS =
-        "\1\7\1\52\1\7\1\40\1\7\1\0\1\40\2\uffff";
-    static final String DFA12_maxS =
-        "\1\7\1\52\1\16\1\52\1\16\1\0\1\52\2\uffff";
-    static final String DFA12_acceptS =
+    static final String DFA13_minS =
+        "\1\10\1\52\1\10\1\40\1\10\1\0\1\40\2\uffff";
+    static final String DFA13_maxS =
+        "\1\10\1\52\1\16\1\52\1\16\1\0\1\52\2\uffff";
+    static final String DFA13_acceptS =
         "\7\uffff\1\1\1\2";
-    static final String DFA12_specialS =
+    static final String DFA13_specialS =
         "\5\uffff\1\0\3\uffff}>";
-    static final String[] DFA12_transitionS = {
+    static final String[] DFA13_transitionS = {
             "\1\1",
             "\1\2",
-            "\1\3\1\uffff\6\3",
+            "\7\3",
             "\1\4\11\uffff\1\5",
-            "\1\6\1\uffff\6\6",
+            "\7\6",
             "\1\uffff",
             "\1\4\11\uffff\1\5",
             "",
             ""
     };
 
-    static final short[] DFA12_eot = DFA.unpackEncodedString(DFA12_eotS);
-    static final short[] DFA12_eof = DFA.unpackEncodedString(DFA12_eofS);
-    static final char[] DFA12_min = DFA.unpackEncodedStringToUnsignedChars(DFA12_minS);
-    static final char[] DFA12_max = DFA.unpackEncodedStringToUnsignedChars(DFA12_maxS);
-    static final short[] DFA12_accept = DFA.unpackEncodedString(DFA12_acceptS);
-    static final short[] DFA12_special = DFA.unpackEncodedString(DFA12_specialS);
-    static final short[][] DFA12_transition;
+    static final short[] DFA13_eot = DFA.unpackEncodedString(DFA13_eotS);
+    static final short[] DFA13_eof = DFA.unpackEncodedString(DFA13_eofS);
+    static final char[] DFA13_min = DFA.unpackEncodedStringToUnsignedChars(DFA13_minS);
+    static final char[] DFA13_max = DFA.unpackEncodedStringToUnsignedChars(DFA13_maxS);
+    static final short[] DFA13_accept = DFA.unpackEncodedString(DFA13_acceptS);
+    static final short[] DFA13_special = DFA.unpackEncodedString(DFA13_specialS);
+    static final short[][] DFA13_transition;
 
     static {
-        int numStates = DFA12_transitionS.length;
-        DFA12_transition = new short[numStates][];
+        int numStates = DFA13_transitionS.length;
+        DFA13_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA12_transition[i] = DFA.unpackEncodedString(DFA12_transitionS[i]);
+            DFA13_transition[i] = DFA.unpackEncodedString(DFA13_transitionS[i]);
         }
     }
 
-    class DFA12 extends DFA {
+    class DFA13 extends DFA {
 
-        public DFA12(BaseRecognizer recognizer) {
+        public DFA13(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 12;
-            this.eot = DFA12_eot;
-            this.eof = DFA12_eof;
-            this.min = DFA12_min;
-            this.max = DFA12_max;
-            this.accept = DFA12_accept;
-            this.special = DFA12_special;
-            this.transition = DFA12_transition;
+            this.decisionNumber = 13;
+            this.eot = DFA13_eot;
+            this.eof = DFA13_eof;
+            this.min = DFA13_min;
+            this.max = DFA13_max;
+            this.accept = DFA13_accept;
+            this.special = DFA13_special;
+            this.transition = DFA13_transition;
         }
         public String getDescription() {
             return "473:1: predicate returns [Predicate value, TermList terms] : ( existingPredicate | newPredicate );";
@@ -2473,128 +2495,126 @@ public class TakeParser extends Parser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA12_5 = input.LA(1);
+                        int LA13_5 = input.LA(1);
 
                          
-                        int index12_5 = input.index();
+                        int index13_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred21_Take()) ) {s = 7;}
+                        if ( (synpred22_Take()) ) {s = 7;}
 
                         else if ( (true) ) {s = 8;}
 
                          
-                        input.seek(index12_5);
+                        input.seek(index13_5);
                         if ( s>=0 ) return s;
                         break;
             }
             if (state.backtracking>0) {state.failed=true; return -1;}
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 12, _s, input);
+                new NoViableAltException(getDescription(), 13, _s, input);
             error(nvae);
             throw nvae;
         }
     }
  
 
-    public static final BitSet FOLLOW_globalAnnotation_in_script97 = new BitSet(new long[]{0x00002206800000B2L});
-    public static final BitSet FOLLOW_declaration_in_script111 = new BitSet(new long[]{0x00002206800000B2L});
-    public static final BitSet FOLLOW_localAnnotation_in_declaration150 = new BitSet(new long[]{0x00002206800000B0L});
-    public static final BitSet FOLLOW_variableDeclarations_in_declaration165 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_constantDeclarations_in_declaration184 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_aggregationDeclaration_in_declaration203 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_queryDeclaration_in_declaration217 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_factStoreDeclaration_in_declaration240 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_factDeclaration_in_declaration259 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDeclaration_in_declaration283 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_GlobalAnnotationKey_in_globalAnnotation322 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_AnnotationValue_in_globalAnnotation324 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LocalAnnotationKey_in_localAnnotation345 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_AnnotationValue_in_localAnnotation347 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_variableDeclarations377 = new BitSet(new long[]{0x0FF0000000000080L});
-    public static final BitSet FOLLOW_type_in_variableDeclarations379 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_Identifier_in_variableDeclarations383 = new BitSet(new long[]{0x0000000100000100L});
-    public static final BitSet FOLLOW_32_in_variableDeclarations386 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_Identifier_in_variableDeclarations390 = new BitSet(new long[]{0x0000000100000100L});
-    public static final BitSet FOLLOW_Newline_in_variableDeclarations394 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_33_in_constantDeclarations432 = new BitSet(new long[]{0x0FF0000000000080L});
-    public static final BitSet FOLLOW_type_in_constantDeclarations434 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_Identifier_in_constantDeclarations438 = new BitSet(new long[]{0x0000000100000100L});
-    public static final BitSet FOLLOW_32_in_constantDeclarations441 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_Identifier_in_constantDeclarations445 = new BitSet(new long[]{0x0000000100000100L});
-    public static final BitSet FOLLOW_Newline_in_constantDeclarations449 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_34_in_aggregationDeclaration486 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_Identifier_in_aggregationDeclaration488 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_35_in_aggregationDeclaration490 = new BitSet(new long[]{0x000001F000000000L});
-    public static final BitSet FOLLOW_aggregateFunction_in_aggregationDeclaration492 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_variable_in_aggregationDeclaration494 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_predicate_in_aggregationDeclaration496 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_Newline_in_aggregationDeclaration498 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_36_in_aggregateFunction531 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_37_in_aggregateFunction545 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_38_in_aggregateFunction559 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_39_in_aggregateFunction573 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_40_in_aggregateFunction587 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_Identifier_in_variable614 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_41_in_queryDeclaration641 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_Identifier_in_queryDeclaration645 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_42_in_queryDeclaration647 = new BitSet(new long[]{0x0000180000000000L});
-    public static final BitSet FOLLOW_ioStates_in_queryDeclaration649 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_42_in_queryDeclaration651 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ioState_in_ioStates691 = new BitSet(new long[]{0x0000000100000002L});
-    public static final BitSet FOLLOW_32_in_ioStates696 = new BitSet(new long[]{0x0000180000000000L});
-    public static final BitSet FOLLOW_ioState_in_ioStates700 = new BitSet(new long[]{0x0000000100000002L});
-    public static final BitSet FOLLOW_43_in_ioState726 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_44_in_ioState740 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_45_in_factStoreDeclaration766 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_Identifier_in_factDeclaration791 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_factDeclaration793 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_predicate_in_factDeclaration795 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_Identifier_in_ruleDeclaration830 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_ruleDeclaration832 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_47_in_ruleDeclaration834 = new BitSet(new long[]{0x0004000000000280L});
-    public static final BitSet FOLLOW_prerequisites_in_ruleDeclaration838 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_48_in_ruleDeclaration840 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_predicate_in_ruleDeclaration842 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_prerequisite_in_prerequisites886 = new BitSet(new long[]{0x0002000000000002L});
-    public static final BitSet FOLLOW_49_in_prerequisites891 = new BitSet(new long[]{0x0004000000000280L});
-    public static final BitSet FOLLOW_prerequisite_in_prerequisites895 = new BitSet(new long[]{0x0002000000000002L});
-    public static final BitSet FOLLOW_factPrerequisite_in_prerequisite922 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_expressionPrerequisite_in_prerequisite934 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_negatablePredicate_in_factPrerequisite959 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_Expression_in_expressionPrerequisite990 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_50_in_negatablePredicate1022 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_predicate_in_negatablePredicate1024 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_predicate_in_negatablePredicate1033 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_existingPredicate_in_predicate1061 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_newPredicate_in_predicate1074 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_Identifier_in_existingPredicate1109 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_42_in_existingPredicate1111 = new BitSet(new long[]{0x0000000000007E80L});
-    public static final BitSet FOLLOW_terms_in_existingPredicate1115 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_42_in_existingPredicate1117 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_Identifier_in_newPredicate1149 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_42_in_newPredicate1151 = new BitSet(new long[]{0x0000000000007E80L});
-    public static final BitSet FOLLOW_terms_in_newPredicate1155 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_42_in_newPredicate1157 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_term_in_terms1197 = new BitSet(new long[]{0x0000000100000002L});
-    public static final BitSet FOLLOW_32_in_terms1202 = new BitSet(new long[]{0x0000000000007E80L});
-    public static final BitSet FOLLOW_term_in_terms1206 = new BitSet(new long[]{0x0000000100000002L});
-    public static final BitSet FOLLOW_complexTerm_in_term1237 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_set_in_complexTerm1265 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_classOrInterfaceType_in_type1338 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_primitiveType_in_type1351 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_qualifiedName_in_classOrInterfaceType1384 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_Identifier_in_qualifiedName1415 = new BitSet(new long[]{0x0008000000000002L});
-    public static final BitSet FOLLOW_51_in_qualifiedName1418 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_Identifier_in_qualifiedName1420 = new BitSet(new long[]{0x0008000000000002L});
-    public static final BitSet FOLLOW_52_in_primitiveType1445 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_53_in_primitiveType1458 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_54_in_primitiveType1474 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_55_in_primitiveType1490 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_56_in_primitiveType1505 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_57_in_primitiveType1522 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_58_in_primitiveType1538 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_59_in_primitiveType1553 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_existingPredicate_in_synpred21_Take1061 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_globalAnnotation_in_script97 = new BitSet(new long[]{0x0000220680000132L});
+    public static final BitSet FOLLOW_declaration_in_script111 = new BitSet(new long[]{0x0000220680000132L});
+    public static final BitSet FOLLOW_localAnnotation_in_declaration150 = new BitSet(new long[]{0x0000220680000170L});
+    public static final BitSet FOLLOW_variableDeclarations_in_declaration165 = new BitSet(new long[]{0x0000000000000042L});
+    public static final BitSet FOLLOW_constantDeclarations_in_declaration184 = new BitSet(new long[]{0x0000000000000042L});
+    public static final BitSet FOLLOW_aggregationDeclaration_in_declaration203 = new BitSet(new long[]{0x0000000000000042L});
+    public static final BitSet FOLLOW_queryDeclaration_in_declaration217 = new BitSet(new long[]{0x0000000000000042L});
+    public static final BitSet FOLLOW_factStoreDeclaration_in_declaration240 = new BitSet(new long[]{0x0000000000000042L});
+    public static final BitSet FOLLOW_factDeclaration_in_declaration259 = new BitSet(new long[]{0x0000000000000042L});
+    public static final BitSet FOLLOW_ruleDeclaration_in_declaration283 = new BitSet(new long[]{0x0000000000000042L});
+    public static final BitSet FOLLOW_Newline_in_declaration305 = new BitSet(new long[]{0x0000000000000042L});
+    public static final BitSet FOLLOW_GlobalAnnotationKey_in_globalAnnotation325 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_AnnotationValue_in_globalAnnotation327 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_LocalAnnotationKey_in_localAnnotation348 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_AnnotationValue_in_localAnnotation350 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_31_in_variableDeclarations380 = new BitSet(new long[]{0x0FF0000000000100L});
+    public static final BitSet FOLLOW_type_in_variableDeclarations382 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_Identifier_in_variableDeclarations386 = new BitSet(new long[]{0x0000000100000002L});
+    public static final BitSet FOLLOW_32_in_variableDeclarations389 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_Identifier_in_variableDeclarations393 = new BitSet(new long[]{0x0000000100000002L});
+    public static final BitSet FOLLOW_33_in_constantDeclarations433 = new BitSet(new long[]{0x0FF0000000000100L});
+    public static final BitSet FOLLOW_type_in_constantDeclarations435 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_Identifier_in_constantDeclarations439 = new BitSet(new long[]{0x0000000100000002L});
+    public static final BitSet FOLLOW_32_in_constantDeclarations442 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_Identifier_in_constantDeclarations446 = new BitSet(new long[]{0x0000000100000002L});
+    public static final BitSet FOLLOW_34_in_aggregationDeclaration485 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_Identifier_in_aggregationDeclaration487 = new BitSet(new long[]{0x0000000800000000L});
+    public static final BitSet FOLLOW_35_in_aggregationDeclaration489 = new BitSet(new long[]{0x000001F000000000L});
+    public static final BitSet FOLLOW_aggregateFunction_in_aggregationDeclaration491 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_variable_in_aggregationDeclaration493 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_predicate_in_aggregationDeclaration495 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_36_in_aggregateFunction528 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_37_in_aggregateFunction542 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_38_in_aggregateFunction556 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_39_in_aggregateFunction570 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_40_in_aggregateFunction584 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_Identifier_in_variable611 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_41_in_queryDeclaration638 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_Identifier_in_queryDeclaration642 = new BitSet(new long[]{0x0000040000000000L});
+    public static final BitSet FOLLOW_42_in_queryDeclaration644 = new BitSet(new long[]{0x0000180000000000L});
+    public static final BitSet FOLLOW_ioStates_in_queryDeclaration646 = new BitSet(new long[]{0x0000040000000000L});
+    public static final BitSet FOLLOW_42_in_queryDeclaration648 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ioState_in_ioStates688 = new BitSet(new long[]{0x0000000100000002L});
+    public static final BitSet FOLLOW_32_in_ioStates693 = new BitSet(new long[]{0x0000180000000000L});
+    public static final BitSet FOLLOW_ioState_in_ioStates697 = new BitSet(new long[]{0x0000000100000002L});
+    public static final BitSet FOLLOW_43_in_ioState723 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_44_in_ioState737 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_45_in_factStoreDeclaration763 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_Identifier_in_factDeclaration788 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_factDeclaration790 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_predicate_in_factDeclaration792 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_Identifier_in_ruleDeclaration827 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_ruleDeclaration829 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_47_in_ruleDeclaration831 = new BitSet(new long[]{0x0004000000000300L});
+    public static final BitSet FOLLOW_prerequisites_in_ruleDeclaration835 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_ruleDeclaration837 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_predicate_in_ruleDeclaration839 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_prerequisite_in_prerequisites883 = new BitSet(new long[]{0x0002000000000002L});
+    public static final BitSet FOLLOW_49_in_prerequisites888 = new BitSet(new long[]{0x0004000000000300L});
+    public static final BitSet FOLLOW_prerequisite_in_prerequisites892 = new BitSet(new long[]{0x0002000000000002L});
+    public static final BitSet FOLLOW_factPrerequisite_in_prerequisite919 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_expressionPrerequisite_in_prerequisite931 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_negatablePredicate_in_factPrerequisite956 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_Expression_in_expressionPrerequisite987 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_50_in_negatablePredicate1019 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_predicate_in_negatablePredicate1021 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_predicate_in_negatablePredicate1030 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_existingPredicate_in_predicate1058 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_newPredicate_in_predicate1071 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_Identifier_in_existingPredicate1101 = new BitSet(new long[]{0x0000040000000000L});
+    public static final BitSet FOLLOW_42_in_existingPredicate1103 = new BitSet(new long[]{0x0000000000007F00L});
+    public static final BitSet FOLLOW_terms_in_existingPredicate1107 = new BitSet(new long[]{0x0000040000000000L});
+    public static final BitSet FOLLOW_42_in_existingPredicate1109 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_Identifier_in_newPredicate1141 = new BitSet(new long[]{0x0000040000000000L});
+    public static final BitSet FOLLOW_42_in_newPredicate1143 = new BitSet(new long[]{0x0000000000007F00L});
+    public static final BitSet FOLLOW_terms_in_newPredicate1147 = new BitSet(new long[]{0x0000040000000000L});
+    public static final BitSet FOLLOW_42_in_newPredicate1149 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_term_in_terms1189 = new BitSet(new long[]{0x0000000100000002L});
+    public static final BitSet FOLLOW_32_in_terms1194 = new BitSet(new long[]{0x0000000000007F00L});
+    public static final BitSet FOLLOW_term_in_terms1198 = new BitSet(new long[]{0x0000000100000002L});
+    public static final BitSet FOLLOW_complexTerm_in_term1229 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_set_in_complexTerm1257 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_classOrInterfaceType_in_type1330 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_primitiveType_in_type1343 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_qualifiedName_in_classOrInterfaceType1376 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_Identifier_in_qualifiedName1407 = new BitSet(new long[]{0x0008000000000002L});
+    public static final BitSet FOLLOW_51_in_qualifiedName1410 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_Identifier_in_qualifiedName1412 = new BitSet(new long[]{0x0008000000000002L});
+    public static final BitSet FOLLOW_52_in_primitiveType1437 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_53_in_primitiveType1450 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_54_in_primitiveType1466 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_55_in_primitiveType1482 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_56_in_primitiveType1497 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_57_in_primitiveType1514 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_58_in_primitiveType1530 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_59_in_primitiveType1545 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_existingPredicate_in_synpred22_Take1058 = new BitSet(new long[]{0x0000000000000002L});
 
 }
