@@ -264,6 +264,37 @@ public class ParserTests {
 		assertTrue(prereq2.getLanguage() instanceof MVEL2ExpressionLanguage);
 	}
 
+	@Test
+	public void testRules7() throws Exception {
+		String script = 
+			"var java.lang.String person1,person2,person3\n"+
+			"var java.lang.String grandchild,father,grandfather\n"+
+			"query is_grandfather_of|in,out|\n"+
+			"rule2: if is_father_of|grandchild,father| and is_father_of|father,grandfather| then is_grandfather_of|grandchild,grandfather|\n"+
+			"fact1: is_father_of|\"Frank\",\"Lutz\"|\n"+
+			"fact2: is_father_of|\"Guenther\", \"Otto\"|\n"+
+			"fact3: is_father_of|\"Jens\", \"Klaus\"|\n"+
+			"fact4: is_father_of|\"Lutz\", \"Otto\"|\n"+
+			"fact5: is_father_of|\"Klaus\", \"Otto\"|\n"+
+			"fact6: is_father_of|\"Max\",\"Jens\"|\n"+
+			"fact7: is_father_of|\"Ralf\", \"Lutz\"|\n"+
+			"fact8: is_father_of|\"Werner\", \"Otto\"|";
+		
+		KnowledgeBase kb = new Parser().parse(new StringReader(script));
+		
+		assertEquals(9,kb.getElements().size());
+		
+		assertEquals("rule2",kb.getElements().get(0).getId());
+		assertEquals("fact1",kb.getElements().get(1).getId());
+		assertEquals("fact2",kb.getElements().get(2).getId());
+		assertEquals("fact3",kb.getElements().get(3).getId());
+		assertEquals("fact4",kb.getElements().get(4).getId());
+		assertEquals("fact5",kb.getElements().get(5).getId());
+		assertEquals("fact6",kb.getElements().get(6).getId());
+		assertEquals("fact7",kb.getElements().get(7).getId());
+		assertEquals("fact8",kb.getElements().get(8).getId());
+
+	}
 	
 	@Test
 	public void testQueries1() throws Exception {

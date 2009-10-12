@@ -22,6 +22,7 @@ import nz.org.take.ExternalFactStore;
 import nz.org.take.Fact;
 import nz.org.take.FactPrerequisite;
 import nz.org.take.KnowledgeBase;
+import nz.org.take.Predicate;
 import nz.org.take.Query;
 import nz.org.take.Term;
 import nz.org.take.Variable;
@@ -173,6 +174,14 @@ public class Parser {
 
 	private void postParse(KnowledgeBase kb,Map<String,Constant> constants,Map<String,Variable> variables) {
 		kb.accept(new TermReplacer(constants,variables));
+		copyQueryAnnotations(kb);
+	}
+	// copy query annotations to predicates
+	private void copyQueryAnnotations(KnowledgeBase kb) {
+		for (Query q:kb.getQueries()) {
+			Predicate p = q.getPredicate();
+			p.addAnnotations(q.getAnnotations());
+		}
 	}
 	
 	

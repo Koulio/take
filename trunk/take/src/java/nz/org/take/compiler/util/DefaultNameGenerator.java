@@ -13,6 +13,7 @@ package nz.org.take.compiler.util;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import nz.org.take.AggregationFunction;
 import nz.org.take.AnnotationKeys;
@@ -52,7 +53,7 @@ public class DefaultNameGenerator implements NameGenerator {
 	 * @see org.mandarax.compiler.NameGenerator#getAccessorNameForSlot(org.mandarax.kernel.Predicate, int)
 	 */
 	public String getAccessorNameForSlot(Predicate p,int slot) {
-		String s = p.getSlotNames()[slot];
+		String s = getVariableNameForSlot(p,slot);
 		return this.createJavaName(s,"get");
 	}
 
@@ -60,7 +61,7 @@ public class DefaultNameGenerator implements NameGenerator {
 	 * @see org.mandarax.compiler.NameGenerator#getMutatorNameForSlot(org.mandarax.kernel.Predicate, int)
 	 */
 	public String getMutatorNameForSlot(Predicate p,int slot) {
-		String s = p.getSlotNames()[slot];
+		String s = getVariableNameForSlot(p,slot);
 		return this.createJavaName(s,"set");
 	}
 
@@ -69,6 +70,18 @@ public class DefaultNameGenerator implements NameGenerator {
 	 */
 	public String getVariableNameForSlot(Predicate p,int slot) {
 		String s = p.getSlotNames()[slot];
+		String annotated = p.getAnnotation(AnnotationKeys.TAKE_GENERATE_SLOTS);
+		if (annotated!=null) {
+			StringTokenizer tokenizer = new StringTokenizer(annotated,",");
+			int counter=0;
+			if (slot<tokenizer.countTokens()) {
+				while (tokenizer.hasMoreTokens() && counter<slot) {
+					tokenizer.nextToken();
+					counter=counter+1;
+				}
+				s = tokenizer.nextToken();
+			}
+		}
 		return createJavaName(s,null);
 	}
 	
