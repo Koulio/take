@@ -352,7 +352,7 @@ scope { Map<String, String> annotations; }
         |   factStoreDeclaration    { annotate($factStoreDeclaration.value); }
         |   factDeclaration         { annotate($factDeclaration.value); }
         |   ruleDeclaration         { annotate($ruleDeclaration.value); }
-        )
+        ) Newline*
     ;
 
 globalAnnotation
@@ -365,7 +365,7 @@ localAnnotation
 
 variableDeclarations returns [Collection<Variable> values]
 @init { $values = new ArrayList<Variable>(); }
-    :   'var' type ids+=Identifier (',' ids+=Identifier)* Newline
+    :   'var' type ids+=Identifier (',' ids+=Identifier)*
         {
             for (Token id : (List<Token>)$ids) {
             	Variable variable = createVariable(id.getText(), $type.value);
@@ -376,7 +376,7 @@ variableDeclarations returns [Collection<Variable> values]
 
 constantDeclarations returns [Collection<Constant> values]
 @init { $values = new ArrayList<Constant>(); }
-    :   'ref' type ids+=Identifier (',' ids+=Identifier)* Newline
+    :   'ref' type ids+=Identifier (',' ids+=Identifier)*
         {
             for (Token id : (List<Token>)$ids) {
                 Constant constant = createConstant(id.getText(), $type.value);
@@ -386,7 +386,7 @@ constantDeclarations returns [Collection<Constant> values]
     ;
     
 aggregationDeclaration returns [AggregationFunction value]
-    :   'aggregation' Identifier '=' aggregateFunction variable predicate Newline
+    :   'aggregation' Identifier '=' aggregateFunction variable predicate
         {
             Fact query = createAnonymousFact($predicate.value, $predicate.terms);
             $value = createAggregationFunction($Identifier.text, $aggregateFunction.value, $variable.value, query);
@@ -472,7 +472,7 @@ negatablePredicate returns [Predicate value, TermList terms]
 
 predicate returns [Predicate value, TermList terms]
     :   existingPredicate  { $value = $existingPredicate.value; $terms = $existingPredicate.terms; }
-    |   newPredicate            { $value = $newPredicate.value; $terms = $newPredicate.terms; }
+    |   newPredicate       { $value = $newPredicate.value; $terms = $newPredicate.terms; }
     ;
 
 existingPredicate returns [Predicate value, TermList terms]

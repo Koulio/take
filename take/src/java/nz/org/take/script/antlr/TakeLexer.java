@@ -1,4 +1,4 @@
-// $ANTLR 3.1.1 /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g 2009-10-12 11:28:48
+// $ANTLR 3.1.1 /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g 2009-10-12 16:08:42
 
 package nz.org.take.script.antlr;
 
@@ -16,12 +16,12 @@ public class TakeLexer extends Lexer {
     public static final int OctalLiteral=12;
     public static final int LineComment=30;
     public static final int Exponent=17;
-    public static final int Newline=8;
-    public static final int AnnotationValue=6;
+    public static final int Newline=6;
+    public static final int AnnotationValue=7;
     public static final int AnnotationKey=22;
     public static final int EOF=-1;
     public static final int HexDigit=15;
-    public static final int Identifier=7;
+    public static final int Identifier=8;
     public static final int T__55=55;
     public static final int BlockComment=29;
     public static final int T__56=56;

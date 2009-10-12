@@ -156,7 +156,8 @@ public class ParserTests {
 	
 	@Test
 	public void testRules5() throws Exception {
-		String script =  "// test3\nexternal factstore1: cond|java.util.Date,long|";
+		String script = 
+			"external factstore1: cond|java.util.Date,long|";
 		KnowledgeBase kb = new Parser().parse(new StringReader(script));
 		assertEquals(1,kb.getElements().size());
 		ExternalFactStore x = (ExternalFactStore)kb.getElement("factstore1");
@@ -247,7 +248,7 @@ public class ParserTests {
 	@Test
 	public void testQueries1() throws Exception {
 		String script = 
-			"// query cond|in,out|\n"+
+			"query cond|in,out| \n" +
 			"fact1: cond|true,false|\n";
 		KnowledgeBase kb = new Parser().parse(new StringReader(script));
 		assertEquals(1,kb.getQueries().size());
@@ -264,12 +265,12 @@ public class ParserTests {
 			"@@dc:date=26/04/2007\n"+
 			"var java.lang.String person1,person2,person3\n"+
 			"var java.lang.String grandchild,father,grandfather\n"+
-			"// query cond2|in,in|\n"+
+			"query cond2|in,in|\n"+
 			"rule1: if cond1|person1,person2| then cond2|person1,person2|\n";
 		KnowledgeBase kb = new Parser().parse(new StringReader(script));
 		assertEquals(1,kb.getQueries().size());
 		Query q = kb.getQueries().get(0);
-		assertEquals("cond",q.getPredicate().getName());
+		assertEquals("cond2",q.getPredicate().getName());
 		assertEquals(2,q.getPredicate().getSlotTypes().length);
 		assertEquals(true,q.getInputParams()[0]);
 		assertEquals(true,q.getInputParams()[1]);

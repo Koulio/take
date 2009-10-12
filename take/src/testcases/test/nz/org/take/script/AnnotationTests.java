@@ -44,7 +44,7 @@ public class AnnotationTests extends AbstractParserTests {
 	public void testDotNamespacesInAnnotationKey() throws Exception {
 		KnowledgeBase kb = parse(
                 "@take.compilerhint.method=getGrandfather \n" +
-                "fact: predicate| true |  \n"
+                "fact: predicate| true |                  \n"
         );
 		KnowledgeElement fact = kb.getElement("fact");
 		assertAnnotatedWith(fact, "take.compilerhint.method", "getGrandfather");
