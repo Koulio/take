@@ -268,43 +268,37 @@ public class ParserTests {
 	@Test
 	public void testQueries1() throws Exception {
 		String script = 
-			"query cond|in,out| \n" +
-			"fact1: cond|true,false|\n";
+			"query cond|in,out|       \n" +
+			"fact1: cond|true,false|  \n";
 		KnowledgeBase kb = new Parser().parse(new StringReader(script));
+		
 		assertEquals(1,kb.getQueries().size());
-		Query q = kb.getQueries().get(0);
-		assertEquals("cond",q.getPredicate().getName());
-		assertEquals(2,q.getPredicate().getSlotTypes().length);
-		assertEquals(true,q.getInputParams()[0]);
-		assertEquals(false,q.getInputParams()[1]);
+		
+		assertContainsQuery(kb.getQueries(), "/cond[in,out]");
 	}
 	
 	@Test
 	public void testQueries2() throws Exception {
-		String script = "@@dc:creator=jens dietrich\n"+
-			"@@dc:date=26/04/2007\n"+
-			"var java.lang.String person1,person2,person3\n"+
-			"var java.lang.String grandchild,father,grandfather\n"+
-			"query cond2|in,in|\n"+
-			"rule1: if cond1|person1,person2| then cond2|person1,person2|\n";
+		String script =
+			"var java.lang.String person1,person2,person3                  \n"+
+			"var java.lang.String grandchild,father,grandfather            \n"+
+			"query cond2|in,in|                                            \n"+
+			"rule1: if cond1|person1,person2| then cond2|person1,person2|  \n";
 		KnowledgeBase kb = new Parser().parse(new StringReader(script));
+		
 		assertEquals(1,kb.getQueries().size());
-		Query q = kb.getQueries().get(0);
-		assertEquals("cond2",q.getPredicate().getName());
-		assertEquals(2,q.getPredicate().getSlotTypes().length);
-		assertEquals(true,q.getInputParams()[0]);
-		assertEquals(true,q.getInputParams()[1]);
+		
+		assertContainsQuery(kb.getQueries(), "/cond2[in,in]");
 	}
 	// multiple queries for same predicate
 	@Test
 	public void testQueries3() throws Exception {
-		String script = "@@dc:creator=jens dietrich\n"+
-			"@@dc:date=26/04/2007\n"+
-			"var java.lang.String person1,person2,person3\n"+
-			"var java.lang.String grandchild,father,grandfather\n"+
-			"query cond_2|in,in|\n"+
-			"query cond_2|out,in|\n"+
-			"rule1: if cond1|person1,person2| then cond_2|person1,person2|\n";
+		String script =
+			"var java.lang.String person1,person2,person3                   \n"+
+			"var java.lang.String grandchild,father,grandfather             \n"+
+			"query cond_2|in,in|                                            \n"+
+			"query cond_2|out,in|                                           \n"+
+			"rule1: if cond1|person1,person2| then cond_2|person1,person2|  \n";
 		KnowledgeBase kb = new Parser().parse(new StringReader(script));
 		
 		assertEquals(2,kb.getQueries().size());

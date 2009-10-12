@@ -8,7 +8,7 @@ public class DuplicateSymbolException extends Exception {
 	private final String symbolName;
 	
 	public DuplicateSymbolException(String symbolName) {
-		super(String.format("A symbol with the name '{0}' already exists.", symbolName));
+		super(String.format("A symbol with the name '%1$s' already exists.", symbolName));
 		
 		this.symbolName = symbolName;
 	}

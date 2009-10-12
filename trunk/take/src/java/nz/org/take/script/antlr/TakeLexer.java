@@ -1,4 +1,4 @@
-// $ANTLR 3.1.1 /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g 2009-10-12 22:23:15
+// $ANTLR 3.1.1 /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g 2009-10-12 23:51:38
 
 package nz.org.take.script.antlr;
 
@@ -713,8 +713,8 @@ public class TakeLexer extends Lexer {
         try {
             int _type = HexLiteral;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:540:12: ( '0' ( 'x' | 'X' ) ( HexDigit )+ ( IntegerTypeSuffix )? )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:540:14: '0' ( 'x' | 'X' ) ( HexDigit )+ ( IntegerTypeSuffix )?
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:548:12: ( '0' ( 'x' | 'X' ) ( HexDigit )+ ( IntegerTypeSuffix )? )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:548:14: '0' ( 'x' | 'X' ) ( HexDigit )+ ( IntegerTypeSuffix )?
             {
             match('0'); 
             if ( input.LA(1)=='X'||input.LA(1)=='x' ) {
@@ -726,7 +726,7 @@ public class TakeLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:540:28: ( HexDigit )+
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:548:28: ( HexDigit )+
             int cnt1=0;
             loop1:
             do {
@@ -740,7 +740,7 @@ public class TakeLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:540:28: HexDigit
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:548:28: HexDigit
             	    {
             	    mHexDigit(); 
 
@@ -756,7 +756,7 @@ public class TakeLexer extends Lexer {
                 cnt1++;
             } while (true);
 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:540:38: ( IntegerTypeSuffix )?
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:548:38: ( IntegerTypeSuffix )?
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -765,7 +765,7 @@ public class TakeLexer extends Lexer {
             }
             switch (alt2) {
                 case 1 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:540:38: IntegerTypeSuffix
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:548:38: IntegerTypeSuffix
                     {
                     mIntegerTypeSuffix(); 
 
@@ -790,10 +790,10 @@ public class TakeLexer extends Lexer {
         try {
             int _type = DecimalLiteral;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:542:16: ( ( '0' | '1' .. '9' ( '0' .. '9' )* ) ( IntegerTypeSuffix )? )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:542:18: ( '0' | '1' .. '9' ( '0' .. '9' )* ) ( IntegerTypeSuffix )?
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:550:16: ( ( '0' | '1' .. '9' ( '0' .. '9' )* ) ( IntegerTypeSuffix )? )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:550:18: ( '0' | '1' .. '9' ( '0' .. '9' )* ) ( IntegerTypeSuffix )?
             {
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:542:18: ( '0' | '1' .. '9' ( '0' .. '9' )* )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:550:18: ( '0' | '1' .. '9' ( '0' .. '9' )* )
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -811,17 +811,17 @@ public class TakeLexer extends Lexer {
             }
             switch (alt4) {
                 case 1 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:542:19: '0'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:550:19: '0'
                     {
                     match('0'); 
 
                     }
                     break;
                 case 2 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:542:25: '1' .. '9' ( '0' .. '9' )*
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:550:25: '1' .. '9' ( '0' .. '9' )*
                     {
                     matchRange('1','9'); 
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:542:34: ( '0' .. '9' )*
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:550:34: ( '0' .. '9' )*
                     loop3:
                     do {
                         int alt3=2;
@@ -834,7 +834,7 @@ public class TakeLexer extends Lexer {
 
                         switch (alt3) {
                     	case 1 :
-                    	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:542:34: '0' .. '9'
+                    	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:550:34: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -852,7 +852,7 @@ public class TakeLexer extends Lexer {
 
             }
 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:542:45: ( IntegerTypeSuffix )?
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:550:45: ( IntegerTypeSuffix )?
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -861,7 +861,7 @@ public class TakeLexer extends Lexer {
             }
             switch (alt5) {
                 case 1 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:542:45: IntegerTypeSuffix
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:550:45: IntegerTypeSuffix
                     {
                     mIntegerTypeSuffix(); 
 
@@ -886,11 +886,11 @@ public class TakeLexer extends Lexer {
         try {
             int _type = OctalLiteral;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:544:14: ( '0' ( '0' .. '7' )+ ( IntegerTypeSuffix )? )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:544:16: '0' ( '0' .. '7' )+ ( IntegerTypeSuffix )?
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:552:14: ( '0' ( '0' .. '7' )+ ( IntegerTypeSuffix )? )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:552:16: '0' ( '0' .. '7' )+ ( IntegerTypeSuffix )?
             {
             match('0'); 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:544:20: ( '0' .. '7' )+
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:552:20: ( '0' .. '7' )+
             int cnt6=0;
             loop6:
             do {
@@ -904,7 +904,7 @@ public class TakeLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:544:21: '0' .. '7'
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:552:21: '0' .. '7'
             	    {
             	    matchRange('0','7'); 
 
@@ -920,7 +920,7 @@ public class TakeLexer extends Lexer {
                 cnt6++;
             } while (true);
 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:544:32: ( IntegerTypeSuffix )?
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:552:32: ( IntegerTypeSuffix )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -929,7 +929,7 @@ public class TakeLexer extends Lexer {
             }
             switch (alt7) {
                 case 1 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:544:32: IntegerTypeSuffix
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:552:32: IntegerTypeSuffix
                     {
                     mIntegerTypeSuffix(); 
 
@@ -952,8 +952,8 @@ public class TakeLexer extends Lexer {
     // $ANTLR start "HexDigit"
     public final void mHexDigit() throws RecognitionException {
         try {
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:547:10: ( ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' ) )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:547:12: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:555:10: ( ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' ) )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:555:12: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )
             {
             if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='F')||(input.LA(1)>='a' && input.LA(1)<='f') ) {
                 input.consume();
@@ -976,8 +976,8 @@ public class TakeLexer extends Lexer {
     // $ANTLR start "IntegerTypeSuffix"
     public final void mIntegerTypeSuffix() throws RecognitionException {
         try {
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:550:19: ( ( 'l' | 'L' ) )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:550:21: ( 'l' | 'L' )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:558:19: ( ( 'l' | 'L' ) )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:558:21: ( 'l' | 'L' )
             {
             if ( input.LA(1)=='L'||input.LA(1)=='l' ) {
                 input.consume();
@@ -1002,14 +1002,14 @@ public class TakeLexer extends Lexer {
         try {
             int _type = FloatingPointLiteral;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:553:5: ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( Exponent )? ( FloatTypeSuffix )? | '.' ( '0' .. '9' )+ ( Exponent )? ( FloatTypeSuffix )? | ( '0' .. '9' )+ Exponent ( FloatTypeSuffix )? | ( '0' .. '9' )+ FloatTypeSuffix )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:561:5: ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( Exponent )? ( FloatTypeSuffix )? | '.' ( '0' .. '9' )+ ( Exponent )? ( FloatTypeSuffix )? | ( '0' .. '9' )+ Exponent ( FloatTypeSuffix )? | ( '0' .. '9' )+ FloatTypeSuffix )
             int alt18=4;
             alt18 = dfa18.predict(input);
             switch (alt18) {
                 case 1 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:553:9: ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( Exponent )? ( FloatTypeSuffix )?
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:561:9: ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( Exponent )? ( FloatTypeSuffix )?
                     {
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:553:9: ( '0' .. '9' )+
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:561:9: ( '0' .. '9' )+
                     int cnt8=0;
                     loop8:
                     do {
@@ -1023,7 +1023,7 @@ public class TakeLexer extends Lexer {
 
                         switch (alt8) {
                     	case 1 :
-                    	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:553:10: '0' .. '9'
+                    	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:561:10: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -1040,7 +1040,7 @@ public class TakeLexer extends Lexer {
                     } while (true);
 
                     match('.'); 
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:553:25: ( '0' .. '9' )*
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:561:25: ( '0' .. '9' )*
                     loop9:
                     do {
                         int alt9=2;
@@ -1053,7 +1053,7 @@ public class TakeLexer extends Lexer {
 
                         switch (alt9) {
                     	case 1 :
-                    	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:553:26: '0' .. '9'
+                    	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:561:26: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -1065,7 +1065,7 @@ public class TakeLexer extends Lexer {
                         }
                     } while (true);
 
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:553:37: ( Exponent )?
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:561:37: ( Exponent )?
                     int alt10=2;
                     int LA10_0 = input.LA(1);
 
@@ -1074,7 +1074,7 @@ public class TakeLexer extends Lexer {
                     }
                     switch (alt10) {
                         case 1 :
-                            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:553:37: Exponent
+                            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:561:37: Exponent
                             {
                             mExponent(); 
 
@@ -1083,7 +1083,7 @@ public class TakeLexer extends Lexer {
 
                     }
 
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:553:47: ( FloatTypeSuffix )?
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:561:47: ( FloatTypeSuffix )?
                     int alt11=2;
                     int LA11_0 = input.LA(1);
 
@@ -1092,7 +1092,7 @@ public class TakeLexer extends Lexer {
                     }
                     switch (alt11) {
                         case 1 :
-                            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:553:47: FloatTypeSuffix
+                            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:561:47: FloatTypeSuffix
                             {
                             mFloatTypeSuffix(); 
 
@@ -1105,10 +1105,10 @@ public class TakeLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:554:9: '.' ( '0' .. '9' )+ ( Exponent )? ( FloatTypeSuffix )?
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:562:9: '.' ( '0' .. '9' )+ ( Exponent )? ( FloatTypeSuffix )?
                     {
                     match('.'); 
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:554:13: ( '0' .. '9' )+
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:562:13: ( '0' .. '9' )+
                     int cnt12=0;
                     loop12:
                     do {
@@ -1122,7 +1122,7 @@ public class TakeLexer extends Lexer {
 
                         switch (alt12) {
                     	case 1 :
-                    	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:554:14: '0' .. '9'
+                    	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:562:14: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -1138,7 +1138,7 @@ public class TakeLexer extends Lexer {
                         cnt12++;
                     } while (true);
 
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:554:25: ( Exponent )?
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:562:25: ( Exponent )?
                     int alt13=2;
                     int LA13_0 = input.LA(1);
 
@@ -1147,7 +1147,7 @@ public class TakeLexer extends Lexer {
                     }
                     switch (alt13) {
                         case 1 :
-                            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:554:25: Exponent
+                            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:562:25: Exponent
                             {
                             mExponent(); 
 
@@ -1156,7 +1156,7 @@ public class TakeLexer extends Lexer {
 
                     }
 
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:554:35: ( FloatTypeSuffix )?
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:562:35: ( FloatTypeSuffix )?
                     int alt14=2;
                     int LA14_0 = input.LA(1);
 
@@ -1165,7 +1165,7 @@ public class TakeLexer extends Lexer {
                     }
                     switch (alt14) {
                         case 1 :
-                            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:554:35: FloatTypeSuffix
+                            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:562:35: FloatTypeSuffix
                             {
                             mFloatTypeSuffix(); 
 
@@ -1178,9 +1178,9 @@ public class TakeLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:555:9: ( '0' .. '9' )+ Exponent ( FloatTypeSuffix )?
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:563:9: ( '0' .. '9' )+ Exponent ( FloatTypeSuffix )?
                     {
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:555:9: ( '0' .. '9' )+
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:563:9: ( '0' .. '9' )+
                     int cnt15=0;
                     loop15:
                     do {
@@ -1194,7 +1194,7 @@ public class TakeLexer extends Lexer {
 
                         switch (alt15) {
                     	case 1 :
-                    	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:555:10: '0' .. '9'
+                    	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:563:10: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -1211,7 +1211,7 @@ public class TakeLexer extends Lexer {
                     } while (true);
 
                     mExponent(); 
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:555:30: ( FloatTypeSuffix )?
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:563:30: ( FloatTypeSuffix )?
                     int alt16=2;
                     int LA16_0 = input.LA(1);
 
@@ -1220,7 +1220,7 @@ public class TakeLexer extends Lexer {
                     }
                     switch (alt16) {
                         case 1 :
-                            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:555:30: FloatTypeSuffix
+                            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:563:30: FloatTypeSuffix
                             {
                             mFloatTypeSuffix(); 
 
@@ -1233,9 +1233,9 @@ public class TakeLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:556:9: ( '0' .. '9' )+ FloatTypeSuffix
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:564:9: ( '0' .. '9' )+ FloatTypeSuffix
                     {
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:556:9: ( '0' .. '9' )+
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:564:9: ( '0' .. '9' )+
                     int cnt17=0;
                     loop17:
                     do {
@@ -1249,7 +1249,7 @@ public class TakeLexer extends Lexer {
 
                         switch (alt17) {
                     	case 1 :
-                    	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:556:10: '0' .. '9'
+                    	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:564:10: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -1282,8 +1282,8 @@ public class TakeLexer extends Lexer {
     // $ANTLR start "Exponent"
     public final void mExponent() throws RecognitionException {
         try {
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:560:10: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:560:12: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:568:10: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:568:12: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
             {
             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                 input.consume();
@@ -1294,7 +1294,7 @@ public class TakeLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:560:22: ( '+' | '-' )?
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:568:22: ( '+' | '-' )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -1320,7 +1320,7 @@ public class TakeLexer extends Lexer {
 
             }
 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:560:33: ( '0' .. '9' )+
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:568:33: ( '0' .. '9' )+
             int cnt20=0;
             loop20:
             do {
@@ -1334,7 +1334,7 @@ public class TakeLexer extends Lexer {
 
                 switch (alt20) {
             	case 1 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:560:34: '0' .. '9'
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:568:34: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -1362,8 +1362,8 @@ public class TakeLexer extends Lexer {
     // $ANTLR start "FloatTypeSuffix"
     public final void mFloatTypeSuffix() throws RecognitionException {
         try {
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:563:17: ( ( 'f' | 'F' | 'd' | 'D' ) )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:563:19: ( 'f' | 'F' | 'd' | 'D' )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:571:17: ( ( 'f' | 'F' | 'd' | 'D' ) )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:571:19: ( 'f' | 'F' | 'd' | 'D' )
             {
             if ( input.LA(1)=='D'||input.LA(1)=='F'||input.LA(1)=='d'||input.LA(1)=='f' ) {
                 input.consume();
@@ -1388,11 +1388,11 @@ public class TakeLexer extends Lexer {
         try {
             int _type = StringLiteral;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:566:5: ( '\"' ( EscapeSequence | ~ ( '\\\\' | '\"' ) )* '\"' )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:566:8: '\"' ( EscapeSequence | ~ ( '\\\\' | '\"' ) )* '\"'
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:574:5: ( '\"' ( EscapeSequence | ~ ( '\\\\' | '\"' ) )* '\"' )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:574:8: '\"' ( EscapeSequence | ~ ( '\\\\' | '\"' ) )* '\"'
             {
             match('\"'); 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:566:12: ( EscapeSequence | ~ ( '\\\\' | '\"' ) )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:574:12: ( EscapeSequence | ~ ( '\\\\' | '\"' ) )*
             loop21:
             do {
                 int alt21=3;
@@ -1408,14 +1408,14 @@ public class TakeLexer extends Lexer {
 
                 switch (alt21) {
             	case 1 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:566:14: EscapeSequence
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:574:14: EscapeSequence
             	    {
             	    mEscapeSequence(); 
 
             	    }
             	    break;
             	case 2 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:566:31: ~ ( '\\\\' | '\"' )
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:574:31: ~ ( '\\\\' | '\"' )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1450,7 +1450,7 @@ public class TakeLexer extends Lexer {
     // $ANTLR start "EscapeSequence"
     public final void mEscapeSequence() throws RecognitionException {
         try {
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:571:5: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) | UnicodeEscape | OctalEscape )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:579:5: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) | UnicodeEscape | OctalEscape )
             int alt22=3;
             int LA22_0 = input.LA(1);
 
@@ -1501,7 +1501,7 @@ public class TakeLexer extends Lexer {
             }
             switch (alt22) {
                 case 1 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:571:9: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:579:9: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
                     {
                     match('\\'); 
                     if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1517,14 +1517,14 @@ public class TakeLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:572:9: UnicodeEscape
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:580:9: UnicodeEscape
                     {
                     mUnicodeEscape(); 
 
                     }
                     break;
                 case 3 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:573:9: OctalEscape
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:581:9: OctalEscape
                     {
                     mOctalEscape(); 
 
@@ -1541,7 +1541,7 @@ public class TakeLexer extends Lexer {
     // $ANTLR start "OctalEscape"
     public final void mOctalEscape() throws RecognitionException {
         try {
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:578:5: ( '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:586:5: ( '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) )
             int alt23=3;
             int LA23_0 = input.LA(1);
 
@@ -1587,25 +1587,25 @@ public class TakeLexer extends Lexer {
             }
             switch (alt23) {
                 case 1 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:578:9: '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' )
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:586:9: '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' )
                     {
                     match('\\'); 
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:578:14: ( '0' .. '3' )
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:578:15: '0' .. '3'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:586:14: ( '0' .. '3' )
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:586:15: '0' .. '3'
                     {
                     matchRange('0','3'); 
 
                     }
 
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:578:25: ( '0' .. '7' )
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:578:26: '0' .. '7'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:586:25: ( '0' .. '7' )
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:586:26: '0' .. '7'
                     {
                     matchRange('0','7'); 
 
                     }
 
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:578:36: ( '0' .. '7' )
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:578:37: '0' .. '7'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:586:36: ( '0' .. '7' )
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:586:37: '0' .. '7'
                     {
                     matchRange('0','7'); 
 
@@ -1615,18 +1615,18 @@ public class TakeLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:579:9: '\\\\' ( '0' .. '7' ) ( '0' .. '7' )
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:587:9: '\\\\' ( '0' .. '7' ) ( '0' .. '7' )
                     {
                     match('\\'); 
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:579:14: ( '0' .. '7' )
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:579:15: '0' .. '7'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:587:14: ( '0' .. '7' )
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:587:15: '0' .. '7'
                     {
                     matchRange('0','7'); 
 
                     }
 
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:579:25: ( '0' .. '7' )
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:579:26: '0' .. '7'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:587:25: ( '0' .. '7' )
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:587:26: '0' .. '7'
                     {
                     matchRange('0','7'); 
 
@@ -1636,11 +1636,11 @@ public class TakeLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:580:9: '\\\\' ( '0' .. '7' )
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:588:9: '\\\\' ( '0' .. '7' )
                     {
                     match('\\'); 
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:580:14: ( '0' .. '7' )
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:580:15: '0' .. '7'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:588:14: ( '0' .. '7' )
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:588:15: '0' .. '7'
                     {
                     matchRange('0','7'); 
 
@@ -1660,8 +1660,8 @@ public class TakeLexer extends Lexer {
     // $ANTLR start "UnicodeEscape"
     public final void mUnicodeEscape() throws RecognitionException {
         try {
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:585:5: ( '\\\\' 'u' HexDigit HexDigit HexDigit HexDigit )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:585:9: '\\\\' 'u' HexDigit HexDigit HexDigit HexDigit
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:593:5: ( '\\\\' 'u' HexDigit HexDigit HexDigit HexDigit )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:593:9: '\\\\' 'u' HexDigit HexDigit HexDigit HexDigit
             {
             match('\\'); 
             match('u'); 
@@ -1686,8 +1686,8 @@ public class TakeLexer extends Lexer {
             Token key=null;
             Token value=null;
 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:589:5: ( '@@' key= AnnotationKey '=' value= AnnotationValue )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:589:9: '@@' key= AnnotationKey '=' value= AnnotationValue
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:597:5: ( '@@' key= AnnotationKey '=' value= AnnotationValue )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:597:9: '@@' key= AnnotationKey '=' value= AnnotationValue
             {
             match("@@"); 
 
@@ -1721,8 +1721,8 @@ public class TakeLexer extends Lexer {
             Token key=null;
             Token value=null;
 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:597:5: ( '@' key= AnnotationKey '=' value= AnnotationValue )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:597:9: '@' key= AnnotationKey '=' value= AnnotationValue
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:605:5: ( '@' key= AnnotationKey '=' value= AnnotationValue )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:605:9: '@' key= AnnotationKey '=' value= AnnotationValue
             {
             match('@'); 
             int keyStart772 = getCharIndex();
@@ -1750,11 +1750,11 @@ public class TakeLexer extends Lexer {
     // $ANTLR start "AnnotationKey"
     public final void mAnnotationKey() throws RecognitionException {
         try {
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:606:5: ( Identifier ( NamespaceDelimiter Identifier )* )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:606:7: Identifier ( NamespaceDelimiter Identifier )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:614:5: ( Identifier ( NamespaceDelimiter Identifier )* )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:614:7: Identifier ( NamespaceDelimiter Identifier )*
             {
             mIdentifier(); 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:606:18: ( NamespaceDelimiter Identifier )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:614:18: ( NamespaceDelimiter Identifier )*
             loop24:
             do {
                 int alt24=2;
@@ -1767,7 +1767,7 @@ public class TakeLexer extends Lexer {
 
                 switch (alt24) {
             	case 1 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:606:19: NamespaceDelimiter Identifier
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:614:19: NamespaceDelimiter Identifier
             	    {
             	    mNamespaceDelimiter(); 
             	    mIdentifier(); 
@@ -1792,7 +1792,7 @@ public class TakeLexer extends Lexer {
     // $ANTLR start "NamespaceDelimiter"
     public final void mNamespaceDelimiter() throws RecognitionException {
         try {
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:611:5: ( ':' | '.' )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:619:5: ( ':' | '.' )
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:
             {
             if ( input.LA(1)=='.'||input.LA(1)==':' ) {
@@ -1819,10 +1819,10 @@ public class TakeLexer extends Lexer {
             Token Newline1=null;
 
              int startIndex = getCharIndex(); 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:617:5: ( ( options {greedy=false; } : . )+ Newline )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:617:9: ( options {greedy=false; } : . )+ Newline
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:625:5: ( ( options {greedy=false; } : . )+ Newline )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:625:9: ( options {greedy=false; } : . )+ Newline
             {
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:617:9: ( options {greedy=false; } : . )+
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:625:9: ( options {greedy=false; } : . )+
             int cnt25=0;
             loop25:
             do {
@@ -1842,7 +1842,7 @@ public class TakeLexer extends Lexer {
 
                 switch (alt25) {
             	case 1 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:617:39: .
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:625:39: .
             	    {
             	    matchAny(); 
 
@@ -1882,11 +1882,11 @@ public class TakeLexer extends Lexer {
         try {
             int _type = Expression;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:628:5: ( '\\'' ( EscapeSequence | ~ ( '\\\\' | '\\'' ) )+ '\\'' )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:628:9: '\\'' ( EscapeSequence | ~ ( '\\\\' | '\\'' ) )+ '\\''
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:636:5: ( '\\'' ( EscapeSequence | ~ ( '\\\\' | '\\'' ) )+ '\\'' )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:636:9: '\\'' ( EscapeSequence | ~ ( '\\\\' | '\\'' ) )+ '\\''
             {
             match('\''); 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:628:14: ( EscapeSequence | ~ ( '\\\\' | '\\'' ) )+
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:636:14: ( EscapeSequence | ~ ( '\\\\' | '\\'' ) )+
             int cnt26=0;
             loop26:
             do {
@@ -1903,14 +1903,14 @@ public class TakeLexer extends Lexer {
 
                 switch (alt26) {
             	case 1 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:628:16: EscapeSequence
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:636:16: EscapeSequence
             	    {
             	    mEscapeSequence(); 
 
             	    }
             	    break;
             	case 2 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:628:33: ~ ( '\\\\' | '\\'' )
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:636:33: ~ ( '\\\\' | '\\'' )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1955,11 +1955,11 @@ public class TakeLexer extends Lexer {
         try {
             int _type = Identifier;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:636:5: ( Letter ( Letter | IDDigit )* )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:636:9: Letter ( Letter | IDDigit )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:644:5: ( Letter ( Letter | IDDigit )* )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:644:9: Letter ( Letter | IDDigit )*
             {
             mLetter(); 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:636:16: ( Letter | IDDigit )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:644:16: ( Letter | IDDigit )*
             loop27:
             do {
                 int alt27=2;
@@ -2006,7 +2006,7 @@ public class TakeLexer extends Lexer {
     // $ANTLR start "Letter"
     public final void mLetter() throws RecognitionException {
         try {
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:641:5: ( 'a' .. 'z' | 'A' .. 'Z' | '_' )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:649:5: ( 'a' .. 'z' | 'A' .. 'Z' | '_' )
             // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
@@ -2030,8 +2030,8 @@ public class TakeLexer extends Lexer {
     // $ANTLR start "IDDigit"
     public final void mIDDigit() throws RecognitionException {
         try {
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:648:5: ( '0' .. '9' )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:648:9: '0' .. '9'
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:656:5: ( '0' .. '9' )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:656:9: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -2048,10 +2048,10 @@ public class TakeLexer extends Lexer {
         try {
             int _type = Newline;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:652:5: ( ( '\\r' )? '\\n' )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:652:9: ( '\\r' )? '\\n'
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:660:5: ( ( '\\r' )? '\\n' )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:660:9: ( '\\r' )? '\\n'
             {
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:652:9: ( '\\r' )?
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:660:9: ( '\\r' )?
             int alt28=2;
             int LA28_0 = input.LA(1);
 
@@ -2060,7 +2060,7 @@ public class TakeLexer extends Lexer {
             }
             switch (alt28) {
                 case 1 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:652:9: '\\r'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:660:9: '\\r'
                     {
                     match('\r'); 
 
@@ -2087,10 +2087,10 @@ public class TakeLexer extends Lexer {
             int _type = Whitespace;
             int _channel = DEFAULT_TOKEN_CHANNEL;
              _channel=HIDDEN; 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:657:5: ( ( ' ' | '\\t' )+ )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:657:9: ( ' ' | '\\t' )+
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:665:5: ( ( ' ' | '\\t' )+ )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:665:9: ( ' ' | '\\t' )+
             {
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:657:9: ( ' ' | '\\t' )+
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:665:9: ( ' ' | '\\t' )+
             int cnt29=0;
             loop29:
             do {
@@ -2145,12 +2145,12 @@ public class TakeLexer extends Lexer {
             int _type = BlockComment;
             int _channel = DEFAULT_TOKEN_CHANNEL;
              _channel=HIDDEN; 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:662:5: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:662:9: '/*' ( options {greedy=false; } : . )* '*/'
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:670:5: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:670:9: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:662:14: ( options {greedy=false; } : . )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:670:14: ( options {greedy=false; } : . )*
             loop30:
             do {
                 int alt30=2;
@@ -2175,7 +2175,7 @@ public class TakeLexer extends Lexer {
 
                 switch (alt30) {
             	case 1 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:662:44: .
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:670:44: .
             	    {
             	    matchAny(); 
 
@@ -2206,12 +2206,12 @@ public class TakeLexer extends Lexer {
             int _type = LineComment;
             int _channel = DEFAULT_TOKEN_CHANNEL;
              _channel=HIDDEN; 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:667:5: ( '//' ( options {greedy=false; } : . )* Newline )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:667:9: '//' ( options {greedy=false; } : . )* Newline
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:675:5: ( '//' ( options {greedy=false; } : . )* Newline )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:675:9: '//' ( options {greedy=false; } : . )* Newline
             {
             match("//"); 
 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:667:14: ( options {greedy=false; } : . )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:675:14: ( options {greedy=false; } : . )*
             loop31:
             do {
                 int alt31=2;
@@ -2230,7 +2230,7 @@ public class TakeLexer extends Lexer {
 
                 switch (alt31) {
             	case 1 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:667:44: .
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:675:44: .
             	    {
             	    matchAny(); 
 
@@ -2612,7 +2612,7 @@ public class TakeLexer extends Lexer {
             this.transition = DFA18_transition;
         }
         public String getDescription() {
-            return "552:1: FloatingPointLiteral : ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( Exponent )? ( FloatTypeSuffix )? | '.' ( '0' .. '9' )+ ( Exponent )? ( FloatTypeSuffix )? | ( '0' .. '9' )+ Exponent ( FloatTypeSuffix )? | ( '0' .. '9' )+ FloatTypeSuffix );";
+            return "560:1: FloatingPointLiteral : ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( Exponent )? ( FloatTypeSuffix )? | '.' ( '0' .. '9' )+ ( Exponent )? ( FloatTypeSuffix )? | ( '0' .. '9' )+ Exponent ( FloatTypeSuffix )? | ( '0' .. '9' )+ FloatTypeSuffix );";
         }
     }
     static final String DFA32_eotS =
