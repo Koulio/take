@@ -58,6 +58,25 @@ public class ParserTests {
 		assertEquals("aaa",((Constant)t).getObject());
 		
 	}
+	// test syntax of predicate names
+	@Test
+	public void testFacts2() throws Exception {
+		String script = "fact1: cond_test1|42,\"aaa\"|";
+		KnowledgeBase kb = new Parser().parse(new StringReader(script));
+		assertEquals(1,kb.getElements().size());
+		Fact r = (Fact)kb.getElement("fact1");
+		assertNotNull(r);
+		Predicate p = r.getPredicate();
+		assertTrue(java.util.Arrays.equals(p.getSlotTypes(),new Class[]{Integer.class,String.class}));
+		assertEquals("cond_test1",p.getName());
+		Term t = r.getTerms()[0];
+		assertTrue(t instanceof Constant);
+		assertEquals(Integer.valueOf(42),((Constant)t).getObject());
+		t = r.getTerms()[1];
+		assertTrue(t instanceof Constant);
+		assertEquals("aaa",((Constant)t).getObject());
+		
+	}
 	@Test
 	public void testRules1() throws Exception {
 		String script = "rule1: if cond1|42,\"aaa\"| then cond2|42,\"bbb\"|";
@@ -275,5 +294,23 @@ public class ParserTests {
 		assertEquals(true,q.getInputParams()[0]);
 		assertEquals(true,q.getInputParams()[1]);
 	}
+	@Test
+	public void testQueries3() throws Exception {
+		String script = "@@dc:creator=jens dietrich\n"+
+			"@@dc:date=26/04/2007\n"+
+			"var java.lang.String person1,person2,person3\n"+
+			"var java.lang.String grandchild,father,grandfather\n"+
+			"query cond_2|in,in|\n"+
+			"rule1: if cond1|person1,person2| then cond2|person1,person2|\n";
+		KnowledgeBase kb = new Parser().parse(new StringReader(script));
+		assertEquals(1,kb.getQueries().size());
+		Query q = kb.getQueries().get(0);
+		assertEquals("cond_2",q.getPredicate().getName());
+		assertEquals(2,q.getPredicate().getSlotTypes().length);
+		assertEquals(true,q.getInputParams()[0]);
+		assertEquals(true,q.getInputParams()[1]);
+	}
+	
+
 	
 }
