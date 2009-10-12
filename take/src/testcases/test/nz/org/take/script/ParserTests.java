@@ -27,6 +27,7 @@ import nz.org.take.FactPrerequisite;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.Predicate;
 import nz.org.take.Prerequisite;
+import nz.org.take.Query;
 import nz.org.take.Term;
 import nz.org.take.Variable;
 import nz.org.take.mvel2.MVEL2ExpressionLanguage;
@@ -201,14 +202,77 @@ public class ParserTests {
 		prereq2.getExpression().equals("c1==c2");
 		assertTrue(prereq2.getLanguage() instanceof MVEL2ExpressionLanguage);
 	}
+	// same as 6, but with comments
 	@Test
-	public void testRules7() throws Exception {
-		String script = "@@dccreator=jensdietrich\n"+
-			"@@dcdate=26/04/2007"+
-			"var java.lang.String person1,person2,person3"+
-			"var java.lang.String grandchild,father,grandfather"+
-			"rule1: if cond1|person1,person2| then cond2|person1,person2|";
+	public void testRules6a() throws Exception {
+		String script = "// script for test scenario 1\n"+
+			"var java.util.Date v1,v2 \n" +
+			"ref java.util.Calendar c1,c2 \n" +
+			"rule1: if cond1|c1,v1| and 'c1==c2' then cond2|c2,v2|";
+		KnowledgeBase kb = new Parser().parse(new StringReader(script));
+
+		assertEquals(1,kb.getElements().size());
+		DerivationRule r = (DerivationRule)kb.getElement("rule1");
+		assertNotNull(r);
+		Fact head = r.getHead();
+		Predicate p = head.getPredicate();
+		assertTrue(java.util.Arrays.equals(p.getSlotTypes(),new Class[]{java.util.Calendar.class,java.util.Date.class}));
+		Term t = head.getTerms()[0];
+		assertTrue(t instanceof Constant);
+		assertEquals(java.util.Calendar.class,t.getType());
+		assertEquals("c2",((Constant)t).getRef());
+		t = head.getTerms()[1];
+		assertTrue(t instanceof Variable);
+		assertEquals(java.util.Date.class,t.getType());
+		assertEquals("v2",((Variable)t).getName());
 		
+		assertTrue(r.getBody().get(0) instanceof FactPrerequisite);
+		FactPrerequisite prereq1 = (FactPrerequisite)r.getBody().get(0);
+		t = prereq1.getTerms()[0];
+		assertTrue(t instanceof Constant);
+		assertEquals(java.util.Calendar.class,t.getType());
+		assertEquals("c1",((Constant)t).getRef());
+		t = prereq1.getTerms()[1];
+		assertTrue(t instanceof Variable);
+		assertEquals(java.util.Date.class,t.getType());
+		assertEquals("v1",((Variable)t).getName());
+		
+		assertTrue(r.getBody().get(1) instanceof ExpressionPrerequisite);
+		ExpressionPrerequisite prereq2 = (ExpressionPrerequisite)r.getBody().get(1);
+		prereq2.getExpression().equals("c1==c2");
+		assertTrue(prereq2.getLanguage() instanceof MVEL2ExpressionLanguage);
+	}
+
+	
+	@Test
+	public void testQueries1() throws Exception {
+		String script = 
+			"// query cond|in,out|\n"+
+			"fact1: cond|true,false|\n";
+		KnowledgeBase kb = new Parser().parse(new StringReader(script));
+		assertEquals(1,kb.getQueries().size());
+		Query q = kb.getQueries().get(0);
+		assertEquals("cond",q.getPredicate().getName());
+		assertEquals(2,q.getPredicate().getSlotTypes().length);
+		assertEquals(true,q.getInputParams()[0]);
+		assertEquals(false,q.getInputParams()[1]);
+	}
+	
+	@Test
+	public void testQueries2() throws Exception {
+		String script = "@@dc:creator=jens dietrich\n"+
+			"@@dc:date=26/04/2007\n"+
+			"var java.lang.String person1,person2,person3\n"+
+			"var java.lang.String grandchild,father,grandfather\n"+
+			"// query cond2|in,in|\n"+
+			"rule1: if cond1|person1,person2| then cond2|person1,person2|\n";
+		KnowledgeBase kb = new Parser().parse(new StringReader(script));
+		assertEquals(1,kb.getQueries().size());
+		Query q = kb.getQueries().get(0);
+		assertEquals("cond",q.getPredicate().getName());
+		assertEquals(2,q.getPredicate().getSlotTypes().length);
+		assertEquals(true,q.getInputParams()[0]);
+		assertEquals(true,q.getInputParams()[1]);
 	}
 	
 }
