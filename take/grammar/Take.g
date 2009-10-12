@@ -129,7 +129,7 @@ private ExpressionPrerequisite createExpressionPrerequisite(String expression) t
     try {
     	return new ExpressionPrerequisite(expression, getActiveExpressionLanguage(), getDeclaredElementTypeMap());
     } catch (ExpressionException e) {
-        throw new TakeGrammarException(e);
+        throw new TakeGrammarException(input, e);
     }
 }
 
@@ -155,7 +155,7 @@ private ComplexTerm createComplexTerm(String expression) throws TakeGrammarExcep
     try {
     	return new ComplexTerm(expression, getActiveExpressionLanguage(), getDeclaredElementTypeMap());
     } catch (ExpressionException e) {
-        throw new TakeGrammarException(e);
+        throw new TakeGrammarException(input, e);
     }
 }
 
@@ -187,7 +187,7 @@ private AggregationFunction createAggregationFunction(String name, Aggregations 
     try {
         aggregationTable.put(function);
     } catch (DuplicateSymbolException e) {
-        throw new TakeGrammarException(e);
+        throw new TakeGrammarException(input, e);
     }
     
     return function;
@@ -200,7 +200,7 @@ private Fact createFact(String name, Predicate predicate, TermList terms) throws
     try {
         clauseTable.put(fact);
     } catch (DuplicateSymbolException e) {
-        throw new TakeGrammarException(e);
+        throw new TakeGrammarException(input, e);
     }
     
     return fact;
@@ -223,7 +223,7 @@ private DerivationRule createRule(String name, List<Prerequisite> body, Fact hea
     try {
         clauseTable.put(rule);
     } catch (DuplicateSymbolException e) {
-        throw new TakeGrammarException(e);
+        throw new TakeGrammarException(input, e);
     }
     
     return rule;
@@ -237,7 +237,7 @@ private Predicate createPredicate(String name, TermList params) throws TakeGramm
     try {
         predicateTable.put(predicate);
     } catch (DuplicateSymbolException e) {
-        throw new TakeGrammarException(e);
+        throw new TakeGrammarException(input, e);
     }
      
     return predicate;
@@ -253,7 +253,7 @@ private Constant createConstant(String name, Class type) throws TakeGrammarExcep
     try {
         constantTable.put(constant);
     } catch (DuplicateSymbolException e) {
-        throw new TakeGrammarException(e);
+        throw new TakeGrammarException(input, e);
     }
     
     return constant;
@@ -269,7 +269,7 @@ private Variable createVariable(String name, Class type) throws TakeGrammarExcep
     try {
         variableTable.put(variable);
     } catch (DuplicateSymbolException e) {
-        throw new TakeGrammarException(e);
+        throw new TakeGrammarException(input, e);
     }
     
     return variable;
@@ -277,7 +277,7 @@ private Variable createVariable(String name, Class type) throws TakeGrammarExcep
 
 private void checkElementNameIsUnique(String name) throws TakeGrammarException {
     if (variableTable.containsName(name) || constantTable.containsName(name)) {
-        throw new TakeGrammarException(new DuplicateSymbolException(name));
+        throw new TakeGrammarException(input, new DuplicateSymbolException(name));
     }
 }
 
@@ -294,7 +294,7 @@ private Class createClass(String className) throws TakeGrammarException {
     try {
         return Class.forName(className);
     } catch (ClassNotFoundException e) {
-        throw new TakeGrammarException(e);
+        throw new TakeGrammarException(input, e);
     }
 }
 
@@ -304,7 +304,7 @@ private QueryDeclaration createQueryDeclaration(Token predicate, List<IOState> p
     try {
         queryTable.put(query);
     } catch (DuplicateQueryException e) {
-        throw new TakeGrammarException(e);
+        throw new TakeGrammarException(input, e);
     }
     
     return query;
@@ -329,6 +329,13 @@ private void importClausesIntoKnowledgeBase() {
         knowledgeBase.add(clause);
 }
 
+}
+
+@parser::rulecatch {
+catch (RecognitionException re) {
+	reportError(re);
+	throw re;
+}
 }
 
 script returns [KnowledgeBase knowledgeBase]
@@ -425,7 +432,8 @@ ioState returns [IOState value]
     ;
 
 factStoreDeclaration returns [ExternalFactStore value]
-    :   'external'
+@after { throw new TakeGrammarException(input, new Exception("Factstores not yet implemented.")); }
+    :   'external' 
     ;
 
 factDeclaration returns [Fact value]
