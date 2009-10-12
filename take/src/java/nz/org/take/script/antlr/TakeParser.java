@@ -2021,7 +2021,7 @@ public class TakeParser extends Parser {
 
             if ( !(( isValidComplexTermExpression((t!=null?t.getText():null)) )) ) {
                 if (state.backtracking>0) {state.failed=true; return value;}
-                throw new FailedPredicateException(input, "complexTerm", " isValidComplexTermExpression($t.text) ");
+                throw new FailedPredicateException(input, "complexTerm", " isValidComplexTermExpression("+t.toString()+")");
             }
             if ( state.backtracking==0 ) {
 

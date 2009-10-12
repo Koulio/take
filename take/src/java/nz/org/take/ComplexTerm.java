@@ -28,6 +28,15 @@ public class ComplexTerm extends Expression implements Term {
 		visitor.endVisit(this);
 	}
 	
+	public String toString() {
+		return new StringBuffer()
+			.append("aComplexTerm(")
+			//.append(this.getLanguage())
+			//.append(':')
+			.append(expression)
+			.append(')')
+			.toString();
+	}
 
 
 
