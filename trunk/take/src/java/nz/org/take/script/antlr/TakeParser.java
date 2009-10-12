@@ -1,4 +1,4 @@
-// $ANTLR 3.1.1 /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g 2009-10-12 16:08:41
+// $ANTLR 3.1.1 /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g 2009-10-12 22:23:14
 
 package nz.org.take.script.antlr;
 
@@ -24,12 +24,14 @@ import nz.org.take.Prerequisite;
 import nz.org.take.Query;
 import nz.org.take.Term;
 import nz.org.take.Variable;
+import nz.org.take.script.DuplicateQueryException;
 import nz.org.take.script.DuplicateSymbolException;
 import nz.org.take.script.IOState;
 import nz.org.take.script.NamedElementTable;
 import nz.org.take.script.NoSuchPredicateException;
 import nz.org.take.script.QueryBuilder;
 import nz.org.take.script.QueryDeclaration;
+import nz.org.take.script.QueryDeclarationTable;
 import nz.org.take.script.TakeGrammarException;
 import nz.org.take.script.TermList;
 
@@ -131,7 +133,7 @@ public class TakeParser extends Parser {
     private NamedElementTable<Clause> clauseTable = new NamedElementTable<Clause>();
     private NamedElementTable<Predicate> predicateTable = new NamedElementTable<Predicate>();
     private NamedElementTable<Variable> variableTable = new NamedElementTable<Variable>();
-    private NamedElementTable<QueryDeclaration> queryTable = new NamedElementTable<QueryDeclaration>();
+    private QueryDeclarationTable queryTable = new QueryDeclarationTable();
 
 
     public Iterable<Constant> getConstants() {
@@ -347,7 +349,7 @@ public class TakeParser extends Parser {
         
         try {
             queryTable.put(query);
-        } catch (DuplicateSymbolException e) {
+        } catch (DuplicateQueryException e) {
             throw new TakeGrammarException(e);
         }
         
@@ -377,16 +379,16 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "script"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:332:1: script returns [KnowledgeBase knowledgeBase] : ( globalAnnotation | declaration )* ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:334:1: script returns [KnowledgeBase knowledgeBase] : ( globalAnnotation | declaration )* ;
     public final KnowledgeBase script() throws RecognitionException {
         KnowledgeBase knowledgeBase = null;
         int script_StartIndex = input.index();
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 1) ) { return knowledgeBase; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:339:5: ( ( globalAnnotation | declaration )* )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:339:9: ( globalAnnotation | declaration )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:341:5: ( ( globalAnnotation | declaration )* )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:341:9: ( globalAnnotation | declaration )*
             {
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:339:9: ( globalAnnotation | declaration )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:341:9: ( globalAnnotation | declaration )*
             loop1:
             do {
                 int alt1=3;
@@ -402,7 +404,7 @@ public class TakeParser extends Parser {
 
                 switch (alt1) {
             	case 1 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:339:13: globalAnnotation
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:341:13: globalAnnotation
             	    {
             	    pushFollow(FOLLOW_globalAnnotation_in_script97);
             	    globalAnnotation();
@@ -413,7 +415,7 @@ public class TakeParser extends Parser {
             	    }
             	    break;
             	case 2 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:340:13: declaration
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:342:13: declaration
             	    {
             	    pushFollow(FOLLOW_declaration_in_script111);
             	    declaration();
@@ -459,7 +461,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "declaration"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:344:1: declaration : ( localAnnotation )* ( variableDeclarations | constantDeclarations | aggregationDeclaration | queryDeclaration | factStoreDeclaration | factDeclaration | ruleDeclaration ) ( Newline )* ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:346:1: declaration : ( localAnnotation )* ( variableDeclarations | constantDeclarations | aggregationDeclaration | queryDeclaration | factStoreDeclaration | factDeclaration | ruleDeclaration ) ( Newline )* ;
     public final void declaration() throws RecognitionException {
         declaration_stack.push(new declaration_scope());
         int declaration_StartIndex = input.index();
@@ -479,10 +481,10 @@ public class TakeParser extends Parser {
          ((declaration_scope)declaration_stack.peek()).annotations = new HashMap<String, String>(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 2) ) { return ; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:347:5: ( ( localAnnotation )* ( variableDeclarations | constantDeclarations | aggregationDeclaration | queryDeclaration | factStoreDeclaration | factDeclaration | ruleDeclaration ) ( Newline )* )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:347:9: ( localAnnotation )* ( variableDeclarations | constantDeclarations | aggregationDeclaration | queryDeclaration | factStoreDeclaration | factDeclaration | ruleDeclaration ) ( Newline )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:349:5: ( ( localAnnotation )* ( variableDeclarations | constantDeclarations | aggregationDeclaration | queryDeclaration | factStoreDeclaration | factDeclaration | ruleDeclaration ) ( Newline )* )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:349:9: ( localAnnotation )* ( variableDeclarations | constantDeclarations | aggregationDeclaration | queryDeclaration | factStoreDeclaration | factDeclaration | ruleDeclaration ) ( Newline )*
             {
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:347:9: ( localAnnotation )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:349:9: ( localAnnotation )*
             loop2:
             do {
                 int alt2=2;
@@ -511,12 +513,12 @@ public class TakeParser extends Parser {
                 }
             } while (true);
 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:348:9: ( variableDeclarations | constantDeclarations | aggregationDeclaration | queryDeclaration | factStoreDeclaration | factDeclaration | ruleDeclaration )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:350:9: ( variableDeclarations | constantDeclarations | aggregationDeclaration | queryDeclaration | factStoreDeclaration | factDeclaration | ruleDeclaration )
             int alt3=7;
             alt3 = dfa3.predict(input);
             switch (alt3) {
                 case 1 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:348:13: variableDeclarations
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:350:13: variableDeclarations
                     {
                     pushFollow(FOLLOW_variableDeclarations_in_declaration165);
                     variableDeclarations1=variableDeclarations();
@@ -530,7 +532,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:349:13: constantDeclarations
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:351:13: constantDeclarations
                     {
                     pushFollow(FOLLOW_constantDeclarations_in_declaration184);
                     constantDeclarations2=constantDeclarations();
@@ -544,7 +546,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:350:13: aggregationDeclaration
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:352:13: aggregationDeclaration
                     {
                     pushFollow(FOLLOW_aggregationDeclaration_in_declaration203);
                     aggregationDeclaration();
@@ -555,7 +557,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:351:13: queryDeclaration
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:353:13: queryDeclaration
                     {
                     pushFollow(FOLLOW_queryDeclaration_in_declaration217);
                     queryDeclaration3=queryDeclaration();
@@ -569,7 +571,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:352:13: factStoreDeclaration
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:354:13: factStoreDeclaration
                     {
                     pushFollow(FOLLOW_factStoreDeclaration_in_declaration240);
                     factStoreDeclaration4=factStoreDeclaration();
@@ -583,7 +585,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:353:13: factDeclaration
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:355:13: factDeclaration
                     {
                     pushFollow(FOLLOW_factDeclaration_in_declaration259);
                     factDeclaration5=factDeclaration();
@@ -597,7 +599,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 7 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:354:13: ruleDeclaration
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:356:13: ruleDeclaration
                     {
                     pushFollow(FOLLOW_ruleDeclaration_in_declaration283);
                     ruleDeclaration6=ruleDeclaration();
@@ -613,7 +615,7 @@ public class TakeParser extends Parser {
 
             }
 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:355:11: ( Newline )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:357:11: ( Newline )*
             loop4:
             do {
                 int alt4=2;
@@ -656,7 +658,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "globalAnnotation"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:358:1: globalAnnotation : GlobalAnnotationKey AnnotationValue ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:360:1: globalAnnotation : GlobalAnnotationKey AnnotationValue ;
     public final void globalAnnotation() throws RecognitionException {
         int globalAnnotation_StartIndex = input.index();
         Token GlobalAnnotationKey7=null;
@@ -664,8 +666,8 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 3) ) { return ; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:359:5: ( GlobalAnnotationKey AnnotationValue )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:359:9: GlobalAnnotationKey AnnotationValue
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:361:5: ( GlobalAnnotationKey AnnotationValue )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:361:9: GlobalAnnotationKey AnnotationValue
             {
             GlobalAnnotationKey7=(Token)match(input,GlobalAnnotationKey,FOLLOW_GlobalAnnotationKey_in_globalAnnotation325); if (state.failed) return ;
             AnnotationValue8=(Token)match(input,AnnotationValue,FOLLOW_AnnotationValue_in_globalAnnotation327); if (state.failed) return ;
@@ -689,7 +691,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "localAnnotation"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:362:1: localAnnotation : LocalAnnotationKey AnnotationValue ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:364:1: localAnnotation : LocalAnnotationKey AnnotationValue ;
     public final void localAnnotation() throws RecognitionException {
         int localAnnotation_StartIndex = input.index();
         Token LocalAnnotationKey9=null;
@@ -697,8 +699,8 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 4) ) { return ; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:363:5: ( LocalAnnotationKey AnnotationValue )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:363:9: LocalAnnotationKey AnnotationValue
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:365:5: ( LocalAnnotationKey AnnotationValue )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:365:9: LocalAnnotationKey AnnotationValue
             {
             LocalAnnotationKey9=(Token)match(input,LocalAnnotationKey,FOLLOW_LocalAnnotationKey_in_localAnnotation348); if (state.failed) return ;
             AnnotationValue10=(Token)match(input,AnnotationValue,FOLLOW_AnnotationValue_in_localAnnotation350); if (state.failed) return ;
@@ -722,7 +724,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "variableDeclarations"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:366:1: variableDeclarations returns [Collection<Variable> values] : 'var' type ids+= Identifier ( ',' ids+= Identifier )* ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:368:1: variableDeclarations returns [Collection<Variable> values] : 'var' type ids+= Identifier ( ',' ids+= Identifier )* ;
     public final Collection<Variable> variableDeclarations() throws RecognitionException {
         Collection<Variable> values = null;
         int variableDeclarations_StartIndex = input.index();
@@ -734,8 +736,8 @@ public class TakeParser extends Parser {
          values = new ArrayList<Variable>(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 5) ) { return values; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:368:5: ( 'var' type ids+= Identifier ( ',' ids+= Identifier )* )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:368:9: 'var' type ids+= Identifier ( ',' ids+= Identifier )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:370:5: ( 'var' type ids+= Identifier ( ',' ids+= Identifier )* )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:370:9: 'var' type ids+= Identifier ( ',' ids+= Identifier )*
             {
             match(input,31,FOLLOW_31_in_variableDeclarations380); if (state.failed) return values;
             pushFollow(FOLLOW_type_in_variableDeclarations382);
@@ -747,7 +749,7 @@ public class TakeParser extends Parser {
             if (list_ids==null) list_ids=new ArrayList();
             list_ids.add(ids);
 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:368:36: ( ',' ids+= Identifier )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:370:36: ( ',' ids+= Identifier )*
             loop5:
             do {
                 int alt5=2;
@@ -760,7 +762,7 @@ public class TakeParser extends Parser {
 
                 switch (alt5) {
             	case 1 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:368:37: ',' ids+= Identifier
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:370:37: ',' ids+= Identifier
             	    {
             	    match(input,32,FOLLOW_32_in_variableDeclarations389); if (state.failed) return values;
             	    ids=(Token)match(input,Identifier,FOLLOW_Identifier_in_variableDeclarations393); if (state.failed) return values;
@@ -801,7 +803,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "constantDeclarations"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:377:1: constantDeclarations returns [Collection<Constant> values] : 'ref' type ids+= Identifier ( ',' ids+= Identifier )* ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:379:1: constantDeclarations returns [Collection<Constant> values] : 'ref' type ids+= Identifier ( ',' ids+= Identifier )* ;
     public final Collection<Constant> constantDeclarations() throws RecognitionException {
         Collection<Constant> values = null;
         int constantDeclarations_StartIndex = input.index();
@@ -813,8 +815,8 @@ public class TakeParser extends Parser {
          values = new ArrayList<Constant>(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 6) ) { return values; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:379:5: ( 'ref' type ids+= Identifier ( ',' ids+= Identifier )* )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:379:9: 'ref' type ids+= Identifier ( ',' ids+= Identifier )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:381:5: ( 'ref' type ids+= Identifier ( ',' ids+= Identifier )* )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:381:9: 'ref' type ids+= Identifier ( ',' ids+= Identifier )*
             {
             match(input,33,FOLLOW_33_in_constantDeclarations433); if (state.failed) return values;
             pushFollow(FOLLOW_type_in_constantDeclarations435);
@@ -826,7 +828,7 @@ public class TakeParser extends Parser {
             if (list_ids==null) list_ids=new ArrayList();
             list_ids.add(ids);
 
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:379:36: ( ',' ids+= Identifier )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:381:36: ( ',' ids+= Identifier )*
             loop6:
             do {
                 int alt6=2;
@@ -839,7 +841,7 @@ public class TakeParser extends Parser {
 
                 switch (alt6) {
             	case 1 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:379:37: ',' ids+= Identifier
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:381:37: ',' ids+= Identifier
             	    {
             	    match(input,32,FOLLOW_32_in_constantDeclarations442); if (state.failed) return values;
             	    ids=(Token)match(input,Identifier,FOLLOW_Identifier_in_constantDeclarations446); if (state.failed) return values;
@@ -880,7 +882,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "aggregationDeclaration"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:388:1: aggregationDeclaration returns [AggregationFunction value] : 'aggregation' Identifier '=' aggregateFunction variable predicate ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:390:1: aggregationDeclaration returns [AggregationFunction value] : 'aggregation' Identifier '=' aggregateFunction variable predicate ;
     public final AggregationFunction aggregationDeclaration() throws RecognitionException {
         AggregationFunction value = null;
         int aggregationDeclaration_StartIndex = input.index();
@@ -894,8 +896,8 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 7) ) { return value; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:389:5: ( 'aggregation' Identifier '=' aggregateFunction variable predicate )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:389:9: 'aggregation' Identifier '=' aggregateFunction variable predicate
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:391:5: ( 'aggregation' Identifier '=' aggregateFunction variable predicate )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:391:9: 'aggregation' Identifier '=' aggregateFunction variable predicate
             {
             match(input,34,FOLLOW_34_in_aggregationDeclaration485); if (state.failed) return value;
             Identifier14=(Token)match(input,Identifier,FOLLOW_Identifier_in_aggregationDeclaration487); if (state.failed) return value;
@@ -938,13 +940,13 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "aggregateFunction"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:396:1: aggregateFunction returns [Aggregations value] : ( 'avg' | 'min' | 'max' | 'sum' | 'count' );
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:398:1: aggregateFunction returns [Aggregations value] : ( 'avg' | 'min' | 'max' | 'sum' | 'count' );
     public final Aggregations aggregateFunction() throws RecognitionException {
         Aggregations value = null;
         int aggregateFunction_StartIndex = input.index();
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 8) ) { return value; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:397:5: ( 'avg' | 'min' | 'max' | 'sum' | 'count' )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:399:5: ( 'avg' | 'min' | 'max' | 'sum' | 'count' )
             int alt7=5;
             switch ( input.LA(1) ) {
             case 36:
@@ -982,7 +984,7 @@ public class TakeParser extends Parser {
 
             switch (alt7) {
                 case 1 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:397:9: 'avg'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:399:9: 'avg'
                     {
                     match(input,36,FOLLOW_36_in_aggregateFunction528); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
@@ -992,7 +994,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:398:9: 'min'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:400:9: 'min'
                     {
                     match(input,37,FOLLOW_37_in_aggregateFunction542); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
@@ -1002,7 +1004,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:399:9: 'max'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:401:9: 'max'
                     {
                     match(input,38,FOLLOW_38_in_aggregateFunction556); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
@@ -1012,7 +1014,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:400:9: 'sum'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:402:9: 'sum'
                     {
                     match(input,39,FOLLOW_39_in_aggregateFunction570); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
@@ -1022,7 +1024,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:401:9: 'count'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:403:9: 'count'
                     {
                     match(input,40,FOLLOW_40_in_aggregateFunction584); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
@@ -1047,7 +1049,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "variable"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:404:1: variable returns [Variable value] : variableName= Identifier {...}?;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:406:1: variable returns [Variable value] : variableName= Identifier {...}?;
     public final Variable variable() throws RecognitionException {
         Variable value = null;
         int variable_StartIndex = input.index();
@@ -1055,8 +1057,8 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 9) ) { return value; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:405:5: (variableName= Identifier {...}?)
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:405:9: variableName= Identifier {...}?
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:407:5: (variableName= Identifier {...}?)
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:407:9: variableName= Identifier {...}?
             {
             variableName=(Token)match(input,Identifier,FOLLOW_Identifier_in_variable611); if (state.failed) return value;
             if ( !(( variableTable.containsName((variableName!=null?variableName.getText():null)) )) ) {
@@ -1083,7 +1085,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "queryDeclaration"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:408:1: queryDeclaration returns [QueryDeclaration value] : 'query' queryName= Identifier '|' ioStates '|' ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:410:1: queryDeclaration returns [QueryDeclaration value] : 'query' queryName= Identifier '|' ioStates '|' ;
     public final QueryDeclaration queryDeclaration() throws RecognitionException {
         QueryDeclaration value = null;
         int queryDeclaration_StartIndex = input.index();
@@ -1093,8 +1095,8 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 10) ) { return value; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:409:5: ( 'query' queryName= Identifier '|' ioStates '|' )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:409:9: 'query' queryName= Identifier '|' ioStates '|'
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:411:5: ( 'query' queryName= Identifier '|' ioStates '|' )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:411:9: 'query' queryName= Identifier '|' ioStates '|'
             {
             match(input,41,FOLLOW_41_in_queryDeclaration638); if (state.failed) return value;
             queryName=(Token)match(input,Identifier,FOLLOW_Identifier_in_queryDeclaration642); if (state.failed) return value;
@@ -1127,7 +1129,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "ioStates"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:415:1: ioStates returns [List<IOState> values] : firstState= ioState ( ',' extraState= ioState )* ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:417:1: ioStates returns [List<IOState> values] : firstState= ioState ( ',' extraState= ioState )* ;
     public final List<IOState> ioStates() throws RecognitionException {
         List<IOState> values = null;
         int ioStates_StartIndex = input.index();
@@ -1139,8 +1141,8 @@ public class TakeParser extends Parser {
          values = new ArrayList<IOState>(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 11) ) { return values; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:417:5: (firstState= ioState ( ',' extraState= ioState )* )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:417:9: firstState= ioState ( ',' extraState= ioState )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:419:5: (firstState= ioState ( ',' extraState= ioState )* )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:419:9: firstState= ioState ( ',' extraState= ioState )*
             {
             pushFollow(FOLLOW_ioState_in_ioStates688);
             firstState=ioState();
@@ -1150,7 +1152,7 @@ public class TakeParser extends Parser {
             if ( state.backtracking==0 ) {
                values.add(firstState); 
             }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:417:64: ( ',' extraState= ioState )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:419:64: ( ',' extraState= ioState )*
             loop8:
             do {
                 int alt8=2;
@@ -1163,7 +1165,7 @@ public class TakeParser extends Parser {
 
                 switch (alt8) {
             	case 1 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:417:65: ',' extraState= ioState
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:419:65: ',' extraState= ioState
             	    {
             	    match(input,32,FOLLOW_32_in_ioStates693); if (state.failed) return values;
             	    pushFollow(FOLLOW_ioState_in_ioStates697);
@@ -1200,13 +1202,13 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "ioState"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:420:1: ioState returns [IOState value] : ( 'in' | 'out' );
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:422:1: ioState returns [IOState value] : ( 'in' | 'out' );
     public final IOState ioState() throws RecognitionException {
         IOState value = null;
         int ioState_StartIndex = input.index();
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 12) ) { return value; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:421:5: ( 'in' | 'out' )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:423:5: ( 'in' | 'out' )
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -1225,7 +1227,7 @@ public class TakeParser extends Parser {
             }
             switch (alt9) {
                 case 1 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:421:7: 'in'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:423:7: 'in'
                     {
                     match(input,43,FOLLOW_43_in_ioState723); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
@@ -1235,7 +1237,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:422:9: 'out'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:424:9: 'out'
                     {
                     match(input,44,FOLLOW_44_in_ioState737); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
@@ -1260,14 +1262,14 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "factStoreDeclaration"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:425:1: factStoreDeclaration returns [ExternalFactStore value] : 'external' ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:427:1: factStoreDeclaration returns [ExternalFactStore value] : 'external' ;
     public final ExternalFactStore factStoreDeclaration() throws RecognitionException {
         ExternalFactStore value = null;
         int factStoreDeclaration_StartIndex = input.index();
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 13) ) { return value; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:426:5: ( 'external' )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:426:9: 'external'
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:428:5: ( 'external' )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:428:9: 'external'
             {
             match(input,45,FOLLOW_45_in_factStoreDeclaration763); if (state.failed) return value;
 
@@ -1287,7 +1289,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "factDeclaration"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:429:1: factDeclaration returns [Fact value] : factName= Identifier ':' predicate ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:431:1: factDeclaration returns [Fact value] : factName= Identifier ':' predicate ;
     public final Fact factDeclaration() throws RecognitionException {
         Fact value = null;
         int factDeclaration_StartIndex = input.index();
@@ -1297,8 +1299,8 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 14) ) { return value; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:430:5: (factName= Identifier ':' predicate )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:430:9: factName= Identifier ':' predicate
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:432:5: (factName= Identifier ':' predicate )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:432:9: factName= Identifier ':' predicate
             {
             factName=(Token)match(input,Identifier,FOLLOW_Identifier_in_factDeclaration788); if (state.failed) return value;
             match(input,46,FOLLOW_46_in_factDeclaration790); if (state.failed) return value;
@@ -1329,7 +1331,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "ruleDeclaration"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:436:1: ruleDeclaration returns [DerivationRule value] : ruleName= Identifier ':' 'if' body= prerequisites 'then' predicate ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:438:1: ruleDeclaration returns [DerivationRule value] : ruleName= Identifier ':' 'if' body= prerequisites 'then' predicate ;
     public final DerivationRule ruleDeclaration() throws RecognitionException {
         DerivationRule value = null;
         int ruleDeclaration_StartIndex = input.index();
@@ -1341,8 +1343,8 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 15) ) { return value; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:437:5: (ruleName= Identifier ':' 'if' body= prerequisites 'then' predicate )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:437:9: ruleName= Identifier ':' 'if' body= prerequisites 'then' predicate
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:439:5: (ruleName= Identifier ':' 'if' body= prerequisites 'then' predicate )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:439:9: ruleName= Identifier ':' 'if' body= prerequisites 'then' predicate
             {
             ruleName=(Token)match(input,Identifier,FOLLOW_Identifier_in_ruleDeclaration827); if (state.failed) return value;
             match(input,46,FOLLOW_46_in_ruleDeclaration829); if (state.failed) return value;
@@ -1381,7 +1383,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "prerequisites"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:444:1: prerequisites returns [List<Prerequisite> values] : firstPrerequisite= prerequisite ( 'and' extraPrerequisite= prerequisite )* ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:446:1: prerequisites returns [List<Prerequisite> values] : firstPrerequisite= prerequisite ( 'and' extraPrerequisite= prerequisite )* ;
     public final List<Prerequisite> prerequisites() throws RecognitionException {
         List<Prerequisite> values = null;
         int prerequisites_StartIndex = input.index();
@@ -1393,8 +1395,8 @@ public class TakeParser extends Parser {
          values = new ArrayList<Prerequisite>(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 16) ) { return values; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:446:5: (firstPrerequisite= prerequisite ( 'and' extraPrerequisite= prerequisite )* )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:446:9: firstPrerequisite= prerequisite ( 'and' extraPrerequisite= prerequisite )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:448:5: (firstPrerequisite= prerequisite ( 'and' extraPrerequisite= prerequisite )* )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:448:9: firstPrerequisite= prerequisite ( 'and' extraPrerequisite= prerequisite )*
             {
             pushFollow(FOLLOW_prerequisite_in_prerequisites883);
             firstPrerequisite=prerequisite();
@@ -1404,7 +1406,7 @@ public class TakeParser extends Parser {
             if ( state.backtracking==0 ) {
                values.add(firstPrerequisite); 
             }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:446:83: ( 'and' extraPrerequisite= prerequisite )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:448:83: ( 'and' extraPrerequisite= prerequisite )*
             loop10:
             do {
                 int alt10=2;
@@ -1417,7 +1419,7 @@ public class TakeParser extends Parser {
 
                 switch (alt10) {
             	case 1 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:446:84: 'and' extraPrerequisite= prerequisite
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:448:84: 'and' extraPrerequisite= prerequisite
             	    {
             	    match(input,49,FOLLOW_49_in_prerequisites888); if (state.failed) return values;
             	    pushFollow(FOLLOW_prerequisite_in_prerequisites892);
@@ -1454,7 +1456,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "prerequisite"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:449:1: prerequisite returns [Prerequisite value] : ( factPrerequisite | expressionPrerequisite );
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:451:1: prerequisite returns [Prerequisite value] : ( factPrerequisite | expressionPrerequisite );
     public final Prerequisite prerequisite() throws RecognitionException {
         Prerequisite value = null;
         int prerequisite_StartIndex = input.index();
@@ -1465,7 +1467,7 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 17) ) { return value; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:450:5: ( factPrerequisite | expressionPrerequisite )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:452:5: ( factPrerequisite | expressionPrerequisite )
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -1484,7 +1486,7 @@ public class TakeParser extends Parser {
             }
             switch (alt11) {
                 case 1 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:450:9: factPrerequisite
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:452:9: factPrerequisite
                     {
                     pushFollow(FOLLOW_factPrerequisite_in_prerequisite919);
                     factPrerequisite20=factPrerequisite();
@@ -1498,7 +1500,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:451:9: expressionPrerequisite
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:453:9: expressionPrerequisite
                     {
                     pushFollow(FOLLOW_expressionPrerequisite_in_prerequisite931);
                     expressionPrerequisite21=expressionPrerequisite();
@@ -1527,7 +1529,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "factPrerequisite"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:454:1: factPrerequisite returns [FactPrerequisite value] : negatablePredicate ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:456:1: factPrerequisite returns [FactPrerequisite value] : negatablePredicate ;
     public final FactPrerequisite factPrerequisite() throws RecognitionException {
         FactPrerequisite value = null;
         int factPrerequisite_StartIndex = input.index();
@@ -1536,8 +1538,8 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 18) ) { return value; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:455:5: ( negatablePredicate )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:455:9: negatablePredicate
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:457:5: ( negatablePredicate )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:457:9: negatablePredicate
             {
             pushFollow(FOLLOW_negatablePredicate_in_factPrerequisite956);
             negatablePredicate22=negatablePredicate();
@@ -1566,7 +1568,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "expressionPrerequisite"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:461:1: expressionPrerequisite returns [ExpressionPrerequisite value] : Expression {...}?;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:463:1: expressionPrerequisite returns [ExpressionPrerequisite value] : Expression {...}?;
     public final ExpressionPrerequisite expressionPrerequisite() throws RecognitionException {
         ExpressionPrerequisite value = null;
         int expressionPrerequisite_StartIndex = input.index();
@@ -1574,8 +1576,8 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 19) ) { return value; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:462:5: ( Expression {...}?)
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:462:9: Expression {...}?
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:464:5: ( Expression {...}?)
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:464:9: Expression {...}?
             {
             Expression23=(Token)match(input,Expression,FOLLOW_Expression_in_expressionPrerequisite987); if (state.failed) return value;
             if ( !(( isValidPrerequisiteExpression((Expression23!=null?Expression23.getText():null)) )) ) {
@@ -1608,7 +1610,7 @@ public class TakeParser extends Parser {
     };
 
     // $ANTLR start "negatablePredicate"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:468:1: negatablePredicate returns [Predicate value, TermList terms] : ( 'not' predicate | predicate );
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:470:1: negatablePredicate returns [Predicate value, TermList terms] : ( 'not' predicate | predicate );
     public final TakeParser.negatablePredicate_return negatablePredicate() throws RecognitionException {
         TakeParser.negatablePredicate_return retval = new TakeParser.negatablePredicate_return();
         retval.start = input.LT(1);
@@ -1620,7 +1622,7 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 20) ) { return retval; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:469:2: ( 'not' predicate | predicate )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:471:2: ( 'not' predicate | predicate )
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -1639,7 +1641,7 @@ public class TakeParser extends Parser {
             }
             switch (alt12) {
                 case 1 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:469:6: 'not' predicate
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:471:6: 'not' predicate
                     {
                     match(input,50,FOLLOW_50_in_negatablePredicate1019); if (state.failed) return retval;
                     pushFollow(FOLLOW_predicate_in_negatablePredicate1021);
@@ -1654,7 +1656,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:470:6: predicate
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:472:6: predicate
                     {
                     pushFollow(FOLLOW_predicate_in_negatablePredicate1030);
                     predicate25=predicate();
@@ -1689,7 +1691,7 @@ public class TakeParser extends Parser {
     };
 
     // $ANTLR start "predicate"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:473:1: predicate returns [Predicate value, TermList terms] : ( existingPredicate | newPredicate );
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:475:1: predicate returns [Predicate value, TermList terms] : ( existingPredicate | newPredicate );
     public final TakeParser.predicate_return predicate() throws RecognitionException {
         TakeParser.predicate_return retval = new TakeParser.predicate_return();
         retval.start = input.LT(1);
@@ -1701,12 +1703,12 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 21) ) { return retval; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:474:5: ( existingPredicate | newPredicate )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:476:5: ( existingPredicate | newPredicate )
             int alt13=2;
             alt13 = dfa13.predict(input);
             switch (alt13) {
                 case 1 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:474:9: existingPredicate
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:476:9: existingPredicate
                     {
                     pushFollow(FOLLOW_existingPredicate_in_predicate1058);
                     existingPredicate26=existingPredicate();
@@ -1720,7 +1722,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:475:9: newPredicate
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:477:9: newPredicate
                     {
                     pushFollow(FOLLOW_newPredicate_in_predicate1071);
                     newPredicate27=newPredicate();
@@ -1755,7 +1757,7 @@ public class TakeParser extends Parser {
     };
 
     // $ANTLR start "existingPredicate"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:478:1: existingPredicate returns [Predicate value, TermList terms] : predicateName= Identifier '|' params= terms '|' {...}?;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:480:1: existingPredicate returns [Predicate value, TermList terms] : predicateName= Identifier '|' params= terms '|' {...}?;
     public final TakeParser.existingPredicate_return existingPredicate() throws RecognitionException {
         TakeParser.existingPredicate_return retval = new TakeParser.existingPredicate_return();
         retval.start = input.LT(1);
@@ -1766,8 +1768,8 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 22) ) { return retval; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:479:2: (predicateName= Identifier '|' params= terms '|' {...}?)
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:479:6: predicateName= Identifier '|' params= terms '|' {...}?
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:481:2: (predicateName= Identifier '|' params= terms '|' {...}?)
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:481:6: predicateName= Identifier '|' params= terms '|' {...}?
             {
             predicateName=(Token)match(input,Identifier,FOLLOW_Identifier_in_existingPredicate1101); if (state.failed) return retval;
             match(input,42,FOLLOW_42_in_existingPredicate1103); if (state.failed) return retval;
@@ -1810,7 +1812,7 @@ public class TakeParser extends Parser {
     };
 
     // $ANTLR start "newPredicate"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:486:1: newPredicate returns [Predicate value, TermList terms] : predicateName= Identifier '|' params= terms '|' ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:488:1: newPredicate returns [Predicate value, TermList terms] : predicateName= Identifier '|' params= terms '|' ;
     public final TakeParser.newPredicate_return newPredicate() throws RecognitionException {
         TakeParser.newPredicate_return retval = new TakeParser.newPredicate_return();
         retval.start = input.LT(1);
@@ -1821,8 +1823,8 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 23) ) { return retval; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:487:5: (predicateName= Identifier '|' params= terms '|' )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:487:9: predicateName= Identifier '|' params= terms '|'
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:489:5: (predicateName= Identifier '|' params= terms '|' )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:489:9: predicateName= Identifier '|' params= terms '|'
             {
             predicateName=(Token)match(input,Identifier,FOLLOW_Identifier_in_newPredicate1141); if (state.failed) return retval;
             match(input,42,FOLLOW_42_in_newPredicate1143); if (state.failed) return retval;
@@ -1857,7 +1859,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "terms"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:494:1: terms returns [TermList values] : firstTerm= term ( ',' extraTerm= term )* ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:496:1: terms returns [TermList values] : firstTerm= term ( ',' extraTerm= term )* ;
     public final TermList terms() throws RecognitionException {
         TermList values = null;
         int terms_StartIndex = input.index();
@@ -1869,8 +1871,8 @@ public class TakeParser extends Parser {
          values = new TermList(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 24) ) { return values; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:496:5: (firstTerm= term ( ',' extraTerm= term )* )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:496:9: firstTerm= term ( ',' extraTerm= term )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:498:5: (firstTerm= term ( ',' extraTerm= term )* )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:498:9: firstTerm= term ( ',' extraTerm= term )*
             {
             pushFollow(FOLLOW_term_in_terms1189);
             firstTerm=term();
@@ -1880,7 +1882,7 @@ public class TakeParser extends Parser {
             if ( state.backtracking==0 ) {
                values.add(firstTerm); 
             }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:496:59: ( ',' extraTerm= term )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:498:59: ( ',' extraTerm= term )*
             loop14:
             do {
                 int alt14=2;
@@ -1893,7 +1895,7 @@ public class TakeParser extends Parser {
 
                 switch (alt14) {
             	case 1 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:496:60: ',' extraTerm= term
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:498:60: ',' extraTerm= term
             	    {
             	    match(input,32,FOLLOW_32_in_terms1194); if (state.failed) return values;
             	    pushFollow(FOLLOW_term_in_terms1198);
@@ -1930,7 +1932,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "term"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:499:1: term returns [Term value] : complexTerm ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:501:1: term returns [Term value] : complexTerm ;
     public final Term term() throws RecognitionException {
         Term value = null;
         int term_StartIndex = input.index();
@@ -1939,8 +1941,8 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 25) ) { return value; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:500:5: ( complexTerm )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:500:9: complexTerm
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:502:5: ( complexTerm )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:502:9: complexTerm
             {
             pushFollow(FOLLOW_complexTerm_in_term1229);
             complexTerm28=complexTerm();
@@ -1967,7 +1969,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "complexTerm"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:503:1: complexTerm returns [ComplexTerm value] : t= ( Expression | Identifier | HexLiteral | DecimalLiteral | OctalLiteral | FloatingPointLiteral | StringLiteral ) {...}?;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:505:1: complexTerm returns [ComplexTerm value] : t= ( Expression | Identifier | HexLiteral | DecimalLiteral | OctalLiteral | FloatingPointLiteral | StringLiteral ) {...}?;
     public final ComplexTerm complexTerm() throws RecognitionException {
         ComplexTerm value = null;
         int complexTerm_StartIndex = input.index();
@@ -1975,8 +1977,8 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 26) ) { return value; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:504:5: (t= ( Expression | Identifier | HexLiteral | DecimalLiteral | OctalLiteral | FloatingPointLiteral | StringLiteral ) {...}?)
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:504:9: t= ( Expression | Identifier | HexLiteral | DecimalLiteral | OctalLiteral | FloatingPointLiteral | StringLiteral ) {...}?
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:506:5: (t= ( Expression | Identifier | HexLiteral | DecimalLiteral | OctalLiteral | FloatingPointLiteral | StringLiteral ) {...}?)
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:506:9: t= ( Expression | Identifier | HexLiteral | DecimalLiteral | OctalLiteral | FloatingPointLiteral | StringLiteral ) {...}?
             {
             t=(Token)input.LT(1);
             if ( (input.LA(1)>=Identifier && input.LA(1)<=StringLiteral) ) {
@@ -2015,7 +2017,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "type"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:511:1: type returns [Class value] : ( classOrInterfaceType | primitiveType );
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:513:1: type returns [Class value] : ( classOrInterfaceType | primitiveType );
     public final Class type() throws RecognitionException {
         Class value = null;
         int type_StartIndex = input.index();
@@ -2026,7 +2028,7 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 27) ) { return value; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:512:5: ( classOrInterfaceType | primitiveType )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:514:5: ( classOrInterfaceType | primitiveType )
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -2045,7 +2047,7 @@ public class TakeParser extends Parser {
             }
             switch (alt15) {
                 case 1 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:512:9: classOrInterfaceType
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:514:9: classOrInterfaceType
                     {
                     pushFollow(FOLLOW_classOrInterfaceType_in_type1330);
                     classOrInterfaceType29=classOrInterfaceType();
@@ -2059,7 +2061,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:513:9: primitiveType
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:515:9: primitiveType
                     {
                     pushFollow(FOLLOW_primitiveType_in_type1343);
                     primitiveType30=primitiveType();
@@ -2088,7 +2090,7 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "classOrInterfaceType"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:516:1: classOrInterfaceType returns [Class value] : qualifiedName {...}?;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:518:1: classOrInterfaceType returns [Class value] : qualifiedName {...}?;
     public final Class classOrInterfaceType() throws RecognitionException {
         Class value = null;
         int classOrInterfaceType_StartIndex = input.index();
@@ -2097,8 +2099,8 @@ public class TakeParser extends Parser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 28) ) { return value; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:517:5: ( qualifiedName {...}?)
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:517:9: qualifiedName {...}?
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:519:5: ( qualifiedName {...}?)
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:519:9: qualifiedName {...}?
             {
             pushFollow(FOLLOW_qualifiedName_in_classOrInterfaceType1376);
             qualifiedName31=qualifiedName();
@@ -2133,18 +2135,18 @@ public class TakeParser extends Parser {
     };
 
     // $ANTLR start "qualifiedName"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:523:1: qualifiedName : Identifier ( '.' Identifier )* ;
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:525:1: qualifiedName : Identifier ( '.' Identifier )* ;
     public final TakeParser.qualifiedName_return qualifiedName() throws RecognitionException {
         TakeParser.qualifiedName_return retval = new TakeParser.qualifiedName_return();
         retval.start = input.LT(1);
         int qualifiedName_StartIndex = input.index();
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 29) ) { return retval; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:524:5: ( Identifier ( '.' Identifier )* )
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:524:9: Identifier ( '.' Identifier )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:526:5: ( Identifier ( '.' Identifier )* )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:526:9: Identifier ( '.' Identifier )*
             {
             match(input,Identifier,FOLLOW_Identifier_in_qualifiedName1407); if (state.failed) return retval;
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:524:20: ( '.' Identifier )*
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:526:20: ( '.' Identifier )*
             loop16:
             do {
                 int alt16=2;
@@ -2157,7 +2159,7 @@ public class TakeParser extends Parser {
 
                 switch (alt16) {
             	case 1 :
-            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:524:21: '.' Identifier
+            	    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:526:21: '.' Identifier
             	    {
             	    match(input,51,FOLLOW_51_in_qualifiedName1410); if (state.failed) return retval;
             	    match(input,Identifier,FOLLOW_Identifier_in_qualifiedName1412); if (state.failed) return retval;
@@ -2189,13 +2191,13 @@ public class TakeParser extends Parser {
 
 
     // $ANTLR start "primitiveType"
-    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:527:1: primitiveType returns [Class value] : ( 'boolean' | 'char' | 'byte' | 'short' | 'int' | 'long' | 'float' | 'double' );
+    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:529:1: primitiveType returns [Class value] : ( 'boolean' | 'char' | 'byte' | 'short' | 'int' | 'long' | 'float' | 'double' );
     public final Class primitiveType() throws RecognitionException {
         Class value = null;
         int primitiveType_StartIndex = input.index();
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 30) ) { return value; }
-            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:528:5: ( 'boolean' | 'char' | 'byte' | 'short' | 'int' | 'long' | 'float' | 'double' )
+            // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:530:5: ( 'boolean' | 'char' | 'byte' | 'short' | 'int' | 'long' | 'float' | 'double' )
             int alt17=8;
             switch ( input.LA(1) ) {
             case 52:
@@ -2248,7 +2250,7 @@ public class TakeParser extends Parser {
 
             switch (alt17) {
                 case 1 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:528:9: 'boolean'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:530:9: 'boolean'
                     {
                     match(input,52,FOLLOW_52_in_primitiveType1437); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
@@ -2258,7 +2260,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:529:9: 'char'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:531:9: 'char'
                     {
                     match(input,53,FOLLOW_53_in_primitiveType1450); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
@@ -2268,7 +2270,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:530:9: 'byte'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:532:9: 'byte'
                     {
                     match(input,54,FOLLOW_54_in_primitiveType1466); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
@@ -2278,7 +2280,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:531:9: 'short'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:533:9: 'short'
                     {
                     match(input,55,FOLLOW_55_in_primitiveType1482); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
@@ -2288,7 +2290,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:532:9: 'int'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:534:9: 'int'
                     {
                     match(input,56,FOLLOW_56_in_primitiveType1497); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
@@ -2298,7 +2300,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:533:9: 'long'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:535:9: 'long'
                     {
                     match(input,57,FOLLOW_57_in_primitiveType1514); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
@@ -2308,7 +2310,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 7 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:534:9: 'float'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:536:9: 'float'
                     {
                     match(input,58,FOLLOW_58_in_primitiveType1530); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
@@ -2318,7 +2320,7 @@ public class TakeParser extends Parser {
                     }
                     break;
                 case 8 :
-                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:535:9: 'double'
+                    // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:537:9: 'double'
                     {
                     match(input,59,FOLLOW_59_in_primitiveType1545); if (state.failed) return value;
                     if ( state.backtracking==0 ) {
@@ -2343,8 +2345,8 @@ public class TakeParser extends Parser {
 
     // $ANTLR start synpred22_Take
     public final void synpred22_Take_fragment() throws RecognitionException {   
-        // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:474:9: ( existingPredicate )
-        // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:474:9: existingPredicate
+        // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:476:9: ( existingPredicate )
+        // /Users/carlos/Projects/Eclipse Workspace/take/grammar/Take.g:476:9: existingPredicate
         {
         pushFollow(FOLLOW_existingPredicate_in_synpred22_Take1058);
         existingPredicate();
@@ -2431,7 +2433,7 @@ public class TakeParser extends Parser {
             this.transition = DFA3_transition;
         }
         public String getDescription() {
-            return "348:9: ( variableDeclarations | constantDeclarations | aggregationDeclaration | queryDeclaration | factStoreDeclaration | factDeclaration | ruleDeclaration )";
+            return "350:9: ( variableDeclarations | constantDeclarations | aggregationDeclaration | queryDeclaration | factStoreDeclaration | factDeclaration | ruleDeclaration )";
         }
     }
     static final String DFA13_eotS =
@@ -2488,7 +2490,7 @@ public class TakeParser extends Parser {
             this.transition = DFA13_transition;
         }
         public String getDescription() {
-            return "473:1: predicate returns [Predicate value, TermList terms] : ( existingPredicate | newPredicate );";
+            return "475:1: predicate returns [Predicate value, TermList terms] : ( existingPredicate | newPredicate );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;

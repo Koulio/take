@@ -67,12 +67,14 @@ import nz.org.take.Prerequisite;
 import nz.org.take.Query;
 import nz.org.take.Term;
 import nz.org.take.Variable;
+import nz.org.take.script.DuplicateQueryException;
 import nz.org.take.script.DuplicateSymbolException;
 import nz.org.take.script.IOState;
 import nz.org.take.script.NamedElementTable;
 import nz.org.take.script.NoSuchPredicateException;
 import nz.org.take.script.QueryBuilder;
 import nz.org.take.script.QueryDeclaration;
+import nz.org.take.script.QueryDeclarationTable;
 import nz.org.take.script.TakeGrammarException;
 import nz.org.take.script.TermList;
 }
@@ -85,7 +87,7 @@ private NamedElementTable<Constant> constantTable = new NamedElementTable<Consta
 private NamedElementTable<Clause> clauseTable = new NamedElementTable<Clause>();
 private NamedElementTable<Predicate> predicateTable = new NamedElementTable<Predicate>();
 private NamedElementTable<Variable> variableTable = new NamedElementTable<Variable>();
-private NamedElementTable<QueryDeclaration> queryTable = new NamedElementTable<QueryDeclaration>();
+private QueryDeclarationTable queryTable = new QueryDeclarationTable();
 
 
 public Iterable<Constant> getConstants() {
@@ -301,7 +303,7 @@ private QueryDeclaration createQueryDeclaration(Token predicate, List<IOState> p
     
     try {
         queryTable.put(query);
-    } catch (DuplicateSymbolException e) {
+    } catch (DuplicateQueryException e) {
         throw new TakeGrammarException(e);
     }
     

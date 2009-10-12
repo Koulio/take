@@ -31,6 +31,7 @@ import nz.org.take.Query;
 import nz.org.take.Term;
 import nz.org.take.Variable;
 import nz.org.take.mvel2.MVEL2ExpressionLanguage;
+import nz.org.take.script.IOState;
 import nz.org.take.script.Parser;
 
 
@@ -305,12 +306,21 @@ public class ParserTests {
 			"query cond_2|out,in|\n"+
 			"rule1: if cond1|person1,person2| then cond_2|person1,person2|\n";
 		KnowledgeBase kb = new Parser().parse(new StringReader(script));
-		assertEquals(1,kb.getQueries().size());
-		Query q = kb.getQueries().get(0);
-		assertEquals("cond_2",q.getPredicate().getName());
-		assertEquals(2,q.getPredicate().getSlotTypes().length);
-		assertEquals(true,q.getInputParams()[0]);
-		assertEquals(true,q.getInputParams()[1]);
+		
+		assertEquals(2,kb.getQueries().size());
+		
+		assertContainsQuery(kb.getQueries(), "/cond_2[in,in]");
+		assertContainsQuery(kb.getQueries(), "/cond_2[out,in]");
+	}
+	
+	private void assertContainsQuery(Iterable<Query> queries, String signature) {
+		for (Query query : queries) {
+			if (query.toString().equals(signature)) {
+				return;
+			}
+		}
+		
+		fail("Did not contatin a query maching the signature: " + signature);
 	}
 	
 
