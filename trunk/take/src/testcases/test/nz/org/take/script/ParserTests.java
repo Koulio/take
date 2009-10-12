@@ -294,6 +294,7 @@ public class ParserTests {
 		assertEquals(true,q.getInputParams()[0]);
 		assertEquals(true,q.getInputParams()[1]);
 	}
+	// multiple queries for same predicate
 	@Test
 	public void testQueries3() throws Exception {
 		String script = "@@dc:creator=jens dietrich\n"+
@@ -301,7 +302,8 @@ public class ParserTests {
 			"var java.lang.String person1,person2,person3\n"+
 			"var java.lang.String grandchild,father,grandfather\n"+
 			"query cond_2|in,in|\n"+
-			"rule1: if cond1|person1,person2| then cond2|person1,person2|\n";
+			"query cond_2|out,in|\n"+
+			"rule1: if cond1|person1,person2| then cond_2|person1,person2|\n";
 		KnowledgeBase kb = new Parser().parse(new StringReader(script));
 		assertEquals(1,kb.getQueries().size());
 		Query q = kb.getQueries().get(0);
