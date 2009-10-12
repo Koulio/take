@@ -38,4 +38,13 @@ public class QueryDeclaration extends AbstractAnnotatable implements NamedElemen
 	public int getColumnNumber() {
 		return columnNumber;
 	}
+	
+	public String getQuerySignature() {
+		return getName() + getParameterStates().toString();
+	}
+	
+	@Override
+	public String toString() {
+		return getQuerySignature();
+	}
 }
