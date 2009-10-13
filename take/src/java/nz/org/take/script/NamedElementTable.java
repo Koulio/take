@@ -1,8 +1,9 @@
 package nz.org.take.script;
 
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+
 import nz.org.take.NamedElement;
 
 
@@ -11,7 +12,7 @@ import nz.org.take.NamedElement;
  */
 public class NamedElementTable<T extends NamedElement> {
 	
-	private Map<String, T> elementMap = new HashMap<String, T>();
+	private Map<String, T> elementMap = new LinkedHashMap<String, T>();
 
 	public boolean containsName(String name) {
 		return elementMap.containsKey(name);
