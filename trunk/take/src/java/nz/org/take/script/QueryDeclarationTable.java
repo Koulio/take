@@ -1,11 +1,11 @@
 package nz.org.take.script;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class QueryDeclarationTable {
 	
-	private Map<String, QueryDeclaration> queryDeclarationMap = new HashMap<String, QueryDeclaration>();
+	private Map<String, QueryDeclaration> queryDeclarationMap = new LinkedHashMap<String, QueryDeclaration>();
 
 	public boolean containsName(String signature) {
 		return queryDeclarationMap.containsKey(signature);
