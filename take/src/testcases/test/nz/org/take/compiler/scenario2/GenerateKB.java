@@ -17,8 +17,7 @@ import java.util.List;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.KnowledgeSource;
 import nz.org.take.TakeException;
-import nz.org.take.nscript.ScriptException;
-import nz.org.take.nscript.ScriptKnowledgeSource;
+import nz.org.take.script.ScriptKnowledgeSource;
 
 /**
  * Script to generate a memory KB.
@@ -34,15 +33,8 @@ public class GenerateKB implements KnowledgeSource {
 		 * @param args
 		 */
 		public KnowledgeBase getKnowledgeBase() throws TakeException {
-			// generate kb
-			KnowledgeBase kb = null;
-			try {
-				ScriptKnowledgeSource KSrc = new ScriptKnowledgeSource(new StringReader(buildScript()));
-				kb = KSrc.getKnowledgeBase();
-			} catch (ScriptException e) {
-				e.printStackTrace();
-			}
-			return kb;
+			ScriptKnowledgeSource KSrc = new ScriptKnowledgeSource(new StringReader(buildScript()));
+			return KSrc.getKnowledgeBase();
 		}
 		/**
 		 * Generate the script. 
@@ -61,11 +53,11 @@ public class GenerateKB implements KnowledgeSource {
 			appendLine(b,"@take.compilerhint.slots=person1,person2");
 			appendLine(b,"@take.compilerhint.method=isAncestor");
 			appendLine(b,"@take.compilerhint.class=AncestorRelationship");
-			appendLine(b,"query isAncestor[in,in]");
+			appendLine(b,"query isAncestor|in,in|");
 			
 			// rules
-			appendLine(b,"rule1: if isFather[descendant,ancestor] then isAncestor[descendant,ancestor]");
-			appendLine(b,"rule2: if isAncestor[x,ancestor] and isFather[descendant,x] then isAncestor[descendant,ancestor]");
+			appendLine(b,"rule1: if isFather|descendant,ancestor| then isAncestor|descendant,ancestor|");
+			appendLine(b,"rule2: if isAncestor|x,ancestor| and isFather|descendant,x| then isAncestor|descendant,ancestor|");
 			
 			// facts
 			List<List<String>> generations = new ArrayList<List<String>>();
@@ -86,7 +78,7 @@ public class GenerateKB implements KnowledgeSource {
 						counter = counter+1;
 						String descendant = ancestor+j;
 						newGeneration.add(descendant);
-						appendLine(b,"fact"+counter,": ","isFather[\"",descendant,"\",\"",ancestor,"\"]");
+						appendLine(b,"fact"+counter,": ","isFather|\"",descendant,"\",\"",ancestor,"\"|");
 					}
 				}
 				generations.add(newGeneration);

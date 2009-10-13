@@ -16,6 +16,7 @@ import nz.org.take.KnowledgeBase;
 import nz.org.take.KnowledgeSource;
 import nz.org.take.TakeException;
 import nz.org.take.compiler.reference.DefaultCompiler;
+import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
 
 
@@ -46,6 +47,7 @@ public class GenerateInterfaces {
 		}
 		compiler.setPackageName("test.nz.org.take.compiler.scenario2.generated");
 		compiler.setClassName("KB");
+		compiler.setLocation(new DefaultLocation("src/testcases"));
 		compiler.compileInterface(kb);
 
 	}
