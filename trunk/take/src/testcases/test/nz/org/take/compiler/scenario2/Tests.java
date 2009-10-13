@@ -10,7 +10,14 @@
 
 package test.nz.org.take.compiler.scenario2;
 
+import static org.junit.Assert.*;
+
 import java.util.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import nz.org.take.Constant;
 import nz.org.take.Fact;
 import nz.org.take.KnowledgeBase;
@@ -32,22 +39,15 @@ public class Tests extends TakeTestCase
 	private KB kb = null;
 	private KnowledgeBase memoryKB = null;
 	/**
-	 * Construct new test instance	 *
-	 * @param name the test name
+	 * Construct new test instance.
 	 */
-	public Tests(String name)
+	public Tests()
 	{
-		super(name);
+		super();
 	}
 
-	/**
-	 * Perform pre-test initialization
-	 *
-	 * @throws Exception
-	 *
-	 * @see TestCase#setUp()
-	 */
-	protected void setUp() throws Exception
+	@Before
+	public void setUp() throws Exception
 	{
 		memoryKB = new GenerateKB().getKnowledgeBase();
 		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
@@ -55,20 +55,12 @@ public class Tests extends TakeTestCase
 		
 	}
 
-	/**
-	 * Perform post-test clean up
-	 *
-	 * @throws Exception
-	 *
-	 * @see TestCase#tearDown()
-	 */
-	protected void tearDown()
-		throws Exception
+	@After
+	public void tearDown() throws Exception
 	{
 		super.tearDown();
-		// Add additional tear down code here
 	}
-
+	@Test
 	public void test1(){
 		
 		System.out.println("starting test case 1");
@@ -80,7 +72,7 @@ public class Tests extends TakeTestCase
 		assertEquals("Wrong number of facts",1,countFacts(x));
 		assertTrue("Expected fact not found",checkFatherFact(x,"r0","r"));
 	}
-	
+	@Test
 	public void test2(){
 		
 		System.out.println("starting test case 2");
@@ -93,7 +85,7 @@ public class Tests extends TakeTestCase
 		assertEquals("Wrong number of facts",1,countFacts(x));
 		assertTrue("Expected fact not found",checkFatherFact(x,"r1","r"));
 	}
-	
+	@Test
 	public void test3(){
 		
 		System.out.println("starting test case 3");
@@ -107,7 +99,7 @@ public class Tests extends TakeTestCase
 		assertTrue("Expected fact not found",checkFatherFact(x,"r0","r"));
 		assertTrue("Expected fact not found",checkFatherFact(x,"r00","r0"));
 	}
-	
+	@Test
 	public void test4(){
 		
 		System.out.println("starting test case 4");
@@ -121,7 +113,7 @@ public class Tests extends TakeTestCase
 		assertTrue("Expected fact not found",checkFatherFact(x,"r1","r"));
 		assertTrue("Expected fact not found",checkFatherFact(x,"r11","r1"));
 	}
-	
+	@Test
 	public void test5(){
 		
 		System.out.println("starting test case 5");
