@@ -10,12 +10,19 @@
 
 package test.nz.org.take.compiler.scenario3;
 
+import static org.junit.Assert.*;
+
 import java.util.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import nz.org.take.deployment.KnowledgeBaseManager;
-import nz.org.take.nscript.ScriptKnowledgeSource;
 import nz.org.take.rt.DerivationController;
 import nz.org.take.rt.DerivationLogEntry;
 import nz.org.take.rt.ResultSet;
+import nz.org.take.script.ScriptKnowledgeSource;
 import test.nz.org.take.TakeTestCase;
 import test.nz.org.take.compiler.scenario3.generated.*;
 
@@ -32,17 +39,13 @@ public class Tests extends TakeTestCase
 	 * Construct new test instance
 	 * @param name the test name
 	 */
-	public Tests(String name)
+	public Tests()
 	{
-		super(name);
+		super();
 	}
 
-	/**
-	 * Perform pre-test initialization
-	 * @throws Exception
-	 * @see TestCase#setUp()
-	 */
-	protected void setUp() throws Exception
+	@Before
+	public void setUp() throws Exception
 	{
 		super.setUp();
 		KnowledgeBaseManager<KB> kbm = new KnowledgeBaseManager<KB>();
@@ -52,23 +55,15 @@ public class Tests extends TakeTestCase
 				); 
 	}
 
-	/**
-	 * Perform post-test clean up
-	 * @throws Exception
-	 *
-	 * @see TestCase#tearDown()
-	 */
-	protected void tearDown()
-		throws Exception
+	@After
+	public void tearDown() throws Exception
 	{
 		super.tearDown();
-		// Add additional tear down code here
 	}
-
+	@Test
 	public void test1(){
 		
 		System.out.println("starting test case 1");
-
 		Person p1 = new Person("Klaus");
 		Person p2 = new Person("Lutz");
 		ResultSet<IsBrotherRelationship> results = kb.isBrother(p1,p2);	
@@ -77,6 +72,7 @@ public class Tests extends TakeTestCase
 		results.getDerivationController().printLog();
 		assertEquals("Wrong number of rules",1,countRules(x));
 	}
+	@Test
 	public void test2(){
 		
 		System.out.println("starting test case 2");

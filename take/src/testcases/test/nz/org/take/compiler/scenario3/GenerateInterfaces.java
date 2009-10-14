@@ -12,12 +12,12 @@
 package test.nz.org.take.compiler.scenario3;
 
 import org.apache.log4j.BasicConfigurator;
-
+import test.nz.org.take.TestUtils;
+import test.nz.org.take.compiler.scenario1.Tests;
 import nz.org.take.KnowledgeBase;
 import nz.org.take.compiler.reference.DefaultCompiler;
+import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
-import nz.org.take.nscript.ScriptException;
-import nz.org.take.nscript.ScriptKnowledgeSource;
 
 
 /**
@@ -38,15 +38,10 @@ public class GenerateInterfaces {
 		compiler.add(new JalopyCodeFormatter());
 		
 		// generate kb
-		KnowledgeBase kb = null;
-		try {
-			ScriptKnowledgeSource KSrc = new ScriptKnowledgeSource(GenerateInterfaces.class.getResourceAsStream("/test/nz/org/take/compiler/scenario3/rules3.take"));
-			kb = KSrc.getKnowledgeBase();
-		} catch (ScriptException e) {
-			e.printStackTrace();
-		}
+		KnowledgeBase kb = TestUtils.readFromClasspath(Tests.class,"/test/nz/org/take/compiler/scenario3/rules3.take");
 		compiler.setPackageName("test.nz.org.take.compiler.scenario3.generated");
 		compiler.setClassName("KB");
+		compiler.setLocation(new DefaultLocation("src/testcases"));
 		compiler.compileInterface(kb);
 
 	}
