@@ -30,6 +30,34 @@ public abstract class Expression  {
 	protected ExpressionLanguage.CompiledExpression compiledExpression = null;
 	protected Collection<Variable> variables = new HashSet<Variable>();
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				+ ((compiledExpression == null) ? 0 : compiledExpression
+						.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Expression other = (Expression) obj;
+		if (compiledExpression == null) {
+			if (other.compiledExpression != null)
+				return false;
+		} else if (!compiledExpression.equals(other.compiledExpression))
+			return false;
+		return true;
+	}
+
 	public Expression(String expression,String language, Map<String,Class> typeInfo) throws ExpressionException  {
 		super();
 		this.expression = expression;
