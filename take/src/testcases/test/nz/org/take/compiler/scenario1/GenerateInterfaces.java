@@ -11,13 +11,10 @@
 
 package test.nz.org.take.compiler.scenario1;
 
-import java.io.StringReader;
-
 import nz.org.take.KnowledgeBase;
 import nz.org.take.compiler.reference.DefaultCompiler;
 import nz.org.take.compiler.util.DefaultLocation;
 import nz.org.take.compiler.util.jalopy.JalopyCodeFormatter;
-import nz.org.take.script.Parser;
 import org.apache.log4j.BasicConfigurator;
 import test.nz.org.take.TestUtils;
 
