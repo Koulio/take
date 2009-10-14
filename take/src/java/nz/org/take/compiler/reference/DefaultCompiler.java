@@ -19,6 +19,7 @@ import org.apache.velocity.VelocityContext;
 import nz.org.take.compiler.*;
 import nz.org.take.compiler.Compiler;
 import nz.org.take.compiler.util.*;
+import nz.org.take.rt.DerivationController;
 import nz.org.take.rt.SingletonIterator;
 import nz.org.take.*;
 
@@ -379,7 +380,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			
 			this.printOneLineComment(out,"return type for expression invocation");
 			String invocationReturnType = expressions.get(x)+"Type";
-			this.expressionPrereqMethodTypes.put(x,invocationReturnType);
+			this.expressionPrereqMethodTypes.put(x,clazz+"."+invocationReturnType);
 			out.print("static class ");
 			out.print(invocationReturnType);
 			out.print(" ");
@@ -410,9 +411,15 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 				out.print(" ");
 				out.print(v.getName());
 			}
+			// derivation controller
+			out.print(", final DerivationController _derivation");
 			out.println("){");
 			
-
+	    	// print log statement
+	        out.print("_derivation.log(\"");
+	        out.print(x.getExpression());
+	        out.println("\", DerivationController.EXPRESSION);");
+	        
 			String var = "result";
 			this.printVariableDeclaration(out, null, "boolean", var, "false");
 			String expressionField = expressions.get(x);
@@ -1311,8 +1318,35 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		boolean first = true;
 		int counter = 1;
 		for (Fact prereq : literals) {
-
-			// createExpressionInvocation(out,expressions,bindings,varGen);
+			// check for expressions we can evaluate
+			// this could be optimised by ordering them, evaluating simpler expressions
+			// first
+			for (Iterator<ExpressionPrerequisite> iter = expressions.iterator();iter.hasNext();) {
+				ExpressionPrerequisite xp = iter.next();
+				List<String> paramRefs = checkForBoundParameter(xp,bindings);
+				className = this.expressionPrereqMethodTypes.get(xp);
+				if (className!=null && paramRefs!=null) { // reuse if already generated, params must be bound
+					iteratorName = varGen.nextTmpVar("iterator");
+					this.printOneLineComment(out, "code for prereq ", prereq);
+					this.printGenericType(out, "ResourceIterator", className);
+					
+					out.print(iteratorName);
+					out.print(" = ");
+					if (first) {
+						this.expressionPrereqMethodRefs.get(xp);
+						first = false;
+						printInvocation(out,xp,paramRefs,true,true);
+					}
+					else {
+						out.print("// TODO");
+					}
+					out.println(";");
+					iter.remove();
+					previousFact = null;
+					previousIteratorName = iteratorName;
+					previousClassName = className;
+				}
+			}
 			
 			iteratorName = varGen.nextTmpVar("iterator");
 			className = getClassName(prereq);
@@ -1357,34 +1391,36 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 				out.println("){");
 				// bind params from previous iterator
 				// here we set the attributes of the bindings object
-				Term[] pterms = previousFact.getTerms();
-				for (int i = 0; i < pterms.length; i++) {
-					Term t = pterms[i];
-					Slot slot = this.buildSlot(previousFact.getPredicate(),	i);
-					
-					// the type of the term and the type of the predicate slot might be different (but compatible - the term types must be a subtype
-					// of the slot type. If they are different, a cast must be generated
-					
-					Class termType = t.getType();
-					Class slotType = previousFact.getPredicate().getSlotTypes()[i];
-					String cast = termType.equals(slotType)?null:this.getTypeName(termType);
-					String ref = refs.get(t);
-					if (t instanceof Variable) {
-						Variable vt = (Variable) t;						
-						printVariableAssignment(out, "bindings",ref,"object", slot.var,cast);
-						bindings.put(vt, refs.get(vt));
-						bindings.assigned(vt);
-					} else if (t instanceof ComplexTerm) {
-						ComplexTerm vt = (ComplexTerm) t;						
-						printVariableAssignment(out, "bindings",ref,"object", slot.var,cast);
-						// bindings.put(vt, refs.get(vt));	// changed 19/09/07 - this avoids expensive method class
-						bindings.put(vt, "bindings"+'.'+ref);	
-						bindings.assigned(vt);
-					} else if (t instanceof Constant) {
-						Constant vt = (Constant) t;						
-						printVariableAssignment(out, "bindings",ref,getRef(this.getNameGenerator().getConstantRegistryClassName(),vt),null,cast);
-						bindings.put(vt, refs.get(vt));			
-						bindings.assigned(vt);
+				if (previousFact!=null) {  // would be null if previous was expression prereq
+					Term[] pterms = previousFact.getTerms();
+					for (int i = 0; i < pterms.length; i++) {
+						Term t = pterms[i];
+						Slot slot = this.buildSlot(previousFact.getPredicate(),	i);
+						
+						// the type of the term and the type of the predicate slot might be different (but compatible - the term types must be a subtype
+						// of the slot type. If they are different, a cast must be generated
+						
+						Class termType = t.getType();
+						Class slotType = previousFact.getPredicate().getSlotTypes()[i];
+						String cast = termType.equals(slotType)?null:this.getTypeName(termType);
+						String ref = refs.get(t);
+						if (t instanceof Variable) {
+							Variable vt = (Variable) t;						
+							printVariableAssignment(out, "bindings",ref,"object", slot.var,cast);
+							bindings.put(vt, refs.get(vt));
+							bindings.assigned(vt);
+						} else if (t instanceof ComplexTerm) {
+							ComplexTerm vt = (ComplexTerm) t;						
+							printVariableAssignment(out, "bindings",ref,"object", slot.var,cast);
+							// bindings.put(vt, refs.get(vt));	// changed 19/09/07 - this avoids expensive method class
+							bindings.put(vt, "bindings"+'.'+ref);	
+							bindings.assigned(vt);
+						} else if (t instanceof Constant) {
+							Constant vt = (Constant) t;						
+							printVariableAssignment(out, "bindings",ref,getRef(this.getNameGenerator().getConstantRegistryClassName(),vt),null,cast);
+							bindings.put(vt, refs.get(vt));			
+							bindings.assigned(vt);
+						}
 					}
 				}
 				
@@ -1443,16 +1479,36 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			
 			// createExpressionInvocation(out,expressions,bindings,varGen);
 		}
-		
+		// FIXME: enable
+		/*
 		if (!expressions.isEmpty()) {
 			throw new CompilerException("There are " + expressions.size() + " unevaluated conditions left, for instance " + expressions.get(0));
 		}
+		*/
 
 		out.print("return ");
 		out.print(iteratorName);
 		out.println(";");
 	}
-   private void _createExpressionInvocation(PrintWriter out,	List<ExpressionPrerequisite> expressions, Bindings bindings,TmpVarGenerator varGen) {
+	// check whether all variable terms occuring in the expression have bindings
+	// if so, return them as a list.
+	// if there are some without bindings, return null
+   private List<String> checkForBoundParameter(Expression x,Bindings bindings) {
+		Collection<Variable> vars = x.getVariables();
+	   	List<String> params = new ArrayList<String>(vars.size());
+	   	for (Variable v:vars) {
+	   		String arg = bindings.getRef(v);
+	   		if (arg==null) {
+	   			return null;
+	   		}
+	   		else {
+	   			params.add(arg);
+	   		}
+	   	}
+		return params;
+	}
+
+private void _createExpressionInvocation(PrintWriter out,	List<ExpressionPrerequisite> expressions, Bindings bindings,TmpVarGenerator varGen) {
 		// check whether we can evaluate expressions here
 		for (Iterator<ExpressionPrerequisite> iter =expressions.iterator();iter.hasNext();) {
 			ExpressionPrerequisite exprPrereq = iter.next();
@@ -1908,5 +1964,35 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 
 	public void setAutoAnnotate(boolean autoAnnotate) {
 		this.autoAnnotate = autoAnnotate;
+	}
+	
+	/**
+	 * Print the code used to invoke the method representing a query.
+	 * @param out a print writer
+	 * @param queryRef the query + the parameters used
+	 */
+	protected void printInvocation(PrintWriter out, ExpressionPrerequisite prereq,List<String> paramRefs, boolean includeExplanation, boolean increaseLevel) {
+		out.print(this.expressionPrereqMethodRefs.get(prereq));
+		out.print("(");
+		boolean f = true;
+		for (String param : paramRefs) {
+			if (f)
+				f = false;
+			else
+				out.print(',');
+			out.print(param);
+		}
+		// add reference to explanation
+		if (includeExplanation) {
+			if (f)
+				f = false;
+			else
+				out.print(',');
+			out.print(this.getVarName4DerivationController());
+			if (increaseLevel) {
+				out.print(".increaseDepth()");
+			}
+		}
+		out.print(")");
 	}
 }

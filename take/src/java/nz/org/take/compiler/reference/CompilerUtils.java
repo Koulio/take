@@ -683,14 +683,10 @@ public abstract class CompilerUtils {
 
 	/**
 	 * Print the code used to invoke the method representing a query.
-	 * 
-	 * @param out
-	 *            a print writer
-	 * @param queryRef
-	 *            the query + the parameters used
+	 * @param out a print writer
+	 * @param queryRef the query + the parameters used
 	 */
-	protected void printInvocation(PrintWriter out, QueryRef queryRef,
-			boolean includeExplanation, boolean increaseLevel) {
+	protected void printInvocation(PrintWriter out, QueryRef queryRef,boolean includeExplanation, boolean increaseLevel) {
 		// references to static methods (in main kb class or in fragments)
 		out.print(this.getNameGenerator().getKBFragementName(queryRef));
 		out.print('.');
@@ -718,6 +714,7 @@ public abstract class CompilerUtils {
 		}
 		out.print(")");
 	}
+
 
 	protected void printLogStatement(PrintWriter out, KnowledgeElement cs,
 			boolean[] io, Slot[] islots) {
