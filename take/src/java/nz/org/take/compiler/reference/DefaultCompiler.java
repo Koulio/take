@@ -66,6 +66,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 	private Collection<Predicate> predicateClassesGenerated = new HashSet<Predicate>();
 	private Map<Expression,String> expressionPrereqMethodRefs = new HashMap<Expression,String>();
 	private Map<Expression,String> expressionPrereqMethodTypes = new HashMap<Expression,String>();
+	private Map<List<Class>,String> expressionPrereqMethodTypesCache = new HashMap<List<Class>,String>();
 	
 	/**
 	 * Constructor.
@@ -378,21 +379,34 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			x.generateDefinitionCode(out, expressions.get(x));
 			out.println();
 			
-			this.printOneLineComment(out,"return type for expression invocation");
-			String invocationReturnType = expressions.get(x)+"Type";
-			this.expressionPrereqMethodTypes.put(x,clazz+"."+invocationReturnType);
-			out.print("static class ");
-			out.print(invocationReturnType);
-			out.print(" ");
-			out.println("{");
-			for (Variable v:x.getVariables()) {
-				out.print(v.getType().getName());
+			List<Class> types = x.getVariableTypes();
+			String reusableClassName = expressionPrereqMethodTypesCache.get(types);
+			String invocationReturnType = null;
+			
+			if (reusableClassName==null) {
+				this.printOneLineComment(out,"return type for expression invocation");
+				invocationReturnType = expressions.get(x)+"Type";
+				this.expressionPrereqMethodTypes.put(x,clazz+"."+invocationReturnType);
+				this.expressionPrereqMethodTypesCache.put(types,invocationReturnType);
+				out.print("static class ");
+				out.print(invocationReturnType);
 				out.print(" ");
-				out.print(v.getName());
-				out.println(";");
+				out.println("{");
+				for (Variable v:x.getVariables()) {
+					out.print(v.getType().getName());
+					out.print(" ");
+					out.print(v.getName());
+					out.println(";");
+				}
+				out.println("}");
 			}
-			out.println("}");
-			x.getVariables();
+			else {
+				this.printOneLineComment(out,"no new return types needed for this expression, reusing " + reusableClassName);
+				this.expressionPrereqMethodTypes.put(x,clazz+"."+reusableClassName);
+				invocationReturnType = reusableClassName;
+			}
+			
+
 			
 			this.printOneLineComment(out,"expression invocation");
 			List<String> args = x.getInputSlots();
@@ -402,7 +416,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			String methodName = expressions.get(x)+"Invocation";
 			out.print(methodName);
 			this.expressionPrereqMethodRefs.put(x,clazz+"."+methodName);
-			out.print("(");
+			out.print("("); 
 			boolean first = true;
 			for (Variable v:x.getVariables()) {
 				if (first) first=false;
@@ -1318,6 +1332,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 		boolean first = true;
 		int counter = 1;
 		for (Fact prereq : literals) {
+			
 			// check for expressions we can evaluate
 			// this could be optimised by ordering them, evaluating simpler expressions
 			// first
