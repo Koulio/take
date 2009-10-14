@@ -11,6 +11,7 @@
 package nz.org.take;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -28,7 +29,7 @@ public abstract class Expression  {
 	protected ExpressionLanguage xLanguage = null;
 	protected String expression = null;
 	protected ExpressionLanguage.CompiledExpression compiledExpression = null;
-	protected Collection<Variable> variables = new HashSet<Variable>();
+	protected List<Variable> variables = new ArrayList<Variable>();
 	
 	@Override
 	public int hashCode() {
@@ -104,9 +105,16 @@ public abstract class Expression  {
 		return compiledExpression.getType();
 	}
 	
-	public Collection<Variable> getVariables() {
+	public List<Variable> getVariables() {
 		return variables;
 	}
+	
+	public List<Class> getVariableTypes() {
+		List<Class> types = new ArrayList<Class>(this.variables.size());
+		for (Variable v:variables) types.add(v.getType());
+		return types;
+	}
+	
 	/**
 	 * Generate the code that can be used to define a field representing this expression.
 	 * @param out
