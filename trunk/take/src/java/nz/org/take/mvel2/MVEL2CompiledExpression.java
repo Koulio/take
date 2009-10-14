@@ -31,10 +31,12 @@ class MVEL2CompiledExpression implements CompiledExpression {
 	private Class<?> type = null;
 	private Map<String, Class> typeInfo = null;
 	private List<String> inputSlots;
+	private String expression = null;
 	
 	
 	public MVEL2CompiledExpression(String expression,Map<String, Class> typeInfo) throws ExpressionException {
 		super();
+		this.expression = expression;
 		
 		// we need to compile the expression twice - first to compute the input slots
 		ParserContext ctx = new ParserContext();
@@ -63,6 +65,32 @@ class MVEL2CompiledExpression implements CompiledExpression {
 			throw new ExpressionException("Cannot parse expression "+expression,x);
 		}
 		
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((expression == null) ? 0 : expression.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MVEL2CompiledExpression other = (MVEL2CompiledExpression) obj;
+		if (expression == null) {
+			if (other.expression != null)
+				return false;
+		} else if (!expression.equals(other.expression))
+			return false;
+		return true;
 	}
 
 	@Override
