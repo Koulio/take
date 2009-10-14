@@ -372,10 +372,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 
 		for (Expression x:expressions.keySet()) {
 			
-			this.printOneLineComment(out,"Code generated for expression: ",x.getExpression());
-			out.println();
-			
-			this.printOneLineComment(out,"compiled expression");
+			this.printOneLineComment(out,"compiled expression \"",x.getExpression(),"\"");
 			x.generateDefinitionCode(out, expressions.get(x));
 			out.println();
 			
@@ -384,7 +381,7 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 			String invocationReturnType = null;
 			
 			if (reusableClassName==null) {
-				this.printOneLineComment(out,"return type for expression invocation");
+				this.printOneLineComment(out,"return type for invoking the expression \"",x.getExpression(),"\"");
 				invocationReturnType = expressions.get(x)+"Type";
 				this.expressionPrereqMethodTypes.put(x,clazz+"."+invocationReturnType);
 				this.expressionPrereqMethodTypesCache.put(types,invocationReturnType);
@@ -401,14 +398,15 @@ public class DefaultCompiler extends CompilerUtils  implements Compiler {
 				out.println("}");
 			}
 			else {
-				this.printOneLineComment(out,"no new return types needed for this expression, reusing " + reusableClassName);
+				this.printOneLineComment(out,"no new return types needed for expression \"",x.getExpression(),"\", reusing ",reusableClassName);
+				out.println();
 				this.expressionPrereqMethodTypes.put(x,clazz+"."+reusableClassName);
 				invocationReturnType = reusableClassName;
 			}
 			
 
 			
-			this.printOneLineComment(out,"expression invocation");
+			this.printOneLineComment(out,"invocation of expression \"",x.getExpression(),"\"");
 			List<String> args = x.getInputSlots();
 			out.print("static ResourceIterator<");
 			out.print(invocationReturnType);
